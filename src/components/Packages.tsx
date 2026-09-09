@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { motion } from 'motion/react';
 import { Check, Sparkles, Zap, Shield, ArrowRight, HelpCircle } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
+import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion } from '../lib/animations';
 
 interface PackagesProps {
   onSelectPackage: (packageName: string) => void;
@@ -16,31 +18,39 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-sky-600/5 blur-[130px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
+        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
             <span>MARKETING LU PACKAGES</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-1 mb-4 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white mt-1 mb-4 tracking-tight">
             Tailored Digital Marketing Packages
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
             Choose the package structured to your current growth velocity. Every package from Marketing LU includes verified SEO, SMO, creative posting, and insight monitoring.
           </p>
         </div>
 
-        {/* 3 Packages Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        {/* 3 Packages Cards - Staggered entrance, consistent card hover physics */}
+        <motion.div 
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12 items-stretch"
+        >
           {packagesData.map((pkg) => (
-            <div
+            <motion.div
               key={pkg.id}
-              className={`relative rounded-2xl flex flex-col justify-between transition-all duration-300 p-7 sm:p-8 ${
+              variants={staggerItemVariants}
+              {...cardHoverMotion}
+              className={`relative rounded-2xl sm:rounded-3xl flex flex-col justify-between transition-colors duration-300 p-5 sm:p-6 lg:p-8 xl:p-10 2xl:p-12 ${
                 pkg.popular
-                  ? 'bg-gradient-to-b from-[#0e172a] via-[#0b1324] to-[#080d1a] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/15 lg:-translate-y-2'
-                  : 'bg-[#0a1120] border border-slate-800 hover:border-slate-700 shadow-lg'
+                  ? 'bg-gradient-to-b from-[#0e172a] via-[#0c1426] to-[#080d1a] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/15'
+                  : 'bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 shadow-lg'
               }`}
               id={`package-card-${pkg.id}`}
             >
@@ -60,18 +70,18 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   <div className="text-xs font-semibold text-cyan-400 tracking-wider uppercase mb-1">
                     {pkg.highlight}
                   </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight">
+                  <h3 className="text-xl sm:text-2xl xl:text-3xl font-black text-white tracking-tight">
                     {pkg.name}
                   </h3>
-                  <p className="text-xs text-slate-400 mt-2 leading-relaxed min-h-[40px]">
+                  <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed min-h-[36px]">
                     {pkg.tagline}
                   </p>
                 </div>
 
                 {/* Pricing / Plan Estimate note */}
-                <div className="py-4 px-4 rounded-xl bg-slate-900/80 border border-slate-800/80 mb-6 flex items-center justify-between">
+                <div className="py-3.5 px-4 rounded-xl bg-slate-900/80 border border-slate-800/80 mb-6 flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-slate-400 block">Package Type</span>
+                    <span className="text-[11px] text-slate-400 block">Package Type</span>
                     <span className="text-sm font-bold text-white">{pkg.priceNote}</span>
                   </div>
                   <div className="w-8 h-8 rounded-lg bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
@@ -105,45 +115,52 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Action Button - Touch friendly min 48px with motion physics */}
               <div className="pt-4 border-t border-slate-800/80">
-                <button
+                <motion.button
+                  {...buttonHoverMotion}
                   onClick={() => onSelectPackage(pkg.name)}
-                  className={`w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                  className={`w-full min-h-[48px] py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                     pkg.popular
-                      ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 hover:brightness-110 shadow-lg shadow-cyan-500/25 active:scale-[0.98]'
+                      ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 hover:brightness-110 shadow-lg shadow-cyan-500/25'
                       : 'bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 hover:border-cyan-500/40'
                   }`}
                 >
                   <span>Select {pkg.name}</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </motion.button>
               </div>
 
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Note on customized requirement */}
-        <div className="mt-12 p-6 rounded-2xl bg-[#0a1120] border border-slate-800 text-center max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Note on customized requirement - stretched and responsive */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 sm:mt-16 p-5 sm:p-6 xl:p-8 rounded-2xl bg-[#0c1322] border border-slate-800/90 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
           <div className="flex items-center gap-3 text-left">
             <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
               <HelpCircle className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white">Need a Customized Solution?</h4>
-              <p className="text-xs text-slate-400">
+              <h4 className="text-sm sm:text-base font-bold text-white">Need a Customized Solution?</h4>
+              <p className="text-xs sm:text-sm text-slate-400">
                 Marketing LU provides custom tailored scopes for multi-brand enterprises and specialized requirements.
               </p>
             </div>
           </div>
-          <button
+          <motion.button
+            {...buttonHoverMotion}
             onClick={() => onSelectPackage('Customized Solution')}
-            className="whitespace-nowrap px-5 py-2.5 rounded-lg border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 font-bold text-xs transition-all cursor-pointer"
+            className="w-full sm:w-auto whitespace-nowrap min-h-[44px] px-6 py-2.5 rounded-xl border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 font-bold text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center"
           >
             Get Custom Quote
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
       </div>
     </section>

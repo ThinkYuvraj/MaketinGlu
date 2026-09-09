@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, TrendingUp, Users, ShoppingCart, Sparkles, ExternalLink, Activity } from 'lucide-react';
+import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion, standardEase } from '../lib/animations';
 
 interface CaseStudy {
   id: string;
@@ -48,39 +50,47 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
 
   return (
-    <section id="cases" className="relative py-20 bg-[#070b14]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="cases" className="relative py-16 sm:py-20 lg:py-24 bg-[#070b14]">
+      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
 
         {/* Section Header with "View All Cases" matching Figma */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
           <div>
-            <span className="text-[11px] font-bold tracking-widest text-cyan-400 uppercase">
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase">
               PORTFOLIO
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-1.5 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-1.5 tracking-tight">
               Case Studies & Recent Work
             </h2>
           </div>
 
           <button
             onClick={onOpenConsultation}
-            className="text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group transition-colors"
+            className="text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 group transition-colors py-2 min-h-[44px]"
           >
             <span>View All Cases</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
         </div>
 
-        {/* 2 Featured Case Study Cards matching Figma layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* 2 Featured Case Study Cards - Staggered entrance, consistent card hover */}
+        <motion.div 
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 xl:gap-12 2xl:gap-16"
+        >
           {caseStudies.map((item) => (
-            <div
+            <motion.div
               key={item.id}
-              className="rounded-2xl bg-[#0a1120] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300 overflow-hidden group hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col"
+              variants={staggerItemVariants}
+              {...cardHoverMotion}
+              className="rounded-2xl bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 transition-colors duration-300 overflow-hidden group hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col"
               id={`case-card-${item.id}`}
             >
-              {/* Graphic Mockup Preview Window (matching Figma screenshots) */}
-              <div className="relative h-64 sm:h-72 bg-[#060a13] p-5 overflow-hidden border-b border-slate-800/80 flex flex-col justify-between">
+              {/* Graphic Mockup Preview Window - Responsive height stretching on wide desktop */}
+              <div className="relative h-56 sm:h-64 md:h-72 lg:h-80 xl:h-96 bg-[#060a13] p-3.5 sm:p-5 lg:p-6 overflow-hidden border-b border-slate-800/80 flex flex-col justify-between">
 
 
                 {item.type === 'nexa' ? (
@@ -98,21 +108,21 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     </div>
 
                     {/* Dashboard center graphics */}
-                    <div className="grid grid-cols-3 gap-3 my-auto">
-                      <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
-                        <div className="relative w-12 h-12 flex items-center justify-center mb-1">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3 my-auto">
+                      <div className="p-2 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
+                        <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center mb-1">
                           <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                             <circle cx="18" cy="18" r="14" fill="none" stroke="#1e293b" strokeWidth="3" />
                             <circle cx="18" cy="18" r="14" fill="none" stroke="#38bdf8" strokeWidth="3" strokeDasharray="88" strokeDashoffset="22" strokeLinecap="round" />
                           </svg>
-                          <span className="absolute text-[11px] font-bold text-white">75%</span>
+                          <span className="absolute text-[10px] sm:text-[11px] font-bold text-white">75%</span>
                         </div>
-                        <span className="text-[9px] text-slate-400 font-medium">Conversion</span>
+                        <span className="text-[8px] sm:text-[9px] text-slate-400 font-medium truncate">Conversion</span>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
-                        <div className="text-xl font-extrabold text-cyan-400 mb-0.5">2.3M</div>
-                        <span className="text-[9px] text-slate-400 font-medium">Gross Vol</span>
+                      <div className="p-2 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
+                        <div className="text-lg sm:text-xl font-extrabold text-cyan-400 mb-0.5">2.3M</div>
+                        <span className="text-[8px] sm:text-[9px] text-slate-400 font-medium truncate">Gross Vol</span>
                         <div className="mt-1 flex gap-0.5 h-3 items-end">
                           <div className="w-1 bg-cyan-600 h-1.5 rounded-sm" />
                           <div className="w-1 bg-cyan-500 h-2.5 rounded-sm" />
@@ -121,9 +131,9 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         </div>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
-                        <div className="text-xl font-extrabold text-emerald-400 mb-0.5">-15%</div>
-                        <span className="text-[9px] text-slate-400 font-medium">Bounce Rate</span>
+                      <div className="p-2 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
+                        <div className="text-lg sm:text-xl font-extrabold text-emerald-400 mb-0.5">-15%</div>
+                        <span className="text-[8px] sm:text-[9px] text-slate-400 font-medium truncate">Bounce</span>
                         <TrendingUp className="w-3.5 h-3.5 text-emerald-400 mt-1" />
                       </div>
                     </div>
@@ -186,12 +196,12 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               </div>
 
               {/* Card Meta Content matching Figma */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="text-[11px] font-extrabold tracking-wider text-cyan-400 uppercase">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold tracking-wider text-cyan-400 uppercase">
                     {item.category}
                   </span>
-                  <h3 className="text-lg sm:text-xl font-bold text-white mt-1 mb-2 group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-white mt-1 mb-2 group-hover:text-cyan-300 transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
@@ -199,8 +209,8 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                   </p>
                 </div>
 
-                <div className="pt-5 mt-4 border-t border-slate-800/80 flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-xs font-semibold text-slate-300">
+                <div className="pt-4 sm:pt-5 mt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-semibold text-slate-300">
                     {item.stats.slice(0, 2).map((s, i) => (
                       <span key={i} className="flex items-center gap-1.5">
                         <span className="text-slate-500">{s.label}:</span>
@@ -210,7 +220,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                   </div>
                   <button
                     onClick={() => setActiveCase(item)}
-                    className="p-1.5 rounded-lg bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 transition-colors cursor-pointer"
+                    className="p-2 sm:p-2.5 rounded-lg bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center shrink-0"
                     title="Read Case Study Details"
                   >
                     <ArrowUpRight className="w-4 h-4" />
@@ -218,57 +228,68 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 </div>
               </div>
 
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
 
-      {/* Case Study Detail Modal */}
-      {activeCase && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
-          onClick={() => setActiveCase(null)}
-        >
-          <div
-            className="relative w-full max-w-lg bg-[#0b1324] border border-cyan-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl text-slate-100"
-            onClick={(e) => e.stopPropagation()}
+      {/* Case Study Detail Modal - Animated overlay & dialog */}
+      <AnimatePresence>
+        {activeCase && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setActiveCase(null)}
           >
-            <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider">{activeCase.category}</span>
-            <h3 className="text-2xl font-extrabold text-white mt-1 mb-3">{activeCase.title}</h3>
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              {activeCase.description}
-            </p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: standardEase }}
+              className="relative w-full max-w-lg bg-[#0b1324] border border-cyan-500/40 rounded-2xl p-5 sm:p-8 shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider">{activeCase.category}</span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white mt-1 mb-3">{activeCase.title}</h3>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+                {activeCase.description}
+              </p>
 
-            <div className="grid grid-cols-3 gap-3 p-4 rounded-xl bg-slate-900/90 border border-slate-800 mb-6 text-center">
-              {activeCase.stats.map((s, idx) => (
-                <div key={idx}>
-                  <div className="text-xl font-extrabold text-cyan-400">{s.value}</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">{s.label}</div>
-                </div>
-              ))}
-            </div>
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 p-3.5 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-800 mb-6 text-center">
+                {activeCase.stats.map((s, idx) => (
+                  <div key={idx}>
+                    <div className="text-lg sm:text-xl font-extrabold text-cyan-400">{s.value}</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">{s.label}</div>
+                  </div>
+                ))}
+              </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => {
-                  setActiveCase(null);
-                  onOpenConsultation();
-                }}
-                className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer text-center"
-              >
-                Schedule Similar Growth Blueprint
-              </button>
-              <button
-                onClick={() => setActiveCase(null)}
-                className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <motion.button
+                  {...buttonHoverMotion}
+                  onClick={() => {
+                    setActiveCase(null);
+                    onOpenConsultation();
+                  }}
+                  className="w-full sm:flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer text-center min-h-[44px] flex items-center justify-center"
+                >
+                  Schedule Similar Growth Blueprint
+                </motion.button>
+                <button
+                  onClick={() => setActiveCase(null)}
+                  className="w-full sm:w-auto py-3 px-5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold min-h-[44px] cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

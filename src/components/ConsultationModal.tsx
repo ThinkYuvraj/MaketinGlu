@@ -1,5 +1,7 @@
 import { useState, FormEvent } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, CheckCircle2, Calendar, Clock, Sparkles } from 'lucide-react';
+import { standardEase, buttonHoverMotion } from '../lib/animations';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -27,8 +29,6 @@ export default function ConsultationModal({
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!isOpen) return null;
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -44,19 +44,32 @@ export default function ConsultationModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div 
-        className="relative w-full max-w-xl bg-[#0b1324] border border-cyan-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl text-slate-100 glow-cyan"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close Button */}
-        <button 
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm"
           onClick={onClose}
-          className="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
-          aria-label="Close modal"
         >
-          <X className="w-5 h-5" />
-        </button>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 15 }}
+            transition={{ duration: 0.25, ease: standardEase }}
+            className="relative w-full max-w-xl bg-[#0b1324] border border-cyan-500/30 rounded-2xl p-5 sm:p-8 shadow-2xl text-slate-100 glow-cyan max-h-[92vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
 
         {submitted ? (
           <div className="text-center py-8 space-y-4">
@@ -195,7 +208,7 @@ export default function ConsultationModal({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 font-extrabold text-sm sm:text-base hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+                  className="w-full min-h-[48px] py-3.5 px-6 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 font-extrabold text-sm sm:text-base hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? 'Reserving Your Slot...' : 'Confirm Appointment Reservation →'}
                 </button>

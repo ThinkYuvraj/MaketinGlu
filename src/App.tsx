@@ -2,19 +2,13 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PerformanceStats from './components/PerformanceStats';
-import AppointmentBanner from './components/AppointmentBanner';
-import GrowthServices from './components/GrowthServices';
-import WebsiteDesignSection from './components/WebsiteDesignSection';
-import EcommerceSection from './components/EcommerceSection';
-import SEOSection from './components/SEOSection';
-import GraphicDesignSection from './components/GraphicDesignSection';
-import PPCSection from './components/PPCSection';
-import SMOSection from './components/SMOSection';
+import CompanyExpertise from './components/CompanyExpertise';
 import Packages from './components/Packages';
 import Testimonials from './components/Testimonials';
 import CaseStudies from './components/CaseStudies';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import AppointmentBanner from './components/AppointmentBanner';
 import ConsultationModal from './components/ConsultationModal';
 import AnimatedSection from './components/AnimatedSection';
 import AdminApp from './admin/AdminApp';
@@ -44,14 +38,14 @@ function MainWebsite() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative">
       
       {/* Top Fixed Navigation */}
       <Navbar
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Main Website Flow with Subtle Viewport Fade-In and Slide-Up Animations */}
+      {/* Main Website Flow: Clean, Non-Redundant, High-Readability */}
       <main className="flex-1">
         {/* Section 1: Hero Section */}
         <AnimatedSection delayMs={0}>
@@ -62,101 +56,48 @@ function MainWebsite() {
         </AnimatedSection>
 
         {/* Section 2: Our Performance In Numbers */}
-        <AnimatedSection delayMs={80}>
+        <AnimatedSection delayMs={60}>
           <PerformanceStats />
         </AnimatedSection>
 
-        {/* Section 3: Appointment Banner (Mid-page) */}
-        <AnimatedSection delayMs={80}>
-          <AppointmentBanner
-            id="banner-mid"
-            title="Book Your Free Appointment Today"
-            description="Transform your digital blueprint with a customized growth framework built specifically for your audience."
-            buttonText="Reserve Free Slot"
-            onOpenConsultation={() => handleOpenConsultation()}
+        {/* Section 3: Unified Company Expertise & Growth Disciplines */}
+        <AnimatedSection id="expertise" delayMs={60}>
+          <CompanyExpertise
+            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
           />
         </AnimatedSection>
 
-        {/* Section 4: Comprehensive Growth Services (Capabilities) */}
-        <AnimatedSection id="services" delayMs={80}>
-          <GrowthServices
-            onSelectService={(serviceTitle) => handleOpenConsultation(serviceTitle)}
-          />
-        </AnimatedSection>
-
-        {/* Section 4a: Custom Website Design */}
-        <AnimatedSection id="web-design" delayMs={80}>
-          <WebsiteDesignSection
-            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle || 'Website Design & Web Development')}
-          />
-        </AnimatedSection>
-
-        {/* Section 4b: Specialized E-Commerce Website Design */}
-        <AnimatedSection id="ecommerce" delayMs={80}>
-          <EcommerceSection
-            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle || 'E-Commerce Website Design')}
-          />
-        </AnimatedSection>
-
-        {/* Section 4c: Search Engine Optimization (SEO) */}
-        <AnimatedSection id="seo" delayMs={80}>
-          <SEOSection
-            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle || 'SEO (Search Engine Optimization)')}
-          />
-        </AnimatedSection>
-
-        {/* Section 4d: Graphic Design & Visual Branding */}
-        <AnimatedSection id="graphic-design" delayMs={80}>
-          <GraphicDesignSection
-            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle || 'Graphic Design & Brand Identity')}
-          />
-        </AnimatedSection>
-
-        {/* Section 4e: Pay-Per-Click Advertising (PPC) */}
-        <AnimatedSection id="ppc" delayMs={80}>
-          <PPCSection
-            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle || 'PPC & Paid Search Advertising')}
-          />
-        </AnimatedSection>
-
-        {/* Section 4f: Social Media Optimization (SMO) */}
-        <AnimatedSection id="smo" delayMs={80}>
-          <SMOSection
-            onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle || 'SMO (Social Media Optimization)')}
-          />
-        </AnimatedSection>
-
-        {/* Section 5: Marketing LU Packages & Plans */}
-        <AnimatedSection delayMs={80}>
+        {/* Section 4: Tailored Marketing Packages */}
+        <AnimatedSection delayMs={60}>
           <Packages
             onSelectPackage={(pkgName) => handleOpenConsultation(`Package: ${pkgName}`)}
           />
         </AnimatedSection>
 
-        {/* Section 6: Our Clients' Success Stories (Testimonials) */}
-        <AnimatedSection delayMs={80}>
-          <Testimonials />
-        </AnimatedSection>
-
-        {/* Section 7: Case Studies & Recent Work (Portfolio) */}
-        <AnimatedSection delayMs={80}>
+        {/* Section 5: Case Studies & Proven Results (Portfolio) */}
+        <AnimatedSection delayMs={60}>
           <CaseStudies
             onOpenConsultation={() => handleOpenConsultation()}
           />
         </AnimatedSection>
 
-        {/* Section 8: Frequently Asked Questions (FAQ) */}
-        <AnimatedSection delayMs={80}>
+        {/* Section 6: Client Reviews & Trust (Testimonials) */}
+        <AnimatedSection delayMs={60}>
+          <Testimonials />
+        </AnimatedSection>
+
+        {/* Section 7: Frequently Asked Questions (FAQ) */}
+        <AnimatedSection delayMs={60}>
           <FAQ />
         </AnimatedSection>
 
-        {/* Section 9: Appointment Banner (Bottom) */}
-        <AnimatedSection delayMs={80}>
+        {/* Section 8: Final High-Impact Consultation Banner (Single Strategic Placement) */}
+        <AnimatedSection delayMs={60}>
           <AppointmentBanner
             id="banner-bottom"
-            title="Book Your Free Appointment Today"
-            description="Schedule a high-intensity 30-minute tactical review with our senior architects in New Delhi. No obligation."
-            buttonText="Reserve consultation"
+            title="Book Your Free Strategy Consultation"
+            description="Schedule a 30-minute tactical review with our senior digital architects in New Delhi. Get custom roadmap recommendations for your brand with zero obligation."
+            buttonText="Reserve Free Strategy Slot"
             onOpenConsultation={() => handleOpenConsultation()}
           />
         </AnimatedSection>
