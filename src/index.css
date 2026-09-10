@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    background-color: #070b14;
+  }
+
   body {
+    zoom: 0.9;
     background-color: #070b14;
     color: #f1f5f9;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
