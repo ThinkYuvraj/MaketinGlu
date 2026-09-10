@@ -48,7 +48,7 @@ function MainWebsite() {
       {/* Main Website Flow: Clean, Non-Redundant, High-Readability */}
       <main className="flex-1">
         {/* Section 1: Hero Section */}
-        <AnimatedSection delayMs={0}>
+        <AnimatedSection id="home" delayMs={0}>
           <Hero
             onOpenConsultation={() => handleOpenConsultation()}
             onExplorePortfolio={handleExplorePortfolio}
