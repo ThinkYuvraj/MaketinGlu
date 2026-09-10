@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Sparkles, Layers, LayoutGrid } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { expertiseData } from '../data/expertiseData';
 import Container from './common/Container';
 import ExpertiseDetailView from './expertise/ExpertiseDetailView';
-import ExpertiseGridView from './expertise/ExpertiseGridView';
 
 interface CompanyExpertiseProps {
   onOpenConsultation: (serviceName?: string) => void;
@@ -11,7 +10,6 @@ interface CompanyExpertiseProps {
 
 export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertiseProps) {
   const [activeTabId, setActiveTabId] = useState<string>("web-design");
-  const [viewMode, setViewMode] = useState<"detail" | "grid">("detail");
 
   // Sync with URL hash if user clicks #web-design, #ecommerce, #seo, #graphic-design, #ppc, #smo
   useEffect(() => {
@@ -25,7 +23,6 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       const match = expertiseData.find(item => item.id === hash);
       if (match) {
         setActiveTabId(match.id);
-        setViewMode("detail");
         const element = document.getElementById("expertise");
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
@@ -42,7 +39,6 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
   const handleSelectTab = (id: string) => {
     setActiveTabId(id);
-    setViewMode("detail");
   };
 
   return (
@@ -80,34 +76,6 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
             Eliminate fragmented vendors. Explore our verified domain capabilities, battle-tested methodologies, and high-impact deliverables.
           </p>
-
-          {/* View Mode Toggle (Interactive Deep Dive vs. All 6 Disciplines Grid) */}
-          <div className="mt-6 sm:mt-7 w-full sm:w-auto inline-flex items-center p-1 rounded-xl bg-[#0a1120] border border-slate-800 shadow-inner">
-            <button
-              onClick={() => setViewMode("detail")}
-              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer min-h-[40px] ${
-                viewMode === "detail"
-                  ? "bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-              id="view-mode-detail-btn"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Interactive Deep Dive</span>
-            </button>
-            <button
-              onClick={() => setViewMode("grid")}
-              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer min-h-[40px] ${
-                viewMode === "grid"
-                  ? "bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold shadow-md shadow-cyan-500/20"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-              id="view-mode-grid-btn"
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              <span>All 6 Disciplines Grid</span>
-            </button>
-          </div>
         </div>
 
         {/* Primary 6 Discipline Cards: Positioned above the showcase card as primary selector */}
@@ -115,7 +83,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 xl:gap-4">
             {expertiseData.map((item) => {
               const Icon = item.icon;
-              const isSelected = item.id === activeTabId && viewMode === "detail";
+              const isSelected = item.id === activeTabId;
 
               return (
                 <button
@@ -163,23 +131,13 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
         </div>
 
-        {/* MODE 1: Interactive Featured Deep-Dive Showcase */}
-        {viewMode === "detail" ? (
-          <ExpertiseDetailView
-            activeExpertise={activeExpertise}
-            activeTabId={activeTabId}
-            onSelectTab={handleSelectTab}
-            onOpenConsultation={onOpenConsultation}
-            onSwitchToGrid={() => setViewMode("grid")}
-          />
-        ) : (
-          /* MODE 2: Comprehensive 6-Discipline Grid View */
-          <ExpertiseGridView
-            activeTabId={activeTabId}
-            onSelectTab={handleSelectTab}
-            onOpenConsultation={onOpenConsultation}
-          />
-        )}
+        {/* Interactive Featured Deep-Dive Showcase */}
+        <ExpertiseDetailView
+          activeExpertise={activeExpertise}
+          activeTabId={activeTabId}
+          onSelectTab={handleSelectTab}
+          onOpenConsultation={onOpenConsultation}
+        />
 
       </Container>
     </section>
