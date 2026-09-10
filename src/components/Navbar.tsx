@@ -78,13 +78,13 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
       <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-3.5 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3.5 flex items-center justify-between">
         
-        {/* Brand Logo */}
+        {/* Brand Logo with White Background Badge */}
         <a
           href="/"
           className="flex items-center group transition-transform active:scale-95"
           id="nav-brand-logo"
         >
-          <Logo variant="auto" size="md" />
+          <Logo variant="light-badge" size="md" />
         </a>
 
         {/* Desktop Nav Links */}
