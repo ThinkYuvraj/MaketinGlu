@@ -35,23 +35,24 @@ export const defaultSiteConfig: SiteConfig = {
     {
       id: 'basic',
       name: 'Basic Package',
+      badge: 'STARTER DIGITAL SETUP',
       tagline: 'Ideal for small businesses & emerging startups setting up their digital foundation.',
       priceNote: 'Custom quote per project scope',
       highlight: 'Starter Digital Setup',
       features: [
         { name: 'Initial Site Analysis', included: true },
         { name: 'Essential On-Page SEO', included: true },
-        { name: 'Off-Page SEO & Directory Submissions', included: false },
-        { name: 'Local SEO (Google Business Profile)', included: false },
+        { name: 'Off-Page SEO & Directory Submissions', included: true },
+        { name: 'Local SEO (Google Business Profile)', included: true },
         { name: 'Social Media Optimization (SMO)', included: true },
         { name: 'Creative Image Posting (12-15 Monthly)', included: true },
         { name: 'Story Sharing & Profile Setup', included: true },
         { name: 'Cover Image Graphic Design', included: true },
-        { name: 'Group Activity & Community Outreach', included: false },
+        { name: 'Group Activity & Community Outreach', included: true },
         { name: 'Insight Monitor Report (Monthly)', included: true },
-        { name: 'Image Tagging to Friends & Followers', included: false },
-        { name: 'Comment & Like Management', included: false },
-        { name: 'Sponsored Ads Campaign Setup', included: false },
+        { name: 'Image Tagging to Friends & Followers', included: true },
+        { name: 'Comment & Like Management', included: true },
+        { name: 'Sponsored Ads Campaign Setup', included: true },
       ],
     },
     {
@@ -164,7 +165,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v3';
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {

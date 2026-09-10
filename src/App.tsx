@@ -4,16 +4,16 @@ import Hero from './components/Hero';
 import PerformanceStats from './components/PerformanceStats';
 import CompanyExpertise from './components/CompanyExpertise';
 import Packages from './components/Packages';
-import Testimonials from './components/Testimonials';
 import CaseStudies from './components/CaseStudies';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AppointmentBanner from './components/AppointmentBanner';
 import ConsultationModal from './components/ConsultationModal';
 import AnimatedSection from './components/AnimatedSection';
+import MobileBottomBar from './components/mobile/MobileBottomBar';
 import AdminApp from './admin/AdminApp';
 import { SiteConfigProvider } from './context/SiteConfigContext';
-import { Shield, Sparkles } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 function MainWebsite() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
@@ -38,7 +38,7 @@ function MainWebsite() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative pb-16 lg:pb-0">
       
       {/* Top Fixed Navigation */}
       <Navbar
@@ -81,12 +81,7 @@ function MainWebsite() {
           />
         </AnimatedSection>
 
-        {/* Section 6: Client Reviews & Trust (Testimonials) */}
-        <AnimatedSection delayMs={60}>
-          <Testimonials />
-        </AnimatedSection>
-
-        {/* Section 7: Frequently Asked Questions (FAQ) */}
+        {/* Section 6: Frequently Asked Questions (FAQ) */}
         <AnimatedSection delayMs={60}>
           <FAQ />
         </AnimatedSection>
@@ -109,6 +104,11 @@ function MainWebsite() {
         onOpenAdmin={navigateToAdmin}
       />
 
+      {/* Mobile Sticky Quick Action Bar (Call, WhatsApp, Get Quote) */}
+      <MobileBottomBar
+        onOpenConsultation={() => handleOpenConsultation('Quick Mobile Audit')}
+      />
+
       {/* Interactive Consultation / Quote Modal */}
       <ConsultationModal
         isOpen={isConsultationOpen}
@@ -118,7 +118,7 @@ function MainWebsite() {
       />
 
       {/* Floating Discreet Admin Quick Access Pill (Bottom Left) */}
-      <div className="fixed bottom-4 left-4 z-30">
+      <div className="fixed bottom-16 lg:bottom-4 left-4 z-30">
         <button
           onClick={navigateToAdmin}
           className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-cyan-300 text-xs shadow-lg backdrop-blur-md transition-all cursor-pointer"

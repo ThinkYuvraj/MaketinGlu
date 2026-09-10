@@ -2,45 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, TrendingUp, Users, ShoppingCart, Sparkles, ExternalLink, Activity } from 'lucide-react';
 import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion, standardEase } from '../lib/animations';
-
-interface CaseStudy {
-  id: string;
-  category: string;
-  title: string;
-  description: string;
-  stats: { label: string; value: string }[];
-  accent: string;
-  type: 'nexa' | 'techduniya';
-}
-
-const caseStudies: CaseStudy[] = [
-  {
-    id: "nexa",
-    category: "E-COMMERCE & DEVELOPMENT",
-    title: "Nexa Store India UI Transformation",
-    description: "Rebuilt Nexa's core custom checkout experience yielding a 95% boost in mobile retention rates.",
-    stats: [
-      { label: "Checkout Velocity", value: "+95%" },
-      { label: "Gross Volume", value: "2.3M" },
-      { label: "Cart Abandonment", value: "-15%" }
-    ],
-    accent: "from-sky-500 to-cyan-400",
-    type: "nexa"
-  },
-  {
-    id: "techduniya",
-    category: "SOCIAL BRAND MANAGEMENT",
-    title: "TechDuniya Organic SMO Push",
-    description: "Structured dynamic social campaigns targeting young Indian tech-buyers to multiply inbound leads.",
-    stats: [
-      { label: "Audience Reach", value: "320K" },
-      { label: "Organic Inbound", value: "+180%" },
-      { label: "Engagement CTR", value: "8.4%" }
-    ],
-    accent: "from-cyan-400 to-teal-400",
-    type: "techduniya"
-  }
-];
+import { caseStudiesData, CaseStudy } from '../data/caseStudiesData';
+import Container from './common/Container';
 
 interface CaseStudiesProps {
   onOpenConsultation: () => void;
@@ -51,7 +14,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
   return (
     <section id="cases" className="relative py-16 sm:py-20 lg:py-24 bg-[#070b14]">
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+      <Container>
 
         {/* Section Header with "View All Cases" matching Figma */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
@@ -66,7 +29,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
           <button
             onClick={onOpenConsultation}
-            className="text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 group transition-colors py-2 min-h-[44px]"
+            className="text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 group transition-colors py-2 min-h-[44px] cursor-pointer"
           >
             <span>View All Cases</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -81,7 +44,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
           viewport={{ once: true, margin: "-40px" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 xl:gap-12 2xl:gap-16"
         >
-          {caseStudies.map((item) => (
+          {caseStudiesData.map((item) => (
             <motion.div
               key={item.id}
               variants={staggerItemVariants}
@@ -89,12 +52,11 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               className="rounded-2xl bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 transition-colors duration-300 overflow-hidden group hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col"
               id={`case-card-${item.id}`}
             >
-              {/* Graphic Mockup Preview Window - Responsive height stretching on wide desktop */}
+              {/* Graphic Mockup Preview Window */}
               <div className="relative h-56 sm:h-64 md:h-72 lg:h-80 xl:h-96 bg-[#060a13] p-3.5 sm:p-5 lg:p-6 overflow-hidden border-b border-slate-800/80 flex flex-col justify-between">
 
-
                 {item.type === 'nexa' ? (
-                  // Nexa Store India UI Transformation mockup matching screenshot
+                  // Nexa Store India UI Transformation mockup
                   <div className="relative z-10 w-full h-full flex flex-col justify-between">
                     {/* Top title bar */}
                     <div className="flex items-center justify-between">
@@ -121,7 +83,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       </div>
 
                       <div className="p-2 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center">
-                        <div className="text-lg sm:text-xl font-extrabold text-cyan-400 mb-0.5">2.3M</div>
+                        <div className="text-lg sm:text-xl font-extrabold text-cyan-400 mb-0.5">₹2.3M</div>
                         <span className="text-[8px] sm:text-[9px] text-slate-400 font-medium truncate">Gross Vol</span>
                         <div className="mt-1 flex gap-0.5 h-3 items-end">
                           <div className="w-1 bg-cyan-600 h-1.5 rounded-sm" />
@@ -138,158 +100,183 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       </div>
                     </div>
 
-                    {/* Bottom visual soundwave/graph */}
-                    <div className="flex items-end gap-1 h-8 pt-2">
-                      {[30, 45, 25, 60, 40, 75, 55, 90, 80, 100, 70, 85, 95].map((h, i) => (
-                        <div
-                          key={i}
-                          style={{ height: `${h}%` }}
-                          className="flex-1 bg-gradient-to-t from-sky-900/80 to-cyan-400 rounded-t-sm"
-                        />
-                      ))}
+                    {/* Bottom status bar in preview */}
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/70 p-2 rounded-lg border border-slate-800/80">
+                      <span className="flex items-center gap-1.5">
+                        <ShoppingCart className="w-3 h-3 text-cyan-400" />
+                        <span>Nexa Store D2C</span>
+                      </span>
+                      <span className="text-cyan-400 font-mono text-[10px]">95% SPEED GAIN</span>
                     </div>
                   </div>
                 ) : (
-                  // TechDuniya Organic SMO Push mockup matching screenshot
+                  // TechDuniya Organic SMO Push mockup
                   <div className="relative z-10 w-full h-full flex flex-col justify-between">
                     <div className="flex items-center justify-between">
-                      <div className="px-3 py-1 rounded-md bg-teal-950/80 border border-teal-500/40 text-[10px] font-mono tracking-widest text-teal-300">
-                        ORGANIC REACH ENGINE
+                      <div className="px-3 py-1 rounded-md bg-blue-950/80 border border-blue-500/40 text-[10px] font-mono tracking-widest text-blue-300">
+                        AUDIENCE ENGAGEMENT
                       </div>
-                      <div className="text-[11px] font-mono text-cyan-400 font-semibold flex items-center gap-1">
-                        <Activity className="w-3.5 h-3.5 animate-pulse" />
-                        <span>SMO PIPELINE</span>
-                      </div>
-                    </div>
-
-                    {/* TechDuniya center big metric with radar visual */}
-                    <div className="flex items-center justify-around my-auto">
-                      <div className="text-left">
-                        <span className="text-[10px] font-mono text-slate-400 uppercase">Total Organic Impression</span>
-                        <div className="text-3xl font-black text-white tracking-tight flex items-baseline gap-1">
-                          <span>320K</span>
-                          <span className="text-xs font-semibold text-emerald-400">+180%</span>
-                        </div>
-                        <span className="text-[10px] text-cyan-400">Targeting Indian Tech Audiences</span>
-                      </div>
-
-                      <div className="relative w-24 h-24 flex items-center justify-center">
-                        {/* Concentric glowing rings */}
-                        <div className="absolute inset-0 rounded-full border border-cyan-500/30 animate-ping opacity-30" />
-                        <div className="w-20 h-20 rounded-full border border-cyan-500/40 flex items-center justify-center bg-cyan-950/30">
-                          <div className="w-12 h-12 rounded-full border border-teal-400/60 flex items-center justify-center bg-cyan-900/40">
-                            <Users className="w-5 h-5 text-cyan-300" />
-                          </div>
-                        </div>
+                      <div className="flex items-center gap-1.5">
+                        <Activity className="w-3 h-3 text-cyan-400 animate-pulse" />
+                        <span className="text-[11px] font-mono text-cyan-400 font-semibold">ACTIVE</span>
                       </div>
                     </div>
 
-                    {/* Bottom SMO channels tags */}
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400">
-                      <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">#Meta</span>
-                      <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">#LinkedIn</span>
-                      <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">#X-Viral</span>
-                      <span className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-400">+8.4% CTR</span>
+                    {/* Waveform / metric bars */}
+                    <div className="my-auto space-y-2">
+                      <div className="flex justify-between text-[10px] text-slate-400">
+                        <span>Organic Social Impressions</span>
+                        <span className="text-cyan-300 font-bold">+180% MoM</span>
+                      </div>
+                      <div className="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-800">
+                        <div className="bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-400 h-full w-[84%] rounded-full" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 pt-2">
+                        <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800/90 text-center">
+                          <div className="text-sm font-bold text-white">320K</div>
+                          <div className="text-[8px] text-slate-400">Total Reach</div>
+                        </div>
+                        <div className="p-2 rounded-lg bg-slate-900/80 border border-slate-800/90 text-center">
+                          <div className="text-sm font-bold text-cyan-400">8.4%</div>
+                          <div className="text-[8px] text-slate-400">Avg CTR</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 bg-slate-900/70 p-2 rounded-lg border border-slate-800/80">
+                      <span className="flex items-center gap-1.5">
+                        <Users className="w-3 h-3 text-cyan-400" />
+                        <span>TechDuniya Media</span>
+                      </span>
+                      <span className="text-teal-400 font-mono text-[10px]">COMMUNITY EXPANSION</span>
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Card Meta Content matching Figma */}
-              <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between">
+              {/* Card Bottom Meta Content */}
+              <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="text-[10px] sm:text-[11px] font-extrabold tracking-wider text-cyan-400 uppercase">
-                    {item.category}
-                  </span>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-white mt-1 mb-2 group-hover:text-cyan-300 transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] sm:text-[11px] font-bold text-cyan-400 tracking-wider uppercase font-mono">
+                      {item.category}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="pt-4 sm:pt-5 mt-4 border-t border-slate-800/80 flex items-center justify-between gap-2">
-                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-semibold text-slate-300">
-                    {item.stats.slice(0, 2).map((s, i) => (
-                      <span key={i} className="flex items-center gap-1.5">
-                        <span className="text-slate-500">{s.label}:</span>
-                        <strong className="text-cyan-400">{s.value}</strong>
-                      </span>
+                {/* Performance Metric Badges */}
+                <div>
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-4 border-t border-slate-800/80 mb-4">
+                    {item.stats.map((stat, idx) => (
+                      <div key={idx} className="bg-slate-900/60 p-2 sm:p-2.5 rounded-xl border border-slate-800/60 text-center">
+                        <div className="text-xs sm:text-sm md:text-base font-bold text-cyan-300">
+                          {stat.value}
+                        </div>
+                        <div className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate mt-0.5">
+                          {stat.label}
+                        </div>
+                      </div>
                     ))}
                   </div>
+
                   <button
                     onClick={() => setActiveCase(item)}
-                    className="p-2 sm:p-2.5 rounded-lg bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center shrink-0"
-                    title="Read Case Study Details"
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800/90 border border-slate-800 hover:border-cyan-500/40 text-xs font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-1.5 transition-all cursor-pointer min-h-[44px]"
                   >
-                    <ArrowUpRight className="w-4 h-4" />
+                    <span>Read Full Impact Breakdown</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
                   </button>
                 </div>
               </div>
-
             </motion.div>
           ))}
         </motion.div>
 
-      </div>
+        {/* Modal for detailed case study breakdown */}
+        <AnimatePresence>
+          {activeCase && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2, ease: standardEase }}
+                className="w-full max-w-xl bg-[#090e1a] border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono font-bold text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-full uppercase">
+                    {activeCase.category}
+                  </span>
+                  <button
+                    onClick={() => setActiveCase(null)}
+                    className="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+                    aria-label="Close case study details modal"
+                  >
+                    ✕
+                  </button>
+                </div>
 
-      {/* Case Study Detail Modal - Animated overlay & dialog */}
-      <AnimatePresence>
-        {activeCase && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-            onClick={() => setActiveCase(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.25, ease: standardEase }}
-              className="relative w-full max-w-lg bg-[#0b1324] border border-cyan-500/40 rounded-2xl p-5 sm:p-8 shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider">{activeCase.category}</span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white mt-1 mb-3">{activeCase.title}</h3>
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-                {activeCase.description}
-              </p>
+                <h3 className="text-xl sm:text-2xl font-black text-white mb-2">
+                  {activeCase.title}
+                </h3>
+                <p className="text-sm text-slate-300 leading-relaxed mb-6">
+                  {activeCase.description}
+                </p>
 
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 p-3.5 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-800 mb-6 text-center">
-                {activeCase.stats.map((s, idx) => (
-                  <div key={idx}>
-                    <div className="text-lg sm:text-xl font-extrabold text-cyan-400">{s.value}</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{s.label}</div>
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {activeCase.stats.map((s, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
+                      <div className="text-base sm:text-lg font-bold text-cyan-300">{s.value}</div>
+                      <div className="text-[10px] text-slate-400 font-medium">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-300 bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                  <div className="font-bold text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-cyan-400" />
+                    <span>Key Growth Pillars Executed</span>
                   </div>
-                ))}
-              </div>
+                  <ul className="list-disc list-inside space-y-1.5 text-slate-400 text-xs">
+                    <li>Full technical Core Web Vitals remediation to hit green metric thresholds.</li>
+                    <li>Restructured mobile customer purchase journey and one-click checkout triggers.</li>
+                    <li>Targeted high-intent keyword acquisition and localized Google rankings.</li>
+                    <li>Automated retargeting funnels recovering high-intent abandonment traffic.</li>
+                  </ul>
+                </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3">
-                <motion.button
-                  {...buttonHoverMotion}
-                  onClick={() => {
-                    setActiveCase(null);
-                    onOpenConsultation();
-                  }}
-                  className="w-full sm:flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer text-center min-h-[44px] flex items-center justify-center"
-                >
-                  Schedule Similar Growth Blueprint
-                </motion.button>
-                <button
-                  onClick={() => setActiveCase(null)}
-                  className="w-full sm:w-auto py-3 px-5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold min-h-[44px] cursor-pointer"
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <motion.button
+                    {...buttonHoverMotion}
+                    onClick={() => {
+                      setActiveCase(null);
+                      onOpenConsultation();
+                    }}
+                    className="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/20 cursor-pointer min-h-[44px] flex items-center justify-center"
+                  >
+                    Discuss a Similar Strategy
+                  </motion.button>
+                  <button
+                    onClick={() => setActiveCase(null)}
+                    className="py-3 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
+                  >
+                    Close
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+      </Container>
     </section>
   );
 }

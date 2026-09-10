@@ -219,7 +219,9 @@ export default function ConsultationModal({
             </form>
           </div>
         )}
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
