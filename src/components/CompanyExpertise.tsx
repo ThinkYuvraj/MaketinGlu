@@ -1,49 +1,46 @@
-import { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Sparkles, 
+  ArrowRight, 
+  Clock, 
+  TrendingUp, 
+  CheckCircle2, 
+  Layers, 
+  ArrowUpRight,
+  ShieldCheck
+} from 'lucide-react';
 import { expertiseData } from '../data/expertiseData';
 import Container from './common/Container';
-import ExpertiseDetailView from './expertise/ExpertiseDetailView';
+import { useNavigation } from '../context/NavigationContext';
 
 interface CompanyExpertiseProps {
   onOpenConsultation: (serviceName?: string) => void;
 }
 
+type FilterCategory = 'all' | 'engineering' | 'growth' | 'creative';
+
 export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertiseProps) {
-  const [activeTabId, setActiveTabId] = useState<string>("web-design");
+  const [selectedFilter, setSelectedFilter] = useState<FilterCategory>('all');
+  const { navigateTo, navigateToService } = useNavigation();
 
-  // Sync with URL hash if user clicks #web-design, #ecommerce, #seo, #graphic-design, #ppc, #smo
-  useEffect(() => {
-    const handleHash = () => {
-      let hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash === 'smm') hash = 'smo';
-      if (hash === 'design') hash = 'graphic-design';
-      if (hash === 'websites') hash = 'web-design';
-      if (hash === 'search') hash = 'seo';
-      
-      const match = expertiseData.find(item => item.id === hash);
-      if (match) {
-        setActiveTabId(match.id);
-        const element = document.getElementById("expertise");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-    };
-
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
-
-  const activeExpertise = expertiseData.find(item => item.id === activeTabId) || expertiseData[0];
-
-  const handleSelectTab = (id: string) => {
-    setActiveTabId(id);
-  };
+  // Filter items based on selected category
+  const filteredServices = useMemo(() => {
+    if (selectedFilter === 'engineering') {
+      return expertiseData.filter(item => item.id === 'web-design' || item.id === 'ecommerce');
+    }
+    if (selectedFilter === 'growth') {
+      return expertiseData.filter(item => item.id === 'seo' || item.id === 'ppc');
+    }
+    if (selectedFilter === 'creative') {
+      return expertiseData.filter(item => item.id === 'graphic-design' || item.id === 'smo');
+    }
+    return expertiseData;
+  }, [selectedFilter]);
 
   return (
     <section id="expertise" className="relative py-20 lg:py-28 bg-[#070b14] border-t border-slate-800/80 overflow-hidden">
-      {/* Invisible anchor targets so old links still resolve smoothly */}
+      {/* Invisible anchor targets so all legacy and external links resolve smoothly */}
       <span id="services" className="absolute -top-24" />
       <span id="capabilities" className="absolute -top-24" />
       <span id="web-design" className="absolute -top-24" />
@@ -54,16 +51,16 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <span id="smo" className="absolute -top-24" />
 
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 -left-40 w-[550px] h-[550px] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] bg-sky-600/10 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 -left-40 w-[550px] h-[550px] bg-cyan-500/10 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] bg-sky-600/10 blur-[160px] rounded-full pointer-events-none" />
 
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-8 sm:mb-12">
+        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>OUR CORE EXPERTISE</span>
+            <span>OUR 6 CORE DISCIPLINES</span>
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
@@ -73,71 +70,203 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
-            Eliminate fragmented vendors. Explore our verified domain capabilities, battle-tested methodologies, and high-impact deliverables.
+          <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+            Eliminate fragmented vendors. Every discipline operates under one roof with dedicated senior architects in New Delhi, battle-tested playbooks, and transparent deliverables.
           </p>
-        </div>
 
-        {/* Primary 6 Discipline Cards: Positioned above the showcase card as primary selector */}
-        <div className="mb-8 sm:mb-10" role="tablist" aria-label="Core Expertise Disciplines">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 xl:gap-4">
-            {expertiseData.map((item) => {
-              const Icon = item.icon;
-              const isSelected = item.id === activeTabId;
-
+          {/* Interactive Category Filter Pills */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            {[
+              { id: 'all', label: 'All Disciplines (6)' },
+              { id: 'engineering', label: 'Web & E-Commerce (2)' },
+              { id: 'growth', label: 'SEO & Performance (2)' },
+              { id: 'creative', label: 'Branding & Social (2)' },
+            ].map((filter) => {
+              const isActive = selectedFilter === filter.id;
               return (
                 <button
-                  key={item.id}
-                  onClick={() => handleSelectTab(item.id)}
-                  role="tab"
-                  aria-selected={isSelected}
-                  id={`expertise-tab-${item.id}`}
-                  className={`group p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[100px] relative overflow-hidden ${
-                    isSelected
-                      ? "bg-gradient-to-b from-[#111e38] to-[#0c152a] border-2 border-cyan-400 shadow-xl shadow-cyan-500/15 scale-[1.02]"
-                      : "bg-[#0a101f]/90 border-slate-800/80 hover:border-slate-700 hover:bg-[#0d162a] text-slate-400 hover:text-slate-200"
+                  key={filter.id}
+                  onClick={() => setSelectedFilter(filter.id as FilterCategory)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/20 scale-[1.03]'
+                      : 'bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white'
                   }`}
                 >
-                  {/* Top row with Icon and Active Glow Dot */}
-                  <div className="flex items-center justify-between mb-2">
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${
-                      isSelected 
-                        ? 'bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/30' 
-                        : 'bg-slate-800/90 text-cyan-400 group-hover:scale-105'
-                    }`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    {isSelected && (
-                      <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.9)] animate-pulse" />
-                    )}
-                  </div>
-
-                  {/* Discipline Title & Subtitle */}
-                  <div>
-                    <div className={`text-xs sm:text-[13px] font-bold truncate ${
-                      isSelected ? 'text-white' : 'text-slate-200 group-hover:text-white'
-                    }`}>
-                      {item.tabLabel}
-                    </div>
-                    <div className={`text-[10px] sm:text-[11px] truncate mt-0.5 font-medium ${
-                      isSelected ? 'text-cyan-300' : 'text-slate-500'
-                    }`}>
-                      {item.category.split('&')[0].trim()}
-                    </div>
-                  </div>
+                  {filter.label}
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Interactive Featured Deep-Dive Showcase */}
-        <ExpertiseDetailView
-          activeExpertise={activeExpertise}
-          activeTabId={activeTabId}
-          onSelectTab={handleSelectTab}
-          onOpenConsultation={onOpenConsultation}
-        />
+        {/* 6 Disciplines Capability Grid (3x2 Desktop, 2x3 Tablet, 1 Mobile) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8">
+          <AnimatePresence mode="popLayout">
+            {filteredServices.map((service, idx) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  key={service.id}
+                  layout
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.25, delay: idx * 0.04 }}
+                  className="group relative rounded-3xl bg-[#090f1f] border border-slate-800/90 hover:border-cyan-500/50 hover:bg-[#0c152a] flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 overflow-hidden"
+                >
+                  {/* Subtle top-right ambient glow on hover */}
+                  <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/5 group-hover:bg-cyan-500/15 rounded-full blur-2xl transition-all duration-500 pointer-events-none" />
+
+                  {/* Top Half: Visual Showcase Image & Badges */}
+                  <div 
+                    onClick={() => navigateToService(service.id)}
+                    className="relative cursor-pointer overflow-hidden border-b border-slate-800/80 bg-slate-950/40"
+                    title={`Click to open dedicated ${service.tabLabel} page`}
+                  >
+                    {/* Compact Image Container with Gradient Fade */}
+                    <div className="h-44 sm:h-48 w-full overflow-hidden relative">
+                      <img
+                        src={service.image}
+                        alt={`${service.title} illustration`}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#090f1f] via-transparent to-black/20" />
+                    </div>
+
+                    {/* Top Float Badges */}
+                    <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-300 bg-slate-900/90 backdrop-blur-md border border-cyan-500/40 px-2.5 py-1 rounded-full shadow-md">
+                        {service.category.split('&')[0].trim()}
+                      </span>
+
+                      <div className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-300 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-2.5 py-1 rounded-full shadow-md">
+                        <Clock className="w-3 h-3 text-cyan-400" />
+                        <span>{service.timelineEstimate}</span>
+                      </div>
+                    </div>
+
+                    {/* Hover Hint Overlay */}
+                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-400 text-slate-950 text-[11px] font-bold px-2.5 py-1 rounded-md shadow-lg flex items-center gap-1">
+                      <span>View Dedicated Page</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+
+                  {/* Bottom Half: Content, Pillars, Metric & Action Bar */}
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      {/* Discipline Icon & Title */}
+                      <div className="flex items-start gap-3 mb-2.5">
+                        <div className="w-9 h-9 rounded-xl bg-slate-800/90 group-hover:bg-cyan-400 group-hover:text-slate-950 text-cyan-400 flex items-center justify-center transition-all duration-300 shrink-0 shadow-md">
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <button
+                            onClick={() => navigateToService(service.id)}
+                            className="text-left font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors line-clamp-1 cursor-pointer"
+                          >
+                            {service.title}
+                          </button>
+                          <p className="text-xs text-cyan-400/90 font-medium line-clamp-1">
+                            {service.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Summary text */}
+                      <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed line-clamp-2 mb-4">
+                        {service.summary}
+                      </p>
+
+                      {/* 3 Key Architectural Pillars / Deliverables Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {service.pillars.slice(0, 3).map((pillar, pIdx) => (
+                          <span
+                            key={pIdx}
+                            className="text-[10px] sm:text-[11px] font-medium text-slate-300 bg-slate-800/60 border border-slate-700/60 px-2 py-0.5 rounded-md flex items-center gap-1"
+                          >
+                            <CheckCircle2 className="w-2.5 h-2.5 text-cyan-400 shrink-0" />
+                            <span className="truncate">{pillar.tag}</span>
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Performance Metric Callout Box */}
+                      <div className="bg-slate-950/70 border border-cyan-500/20 rounded-xl p-2.5 mb-5 flex items-center justify-between gap-2">
+                        <div className="min-w-0">
+                          <div className="text-[10px] uppercase tracking-wider text-slate-400 font-bold truncate">
+                            {service.metricSubtitle}
+                          </div>
+                          <div className="text-xs font-extrabold text-cyan-300 truncate">
+                            {service.metricBadge}
+                          </div>
+                        </div>
+                        <TrendingUp className="w-4 h-4 text-cyan-400 shrink-0" />
+                      </div>
+                    </div>
+
+                    {/* Direct Landing Action Bar */}
+                    <div className="pt-2 border-t border-slate-800/80 flex items-center gap-2">
+                      <button
+                        onClick={() => navigateToService(service.id)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-400/10 cursor-pointer"
+                        title={`Open full ${service.tabLabel} architecture page`}
+                      >
+                        <span>Dedicated Page</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+
+                      <button
+                        onClick={() => onOpenConsultation(service.title)}
+                        className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold border border-slate-700 transition-all cursor-pointer"
+                        title="Book a free consultation for this service"
+                      >
+                        Consult
+                      </button>
+                    </div>
+
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {/* Integrated Multi-Discipline Growth Banner */}
+        <div className="mt-12 sm:mt-16 rounded-3xl bg-gradient-to-r from-cyan-950/40 via-[#0a1426] to-slate-900/60 border border-cyan-500/30 p-6 sm:p-8 lg:p-10 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="max-w-2xl text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
+              <ShieldCheck className="w-4 h-4 text-cyan-400" />
+              <span>Full-Stack Marketing &amp; Engineering Synergy</span>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
+              Looking to Combine Multiple Disciplines?
+            </h3>
+            <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              78% of our high-growth partners connect 2 or more disciplines (e.g., Bespoke Web Architecture + Performance SEO + PPC Paid Advertising). We eliminate inter-agency friction with single-point executive accountability.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shrink-0">
+            <button
+              onClick={() => onOpenConsultation('Multi-Discipline Custom Growth Suite')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold shadow-lg shadow-cyan-400/20 transition-all cursor-pointer"
+            >
+              <span>Build Integrated Growth Suite</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => navigateTo('#/services')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white text-xs sm:text-sm font-semibold border border-slate-700 transition-all cursor-pointer"
+            >
+              <Layers className="w-4 h-4 text-cyan-400" />
+              <span>All 6 Pages Directory</span>
+            </button>
+          </div>
+        </div>
 
       </Container>
     </section>

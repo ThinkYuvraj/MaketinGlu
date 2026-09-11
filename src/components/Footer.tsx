@@ -1,7 +1,8 @@
 import { motion } from 'motion/react';
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Lock } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Lock, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
 import { useSiteConfig } from '../context/SiteConfigContext';
+import { useNavigation } from '../context/NavigationContext';
 import { staggerContainerVariants, staggerItemVariants } from '../lib/animations';
 
 interface FooterProps {
@@ -11,22 +12,23 @@ interface FooterProps {
 
 export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps) {
   const { config } = useSiteConfig();
+  const { navigateTo, navigateToService } = useNavigation();
 
   const usefulLinks = [
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Contact Us', href: '#contact' },
-    { name: 'About Us', href: '#growth' },
-    { name: 'Refund Policy', href: '#' },
+    { name: 'Home', action: () => navigateTo('#/') },
+    { name: 'All Services Hub', action: () => navigateTo('#/services') },
+    { name: 'Contact & Consultation', action: () => onOpenConsultation() },
+    { name: 'Growth Performance', action: () => navigateTo('#/#growth') },
+    { name: 'Client Case Studies', action: () => navigateTo('#/#cases') },
   ];
 
   const serviceLinks = [
-    { name: 'SEO', href: '#seo' },
-    { name: 'Ecommerce Website Design', href: '#ecommerce' },
-    { name: 'Website Design', href: '#web-design' },
-    { name: 'Graphic Design', href: '#graphic-design' },
-    { name: 'PPC', href: '#ppc' },
-    { name: 'SMM', href: '#capabilities' },
-    { name: 'SMO', href: '#smo' },
+    { name: 'Website Design & Dev', id: 'web-design' },
+    { name: 'Ecommerce Storefronts', id: 'ecommerce' },
+    { name: 'Search Engine Optimization (SEO)', id: 'seo' },
+    { name: 'Branding & Graphic Design', id: 'graphic-design' },
+    { name: 'PPC Paid Advertising', id: 'ppc' },
+    { name: 'Social Media Optimization (SMO)', id: 'smo' },
   ];
 
   return (
@@ -78,34 +80,39 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
             <ul className="space-y-2">
               {usefulLinks.map((link) => (
                 <li key={link.name}>
-                  <a 
-                    href={link.href} 
-                    onClick={(e) => {
-                      if (link.name === 'Contact Us') {
-                        e.preventDefault();
-                        onOpenConsultation();
-                      }
-                    }}
-                    className="hover:text-cyan-400 transition-colors inline-flex items-center py-1 min-h-[36px]"
+                  <button 
+                    onClick={link.action}
+                    className="hover:text-cyan-400 transition-colors inline-flex items-center py-1 min-h-[32px] text-left cursor-pointer"
                   >
                     {link.name}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
           </motion.div>
 
-          {/* Column 3: Services matching Figma */}
+          {/* Column 3: Dedicated Service Pages */}
           <motion.div variants={staggerItemVariants}>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Services
-            </h4>
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+                Services
+              </h4>
+              <button
+                onClick={() => navigateTo('#/services')}
+                className="text-[11px] text-cyan-400 hover:text-white font-medium cursor-pointer"
+              >
+                All &rarr;
+              </button>
+            </div>
             <ul className="space-y-2">
               {serviceLinks.map((service) => (
                 <li key={service.name}>
-                  <a href={service.href} className="hover:text-cyan-400 transition-colors inline-flex items-center py-1 min-h-[36px]">
+                  <button
+                    onClick={() => navigateToService(service.id)}
+                    className="hover:text-cyan-400 transition-colors inline-flex items-center py-1 min-h-[32px] text-left cursor-pointer"
+                  >
                     {service.name}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
