@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <rect width="1600" height="900" fill="#ffffff" />
+  
+  <g fill="#000000">
+    <!-- Top Horizontal Bar -->
+    <polygon points="
+      60,82
+      1540,82
+      1470,152
+      130,152
+    " />
+
+    <!-- Center Vertical Dividing Spine -->
+    <rect x="765" y="82" width="70" height="766" />
+
+    <!-- Right Side: G Body & Outer Diagonal Frame -->
+    <!-- Solid black body from Y=238 down to apex, with inner L-shaped white cutout -->
+    <path fill-rule="evenodd" d="
+      M 835,238
+      L 1388,238
+      L 800,848
+      L 835,805
+      Z
+
+      M 915,315
+      L 1200,315
+      L 1200,380
+      L 1025,380
+      L 1025,490
+      L 915,490
+      Z
+    " />
+
+    <!-- G Spur and Crossbar -->
+    <polygon points="
+      1025,380
+      1200,380
+      1200,445
+      1135,445
+      1135,490
+      1025,490
+    " />
+
+    <!-- Left Side: Outer Diagonal Border with Notch -->
+    <polygon points="
+      60,82
+      275,305
+      235,345
+      800,848
+      765,848
+      765,785
+      305,335
+      345,295
+      130,152
+    " />
+
+    <!-- M Right Vertical Bar -->
+    <polygon points="
+      605,238
+      705,238
+      705,715
+      605,615
+    " />
+
+    <!-- M Diagonal Connecting Band from Left Leg to Center Spine -->
+    <polygon points="
+      430,440
+      765,775
+      765,848
+      395,515
+    " />
+
+    <!-- M Left Vertical Bar with Protruding Bottom Tab -->
+    <polygon points="
+      430,238
+      530,238
+      530,540
+      430,440
+    " />
+
+    <polygon points="
+      395,440
+      430,440
+      430,575
+      395,575
+    " />
+  </g>
+</svg>
