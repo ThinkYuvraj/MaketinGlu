@@ -36,7 +36,7 @@ export default function CompanyExpertise({ onOpenConsultation: _onOpenConsultati
   }, [selectedFilter]);
 
   return (
-    <section id="expertise" className="relative py-12 sm:py-16 bg-[#070b14] border-t border-slate-800/80 overflow-hidden">
+    <section id="expertise" className="relative py-8 sm:py-12 bg-[#070b14] border-t border-slate-800/80 overflow-hidden">
       {/* Invisible anchor targets so all legacy and external links resolve smoothly */}
       <span id="services" className="absolute -top-24" />
       <span id="capabilities" className="absolute -top-24" />

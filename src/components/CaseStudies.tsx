@@ -13,7 +13,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
 
   return (
-    <section id="cases" className="relative py-12 sm:py-16 bg-[#070b14]">
+    <section id="cases" className="relative py-8 sm:py-10 bg-[#070b14]">
       <Container>
 
         {/* Section Header with "View All Cases" */}

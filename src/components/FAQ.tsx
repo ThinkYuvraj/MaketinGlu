@@ -18,6 +18,7 @@ import {
   ArrowDown
 } from 'lucide-react';
 import { standardEase } from '../lib/animations';
+import Container from './common/Container';
 
 interface FAQItem {
   id: number;
@@ -256,11 +257,11 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="relative py-12 lg:py-16 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden">
+    <section id="faq" className="relative py-8 lg:py-10 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[220px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <Container className="relative z-10">
 
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-6">
