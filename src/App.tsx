@@ -7,7 +7,6 @@ import Packages from './components/Packages';
 import CaseStudies from './components/CaseStudies';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
-import AppointmentBanner from './components/AppointmentBanner';
 import ConsultationModal from './components/ConsultationModal';
 import AnimatedSection from './components/AnimatedSection';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
@@ -17,7 +16,6 @@ import ServicesIndexPage from './pages/ServicesIndexPage';
 import { SiteConfigProvider } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
-import { Shield } from 'lucide-react';
 
 function AppContent() {
   const { currentRoute, navigateTo } = useNavigation();
@@ -114,17 +112,6 @@ function AppContent() {
             <AnimatedSection delayMs={60}>
               <FAQ />
             </AnimatedSection>
-
-            {/* Section 7: Final High-Impact Consultation Banner */}
-            <AnimatedSection delayMs={60}>
-              <AppointmentBanner
-                id="banner-bottom"
-                title="Book Your Free Strategy Consultation"
-                description="Schedule a 30-minute tactical review with our senior digital architects in New Delhi. Get custom roadmap recommendations for your brand with zero obligation."
-                buttonText="Reserve Free Strategy Slot"
-                onOpenConsultation={() => handleOpenConsultation()}
-              />
-            </AnimatedSection>
           </>
         )}
       </main>
@@ -147,18 +134,6 @@ function AppContent() {
         title={consultationService ? `Reserve Consultation: ${consultationService}` : "Book Your Free Consultation"}
         subtitle="Schedule a high-intensity 30-minute tactical review with our senior architects in New Delhi."
       />
-
-      {/* Floating Discreet Admin Quick Access Pill (Bottom Left) */}
-      <div className="fixed bottom-16 lg:bottom-4 left-4 z-30">
-        <button
-          onClick={navigateToAdmin}
-          className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-cyan-300 text-xs shadow-lg backdrop-blur-md transition-all cursor-pointer"
-          title="Open Admin Login & UI/UX Studio"
-        >
-          <Shield className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
-          <span className="font-semibold text-[11px] hidden sm:inline">Admin Studio</span>
-        </button>
-      </div>
     </div>
   );
 }

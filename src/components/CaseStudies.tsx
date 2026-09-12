@@ -19,10 +19,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
         {/* Section Header with "View All Cases" matching Figma */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
           <div>
-            <span className="text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase">
-              PORTFOLIO
-            </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-1.5 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
               Case Studies & Recent Work
             </h2>
           </div>

@@ -5,23 +5,21 @@ import {
   ArrowRight, 
   Clock, 
   TrendingUp, 
-  CheckCircle2, 
-  Layers, 
-  ShieldCheck
+  CheckCircle2
 } from 'lucide-react';
 import { expertiseData } from '../data/expertiseData';
 import Container from './common/Container';
 import { useNavigation } from '../context/NavigationContext';
 
 interface CompanyExpertiseProps {
-  onOpenConsultation: (serviceName?: string) => void;
+  onOpenConsultation?: (serviceName?: string) => void;
 }
 
 type FilterCategory = 'all' | 'engineering' | 'growth' | 'creative';
 
-export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertiseProps) {
+export default function CompanyExpertise({ onOpenConsultation: _onOpenConsultation }: CompanyExpertiseProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterCategory>('all');
-  const { navigateTo, navigateToService } = useNavigation();
+  const { navigateToService } = useNavigation();
 
   // Filter items based on selected category
   const filteredServices = useMemo(() => {
@@ -218,40 +216,6 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               );
             })}
           </AnimatePresence>
-        </div>
-
-        {/* Integrated Multi-Discipline Growth Banner */}
-        <div className="mt-12 sm:mt-16 rounded-3xl bg-gradient-to-r from-cyan-950/40 via-[#0a1426] to-slate-900/60 border border-cyan-500/30 p-6 sm:p-8 lg:p-10 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div className="max-w-2xl text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">
-              <ShieldCheck className="w-4 h-4 text-cyan-400" />
-              <span>Full-Stack Marketing &amp; Engineering Synergy</span>
-            </div>
-            <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
-              Looking to Combine Multiple Disciplines?
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-              78% of our high-growth partners connect 2 or more disciplines (e.g., Bespoke Web Architecture + Performance SEO + PPC Paid Advertising). We eliminate inter-agency friction with single-point executive accountability.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shrink-0">
-            <button
-              onClick={() => onOpenConsultation('Multi-Discipline Custom Growth Suite')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold shadow-lg shadow-cyan-400/20 transition-all cursor-pointer"
-            >
-              <span>Build Integrated Growth Suite</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={() => navigateTo('#/services')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white text-xs sm:text-sm font-semibold border border-slate-700 transition-all cursor-pointer"
-            >
-              <Layers className="w-4 h-4 text-cyan-400" />
-              <span>All 6 Pages Directory</span>
-            </button>
-          </div>
         </div>
 
       </Container>

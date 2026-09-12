@@ -252,45 +252,6 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
         <div className="max-w-7xl mx-auto">
             
-            {/* Centered Package Selection Tabs */}
-            <div className="flex items-center justify-center mb-8 sm:mb-10">
-              <div className="inline-flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-2xl bg-[#090e1d]/90 border border-slate-800/90 shadow-xl backdrop-blur-sm">
-                {packagesData.map((pkg, idx) => {
-                  const isActive = idx === currentIndex;
-                  return (
-                    <button
-                      key={pkg.id}
-                      type="button"
-                      onClick={() => handleSelectTab(idx)}
-                      className={`relative px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 ${
-                        isActive
-                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/60 shadow-lg shadow-cyan-500/15'
-                          : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800/80 hover:border-slate-700'
-                      }`}
-                    >
-                      <span className="font-mono text-[10px] text-cyan-400 font-extrabold">0{idx + 1}</span>
-                      <span>{pkg.name.replace(' Package', '')}</span>
-                      {pkg.popular && (
-                        <span className="hidden sm:inline text-[9px] bg-cyan-400 text-slate-950 px-1.5 py-0.5 rounded-sm font-extrabold uppercase">
-                          Popular
-                        </span>
-                      )}
-
-                      {/* Active indicator underline progress bar */}
-                      {isActive && (
-                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-white transition-all duration-75"
-                            style={{ width: `${progress}%` }}
-                          />
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* DESKTOP 3-CARD ANIMATION VIEW: 
                 - Left card: Faded (opacity-40, scale-90), clicking shifts to middle
                 - Middle card: Active focus (opacity-100, scale-100, illuminated)

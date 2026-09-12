@@ -162,11 +162,6 @@ export default function FAQ() {
 
         {/* Section Header */}
         <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3.5 shadow-sm shadow-cyan-500/10">
-            <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
-            <span>TRANSPARENCY & ASSURANCE</span>
-          </div>
-
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
             Frequently Asked{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
