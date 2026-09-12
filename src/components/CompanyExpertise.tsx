@@ -7,7 +7,6 @@ import {
   TrendingUp, 
   CheckCircle2, 
   Layers, 
-  ArrowUpRight,
   ShieldCheck
 } from 'lucide-react';
 import { expertiseData } from '../data/expertiseData';
@@ -145,12 +144,6 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                         <Clock className="w-3 h-3 text-cyan-400" />
                         <span>{service.timelineEstimate}</span>
                       </div>
-                    </div>
-
-                    {/* Hover Hint Overlay */}
-                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-400 text-slate-950 text-[11px] font-bold px-2.5 py-1 rounded-md shadow-lg flex items-center gap-1">
-                      <span>Know More</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>
                   </div>
 

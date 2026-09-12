@@ -165,15 +165,15 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.98 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 w-80 mt-2 bg-[#090f1f]/98 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-2.5 shadow-2xl shadow-black/80 z-50"
+                  className="absolute top-full left-0 w-84 mt-2 bg-slate-950 border border-cyan-500/40 rounded-2xl p-3 shadow-2xl shadow-black z-50"
                 >
-                  <div className="px-3 py-2 border-b border-slate-800/80 mb-1 flex items-center justify-between">
+                  <div className="px-3 py-2 border-b border-slate-800 mb-1.5 flex items-center justify-between">
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
                       CORE CAPABILITIES
                     </span>
                     <button
                       onClick={() => handleNavClick('#/services')}
-                      className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer"
+                      className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer transition-colors"
                     >
                       All Services &rarr;
                     </button>
@@ -192,12 +192,12 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                           }}
                           className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                             isActive
-                              ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300'
-                              : 'hover:bg-slate-900/90 text-slate-200 hover:text-white'
+                              ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300'
+                              : 'hover:bg-slate-900 text-slate-200 hover:text-white'
                           }`}
                         >
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                            isActive ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800/90 text-cyan-400'
+                            isActive ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800 text-cyan-400'
                           }`}>
                             <Icon className="w-4 h-4" />
                           </div>
@@ -210,13 +210,15 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     })}
                   </div>
 
-                  <div className="mt-2 pt-2 border-t border-slate-800/80">
+                  <div className="mt-2.5 pt-2.5 border-t border-slate-800">
                     <button
                       onClick={() => handleNavClick('#/services')}
-                      className="w-full py-2 px-3 rounded-lg bg-cyan-950/40 hover:bg-cyan-900/60 border border-cyan-500/20 text-center text-xs font-bold text-cyan-300 hover:text-white transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                      className="w-full py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[42px]"
+                      id="nav-dropdown-know-more"
                     >
-                      <Layers className="w-3.5 h-3.5" />
-                      <span>Explore All 6 Service Pages</span>
+                      <Layers className="w-4 h-4 text-slate-950 shrink-0" />
+                      <span>Know More &bull; All Services</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
                     </button>
                   </div>
                 </motion.div>
@@ -321,7 +323,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.22, ease: standardEase }}
-              className="lg:hidden fixed top-full left-0 right-0 z-40 bg-[#080d19]/98 backdrop-blur-xl border-b border-slate-800 px-4 sm:px-6 py-5 space-y-4 shadow-2xl max-h-[calc(100vh-70px)] overflow-y-auto"
+              className="lg:hidden fixed top-full left-0 right-0 z-40 bg-slate-950 border-b border-slate-800 px-4 sm:px-6 py-5 space-y-4 shadow-2xl max-h-[calc(100vh-70px)] overflow-y-auto"
             >
               {/* Mobile Navigation Links */}
               <div className="flex flex-col gap-1 font-medium text-slate-300 text-sm sm:text-base">
@@ -363,9 +365,11 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                       ))}
                       <button
                         onClick={() => handleNavClick('#/services')}
-                        className="w-full py-2 px-3 mt-1 rounded-lg bg-cyan-950/80 text-center text-xs font-bold text-cyan-300 hover:text-white transition-colors cursor-pointer"
+                        className="w-full py-2.5 px-3 mt-1.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-center text-xs font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2"
                       >
-                        Browse All 6 Disciplines Hub &rarr;
+                        <Layers className="w-3.5 h-3.5 text-slate-950" />
+                        <span>Know More &bull; All Services</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
                       </button>
                     </div>
                   )}
