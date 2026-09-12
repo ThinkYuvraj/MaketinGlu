@@ -36,7 +36,7 @@ export default function PackageDeliverablesTable({
               Included Deliverables Matrix
             </span>
             <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
-              13 Verified Inclusions
+              {activePackage.features?.length || 13} Verified Inclusions
             </span>
           </div>
           <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">

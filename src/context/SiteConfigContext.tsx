@@ -64,6 +64,7 @@ export const defaultSiteConfig: SiteConfig = {
       priceNote: 'Tailored monthly retainer',
       highlight: 'High-ROI Acceleration',
       features: [
+        { name: 'Advance Ecommerce Website', included: true },
         { name: 'Comprehensive Initial Site Analysis', included: true },
         { name: 'Advanced On-Page SEO & Keyword Architecture', included: true },
         { name: 'Off-Page SEO & Backlink Submissions', included: true },
@@ -88,6 +89,8 @@ export const defaultSiteConfig: SiteConfig = {
       priceNote: 'Comprehensive enterprise plan',
       highlight: 'Maximum Market Domination',
       features: [
+        { name: 'Small Website / App Development', included: true },
+        { name: 'Pro Videography', included: true },
         { name: 'Deep Technical & Architectural Site Audit', included: true },
         { name: 'Aggressive Full-Funnel On-Page & Technical SEO', included: true },
         { name: 'High-Authority Off-Page SEO & PR Outreach', included: true },
@@ -165,7 +168,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v3';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v4';
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {

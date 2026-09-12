@@ -132,7 +132,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
             <span className="text-[10px] sm:text-[11px] font-medium text-slate-400 flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              13 Deliverables
+              {pkg.features?.length || 13} Deliverables
             </span>
           </div>
 

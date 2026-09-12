@@ -66,13 +66,13 @@ export interface ExpertiseItem {
 export const expertiseData: ExpertiseItem[] = [
   {
     id: "web-design",
-    tabLabel: "Web Design",
-    category: "Web Engineering & Architecture",
-    title: "Custom Website Design & Development",
-    subtitle: "High-Performance Websites Engineered for Brand Authority, Speed & Conversions",
-    summary: "We engineer bespoke, lightning-fast digital experiences tailored to your business objectives. Every website combines human-centered UX design, modern visual storytelling, responsive mobile engineering, and clean semantic architecture that search engines favor.",
+    tabLabel: "Web & App Dev",
+    category: "Web Dev, UI/UX & App Engineering",
+    title: "Web Development, UI/UX & App Engineering",
+    subtitle: "Dynamic Web Apps, Static Fast Sites, UI/UX Design, E-Commerce & Mobile App Development",
+    summary: "From lightning-fast static websites and scalable dynamic web applications to intuitive UI/UX design systems, turnkey e-commerce storefronts, and cross-platform mobile apps for iOS and Android. We engineer full-stack digital solutions tailored for performance, conversions, and scale.",
     metricBadge: "99.9% Uptime & Sub-Second Loads",
-    metricSubtitle: "Core Web Vitals & Conversion-Ready",
+    metricSubtitle: "Dynamic & Static Architecture",
     icon: Globe,
     image: websiteDesignImg,
     heroStats: [
@@ -81,42 +81,42 @@ export const expertiseData: ExpertiseItem[] = [
       { label: "Mobile Experience", value: "100%", desc: "Bespoke responsive ergonomics across all screen sizes" },
       { label: "Uptime & Security", value: "99.99%", desc: "Enterprise cloud hosting & automated CDN edge caching" }
     ],
-    idealFor: "Growing B2B companies, service enterprises, and ambitious brands seeking a high-converting digital presence that outclasses competitors.",
+    idealFor: "Growing B2B companies, direct-to-consumer brands, and ambitious startups seeking high-converting dynamic or static websites, custom UI/UX, and scalable mobile apps.",
     keyBenefits: [
-      { title: "Zero Generic Templates", description: "Every pixel is designed from scratch around your brand's unique value proposition and buyer psychology." },
-      { title: "Built for Search Engine Dominance", description: "Clean semantic HTML5, JSON-LD schema markup, and lean codebases that Google crawlers reward with top rankings." },
-      { title: "Autonomous Content Management", description: "Intuitive CMS configuration giving your team full autonomy to publish articles, case studies, and team updates without coding." },
-      { title: "Enterprise Grade Security", description: "End-to-end SSL encryption, automated backups, DDoS mitigation, and continuous performance telemetry." }
+      { title: "Dynamic & Static Website Agility", description: "Choose between ultra-fast Jamstack static websites or robust dynamic database-driven web applications and client portals." },
+      { title: "Human-Centered UI/UX Design", description: "Every wireframe, prototype, and layout is engineered in Figma around user psychology to minimize friction and lift conversions." },
+      { title: "Integrated E-Commerce & App Ecosystem", description: "Turnkey digital storefronts and cross-platform mobile apps (iOS & Android) with unified checkout and catalog systems." },
+      { title: "Built for Google Search Engine Dominance", description: "Clean semantic HTML5, JSON-LD schema markup, and lean codebases that Google crawlers reward with top rankings." }
     ],
     pillars: [
       {
-        title: "User Experience (UX) Architecture",
-        description: "Frictionless customer journeys, intuitive navigation systems, and prominent conversion triggers.",
-        tag: "Intuitive UX"
+        title: "Dynamic & Static Website Engineering",
+        description: "Custom dynamic database-backed web applications, scalable client portals, and ultra-fast static websites engineered with sub-second speeds.",
+        tag: "Dynamic & Static Sites"
       },
       {
-        title: "Modern Visual Brand Identity",
-        description: "Bespoke digital aesthetics, harmonized color systems, modern typography, and high-fidelity graphics.",
-        tag: "Design System"
+        title: "UI/UX & Interactive Product Design",
+        description: "Human-centered UI/UX wireframes, Figma prototypes, responsive design systems, and frictionless user journeys that maximize conversion rates.",
+        tag: "UI/UX Design"
       },
       {
-        title: "Multi-Device Responsive Engineering",
-        description: "Fluid responsiveness meticulously tested across ultra-wide monitors, laptops, tablets, and mobile devices.",
-        tag: "Mobile-First"
+        title: "E-Commerce Website Solutions",
+        description: "High-converting online storefronts, catalog architecture, inventory synchronization, and bank-grade secure checkout integrations.",
+        tag: "E-Commerce Websites"
       },
       {
-        title: "SEO-Optimized Content Structure",
-        description: "Structured hierarchy, semantic HTML tags, clean page speeds, and scannable conversion layouts.",
-        tag: "Speed & SEO"
+        title: "Cross-Platform App Development",
+        description: "Native and hybrid mobile app development for iOS and Android, Progressive Web Apps (PWA), and custom API architectures.",
+        tag: "App Development"
       }
     ],
     deliverables: [
-      "Custom responsive design (No generic templates)",
-      "Speed optimized & Core Web Vitals compliant",
-      "Intuitive CMS setup for simple client updates",
-      "SSL, cloud security & CDN integration",
-      "Google Analytics 4 & Search Console configuration",
-      "Interactive contact forms with instant email notifications"
+      "Dynamic web applications & bespoke client portals",
+      "Static high-speed websites & high-converting landing pages",
+      "End-to-end UI/UX design, interactive Figma prototypes & user flows",
+      "E-Commerce website development with payment & inventory integration",
+      "Cross-platform mobile app development (iOS & Android / PWA)",
+      "Speed optimization, Core Web Vitals <0.8s & enterprise cloud hosting"
     ],
     methodology: [
       {
@@ -149,28 +149,33 @@ export const expertiseData: ExpertiseItem[] = [
       }
     ],
     techStack: [
-      { name: "React & Next.js", role: "High-performance frontend rendering" },
-      { name: "Tailwind CSS", role: "Design system & fluid responsive styling" },
-      { name: "TypeScript", role: "Strict type safety & bug prevention" },
-      { name: "Cloudflare Edge", role: "Global CDN, DDoS protection & caching" },
-      { name: "Google Analytics 4", role: "Multi-touch conversion attribution" }
+      { name: "React & Next.js", role: "Dynamic web apps & static Jamstack pre-rendering" },
+      { name: "React Native & Flutter", role: "Cross-platform iOS & Android mobile apps" },
+      { name: "Figma & Tailwind CSS", role: "UI/UX wireframing, prototypes & fluid design systems" },
+      { name: "Shopify & WooCommerce", role: "E-Commerce storefronts & catalog architecture" },
+      { name: "Node.js & TypeScript", role: "Dynamic API integrations & backend engineering" },
+      { name: "Cloudflare Edge", role: "Global CDN, edge caching & sub-second loading" }
     ],
     faqs: [
       {
-        question: "How long does a custom website project take to build?",
-        answer: "Most custom website projects take between 3 to 5 weeks from initial kickoff to live deployment. Complex platforms or enterprise integrations may take 6 to 8 weeks."
+        question: "Do you build both Dynamic and Static websites as well as mobile apps?",
+        answer: "Yes, 100%. We engineer lightning-fast static websites (ideal for brand showcases, landing pages, and portfolio sites) as well as feature-rich dynamic web applications (client portals, booking engines, web SaaS). We also engineer cross-platform mobile apps for iOS and Android."
+      },
+      {
+        question: "What is included in your UI/UX design process?",
+        answer: "Our UI/UX process covers user journey mapping, low-fidelity wireframing, high-fidelity interactive Figma prototypes, and complete design system creation with typography scales, color palettes, and component states."
+      },
+      {
+        question: "How long does a custom web or app development project take to build?",
+        answer: "Static websites take 2 to 3 weeks; dynamic web applications and e-commerce platforms take 3 to 5 weeks; full-scale mobile app development takes 5 to 8 weeks depending on backend complexity."
       },
       {
         question: "Will I be able to update text and images myself without technical knowledge?",
-        answer: "Yes, 100%. We configure an intuitive, visual content management system (CMS) and provide a personalized video walkthrough so your team can easily add blog posts, testimonials, and service updates."
+        answer: "Yes, 100%. We configure an intuitive, visual content management system (CMS) and provide a personalized video walkthrough so your team can easily add blog posts, testimonials, products, and updates."
       },
       {
         question: "Do you guarantee fast load times and mobile compatibility?",
-        answer: "Absolutely. We engineer every page to exceed Google Core Web Vitals standards, targeting sub-second load times and 90+ Lighthouse performance scores across both mobile and desktop devices."
-      },
-      {
-        question: "What ongoing support do you provide after launch?",
-        answer: "All web design projects include 30 days of complimentary post-launch hypercare, covering bug fixes, speed audits, and security checkups. We also offer dedicated monthly SLA maintenance packages."
+        answer: "Absolutely. We engineer every page to exceed Google Core Web Vitals standards, targeting sub-second load times (<0.8s) and 90+ Lighthouse performance scores across all device viewports."
       }
     ],
     caseStudyPreview: {
@@ -302,13 +307,13 @@ export const expertiseData: ExpertiseItem[] = [
   },
   {
     id: "seo",
-    tabLabel: "Search (SEO)",
-    category: "Organic Search & SERP Dominance",
-    title: "Search Engine Optimization (SEO)",
-    subtitle: "Dominate Google SERPs With Compounding High-Intent Organic Traffic",
-    summary: "Outrank industry rivals and capture ready-to-convert prospects right when they search for your solutions. Our data-driven SEO framework produces a sustainable, compounding client-acquisition engine without ongoing per-click ad costs.",
+    tabLabel: "Google Ranking & SEO",
+    category: "Google Ranking Platform & SEO",
+    title: "Google Ranking Platform & SEO Dominance",
+    subtitle: "Dominate Google SERPs, Google Maps Local 3-Pack & Organic Search Rankings",
+    summary: "Propel your brand to the top of Google. Our proprietary Google Ranking Platform framework pairs rigorous technical SEO, local Google Business 3-pack dominance, and high-authority link acquisition to deliver compounding inbound customer leads without per-click ad costs.",
     metricBadge: "Top-Tier SERP Ranking Framework",
-    metricSubtitle: "Sustainable Organic Client Acquisition",
+    metricSubtitle: "Google Ranking & Organic Growth",
     icon: Search,
     image: seoImg,
     heroStats: [
@@ -317,18 +322,23 @@ export const expertiseData: ExpertiseItem[] = [
       { label: "Technical Health", value: "98/100", desc: "Average crawl score on deep Screaming Frog audits" },
       { label: "Domain Trust", value: "4.5x", desc: "Authoritative backlink profile growth within 6 months" }
     ],
-    idealFor: "Businesses looking for sustainable, predictable, and compounding inbound customer demand that lowers overall customer acquisition costs (CAC).",
+    idealFor: "Businesses looking for sustainable, predictable, and compounding inbound customer demand that dominates Google Search and Google Maps rankings.",
     keyBenefits: [
-      { title: "Commercial Intent Targeting", description: "We don't chase vanity keywords. We focus on search terms used by decision-makers with credit cards in hand." },
-      { title: "Flawless Technical Architecture", description: "Resolving crawl errors, canonical duplicates, schema issues, and Core Web Vitals to earn algorithmic trust." },
-      { title: "High-Authority Digital PR Backlinks", description: "White-hat editorial link acquisition from trusted industry publications and regional authoritative directories." },
-      { title: "Transparent Monthly Reporting", description: "Clear live dashboards displaying ranking changes, organic traffic growth, and attributed phone calls/form fills." }
+      { title: "Google Ranking Platform Dominance", description: "Systematic optimization across Google Search organic results and the Google Maps Local 3-Pack to dominate your local market." },
+      { title: "Commercial Intent Keyword Targeting", description: "We don't chase vanity keywords. We focus on high-conversion search queries used by active buyers with purchasing intent." },
+      { title: "Flawless Technical SEO Architecture", description: "Resolving crawl errors, canonical duplicates, JSON-LD schema issues, and Core Web Vitals to earn algorithmic trust." },
+      { title: "High-Authority Digital PR Backlinks", description: "White-hat editorial link acquisition from trusted industry publications and regional authoritative directories." }
     ],
     pillars: [
       {
+        title: "Google Ranking Platform Optimization",
+        description: "Google Search indexation, algorithmic ranking calibration, and Google Business Profile Local 3-Pack map rankings.",
+        tag: "Google Ranking"
+      },
+      {
         title: "Technical SEO & Speed Optimization",
         description: "Deep crawl audits, indexing fixes, schema markups, canonical structures, and site velocity enhancements.",
-        tag: "Technical Audit"
+        tag: "Technical SEO"
       },
       {
         title: "High-Intent Keyword Dominance",
@@ -339,20 +349,15 @@ export const expertiseData: ExpertiseItem[] = [
         title: "Authoritative Link Architecture",
         description: "High-authority domain backlinks, digital PR outreach, and clean directory citations that build domain trust.",
         tag: "Domain Authority"
-      },
-      {
-        title: "Content & User Experience Alignment",
-        description: "Search-aligned content architecture designed to outrank competitor articles and satisfy Google helpful content signals.",
-        tag: "Content Strategy"
       }
     ],
     deliverables: [
-      "Complete on-page keyword & meta-tag optimization",
-      "Google Search Console & Analytics 4 integration",
-      "Google Business Profile (Local Map Pack) optimization",
-      "Monthly transparent keyword ranking & traffic reports",
-      "Technical health audit and structured JSON-LD schema deployment",
-      "Competitor gap analysis & quarterly content roadmap"
+      "Google Ranking Platform optimization (Google Search & Google Maps Local 3-Pack)",
+      "Comprehensive on-page SEO & semantic keyword architecture",
+      "Complete technical SEO crawl audit & JSON-LD schema deployment",
+      "High-authority white-hat backlink building & PR distribution",
+      "Google Search Console & Analytics 4 multi-channel attribution",
+      "Monthly transparent keyword ranking reports & competitor tracking"
     ],
     methodology: [
       {
@@ -421,12 +426,12 @@ export const expertiseData: ExpertiseItem[] = [
   {
     id: "graphic-design",
     tabLabel: "Branding & Design",
-    category: "Brand Identity & Creative Media",
-    title: "Graphic Design & Visual Brand Identity",
-    subtitle: "Distinctive Visual Assets That Command Market Authority and Brand Recall",
-    summary: "Visual first impressions dictate brand trust. We develop memorable brand identities, custom logo systems, marketing collateral, and high-impact digital graphics that instantly distinguish your business in competitive markets.",
+    category: "Brand Management & Creative Design",
+    title: "Brand Management & Graphic Design",
+    subtitle: "Brand Management, Product Campaigning Catalogs & High-Impact Visual Systems",
+    summary: "Visual first impressions dictate brand trust. We develop end-to-end Brand Management frameworks, product campaigning catalogs, custom logo systems, marketing collateral, and high-impact digital graphics that instantly distinguish your business in competitive markets.",
     metricBadge: "Complete Vector & Brand Suite",
-    metricSubtitle: "Ready for Print, Web & Large Format",
+    metricSubtitle: "Brand Management & Catalog Design",
     icon: Palette,
     image: graphicDesignImg,
     heroStats: [
@@ -435,42 +440,42 @@ export const expertiseData: ExpertiseItem[] = [
       { label: "Brand Recall Lift", value: "+210%", desc: "Standardized visual assets that build instant recognition" },
       { label: "File Formats", value: "All Types", desc: "Web, print, CMYK press, RGB digital, transparent PNGs" }
     ],
-    idealFor: "Startups launching new ventures, established companies undergoing a rebrand, and businesses seeking elite visual marketing collateral.",
+    idealFor: "Startups launching new ventures, established companies undergoing a rebrand, and businesses seeking elite Brand Management and Product Campaigning catalogs.",
     keyBenefits: [
+      { title: "Strategic Brand Management", description: "Comprehensive brand positioning, style manuals, visual identity consistency, and brand perception management." },
+      { title: "Product Campaigning & Catalog Design", description: "High-conversion product catalogs, digital lookbooks, brochure collections, and launch campaign assets." },
       { title: "Timeless Custom Logo Systems", description: "Bespoke identity marks with responsive variations for dark mode, light mode, app icons, and horizontal headers." },
-      { title: "Complete Brand Identity Manual", description: "Strict guidelines on typography rules, color hex codes, minimum clear space, and forbidden usage patterns." },
-      { title: "Press-Ready Print Production", description: "Executive business cards, corporate brochures, vehicle wraps, and trade-show banners pre-calibrated in CMYK 300 DPI." },
-      { title: "High-CTR Digital Ad Creatives", description: "Engaging social post templates, banner ads, pitch deck presentations, and website graphics that command attention." }
+      { title: "Press-Ready Print Production", description: "Executive business cards, corporate brochures, product packaging, and trade-show banners pre-calibrated in CMYK 300 DPI." }
     ],
     pillars: [
+      {
+        title: "Strategic Brand Management",
+        description: "Brand positioning architecture, style guides, font systems, color palettes, and unified brand perception.",
+        tag: "Brand Management"
+      },
+      {
+        title: "Product Campaigning & Catalogs",
+        description: "High-impact product launch collateral, digital catalogs, interactive lookbooks, and promotional sales kits.",
+        tag: "Product Catalogs"
+      },
       {
         title: "Memorable Logo Design Suites",
         description: "Versatile, timeless vector logos crafted with variants for dark, light, horizontal, and icon mark use.",
         tag: "Brand Mark"
       },
       {
-        title: "Comprehensive Style Systems",
-        description: "Tailored color palettes, custom typography pairings, usage rules, and complete visual guidelines.",
-        tag: "Style Guidelines"
-      },
-      {
         title: "Press-Ready Print Collateral",
         description: "Executive business cards, corporate brochures, flyers, event banners, and promotional merchandise.",
         tag: "Print Media"
-      },
-      {
-        title: "Social & Digital Ad Creatives",
-        description: "Scroll-stopping social media graphics, cover artwork, carousel sets, and high-CTR display banner ads.",
-        tag: "Digital Assets"
       }
     ],
     deliverables: [
+      "End-to-end Brand Management manual & style guidelines",
+      "Product campaigning catalog & digital lookbook design",
       "Full editable source files (AI, SVG, EPS, PNG, PDF)",
-      "Comprehensive brand identity guidelines guide",
-      "Custom vector iconography & brand assets",
-      "Fast turnaround with collaborative revision rounds",
-      "Executive business card & letterhead stationery kit",
-      "Social media profile banner kit across all platforms"
+      "Custom vector iconography & brand identity assets",
+      "Executive business card & corporate stationery kit",
+      "Social media profile kit and product promotional banners"
     ],
     methodology: [
       {
@@ -538,13 +543,13 @@ export const expertiseData: ExpertiseItem[] = [
   },
   {
     id: "ppc",
-    tabLabel: "PPC & Paid Ads",
-    category: "Paid Search & Performance Marketing",
-    title: "Pay-Per-Click Advertising (PPC)",
-    subtitle: "Targeted Ad Campaigns Delivering Immediate Leads & Transparent ROAS",
-    summary: "Eliminate guesswork and connect directly with high-intent buyers through precision Google Ads and paid search campaigns. We optimize every dollar of ad spend with negative keyword pruning, rigorous A/B testing, and conversion-focused landing pages.",
+    tabLabel: "Paid Ads & PPC",
+    category: "Paid Ads (Google, Meta, LinkedIn & TikTok)",
+    title: "Paid Ads & Performance Marketing",
+    subtitle: "High-ROI Paid Ads Across Google Ads, Meta Ads, LinkedIn Ads & TikTok Ads",
+    summary: "Eliminate wasted media spend and acquire high-intent buyers through precision Paid Ads. We manage high-converting ad funnels across Google Ads (Search, Display, Performance Max, YouTube), Meta Ads (Facebook & Instagram), LinkedIn Ads for B2B scale, and viral TikTok Ads.",
     metricBadge: "Full Multi-Touch ROAS Attribution",
-    metricSubtitle: "Immediate Traffic & Direct Attribution",
+    metricSubtitle: "Google, Meta, LinkedIn & TikTok Ads",
     icon: MousePointerClick,
     image: ppcImg,
     heroStats: [
@@ -553,42 +558,42 @@ export const expertiseData: ExpertiseItem[] = [
       { label: "Launch Speed", value: "48 Hours", desc: "Fast campaign build from keyword research to live ads" },
       { label: "Conversion Tracking", value: "100%", desc: "Server-side GA4, Google Tag Manager & call tracking" }
     ],
-    idealFor: "Companies needing immediate customer acquisition, product launches, or seasonal promotions without waiting months for organic growth.",
+    idealFor: "Companies needing immediate customer acquisition, product launches, or seasonal promotions across Google Ads, Meta Ads, LinkedIn, and TikTok.",
     keyBenefits: [
-      { title: "Immediate Inbound Qualified Leads", description: "Skip the organic wait time. Place your business at the very top of Google for prime search terms within hours of launching." },
-      { title: "Aggressive Negative Keyword Management", description: "We protect your ad budget from being burned on low-intent queries, competitor career seekers, or irrelevant searches." },
+      { title: "Multi-Platform Paid Ads Domination", description: "Seamless coordination across Google Ads, Meta Ads (Instagram/Facebook), LinkedIn Ads, and TikTok Ads under a unified budget." },
+      { title: "Aggressive Negative Keyword & Fraud Protection", description: "We protect your ad budget from being burned on low-intent queries, click farms, or irrelevant search traffic." },
       { title: "Dedicated High-Converting Landing Pages", description: "We pair your ads with dedicated, hyper-relevant landing pages that convert clicks into paying customers at 2x industry benchmarks." },
-      { title: "Transparent Budget Management", description: "Direct access to your ad account. You pay Google directly with zero markups or hidden fees on your media spend." }
+      { title: "Transparent Real-Time ROAS Telemetry", description: "Direct access to your ad accounts. You pay ad networks directly with zero markups and 24/7 transparent analytics." }
     ],
     pillars: [
       {
-        title: "Immediate Traffic & Fast Results",
-        description: "Bypass long organic ramp-up periods and start capturing high-intent inquiries from day one of campaign launch.",
-        tag: "Instant Traction"
+        title: "Google Ads & Paid Search Funnels",
+        description: "Google Search, Display, Performance Max, Shopping, and YouTube Ads targeting users with immediate purchase intent.",
+        tag: "Google Ads"
       },
       {
-        title: "Laser Audience & Geo-Targeting",
-        description: "Target by exact geographic radius, demographics, search queries, and purchase intent to eliminate wasted spend.",
-        tag: "Precision Targeting"
+        title: "Meta Ads (Facebook & Instagram)",
+        description: "High-CTR visual creatives, carousel ads, and vertical reel campaigns targeted at high-value consumer demographics.",
+        tag: "Meta Ads"
       },
       {
-        title: "Dynamic Bid & Budget Management",
-        description: "Continuous bid adjustments focused on high-converting keyword queries to maximize return on ad spend (ROAS).",
-        tag: "Budget Control"
+        title: "LinkedIn Ads & TikTok Ads",
+        description: "B2B executive lead acquisition via LinkedIn Ads and viral short-form video conversion funnels via TikTok Ads.",
+        tag: "LinkedIn & TikTok Ads"
       },
       {
-        title: "Real-Time Conversion Attribution",
-        description: "Live tracking dashboards showing exact cost-per-click (CPC), cost-per-lead (CPL), and conversion rates.",
-        tag: "Transparent ROI"
+        title: "Dynamic Bid & ROAS Optimization",
+        description: "Real-time algorithmic bid management, conversion attribution, and budget reallocation toward highest-profit channels.",
+        tag: "Paid Ads ROAS"
       }
     ],
     deliverables: [
-      "Targeted Google Search & Display campaign setup",
-      "Negative keyword lists to prevent ad budget waste",
-      "High-converting landing page optimization",
-      "Transparent weekly performance & lead analytics",
-      "Call tracking and form submission conversion tagging",
-      "Competitor ad copy analysis & continuous split-testing"
+      "Google Ads management (Search, Display, Performance Max & YouTube)",
+      "Meta Ads management (Facebook & Instagram Feed, Reels & Stories)",
+      "LinkedIn Ads setup for high-ticket B2B decision-maker leads",
+      "TikTok Ads for viral short-form video consumer campaigns",
+      "Negative keyword pruning & click-fraud suppression filters",
+      "Server-side conversion tracking (GA4, CAPI & Pixel) and live ROAS dashboards"
     ],
     methodology: [
       {
@@ -656,13 +661,13 @@ export const expertiseData: ExpertiseItem[] = [
   },
   {
     id: "smo",
-    tabLabel: "Social Media (SMO)",
-    category: "Community Engagement & Paid Social",
-    title: "Social Media Optimization (SMO & SMM)",
-    subtitle: "Building Loyal Online Communities & Amplifying Organic Social Reach",
-    summary: "Transform social media profiles into active customer acquisition channels. We engineer engaging content strategies, optimize brand profiles across major networks, build authentic community trust, and run targeted paid social funnels on Meta and LinkedIn.",
+    tabLabel: "Social Media & Management",
+    category: "Social Media & Management",
+    title: "Social Media & Social Media Management (SMM & SMO)",
+    subtitle: "Social Media Management, Product Campaigning Catalogs & Brand Community Growth",
+    summary: "Transform social media into a predictable customer acquisition channel. We provide complete Social Media Management, high-converting Product Campaigning & Catalog promotions, branded reels and carousels, proactive community moderation, and strategic paid social growth across Instagram, Facebook, LinkedIn, TikTok, and YouTube.",
     metricBadge: "Compounding Organic Inbound Pipeline",
-    metricSubtitle: "Brand Loyalty & Active Community Reach",
+    metricSubtitle: "Social Media Management & Catalogs",
     icon: Megaphone,
     image: smoImg,
     heroStats: [
@@ -671,42 +676,42 @@ export const expertiseData: ExpertiseItem[] = [
       { label: "Posting Consistency", value: "100%", desc: "Scheduled editorial calendar delivered without missing dates" },
       { label: "Brand Sentiment", value: "98% Positive", desc: "Active community moderation & prompt reply shielding" }
     ],
-    idealFor: "Brands seeking to build genuine authority, expand customer brand loyalty, and turn followers into active paying advocates.",
+    idealFor: "Brands seeking to build genuine authority, expand customer brand loyalty, and execute high-converting Product Campaigning and Social Media Management.",
     keyBenefits: [
+      { title: "Full-Service Social Media Management", description: "Hands-off content publishing, creative caption writing, hashtag research, and consistent multi-platform distribution." },
+      { title: "Product Campaigning & Catalog Showcases", description: "Structured product launch campaigns, digital catalog showcases, discount drops, and seasonal promotional rollouts." },
       { title: "Engaging Visual Content Creation", description: "Custom-branded graphics, educational carousels, engaging video reels, and interactive stories produced specifically for your niche." },
-      { title: "Complete Profile Optimization", description: "Transforming bios, highlight covers, contact buttons, and link-in-bio funnels into high-converting lead funnels." },
-      { title: "Community Management & Reputation", description: "Prompt comment responses, DM routing, and proactive engagement with prospective buyers in your industry." },
-      { title: "Full-Funnel Paid Social Ads", description: "Targeted Meta (Instagram & Facebook) and LinkedIn campaigns designed to retarget warm website visitors and capture high-margin buyers." }
+      { title: "Community Management & Reputation Shield", description: "Prompt comment responses, DM routing, and proactive engagement with prospective buyers in your industry." }
     ],
     pillars: [
       {
-        title: "Organic Reach & Brand Visibility",
-        description: "Consistent posting schedules with branded visuals that establish top-of-mind awareness across platforms.",
-        tag: "Organic Reach"
+        title: "Social Media Management & Publishing",
+        description: "Consistent posting schedules, editorial planning, and branded visuals that maintain top-of-mind awareness across channels.",
+        tag: "Social Management"
       },
       {
-        title: "Compounding Inbound Traffic",
-        description: "Strategic link funnels, story highlights, and bio links that guide social followers directly to your website.",
-        tag: "Inbound Pipeline"
+        title: "Product Campaigning & Catalog Launches",
+        description: "Promotional rollouts for new product catalogs, seasonal collections, lookbooks, and high-converting offer campaigns.",
+        tag: "Product Campaigns"
       },
       {
-        title: "Active Community Trust Building",
-        description: "Direct relationship cultivation and timely response management that transforms followers into brand advocates.",
-        tag: "Community Trust"
+        title: "Brand Management & Community Trust",
+        description: "Active community relationship cultivation, DM routing, and prompt response moderation that turns followers into brand advocates.",
+        tag: "Brand Management"
       },
       {
         title: "Paid Social Growth & Retargeting",
-        description: "Targeted Meta Ads and LinkedIn campaigns targeting lookalike audiences and retargeting warm site visitors.",
+        description: "Targeted Meta Ads, TikTok Ads, and LinkedIn campaigns designed to retarget warm website visitors and drive sales.",
         tag: "Paid Social Funnels"
       }
     ],
     deliverables: [
-      "Custom monthly editorial calendar & post scheduling",
-      "Profile branding & bio link optimization kit",
-      "Paid campaign setup on Instagram, Facebook & LinkedIn",
-      "Monthly audience growth & engagement performance report",
-      "Reel video editing & animated story collaterals",
-      "Hashtag matrix calibration & audience engagement monitoring"
+      "End-to-end Social Media Management & scheduled multi-channel posting",
+      "Product Campaigning & digital catalog promotional launches",
+      "Custom monthly editorial calendar & content pillar roadmap",
+      "Reel video editing, animated stories & educational carousel sets",
+      "Brand management, active comment moderation & DM routing",
+      "Monthly audience growth, engagement metrics & lead conversion reports"
     ],
     methodology: [
       {
