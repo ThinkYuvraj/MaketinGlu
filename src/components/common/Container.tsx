@@ -10,20 +10,20 @@ interface ContainerProps {
 export default function Container({ 
   children, 
   className = '', 
-  size = 'wide',
+  size = 'standard',
   id 
 }: ContainerProps) {
   const sizeClasses = {
     narrow: 'max-w-4xl',
-    standard: 'max-w-6xl',
-    wide: 'max-w-[1720px] 2xl:max-w-[1840px]',
+    standard: 'max-w-7xl',
+    wide: 'max-w-[1400px]',
     full: 'w-full',
   }[size];
 
   return (
     <div 
       id={id}
-      className={`w-full ${sizeClasses} mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 ${className}`}
+      className={`w-full ${sizeClasses} mx-auto px-4 sm:px-6 lg:px-8 ${className}`}
     >
       {children}
     </div>

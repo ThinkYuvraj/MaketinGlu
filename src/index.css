@@ -41,3 +41,21 @@
   box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
 }
 
+/* Custom scrollbar for FAQ flex box container */
+.faq-scroll-box::-webkit-scrollbar {
+  width: 6px;
+}
+.faq-scroll-box::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 9999px;
+  margin: 6px 0;
+}
+.faq-scroll-box::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: 9999px;
+}
+.faq-scroll-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.65);
+}
+
+

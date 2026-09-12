@@ -117,11 +117,11 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </div>
         )}
 
-        <div className="p-6 sm:p-7 flex-1 flex flex-col">
+        <div className="p-4.5 sm:p-5.5 flex-1 flex flex-col">
           {/* Header Row: Tier Badge + Inclusions */}
-          <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="flex items-center justify-between gap-2 mb-3">
             <span
-              className={`text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-md ${
+              className={`text-[9.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
                 isPopular && isFocused
                   ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-500/40'
                   : 'bg-slate-900 text-slate-400 border border-slate-800'
@@ -137,24 +137,24 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </div>
 
           {/* Package Title & Description */}
-          <div className="mb-5">
-            <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          <div className="mb-3">
+            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
               {pkg.name}
             </h3>
-            <p className="text-xs sm:text-sm text-cyan-400 font-bold mt-1">
+            <p className="text-xs text-cyan-400 font-bold mt-0.5">
               {pkg.highlight}
             </p>
-            <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2">
               {pkg.tagline}
             </p>
           </div>
 
           {/* Investment Model Tag */}
-          <div className="p-3.5 rounded-2xl bg-[#050812] border border-slate-800/80 mb-5">
-            <div className="text-[10px] sm:text-[11px] font-mono text-slate-400 uppercase">
+          <div className="p-2.5 sm:p-3 rounded-xl bg-[#050812] border border-slate-800/80 mb-3.5">
+            <div className="text-[9.5px] font-mono text-slate-400 uppercase">
               Investment Model
             </div>
-            <div className="text-base sm:text-lg font-extrabold text-white mt-0.5">
+            <div className="text-sm sm:text-base font-extrabold text-white mt-0.5">
               {pkg.priceNote}
             </div>
             <div className="text-[10px] text-cyan-400 mt-0.5 font-medium">
@@ -163,36 +163,36 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </div>
 
           {/* Deliverables Checklist */}
-          <div className="space-y-2.5 pt-2 pb-5 border-t border-slate-800/80 flex-1">
-            <div className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">
+          <div className="space-y-1.5 pt-2 pb-3.5 border-t border-slate-800/80 flex-1">
+            <div className="text-[9.5px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
               Core Inclusions & Deliverables:
             </div>
 
-            {pkg.features && pkg.features.slice(0, 8).map((feat, fIdx) => (
-              <div key={fIdx} className="flex items-start gap-2 text-xs sm:text-[13px] text-slate-200">
-                <div className="w-4 h-4 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-2.5 h-2.5 text-cyan-400 stroke-[3]" />
+            {pkg.features && pkg.features.slice(0, 5).map((feat, fIdx) => (
+              <div key={fIdx} className="flex items-start gap-1.5 text-xs text-slate-200">
+                <div className="w-3.5 h-3.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                  <Check className="w-2 h-2 text-cyan-400 stroke-[3]" />
                 </div>
-                <span className="leading-snug">{feat.name}</span>
+                <span className="leading-tight line-clamp-1">{feat.name}</span>
               </div>
             ))}
 
-            {pkg.features && pkg.features.length > 8 && (
-              <div className="text-[10px] sm:text-[11px] text-cyan-400 font-semibold pt-1">
-                + {pkg.features.length - 8} more specialized deliverables included
+            {pkg.features && pkg.features.length > 5 && (
+              <div className="text-[10px] text-cyan-400 font-semibold pt-0.5">
+                + {pkg.features.length - 5} more specialized deliverables included
               </div>
             )}
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-2 pt-4 border-t border-slate-800/80 mt-auto">
+          <div className="space-y-1.5 pt-3 border-t border-slate-800/80 mt-auto">
             <motion.button
               {...buttonHoverMotion}
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectPackage(pkg.name);
               }}
-              className={`w-full min-h-[46px] py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
+              className={`w-full min-h-[40px] py-2 px-4 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isPopular && isFocused
                   ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
                   : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15'
@@ -200,7 +200,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               id={`btn-select-${pkg.id}`}
             >
               <span>Select {pkg.name}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </motion.button>
 
             <a
@@ -208,7 +208,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="w-full min-h-[40px] py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+              className="w-full min-h-[36px] py-1.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
               <span>WhatsApp Inquiry</span>
@@ -222,43 +222,38 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative py-20 lg:py-28 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden"
+      className="relative py-12 sm:py-16 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-cyan-500/5 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cyan-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
             <span>TRANSPARENT SERVICE TIERS</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Tailored Digital Marketing{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
               Service Packages
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-            Explore our curated packages calibrated for your growth stage. Plans automatically rotate every 5 seconds or swipe freely on mobile to compare.
+          <p className="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+            Explore our curated packages calibrated for your growth stage. Plans rotate automatically or swipe freely on mobile to compare.
           </p>
         </div>
 
         <div className="max-w-7xl mx-auto">
             
-            {/* DESKTOP 3-CARD ANIMATION VIEW: 
-                - Left card: Faded (opacity-40, scale-90), clicking shifts to middle
-                - Middle card: Active focus (opacity-100, scale-100, illuminated)
-                - Right card: Faded (opacity-40, scale-90), clicking shifts to middle
-                - Every 5s, middle moves to left, right moves to middle
-            */}
-            <div className="hidden lg:grid lg:grid-cols-3 gap-6 xl:gap-8 items-center min-h-[640px] relative">
+            {/* DESKTOP 3-CARD ANIMATION VIEW: */}
+            <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6 items-center min-h-[490px] relative">
               
               {/* Column 1: Left Faded Card */}
               <motion.div

@@ -117,7 +117,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-3.5 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3.5 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
         
         {/* Brand Logo with White Background Badge */}
         <button

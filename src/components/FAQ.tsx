@@ -1,7 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  ChevronDown, 
   HelpCircle, 
   Search, 
   Sparkles, 
@@ -10,8 +9,13 @@ import {
   Calendar, 
   TrendingUp, 
   Code, 
-  CreditCard,
-  FileCheck
+  CreditCard, 
+  FileCheck, 
+  X, 
+  Plus, 
+  Minus,
+  ArrowUp,
+  ArrowDown
 } from 'lucide-react';
 import { standardEase } from '../lib/animations';
 
@@ -38,7 +42,7 @@ const faqs: FAQItem[] = [
     category: 'seo',
     categoryLabel: 'SEO & Rankings',
     question: "Do you guarantee #1 rankings on Google for our search keywords?",
-    answer: "No reputable, ethical agency can guarantee a fixed #1 Google rank, and Google's official documentation explicitly warns against any agency making this claim. What Marketing LU guarantees is a battle-tested, 100% white-hat technical and editorial framework: sub-second Core Web Vitals optimization, high-intent transactional keyword architecture, structured JSON-LD schema data, and authentic contextual backlink acquisition. Over 94% of our client target keywords rank within Google's top 5 positions within 3 to 6 months.",
+    answer: "No reputable, ethical agency can guarantee a fixed #1 Google rank, and Google's official documentation explicitly warns against any agency making this claim. What MarketingGlu guarantees is a battle-tested, 100% white-hat technical and editorial framework: sub-second Core Web Vitals optimization, high-intent transactional keyword architecture, structured JSON-LD schema data, and authentic contextual backlink acquisition. Over 94% of our client target keywords rank within Google's top 5 positions within 3 to 6 months.",
     highlights: ["100% White-Hat Only", "Google Guidelines Compliant", "94% In Top-5 Positions"]
   },
   {
@@ -54,7 +58,7 @@ const faqs: FAQItem[] = [
     category: 'pricing',
     categoryLabel: 'Ad Spend & Pricing',
     question: "How is our advertising budget (ad spend) managed and billed?",
-    answer: "Your advertising media spend is billed directly by Google Ads, Meta (Instagram/Facebook), and LinkedIn to your company credit card or GST-registered billing profile. Marketing LU never charges hidden commissions, markups, or cuts on your media spend. You pay Marketing LU a transparent, flat or tiered monthly management retainer covering campaign architecture, conversion copywriting, daily bid optimization, negative keyword audits, and A/B ad creative production.",
+    answer: "Your advertising media spend is billed directly by Google Ads, Meta (Instagram/Facebook), and LinkedIn to your company credit card or GST-registered billing profile. MarketingGlu never charges hidden commissions, markups, or cuts on your media spend. You pay MarketingGlu a transparent, flat or tiered monthly management retainer covering campaign architecture, conversion copywriting, daily bid optimization, negative keyword audits, and A/B ad creative production.",
     highlights: ["Direct Platform Billing", "Zero Spend Markup", "Transparent Flat Retainer"]
   },
   {
@@ -117,9 +121,10 @@ const categoryFilters = [
 ];
 
 export default function FAQ() {
-  const [openIds, setOpenIds] = useState<number[]>([1]); // First item open by default for immediate engagement
+  const [openIds, setOpenIds] = useState<number[]>([1]); // First item open for preview
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const toggle = (id: number) => {
     if (openIds.includes(id)) {
@@ -137,6 +142,15 @@ export default function FAQ() {
     setOpenIds([]);
   };
 
+  // Category item counts
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: faqs.length };
+    faqs.forEach(f => {
+      counts[f.category] = (counts[f.category] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
   const filteredFaqs = useMemo(() => {
     return faqs.filter((faq) => {
       const matchesCategory = activeCategory === 'all' || faq.category === activeCategory;
@@ -153,242 +167,331 @@ export default function FAQ() {
     });
   }, [activeCategory, searchQuery]);
 
-  return (
-    <section id="faq" className="relative py-20 lg:py-28 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-cyan-500/5 blur-[160px] rounded-full pointer-events-none" />
+  const scrollToTop = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ 
+        top: scrollContainerRef.current.scrollHeight, 
+        behavior: 'smooth' 
+      });
+    }
+  };
+
+  const renderCard = (faq: FAQItem) => {
+    const isOpen = openIds.includes(faq.id);
+
+    return (
+      <div
+        key={faq.id}
+        className={`rounded-xl border transition-all duration-200 overflow-hidden shrink-0 ${
+          isOpen
+            ? 'bg-[#0a1226] border-cyan-500/40 shadow-md shadow-cyan-500/5 ring-1 ring-cyan-500/20'
+            : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022]'
+        }`}
+        id={`faq-item-${faq.id}`}
+      >
+        <button
+          type="button"
+          onClick={() => toggle(faq.id)}
+          className="w-full px-3.5 py-3 sm:px-4 sm:py-3.5 flex items-start justify-between gap-3 text-left transition-colors cursor-pointer"
+          aria-expanded={isOpen}
+        >
+          <div className="space-y-1 flex-1 pr-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] sm:text-[9.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded">
+                {faq.categoryLabel}
+              </span>
+            </div>
+            <h3 className="text-xs sm:text-[13px] font-bold text-white tracking-tight leading-snug">
+              {faq.question}
+            </h3>
+          </div>
+
+          <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center shrink-0 transition-colors duration-200 mt-0.5 ${
+            isOpen ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400 hover:text-white'
+          }`}>
+            {isOpen ? <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
+          </div>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: standardEase }}
+              className="overflow-hidden"
+            >
+              <div className="px-3.5 pb-3.5 pt-1 sm:px-4 sm:pb-4 border-t border-slate-800/60 space-y-2.5 bg-[#080d1a]/60">
+                <p className="text-[12px] sm:text-xs text-slate-300 leading-relaxed pt-1.5">
+                  {faq.answer}
+                </p>
+
+                {/* Feature Highlights */}
+                {faq.highlights && faq.highlights.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                    {faq.highlights.map((item, hIdx) => (
+                      <span
+                        key={hIdx}
+                        className="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-2 py-0.5 rounded-md"
+                      >
+                        <Sparkles className="w-2.5 h-2.5 text-cyan-400 shrink-0" />
+                        <span>{item}</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
+  return (
+    <section id="faq" className="relative py-12 lg:py-16 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[220px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+        <div className="text-center max-w-2xl mx-auto mb-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-wide uppercase mb-2.5">
+            <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+            Knowledge Base
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Frequently Asked{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
               Questions
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-4 text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-            Clear, honest answers regarding campaign turnaround, Google ranking guarantees, code ownership, and ad spend management.
+          <p className="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
+            Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.
           </p>
 
-          {/* Quick trust metrics */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0a1122] border border-slate-800 text-slate-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+          {/* Trust badges */}
+          <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2 text-[10.5px]">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300">
+              <ShieldCheck className="w-3 h-3 text-cyan-400" />
               100% Asset Ownership
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0a1122] border border-slate-800 text-slate-300">
-              <Calendar className="w-3.5 h-3.5 text-cyan-400" />
-              Month-to-Month Flexibility
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300">
+              <Calendar className="w-3 h-3 text-cyan-400" />
+              Month-to-Month Retainers
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0a1122] border border-slate-800 text-slate-300">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              No Hidden Media Markups
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300">
+              <Sparkles className="w-3 h-3 text-cyan-400" />
+              Zero Media Markups
             </span>
           </div>
         </div>
 
-        {/* Interactive Search Bar and Controls */}
-        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto mb-8 space-y-4">
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            
-            {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search questions by keyword (e.g. 'rankings', 'ownership', 'spend', 'ROI')..."
-                className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#090e1c] border border-slate-800 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-400/80 transition-colors shadow-inner"
-                aria-label="Search FAQs"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-800"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-
-            {/* Expand / Collapse All Toggle */}
-            <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+        {/* Controls Toolbar: Search + Category Chips */}
+        <div className="max-w-3xl mx-auto mb-4 space-y-2.5">
+          {/* Compact Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search questions (e.g., 'rankings', 'ownership', 'spend', 'ROI')..."
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-[#090e1c] border border-slate-800 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-cyan-400/80 transition-colors shadow-inner"
+              aria-label="Search FAQs"
+            />
+            {searchQuery && (
               <button
                 type="button"
-                onClick={expandAll}
-                className="px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-colors cursor-pointer"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 hover:text-white p-0.5 rounded hover:bg-slate-800"
+                aria-label="Clear search"
               >
-                Expand All
+                <X className="w-3.5 h-3.5" />
               </button>
-              <button
-                type="button"
-                onClick={collapseAll}
-                className="px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-colors cursor-pointer"
-              >
-                Collapse All
-              </button>
-            </div>
+            )}
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {/* Modular Category Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
             {categoryFilters.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.id;
+              const count = categoryCounts[cat.id] || 0;
 
               return (
                 <button
                   key={cat.id}
                   type="button"
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20'
-                      : 'bg-[#090e1a] border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                      ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-xs shadow-cyan-500/20'
+                      : 'bg-[#090e1c] border border-slate-800/90 text-slate-400 hover:text-white hover:border-slate-700'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-3 h-3" />
                   <span>{cat.label}</span>
+                  <span className={`text-[9.5px] px-1 rounded ${
+                    isActive ? 'bg-slate-950/20 text-slate-900 font-extrabold' : 'bg-slate-800/80 text-slate-400'
+                  }`}>
+                    {count}
+                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* FAQ Accordion List */}
-        <div className="space-y-3.5 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+        {/* SCROLLABLE FLEX BOX CONTAINER */}
+        <div className="max-w-3xl mx-auto rounded-2xl bg-[#080d1a]/95 border border-slate-800 shadow-xl backdrop-blur-sm overflow-hidden flex flex-col">
+          
+          {/* Scroll Box Top Bar */}
+          <div className="px-4 py-2.5 sm:px-5 sm:py-3 bg-[#0a1224] border-b border-slate-800/90 flex items-center justify-between gap-3 text-xs shrink-0">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="font-bold text-white text-[12px] sm:text-xs">
+                {activeCategory === 'all' 
+                  ? 'All Questions' 
+                  : categoryFilters.find(c => c.id === activeCategory)?.label || 'Questions'}
+              </span>
+              <span className="text-[10px] sm:text-[10.5px] text-cyan-400 font-mono font-semibold bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded-full">
+                {filteredFaqs.length} {filteredFaqs.length === 1 ? 'item' : 'items'}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 sm:gap-3 text-[11px]">
+              <span className="hidden sm:inline-flex items-center gap-1 text-slate-400 text-[10.5px]">
+                <ArrowDown className="w-3 h-3 text-cyan-400 animate-bounce" />
+                Scrollable Flex Container
+              </span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={expandAll}
+                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/30 text-[10px] font-semibold transition-colors cursor-pointer"
+                >
+                  Expand All
+                </button>
+                <button
+                  type="button"
+                  onClick={collapseAll}
+                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/30 text-[10px] font-semibold transition-colors cursor-pointer"
+                >
+                  Collapse All
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* THE SCROLLABLE FLEX BOX OF QUESTIONS */}
           {filteredFaqs.length === 0 ? (
-            <div className="text-center py-12 px-4 rounded-2xl bg-[#0a0f1d] border border-slate-800">
-              <HelpCircle className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-              <p className="text-sm font-bold text-white">No matching questions found</p>
-              <p className="text-xs text-slate-400 mt-1">
-                Try searching a different term or reset your category filters.
+            <div className="text-center py-10 px-4">
+              <HelpCircle className="w-6 h-6 text-slate-500 mx-auto mb-2" />
+              <p className="text-xs font-bold text-white">No questions match your filter</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Try a different keyword or reset filters.
               </p>
               <button
                 type="button"
                 onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
-                className="mt-4 px-4 py-2 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-colors"
+                className="mt-3 px-3 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
               >
-                Reset Search Filters
+                Reset Search
               </button>
             </div>
           ) : (
-            filteredFaqs.map((faq) => {
-              const isOpen = openIds.includes(faq.id);
-
-              return (
-                <div
-                  key={faq.id}
-                  className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
-                    isOpen
-                      ? 'bg-[#0a1122] border-cyan-500/40 shadow-xl shadow-cyan-500/5'
-                      : 'bg-[#090e1a] border-slate-800/80 hover:border-slate-700/90'
-                  }`}
-                  id={`faq-item-${faq.id}`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggle(faq.id)}
-                    className="w-full px-5 sm:px-7 py-4 sm:py-5 flex items-start justify-between gap-4 text-left transition-colors cursor-pointer min-h-[56px]"
-                    aria-expanded={isOpen}
-                  >
-                    <div className="space-y-1.5 flex-1 pr-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded-md">
-                          {faq.categoryLabel}
-                        </span>
-                      </div>
-                      <h3 className="text-sm sm:text-base lg:text-lg font-bold text-white tracking-tight leading-snug">
-                        {faq.question}
-                      </h3>
-                    </div>
-
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 mt-0.5 ${
-                      isOpen ? 'rotate-180 bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400'
-                    }`}>
-                      <ChevronDown className="w-4 h-4" />
-                    </div>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25, ease: standardEase }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 sm:px-7 pb-5 pt-2 border-t border-slate-800/60 space-y-4">
-                          <p className="text-xs sm:text-sm lg:text-[15px] text-slate-300 leading-relaxed">
-                            {faq.answer}
-                          </p>
-
-                          {/* Feature Highlights Pills inside answer */}
-                          {faq.highlights && faq.highlights.length > 0 && (
-                            <div className="flex flex-wrap items-center gap-2 pt-1">
-                              {faq.highlights.map((item, hIdx) => (
-                                <span
-                                  key={hIdx}
-                                  className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-cyan-300 bg-cyan-950/40 border border-cyan-500/20 px-2.5 py-1 rounded-lg"
-                                >
-                                  <Sparkles className="w-3 h-3 text-cyan-400 shrink-0" />
-                                  <span>{item}</span>
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })
-          )}
-        </div>
-
-        {/* Still have questions inquiry box */}
-        <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800/90 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-1.5 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase text-cyan-400 font-bold">
-              <Sparkles className="w-3 h-3" />
-              Direct Strategic Access
+            <div 
+              ref={scrollContainerRef}
+              className="flex flex-col gap-2.5 p-3 sm:p-4 overflow-y-auto max-h-[420px] sm:max-h-[460px] faq-scroll-box scroll-smooth"
+              tabIndex={0}
+              aria-label="Scrollable list of frequently asked questions"
+            >
+              {filteredFaqs.map(renderCard)}
             </div>
-            <h4 className="text-base sm:text-lg lg:text-xl font-extrabold text-white">
-              Have a specific question about your brand's growth?
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Our New Delhi digital marketing architects are available for a confidential review of your current search visibility, ad performance, and technical architecture.
-            </p>
+          )}
+
+          {/* Scroll Box Bottom Status Bar */}
+          <div className="px-4 py-2 sm:px-5 bg-[#070c17] border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
+            <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-slate-400">
+                Showing {filteredFaqs.length} questions • Scroll within box to explore
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={scrollToBottom}
+                className="text-slate-400 hover:text-cyan-300 flex items-center gap-1 transition-colors cursor-pointer text-[10px]"
+                title="Scroll to bottom"
+              >
+                <span>Bottom</span>
+                <ArrowDown className="w-2.5 h-2.5" />
+              </button>
+              <span className="text-slate-700">|</span>
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="text-slate-400 hover:text-cyan-300 flex items-center gap-1 transition-colors cursor-pointer text-[10px]"
+                title="Scroll back to top"
+              >
+                <span>Top</span>
+                <ArrowUp className="w-2.5 h-2.5" />
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto shrink-0">
+        </div>
+
+        {/* Compact Inquiry Strip */}
+        <div className="mt-6 p-4 sm:p-4.5 rounded-xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+          <div className="flex items-center gap-2.5 text-center sm:text-left">
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 hidden sm:flex text-cyan-400">
+              <Sparkles className="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <h4 className="text-xs sm:text-[13px] font-bold text-white">
+                Have a specific question about your brand's growth?
+              </h4>
+              <p className="text-[10.5px] sm:text-[11px] text-slate-400 mt-0.5">
+                Speak directly with our senior digital marketing strategists.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
             <a
-              href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi Marketing LU, I have a specific question regarding your digital marketing services.')}`}
+              href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi MarketingGlu, I have a specific question regarding your digital marketing services.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
             >
-              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <MessageCircle className="w-3 h-3 text-emerald-400" />
               <span>WhatsApp Strategy</span>
             </a>
 
             <a
               href="#banner-bottom"
-              className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110"
+              className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs shadow-cyan-500/20 hover:brightness-110"
             >
-              <span>Schedule Free Audit</span>
+              <span>Schedule Audit</span>
             </a>
           </div>
         </div>
 
-      </div>
+      </Container>
     </section>
   );
 }
