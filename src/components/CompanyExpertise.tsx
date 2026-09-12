@@ -149,7 +149,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
                     {/* Hover Hint Overlay */}
                     <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-400 text-slate-950 text-[11px] font-bold px-2.5 py-1 rounded-md shadow-lg flex items-center gap-1">
-                      <span>View Dedicated Page</span>
+                      <span>Know More</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>
                   </div>
@@ -207,23 +207,16 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                       </div>
                     </div>
 
-                    {/* Direct Landing Action Bar */}
-                    <div className="pt-2 border-t border-slate-800/80 flex items-center gap-2">
+                    {/* Direct Landing Action Bar: Single Know More Button */}
+                    <div className="pt-2 border-t border-slate-800/80">
                       <button
                         onClick={() => navigateToService(service.id)}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-400/10 cursor-pointer"
-                        title={`Open full ${service.tabLabel} architecture page`}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer group/btn min-h-[42px]"
+                        title={`Know more about ${service.title}`}
+                        id={`expertise-know-more-${service.id}`}
                       >
-                        <span>Dedicated Page</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-
-                      <button
-                        onClick={() => onOpenConsultation(service.title)}
-                        className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold border border-slate-700 transition-all cursor-pointer"
-                        title="Book a free consultation for this service"
-                      >
-                        Consult
+                        <span>Know More</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
                       </button>
                     </div>
 

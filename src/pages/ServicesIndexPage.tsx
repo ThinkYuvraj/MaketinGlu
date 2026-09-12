@@ -121,22 +121,15 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                   </div>
                 </div>
 
-                {/* Card Action Buttons */}
-                <div className="space-y-2 pt-2">
+                {/* Card Action Button: Single Know More Button */}
+                <div className="pt-2">
                   <button
                     onClick={() => navigateToService(service.id)}
-                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs tracking-tight transition-all duration-200 shadow-md shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer min-h-[44px] group/btn"
                     id={`services-view-page-${service.id}`}
                   >
-                    <span>View Dedicated {service.tabLabel} Page</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-
-                  <button
-                    onClick={() => onOpenConsultation(`Inquiry for ${service.title}`)}
-                    className="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold transition-colors cursor-pointer"
-                  >
-                    Request Free Consultation
+                    <span>Know More</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
                   </button>
                 </div>
 
