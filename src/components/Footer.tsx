@@ -46,8 +46,12 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
           
           {/* Column 1: Brand & Contact Info */}
           <motion.div variants={staggerItemVariants} className="space-y-4">
-            <div className="mb-3">
+            <div className="mb-3 flex items-center gap-2.5">
               <Logo variant="light-badge" />
+              <span className="text-xl font-black tracking-tight">
+                <span className="text-white italic">MARKETIN</span>
+                <span className="text-blue-500 not-italic">GLU</span>
+              </span>
             </div>
 
             <div className="flex items-start gap-2.5 text-slate-300">

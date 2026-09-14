@@ -43,10 +43,14 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] mb-3.5 sm:mb-5">
-              <span>{config.heroTitleLine1}</span> <br className="hidden sm:inline" />
-              <span>
-                SOLUTI<span className="text-cyan-400">ONS</span>
+            <h1 className="tracking-tight leading-[1.08] mb-3.5 sm:mb-5">
+              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-2 sm:mb-3.5">
+                <span className="text-white italic">MARKETIN</span>
+                <span className="text-blue-500 not-italic">GLU</span>
+              </span>
+              <span className="block text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold italic text-white tracking-wide leading-tight sm:leading-snug">
+                <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span> <br className="hidden sm:inline" />
+                <span>{config.heroTitleLine2 || 'SOLUTIONS'}</span>
               </span>
             </h1>
 

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { SiteConfig, PackageItem, TestimonialItem } from '../types';
 
 export const defaultSiteConfig: SiteConfig = {
-  brandName: 'Marketing LU',
+  brandName: 'MaketinGlu',
   phone: '+91 96545 96149',
   email: 'marketing2glue@gmail.com',
   address: 'C5C/11-B Janak Puri, New Delhi, India - 110058',
@@ -10,7 +10,7 @@ export const defaultSiteConfig: SiteConfig = {
 
   announcement: {
     enabled: true,
-    text: '🚀 Accelerate your brand growth with Marketing LU custom digital solutions',
+    text: '🚀 Accelerate your brand growth with MaketinGlu custom digital solutions',
     ctaText: 'Claim Free Audit',
   },
 

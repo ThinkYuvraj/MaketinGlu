@@ -119,13 +119,17 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
         
-        {/* Brand Logo with White Background Badge */}
+        {/* Brand Logo with White Background Badge & Typography */}
         <button
           onClick={() => handleNavClick('#/')}
-          className="flex items-center group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
+          className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
           id="nav-brand-logo"
         >
           <Logo variant="light-badge" size="md" />
+          <span className="text-lg sm:text-xl font-black tracking-tight flex items-center">
+            <span className="text-white italic">MARKETIN</span>
+            <span className="text-blue-500 not-italic">GLU</span>
+          </span>
         </button>
 
         {/* Desktop Nav Links */}
