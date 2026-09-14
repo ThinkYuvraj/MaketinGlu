@@ -85,6 +85,27 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   const centerIndex = currentIndex;
   const rightIndex = (currentIndex + 1) % totalPackages;
 
+  // Animation variants for smooth mobile horizontal card sliding
+  const mobileSlideVariants = {
+    enter: (direction: 'left' | 'right') => ({
+      x: direction === 'right' ? '100%' : '-100%',
+      opacity: 0.2,
+      scale: 0.95,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      zIndex: 1,
+    },
+    exit: (direction: 'left' | 'right') => ({
+      x: direction === 'right' ? '-100%' : '100%',
+      opacity: 0.2,
+      scale: 0.95,
+      zIndex: 0,
+    }),
+  };
+
   // Render an individual card
   const renderCardContent = (pkg: PackageItem, isFocused: boolean, isLeftOrRightFaded = false) => {
     const isPopular = pkg.popular;
@@ -109,11 +130,14 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
         {/* Faded overlay hint when not in center on desktop */}
         {isLeftOrRightFaded && (
-          <div className="absolute inset-0 z-30 bg-[#070b14]/50 backdrop-blur-[0.5px] flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity p-4 text-center cursor-pointer">
-            <div className="px-4 py-2 rounded-xl bg-slate-900/90 border border-cyan-500/50 text-cyan-300 font-bold text-xs flex items-center gap-1.5 shadow-lg">
+          <div className="absolute inset-0 z-30 bg-[#070b14]/70 backdrop-blur-[1px] flex flex-col items-center justify-center p-4 text-center cursor-pointer group-hover:bg-[#070b14]/50 transition-all">
+            <div className="px-4 py-2.5 rounded-xl bg-slate-900/95 border border-cyan-500/60 text-cyan-300 font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-xl group-hover:scale-105 transition-transform">
               <MousePointerClick className="w-4 h-4 text-cyan-400" />
               <span>Click to view {pkg.name}</span>
             </div>
+            <span className="text-[11px] text-slate-400 mt-2 font-medium">
+              {pkg.tagline}
+            </span>
           </div>
         )}
 
@@ -252,18 +276,17 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
         <div className="max-w-7xl mx-auto">
             
-            {/* DESKTOP 3-CARD ANIMATION VIEW: */}
-            <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6 items-center min-h-[490px] relative">
+            {/* DESKTOP 3-CARD ANIMATION VIEW */}
+            <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6 items-stretch min-h-[500px] relative">
               
               {/* Column 1: Left Faded Card */}
               <motion.div
                 key={`left-${packagesData[leftIndex].id}`}
-                layout
-                initial={{ opacity: 0.2, scale: 0.88, x: -30 }}
-                animate={{ opacity: 0.42, scale: 0.92, x: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                initial={{ opacity: 0.2, scale: 0.88, x: slideDirection === 'right' ? 50 : -50 }}
+                animate={{ opacity: 0.45, scale: 0.92, x: 0 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => handleSelectTab(leftIndex)}
-                className="cursor-pointer hover:opacity-75 transition-opacity"
+                className="cursor-pointer hover:opacity-85 transition-opacity h-full flex flex-col group"
               >
                 {renderCardContent(packagesData[leftIndex], false, true)}
               </motion.div>
@@ -271,11 +294,10 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               {/* Column 2: Center Highlighted Active Card */}
               <motion.div
                 key={`center-${packagesData[centerIndex].id}`}
-                layout
-                initial={{ opacity: 0.8, scale: 0.95, y: slideDirection === 'right' ? 20 : -20 }}
-                animate={{ opacity: 1, scale: 1.02, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="z-20 relative"
+                initial={{ opacity: 0.5, scale: 0.96, x: slideDirection === 'right' ? 65 : -65 }}
+                animate={{ opacity: 1, scale: 1.02, x: 0 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="z-20 relative h-full flex flex-col"
               >
                 {renderCardContent(packagesData[centerIndex], true, false)}
               </motion.div>
@@ -283,12 +305,11 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               {/* Column 3: Right Faded Card */}
               <motion.div
                 key={`right-${packagesData[rightIndex].id}`}
-                layout
-                initial={{ opacity: 0.2, scale: 0.88, x: 30 }}
-                animate={{ opacity: 0.42, scale: 0.92, x: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                initial={{ opacity: 0.2, scale: 0.88, x: slideDirection === 'right' ? 50 : -50 }}
+                animate={{ opacity: 0.45, scale: 0.92, x: 0 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => handleSelectTab(rightIndex)}
-                className="cursor-pointer hover:opacity-75 transition-opacity"
+                className="cursor-pointer hover:opacity-85 transition-opacity h-full flex flex-col group"
               >
                 {renderCardContent(packagesData[rightIndex], false, true)}
               </motion.div>
@@ -297,10 +318,10 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
             {/* MOBILE VIEW: 
                 - Shows 1 plan at a time
-                - Left & Right swipe functionality to inspect all plans
+                - Silky smooth simultaneous left & right swipe
                 - Auto-changes every 5 seconds
             */}
-            <div className="block lg:hidden relative">
+            <div className="block lg:hidden relative max-w-sm sm:max-w-md mx-auto">
               
               {/* Swipe guidance indicator */}
               <div className="text-center mb-3">
@@ -311,29 +332,34 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                 </span>
               </div>
 
-              {/* Swipable Card Container */}
-              <div className="relative overflow-hidden px-1">
-                <AnimatePresence mode="wait" initial={false}>
+              {/* Swipable Card Container with popLayout for concurrent slide */}
+              <div className="relative overflow-hidden px-1 min-h-[530px]">
+                <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                   <motion.div
                     key={packagesData[currentIndex].id}
+                    custom={slideDirection}
+                    variants={mobileSlideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{
+                      x: { type: "spring", stiffness: 280, damping: 28, mass: 0.8 },
+                      opacity: { duration: 0.25 },
+                      scale: { duration: 0.25 },
+                    }}
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.25}
+                    dragElastic={0.2}
                     onDragEnd={(_, info) => {
-                      // Left swipe: next package
-                      if (info.offset.x < -40 || info.velocity.x < -300) {
+                      const swipeThreshold = 35;
+                      const velocityThreshold = 250;
+                      if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
                         handleNext();
-                      } 
-                      // Right swipe: previous package
-                      else if (info.offset.x > 40 || info.velocity.x > 300) {
+                      } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
                         handlePrev();
                       }
                     }}
-                    initial={{ opacity: 0, x: slideDirection === 'right' ? 80 : -80 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: slideDirection === 'right' ? -80 : 80 }}
-                    transition={{ duration: 0.32, ease: "easeInOut" }}
-                    className="touch-pan-y cursor-grab active:cursor-grabbing"
+                    className="w-full touch-pan-y cursor-grab active:cursor-grabbing"
                   >
                     {renderCardContent(packagesData[currentIndex], true, false)}
                   </motion.div>
@@ -341,27 +367,27 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               </div>
 
               {/* Mobile pagination indicators with Prev / Next */}
-              <div className="flex items-center justify-between mt-5 px-2">
+              <div className="flex items-center justify-between mt-5 px-1">
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white"
+                  className="min-h-[44px] flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-4 h-4 text-cyan-400" />
                   <span>Previous</span>
                 </button>
 
                 {/* 3 Pagination Dots */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   {packagesData.map((_, dotIdx) => (
                     <button
                       key={dotIdx}
                       type="button"
                       onClick={() => handleSelectTab(dotIdx)}
-                      className={`h-2.5 rounded-full transition-all ${
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
                         dotIdx === currentIndex
                           ? 'w-7 bg-cyan-400 shadow-md shadow-cyan-400/40'
-                          : 'w-2.5 bg-slate-700 hover:bg-slate-500'
+                          : 'w-2 bg-slate-700 hover:bg-slate-500'
                       }`}
                       aria-label={`Go to plan ${dotIdx + 1}`}
                     />
@@ -371,10 +397,10 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white"
+                  className="min-h-[44px] flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
                 >
                   <span>Next</span>
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4 text-cyan-400" />
                 </button>
               </div>
 
