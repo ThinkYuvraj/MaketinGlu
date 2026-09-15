@@ -75,7 +75,7 @@ function AppContent() {
           /* Default Main Homepage Flow */
           <>
             {/* Section 1: Hero Section */}
-            <AnimatedSection id="home" delayMs={0}>
+            <AnimatedSection id="home" delayMs={0} className="home-slide home-slide--hero">
               <Hero
                 onOpenConsultation={() => handleOpenConsultation()}
                 onExplorePortfolio={handleExplorePortfolio}
@@ -83,33 +83,33 @@ function AppContent() {
             </AnimatedSection>
 
             {/* Section 2: Our Performance In Numbers */}
-            <AnimatedSection delayMs={60}>
+            <AnimatedSection delayMs={60} className="home-slide">
               <PerformanceStats />
             </AnimatedSection>
 
             {/* Section 3: Unified Company Expertise & Growth Disciplines */}
-            <AnimatedSection id="expertise" delayMs={60}>
+            <AnimatedSection id="expertise" delayMs={60} className="home-slide">
               <CompanyExpertise
                 onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
               />
             </AnimatedSection>
 
             {/* Section 4: Tailored Marketing Packages */}
-            <AnimatedSection delayMs={60}>
+            <AnimatedSection delayMs={60} className="home-slide">
               <Packages
                 onSelectPackage={(pkgName) => handleOpenConsultation(`Package: ${pkgName}`)}
               />
             </AnimatedSection>
 
             {/* Section 5: Case Studies & Proven Results (Portfolio) */}
-            <AnimatedSection delayMs={60}>
+            <AnimatedSection delayMs={60} className="home-slide">
               <CaseStudies
                 onOpenConsultation={() => handleOpenConsultation()}
               />
             </AnimatedSection>
 
             {/* Section 6: Frequently Asked Questions (FAQ) */}
-            <AnimatedSection delayMs={60}>
+            <AnimatedSection delayMs={60} className="home-slide">
               <FAQ />
             </AnimatedSection>
           </>

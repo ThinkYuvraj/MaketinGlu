@@ -457,7 +457,7 @@ export default function FAQ() {
         </div>
 
         {/* Compact Inquiry Strip */}
-        <div className="mt-6 p-4 sm:p-4.5 rounded-xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+        <div className="faq-inquiry mt-6 p-4 sm:p-4.5 rounded-xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-2.5 text-center sm:text-left">
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 hidden sm:flex text-cyan-400">
               <Sparkles className="w-3.5 h-3.5" />
