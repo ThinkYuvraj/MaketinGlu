@@ -3,6 +3,7 @@
 @layer base {
   html {
     background-color: #020617;
+    zoom: 90%;
   }
 
   body {

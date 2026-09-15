@@ -18,7 +18,9 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const casesList = config.caseStudies && config.caseStudies.length > 0 ? config.caseStudies : caseStudiesData;
 
   return (
-    <section id="cases" className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14]">
+    <section id="cases" className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14] border-t border-slate-800/80">
+      {/* Sleek separation glow divider line matching all other major sections */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 via-slate-700/60 to-transparent pointer-events-none" />
       <Container>
 
         {/* Section Header with "View All Cases" */}
@@ -58,7 +60,10 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
           viewport={{ once: true, margin: "-40px" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
         >
-          {casesList.map((item) => (
+          {casesList.map((item) => {
+            const caseImg = item.imageUrl || config.sectionImages?.[`case-${item.id}`];
+
+            return (
             <motion.div
               key={item.id}
               variants={staggerItemVariants}
@@ -69,7 +74,36 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               {/* Graphic Mockup Preview Window - Compact */}
               <div className="relative h-44 sm:h-48 md:h-52 bg-[#060a13] p-3 sm:p-4 overflow-hidden border-b border-slate-800/80 flex flex-col justify-between">
 
-                {item.type === 'nexa' ? (
+                {caseImg ? (
+                  // Custom Real Image Showcase
+                  <div className="relative z-10 w-full h-full flex flex-col justify-between">
+                    <img 
+                      src={caseImg} 
+                      alt={item.title} 
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-lg" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#060a13] via-[#060a13]/50 to-black/40 rounded-lg" />
+                    
+                    <div className="relative z-10 flex items-center justify-between">
+                      <div className="px-2.5 py-0.5 rounded-md bg-slate-950/85 backdrop-blur-xs border border-cyan-500/40 text-[9.5px] font-mono tracking-widest text-cyan-300 uppercase">
+                        {item.category}
+                      </div>
+                      <div className="flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded border border-emerald-500/40">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-[9.5px] font-mono text-emerald-400 font-semibold">VERIFIED</span>
+                      </div>
+                    </div>
+
+                    <div className="relative z-10 flex items-center justify-between text-[10px] text-slate-200 bg-slate-950/85 backdrop-blur-xs px-2.5 py-1.5 rounded-md border border-slate-700/60">
+                      <span className="font-bold text-white truncate">{item.title}</span>
+                      {item.stats && item.stats[0] && (
+                        <span className="text-cyan-300 font-mono font-bold text-[9.5px] shrink-0 ml-2">
+                          {item.stats[0].value} {item.stats[0].label}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ) : item.type === 'nexa' ? (
                   // Nexa Store India UI Transformation mockup
                   <div className="relative z-10 w-full h-full flex flex-col justify-between">
                     {/* Top title bar */}
@@ -241,7 +275,8 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 </div>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
 
         {/* Modal for detailed case study breakdown */}

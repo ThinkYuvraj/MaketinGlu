@@ -16,7 +16,9 @@ import {
   Check, 
   Eye,
   Sliders,
-  ShieldCheck
+  ShieldCheck,
+  Layers,
+  Image as ImageIcon
 } from 'lucide-react';
 import TitlesTab from './components/TitlesTab';
 import PackagesTab from './components/PackagesTab';
@@ -25,13 +27,15 @@ import FaqTab from './components/FaqTab';
 import TestimonialsTab from './components/TestimonialsTab';
 import CompanyTab from './components/CompanyTab';
 import ThemeStatsTab from './components/ThemeStatsTab';
+import SectionsTab from './components/SectionsTab';
+import ImagesMediaTab from './components/ImagesMediaTab';
 
 interface AdminDashboardProps {
   onBackToSite: () => void;
   onLogout: () => void;
 }
 
-type TabType = 'titles' | 'packages' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
+type TabType = 'titles' | 'sections' | 'images' | 'packages' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
 
 export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboardProps) {
   const { 
@@ -49,7 +53,11 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     deleteFaq,
     updateTestimonial, 
     addTestimonial, 
-    deleteTestimonial 
+    deleteTestimonial,
+    addCustomSection,
+    updateCustomSection,
+    deleteCustomSection,
+    toggleCustomSection
   } = useSiteConfig();
 
   const [activeTab, setActiveTab] = useState<TabType>('titles');
@@ -91,6 +99,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
     themeAccent: config.themeAccent,
     animationsEnabled: config.animationsEnabled,
+    pageScale: config.pageScale || '90%',
 
     webDesignStat: config.stats.webDesign,
     ecommerceStat: config.stats.ecommerce,
@@ -134,6 +143,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
       themeAccent: config.themeAccent,
       animationsEnabled: config.animationsEnabled,
+      pageScale: config.pageScale || '90%',
 
       webDesignStat: config.stats.webDesign,
       ecommerceStat: config.stats.ecommerce,
@@ -179,6 +189,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
       themeAccent: formData.themeAccent,
       animationsEnabled: formData.animationsEnabled,
+      pageScale: (formData.pageScale || '90%') as any,
 
       stats: {
         webDesign: formData.webDesignStat,
@@ -202,6 +213,8 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
   const tabs: { id: TabType; label: string; icon: any; count?: number }[] = [
     { id: 'titles', label: 'Titles & Copy', icon: Type },
+    { id: 'sections', label: 'Add / Edit Sections', icon: Layers, count: config.customSections?.length },
+    { id: 'images', label: 'Change Images', icon: ImageIcon },
     { id: 'packages', label: 'Service Packages', icon: Package, count: config.packages?.length },
     { id: 'cases', label: 'Case Studies', icon: Sparkles, count: config.caseStudies?.length },
     { id: 'faq', label: 'FAQ Knowledge', icon: HelpCircle, count: config.faqs?.length },
@@ -340,6 +353,25 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
         <main className="flex-1 bg-[#090e1a] border border-slate-800/90 rounded-3xl p-5 sm:p-7 min-w-0">
           {activeTab === 'titles' && (
             <TitlesTab formData={formData} setFormData={setFormData} />
+          )}
+
+          {activeTab === 'sections' && (
+            <SectionsTab
+              sections={config.customSections}
+              onAddSection={addCustomSection}
+              onUpdateSection={updateCustomSection}
+              onDeleteSection={deleteCustomSection}
+              onToggleSection={toggleCustomSection}
+            />
+          )}
+
+          {activeTab === 'images' && (
+            <ImagesMediaTab
+              onNotifySave={() => {
+                setSaveToast(true);
+                setTimeout(() => setSaveToast(false), 2500);
+              }}
+            />
           )}
 
           {activeTab === 'packages' && (

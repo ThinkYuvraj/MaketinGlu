@@ -5,6 +5,7 @@ interface ThemeStatsTabProps {
   formData: {
     themeAccent: string;
     animationsEnabled: boolean;
+    pageScale?: string;
     webDesignStat: number;
     ecommerceStat: number;
     designStat: number;
@@ -74,6 +75,42 @@ export default function ThemeStatsTab({ formData, setFormData }: ThemeStatsTabPr
             />
             <div className="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-500"></div>
           </label>
+        </div>
+
+        {/* Page Zoom / Scale Setting */}
+        <div className="pt-3 border-t border-slate-800 space-y-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-xs font-bold text-white flex items-center gap-2">
+                <span>Default Web Page Scale (Zoom)</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  {formData.pageScale || '90%'} (Default: 90%)
+                </span>
+              </div>
+              <div className="text-[11px] text-slate-400">Global browser viewport zoom applied across all pages and sections</div>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-2 pt-1">
+            {[
+              { label: '85%', value: '85%' },
+              { label: '90% (Default)', value: '90%' },
+              { label: '95%', value: '95%' },
+              { label: '100%', value: '100%' },
+            ].map((scaleOpt) => (
+              <button
+                key={scaleOpt.value}
+                type="button"
+                onClick={() => setFormData({ ...formData, pageScale: scaleOpt.value })}
+                className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                  (formData.pageScale || '90%') === scaleOpt.value
+                    ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-sm'
+                    : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                }`}
+              >
+                {scaleOpt.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -14,11 +14,14 @@ import BackToTopButton from './components/common/BackToTopButton';
 import AdminApp from './admin/AdminApp';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesIndexPage from './pages/ServicesIndexPage';
-import { SiteConfigProvider } from './context/SiteConfigContext';
+import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
+import CustomSectionRenderer from './components/CustomSectionRenderer';
+import { SectionPosition } from './types';
 
 function AppContent() {
+  const { config } = useSiteConfig();
   const { currentRoute, navigateTo } = useNavigation();
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [consultationService, setConsultationService] = useState<string>('Digital Marketing Audit');
@@ -39,6 +42,21 @@ function AppContent() {
 
   const navigateToAdmin = () => {
     navigateTo('#/admin');
+  };
+
+  const renderCustomSections = (position: SectionPosition) => {
+    if (!config.customSections) return null;
+    return config.customSections
+      .filter((s) => s.enabled && s.position === position)
+      .sort((a, b) => (a.order || 0) - (b.order || 0))
+      .map((section) => (
+        <AnimatedSection key={section.id} delayMs={60} className="relative">
+          <CustomSectionRenderer
+            section={section}
+            onOpenConsultation={(topic) => handleOpenConsultation(topic)}
+          />
+        </AnimatedSection>
+      ));
   };
 
   // If viewing admin portal, render dedicated AdminApp interface
@@ -82,11 +100,13 @@ function AppContent() {
                 onExplorePortfolio={handleExplorePortfolio}
               />
             </AnimatedSection>
+            {renderCustomSections('after-hero')}
 
             {/* Section 2: Our Performance In Numbers */}
             <AnimatedSection delayMs={60} className="relative">
               <PerformanceStats />
             </AnimatedSection>
+            {renderCustomSections('after-stats')}
 
             {/* Section 3: Unified Company Expertise & Growth Disciplines */}
             <AnimatedSection id="expertise" delayMs={60} className="relative">
@@ -94,13 +114,15 @@ function AppContent() {
                 onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
               />
             </AnimatedSection>
+            {renderCustomSections('after-expertise')}
 
             {/* Section 4: Tailored Marketing Packages */}
             <AnimatedSection delayMs={60} className="relative">
               <Packages
-                onSelectPackage={(pkgName) => handleOpenConsultation(`Package: ${pkgName}`)}
+                onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
               />
             </AnimatedSection>
+            {renderCustomSections('after-packages')}
 
             {/* Section 5: Case Studies & Proven Results (Portfolio) */}
             <AnimatedSection delayMs={60} className="relative">
@@ -108,11 +130,13 @@ function AppContent() {
                 onOpenConsultation={() => handleOpenConsultation()}
               />
             </AnimatedSection>
+            {renderCustomSections('after-cases')}
 
             {/* Section 6: Frequently Asked Questions (FAQ) */}
             <AnimatedSection delayMs={60} className="relative">
               <FAQ />
             </AnimatedSection>
+            {renderCustomSections('after-faq')}
           </>
         )}
       </main>
@@ -134,8 +158,9 @@ function AppContent() {
       <ConsultationModal
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
-        title={consultationService ? `Reserve Consultation: ${consultationService}` : "Book Your Free Consultation"}
-        subtitle="Schedule a high-intensity 30-minute tactical review with our senior architects in New Delhi."
+        initialService={consultationService}
+        title={consultationService ? `Reserve: ${consultationService.replace(/^Package:\s*/i, '')}` : "Book Free Consultation"}
+        subtitle="Schedule a 30-minute tactical review with our senior architects in New Delhi."
       />
     </div>
   );

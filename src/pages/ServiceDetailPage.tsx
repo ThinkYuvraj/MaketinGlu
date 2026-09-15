@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { ExpertiseItem, expertiseData } from '../data/expertiseData';
 import { useNavigation } from '../context/NavigationContext';
+import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from '../components/common/Container';
 import { buttonHoverMotion, standardEase } from '../lib/animations';
 
@@ -26,6 +27,7 @@ interface ServiceDetailPageProps {
 
 export default function ServiceDetailPage({ service, onOpenConsultation }: ServiceDetailPageProps) {
   const { navigateTo, navigateToService } = useNavigation();
+  const { config } = useSiteConfig();
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const toggleFaq = (idx: number) => {
@@ -175,7 +177,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
                 
                 <div className="relative rounded-2xl bg-[#0b1324] border border-cyan-500/30 overflow-hidden shadow-2xl p-3 sm:p-4">
                   <img 
-                    src={service.image} 
+                    src={config.sectionImages?.[service.id] || service.image} 
                     alt={`${service.title} Showcase`} 
                     className="w-full h-56 sm:h-72 lg:h-80 rounded-xl object-cover transform transition duration-500 group-hover:scale-[1.02]" 
                   />

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem } from '../types';
+import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection } from '../types';
 import { caseStudiesData } from '../data/caseStudiesData';
 import { defaultFaqs } from '../data/faqData';
 
@@ -46,6 +46,7 @@ export const defaultSiteConfig: SiteConfig = {
 
   themeAccent: 'cyan',
   animationsEnabled: true,
+  pageScale: '90%',
 
   stats: {
     webDesign: 91,
@@ -180,6 +181,53 @@ export const defaultSiteConfig: SiteConfig = {
       highlight: 'Wonderful job',
     },
   ],
+
+  // Custom User-Added Sections
+  customSections: [
+    {
+      id: 'why-choose-us',
+      badge: 'THE MARKETINGLU EDGE',
+      title: 'Why Growth-Minded Brands Choose',
+      titleHighlight: 'Our Strategic Team',
+      description: 'We replace opaque marketing retainers with engineering precision, real-time dashboards, and full commercial asset ownership.',
+      position: 'after-packages',
+      layout: 'cards',
+      enabled: true,
+      order: 1,
+      items: [
+        {
+          id: 'item-1',
+          title: 'Zero Long-Term Lock-In',
+          description: 'Flexible month-to-month retainers. We earn your business continuously through tangible ROI and measurable conversion lifts.',
+          tag: 'FLEXIBILITY',
+          icon: 'ShieldCheck',
+          statValue: '100%',
+          statLabel: 'Client Freedom'
+        },
+        {
+          id: 'item-2',
+          title: 'Complete IP & Code Ownership',
+          description: 'You retain 100% full ownership of your domains, codebase, ad accounts, analytics setups, and visual design assets.',
+          tag: 'SECURITY',
+          icon: 'Award',
+          statValue: '0%',
+          statLabel: 'Agency Handcuffs'
+        },
+        {
+          id: 'item-3',
+          title: 'Direct Senior Strategist Access',
+          description: 'Weekly video calls, dedicated WhatsApp and Slack channels with senior marketing architects—never passed to interns.',
+          tag: 'EXPERTISE',
+          icon: 'Sparkles',
+          statValue: '24/7',
+          statLabel: 'Dedicated Support'
+        }
+      ]
+    }
+  ],
+
+  // Section Images (Expertise services, case studies, hero/brand visuals)
+  sectionImages: {},
 };
 
 interface SiteConfigContextType {
@@ -206,11 +254,21 @@ interface SiteConfigContextType {
   updateTestimonial: (test: TestimonialItem) => void;
   addTestimonial: (test: TestimonialItem) => void;
   deleteTestimonial: (id: string) => void;
+
+  // Custom Sections Management
+  addCustomSection: (section: CustomSection) => void;
+  updateCustomSection: (section: CustomSection) => void;
+  deleteCustomSection: (id: string) => void;
+  toggleCustomSection: (id: string) => void;
+
+  // Section Images Management
+  updateSectionImage: (key: string, url: string) => void;
+  resetSectionImage: (key: string) => void;
 }
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v5';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v6';
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {
@@ -225,6 +283,9 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           caseStudies: parsed.caseStudies || defaultSiteConfig.caseStudies,
           faqs: parsed.faqs || defaultSiteConfig.faqs,
           testimonials: parsed.testimonials || defaultSiteConfig.testimonials,
+          customSections: parsed.customSections || defaultSiteConfig.customSections,
+          sectionImages: parsed.sectionImages || defaultSiteConfig.sectionImages,
+          pageScale: parsed.pageScale || '90%',
         };
       }
     } catch {
@@ -232,6 +293,16 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
     return defaultSiteConfig;
   });
+
+  // Apply default page scale (zoom: 90%) to document root
+  useEffect(() => {
+    const scale = config.pageScale || '90%';
+    try {
+      (document.documentElement.style as any).zoom = scale;
+    } catch {
+      // fallback
+    }
+  }, [config.pageScale]);
 
   useEffect(() => {
     try {
@@ -342,6 +413,61 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
+  // Custom Sections Management
+  const addCustomSection = (section: CustomSection) => {
+    setConfig((prev) => ({
+      ...prev,
+      customSections: [...(prev.customSections || []), section],
+    }));
+  };
+
+  const updateCustomSection = (updatedSection: CustomSection) => {
+    setConfig((prev) => ({
+      ...prev,
+      customSections: (prev.customSections || []).map((s) =>
+        s.id === updatedSection.id ? updatedSection : s
+      ),
+    }));
+  };
+
+  const deleteCustomSection = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      customSections: (prev.customSections || []).filter((s) => s.id !== id),
+    }));
+  };
+
+  const toggleCustomSection = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      customSections: (prev.customSections || []).map((s) =>
+        s.id === id ? { ...s, enabled: !s.enabled } : s
+      ),
+    }));
+  };
+
+  // Section Images Management
+  const updateSectionImage = (key: string, url: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      sectionImages: {
+        ...(prev.sectionImages || {}),
+        [key]: url,
+      },
+    }));
+  };
+
+  const resetSectionImage = (key: string) => {
+    setConfig((prev) => {
+      const nextImages = { ...(prev.sectionImages || {}) };
+      delete nextImages[key];
+      return {
+        ...prev,
+        sectionImages: nextImages,
+      };
+    });
+  };
+
   return (
     <SiteConfigContext.Provider
       value={{
@@ -360,6 +486,12 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         updateTestimonial,
         addTestimonial,
         deleteTestimonial,
+        addCustomSection,
+        updateCustomSection,
+        deleteCustomSection,
+        toggleCustomSection,
+        updateSectionImage,
+        resetSectionImage,
       }}
     >
       {children}

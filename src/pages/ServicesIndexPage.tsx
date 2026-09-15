@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, CheckCircle2, ArrowLeft, Zap, MessageCircle } from 'lucide-react';
 import { expertiseData } from '../data/expertiseData';
 import { useNavigation } from '../context/NavigationContext';
+import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from '../components/common/Container';
 import { buttonHoverMotion } from '../lib/animations';
 
@@ -12,6 +13,7 @@ interface ServicesIndexPageProps {
 
 export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexPageProps) {
   const { navigateTo, navigateToService } = useNavigation();
+  const { config } = useSiteConfig();
 
   return (
     <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-24 sm:pt-28 pb-20">
@@ -80,7 +82,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                   {/* Service Image Preview */}
                   <div className="relative rounded-xl overflow-hidden mb-4 border border-slate-800/80 aspect-video bg-[#070b14]">
                     <img
-                      src={service.image}
+                      src={config.sectionImages?.[service.id] || service.image}
                       alt={service.title}
                       className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
                     />

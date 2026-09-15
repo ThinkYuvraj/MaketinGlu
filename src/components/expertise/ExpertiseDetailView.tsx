@@ -9,6 +9,7 @@ import {
 import { ExpertiseItem } from '../../data/expertiseData';
 import { buttonHoverMotion, standardEase } from '../../lib/animations';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSiteConfig } from '../../context/SiteConfigContext';
 
 interface ExpertiseDetailViewProps {
   activeExpertise: ExpertiseItem;
@@ -23,7 +24,9 @@ export default function ExpertiseDetailView({
   onOpenConsultation,
 }: ExpertiseDetailViewProps) {
   const { navigateToService } = useNavigation();
+  const { config } = useSiteConfig();
   const ActiveIcon = activeExpertise.icon;
+  const serviceImg = config.sectionImages?.[activeExpertise.id] || activeExpertise.image;
 
   return (
     <div className="w-full">
@@ -165,7 +168,7 @@ export default function ExpertiseDetailView({
                   title={`Click to open dedicated ${activeExpertise.tabLabel} page`}
                 >
                   <img 
-                    src={activeExpertise.image} 
+                    src={serviceImg} 
                     alt={`${activeExpertise.title} Showcase`} 
                     className="w-full h-48 sm:h-64 md:h-72 lg:h-80 xl:h-[420px] 2xl:h-[480px] rounded-xl object-cover transform transition duration-500"
                   />
