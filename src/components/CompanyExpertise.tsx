@@ -403,14 +403,14 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               {/* Swipe guidance indicator */}
               <div className="text-center mb-3">
                 <span className="text-[11px] font-medium text-slate-400 flex items-center justify-center gap-1.5">
-                  <ChevronLeft className="w-3 h-3 text-cyan-400 animate-pulse" />
-                  <span>Swipe left or right to switch disciplines</span>
-                  <ChevronRight className="w-3 h-3 text-cyan-400 animate-pulse" />
+                  <ChevronLeft className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                  <span className="font-semibold text-slate-300">Swipe left or right to switch disciplines</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
                 </span>
               </div>
 
               {/* Swipable Card Container with popLayout for concurrent slide */}
-              <div className="relative overflow-hidden px-1 min-h-[450px]">
+              <div className="relative overflow-hidden px-1 min-h-[490px] sm:min-h-[510px]">
                 <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                   <motion.div
                     key={services[safeCurrentIndex].id}
