@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { fadeInUpVariants, buttonHoverMotion } from '../lib/animations';
+import Container from './common/Container';
 
 interface AppointmentBannerProps {
   title?: string;
@@ -18,7 +19,7 @@ export default function AppointmentBanner({
   id = "appointment-banner"
 }: AppointmentBannerProps) {
   return (
-    <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 my-12 sm:my-16 lg:my-20" id={id}>
+    <Container className="my-12 sm:my-16 lg:my-20" id={id}>
       <motion.div 
         variants={fadeInUpVariants}
         initial="hidden"
@@ -54,6 +55,6 @@ export default function AppointmentBanner({
         </div>
 
       </motion.div>
-    </div>
+    </Container>
   );
 }

@@ -1,8 +1,10 @@
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Lock, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
+import Container from './common/Container';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { useNavigation } from '../context/NavigationContext';
+import { expertiseData } from '../data/expertiseData';
 import { staggerContainerVariants, staggerItemVariants } from '../lib/animations';
 
 interface FooterProps {
@@ -23,18 +25,12 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
     { name: 'Contact & Consultation', action: () => onOpenConsultation() },
   ];
 
-  const serviceLinks = [
-    { name: 'Website Design & Dev', id: 'web-design' },
-    { name: 'Ecommerce Storefronts', id: 'ecommerce' },
-    { name: 'Search Engine Optimization (SEO)', id: 'seo' },
-    { name: 'Branding & Graphic Design', id: 'graphic-design' },
-    { name: 'PPC Paid Advertising', id: 'ppc' },
-    { name: 'Social Media Optimization (SMO)', id: 'smo' },
-  ];
+  const allServices = config.services && config.services.length > 0 ? config.services : expertiseData;
+  const displayedServices = allServices.slice(0, 6);
 
   return (
     <footer id="contact" className="relative bg-[#050810] border-t border-slate-900 pt-16 pb-12 text-slate-400 text-xs sm:text-sm">
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+      <Container>
         
         {/* Main Footer Grid - Staggered entrance across desktop screens */}
         <motion.div 
@@ -110,13 +106,13 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
               </button>
             </div>
             <ul className="space-y-2">
-              {serviceLinks.map((service) => (
-                <li key={service.name}>
+              {displayedServices.map((service) => (
+                <li key={service.id}>
                   <button
                     onClick={() => navigateToService(service.id)}
                     className="hover:text-cyan-400 transition-colors inline-flex items-center py-1 min-h-[32px] text-left cursor-pointer"
                   >
-                    {service.name}
+                    {service.tabLabel || service.title}
                   </button>
                 </li>
               ))}
@@ -208,7 +204,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
           </div>
         </div>
 
-      </div>
+      </Container>
     </footer>
   );
 }

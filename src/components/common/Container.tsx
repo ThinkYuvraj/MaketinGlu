@@ -14,16 +14,16 @@ export default function Container({
   id 
 }: ContainerProps) {
   const sizeClasses = {
-    narrow: 'max-w-5xl xl:max-w-6xl 2xl:max-w-7xl',
-    standard: 'max-w-[1720px] 2xl:max-w-[1840px]',
-    wide: 'max-w-[1840px] 2xl:max-w-[1920px]',
+    narrow: 'max-w-4xl',
+    standard: 'max-w-7xl',
+    wide: 'max-w-7xl xl:max-w-7xl 2xl:max-w-[1440px]',
     full: 'w-full',
   }[size];
 
   return (
     <div 
       id={id}
-      className={`w-full ${sizeClasses} mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 ${className}`}
+      className={`w-full ${sizeClasses} mx-auto px-4 sm:px-6 lg:px-8 ${className}`}
     >
       {children}
     </div>

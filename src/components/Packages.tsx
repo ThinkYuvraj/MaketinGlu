@@ -237,7 +237,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </motion.button>
 
             <a
-              href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi Marketing LU, I am interested in inquiring about the ${pkg.name} package.`)}`}
+              href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketingGlu, I am interested in inquiring about the ${pkg.name} package.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
@@ -255,7 +255,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white "
+      className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

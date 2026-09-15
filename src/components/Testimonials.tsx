@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion, standardEase } from '../lib/animations';
+import Container from './common/Container';
 
 export default function Testimonials() {
   const { config } = useSiteConfig();
@@ -67,19 +68,19 @@ export default function Testimonials() {
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-sky-600/5 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
+      <Container className="relative z-10">
 
-        {/* Section Header matching Figma & Marketing LU website */}
+        {/* Section Header matching Figma & MarketingGlu website */}
         <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
             <span>TESTIMONIALS</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-1 mb-3 tracking-tight">
-            What Our Clients Say About Marketing LU
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-1 mb-3 tracking-tight">
+            What Our Clients Say About MarketingGlu
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
-            Real reviews and feedback directly from our client portfolio on marketinglu.com.
+            Real reviews and feedback directly from our growth partnerships across India.
           </p>
 
           {/* Average Rating Score Summary Badge */}
@@ -381,14 +382,14 @@ export default function Testimonials() {
               <div className="p-4 bg-slate-900/40 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span>
-                  Lalita Rani’s testimonial appears in active rotation within Marketing LU’s homepage testimonial carousel.
+                  Client testimonials are verified from live campaigns and client reviews across MarketingGlu.
                 </span>
               </div>
             </div>
           </motion.div>
         )}
 
-      </div>
+      </Container>
     </section>
   );
 }

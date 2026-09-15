@@ -77,7 +77,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition-colors cursor-pointer"
           >
             <Layers className="w-3.5 h-3.5 text-cyan-400" />
-            <span>All 6 Disciplines</span>
+            <span>All {allServices.length} Disciplines</span>
           </button>
         </div>
 

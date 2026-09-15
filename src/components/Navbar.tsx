@@ -105,7 +105,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
       {/* Top Announcement Bar (Configurable in Admin Studio) */}
       {config.announcement.enabled && (
         <div className="bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border-b border-cyan-500/20 py-1.5 px-3 sm:px-4 text-center text-[11px] sm:text-xs">
-          <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <span className="truncate max-w-[200px] sm:max-w-none font-medium">{config.announcement.text}</span>
             <button
@@ -119,7 +119,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
         
         {/* Brand Logo with White Background Badge & Typography */}
         <button
@@ -135,7 +135,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </button>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 2xl:gap-9 text-sm xl:text-base font-medium text-slate-300">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7 text-sm font-medium text-slate-300">
           <button
             onClick={() => handleNavClick('#/')}
             className={`hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium ${
@@ -249,6 +249,14 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             className="hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium"
           >
             Portfolio
+          </button>
+          <button
+            onClick={() => handleNavClick('#/blogs')}
+            className={`hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium ${
+              currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail' ? 'text-cyan-400' : ''
+            }`}
+          >
+            Blogs
           </button>
           <button
             onClick={() => handleNavClick('#faq')}
@@ -402,6 +410,14 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                   className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
                 >
                   <span className="font-semibold">Portfolio</span>
+                  <ArrowRight className="w-4 h-4 text-slate-500" />
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#/blogs')}
+                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
+                >
+                  <span className="font-semibold">Blogs &amp; Insights</span>
                   <ArrowRight className="w-4 h-4 text-slate-500" />
                 </button>
 

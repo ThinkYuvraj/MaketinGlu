@@ -24,20 +24,20 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
       <Container>
 
         {/* Section Header with "View All Cases" */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[9.5px] sm:text-[10px] font-bold tracking-widest uppercase mb-1.5 shadow-sm shadow-cyan-500/10">
-              <Sparkles className="w-3 h-3 text-cyan-400" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyan-400 text-[11px] font-bold tracking-widest uppercase mb-2 shadow-sm shadow-cyan-500/10">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
             </div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
               {config.casesSectionTitle1 || 'Case Studies &'}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
                 {config.casesSectionTitle2 || 'Recent Work'}
               </span>
             </h2>
             {config.casesSectionDescription && (
-              <p className="mt-1.5 text-slate-400 text-xs leading-relaxed max-w-lg">
+              <p className="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl">
                 {config.casesSectionDescription}
               </p>
             )}
@@ -45,10 +45,10 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
           <button
             onClick={onOpenConsultation}
-            className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group transition-colors py-1 min-h-[32px] cursor-pointer self-start sm:self-auto"
+            className="text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 group transition-colors py-1 cursor-pointer self-start sm:self-auto"
           >
             <span>View All Cases</span>
-            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
         </div>
 
@@ -58,7 +58,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto w-full"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full"
         >
           {casesList.map((item) => {
             const caseImg = item.imageUrl || config.sectionImages?.[`case-${item.id}`];

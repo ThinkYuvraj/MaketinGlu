@@ -51,14 +51,14 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
                 <span className="text-white italic tracking-tighter">MARKETIN</span>
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
-              <span className="block text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-100 tracking-wider leading-tight sm:leading-snug drop-shadow-md whitespace-nowrap">
+              <span className="block text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-100 tracking-wide leading-tight sm:leading-snug drop-shadow-md">
                 <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span>{' '}
-                <span className="text-slate-300 font-bold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
+                <span className="text-cyan-300 font-bold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
               </span>
             </h1>
 
             {/* Description */}
-            <p className="max-w-2xl lg:max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-slate-400 font-medium leading-relaxed mb-8 sm:mb-10 px-4">
+            <p className="max-w-2xl lg:max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-8 sm:mb-10 px-4">
               {config.heroDescription}
             </p>
 
@@ -68,18 +68,18 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation()}
-                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all border border-cyan-400/20"
+                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all border border-cyan-300/30"
                 id="hero-btn-consultation"
               >
                 <span>{config.heroPrimaryCta}</span>
-                <ArrowRight className="w-4 h-4 stroke-[3]" />
+                <ArrowRight className="w-4 h-4 stroke-[3] text-slate-950" />
               </motion.button>
 
               {/* Secondary CTA */}
               <motion.button
                 {...buttonHoverMotion}
                 onClick={onExplorePortfolio}
-                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-transparent hover:bg-[#0c1322] border-2 border-slate-700/80 hover:border-cyan-500/40 text-slate-200 font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer transition-all"
+                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/50 text-slate-200 font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer transition-all shadow-md"
                 id="hero-btn-portfolio"
               >
                 <span>{config.heroSecondaryCta}</span>
