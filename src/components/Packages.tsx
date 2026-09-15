@@ -112,7 +112,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
     return (
       <div
-        className={`relative w-full rounded-3xl flex flex-col justify-between transition-all duration-500  ${
+        className={`relative w-full rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-500  ${
           isFocused
             ? isPopular
               ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20'
@@ -122,7 +122,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
       >
         {/* Top Banner for Popular Package */}
         {isPopular && (
-          <div className="bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 text-center py-1.5 px-4 text-[10px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm">
+          <div className="rounded-t-[22px] bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 text-center py-1.5 px-4 text-[10px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm">
             <Sparkles className="w-3 h-3 fill-slate-950" />
             <span>MOST POPULAR • HIGH-ROI ACCELERATION</span>
           </div>

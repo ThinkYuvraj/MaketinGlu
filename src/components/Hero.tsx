@@ -51,8 +51,8 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
                 <span className="text-white italic tracking-tighter">MARKETIN</span>
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
-              <span className="block text-lg sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-wider leading-tight sm:leading-snug drop-shadow-md">
-                <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span> <br className="hidden sm:inline" />
+              <span className="block text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-100 tracking-wider leading-tight sm:leading-snug drop-shadow-md whitespace-nowrap">
+                <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span>{' '}
                 <span className="text-slate-300 font-bold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
               </span>
             </h1>

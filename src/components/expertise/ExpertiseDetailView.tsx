@@ -167,7 +167,7 @@ export default function ExpertiseDetailView({
                   <img 
                     src={activeExpertise.image} 
                     alt={`${activeExpertise.title} Showcase`} 
-                    className="w-full h-48 sm:h-64 md:h-72 lg:h-80 xl:h-[420px] 2xl:h-[480px] rounded-xl object-cover transform transition duration-500 
+                    className="w-full h-48 sm:h-64 md:h-72 lg:h-80 xl:h-[420px] 2xl:h-[480px] rounded-xl object-cover transform transition duration-500"
                   />
                   
                   {/* Floating Metric Card Overlay */}
