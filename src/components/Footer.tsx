@@ -17,9 +17,10 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
   const usefulLinks = [
     { name: 'Home', action: () => navigateTo('#/') },
     { name: 'All Services Hub', action: () => navigateTo('#/services') },
-    { name: 'Contact & Consultation', action: () => onOpenConsultation() },
+    { name: 'Blogs & Resources', action: () => navigateTo('#/blogs') },
     { name: 'Growth Performance', action: () => navigateTo('#/#growth') },
     { name: 'Client Case Studies', action: () => navigateTo('#/#cases') },
+    { name: 'Contact & Consultation', action: () => onOpenConsultation() },
   ];
 
   const serviceLinks = [

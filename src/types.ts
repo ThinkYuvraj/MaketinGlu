@@ -94,6 +94,27 @@ export interface CustomSection {
   items?: CustomSectionItem[];
 }
 
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  excerpt: string;
+  content: string;
+  author: {
+    name: string;
+    role: string;
+    avatar?: string;
+  };
+  readTime: string;
+  publishedAt: string;
+  tags: string[];
+  coverImage?: string;
+  featured?: boolean;
+  published: boolean;
+  views?: number;
+}
+
 export interface SiteConfig {
   // Brand & Contact
   brandName: string;
@@ -152,6 +173,7 @@ export interface SiteConfig {
   caseStudies: CaseStudy[];
   faqs: FAQItem[];
   testimonials: TestimonialItem[];
+  blogs: BlogPost[];
 
   // Custom User-Added Sections
   customSections: CustomSection[];

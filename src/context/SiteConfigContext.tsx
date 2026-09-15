@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection } from '../types';
+import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost } from '../types';
 import { caseStudiesData } from '../data/caseStudiesData';
 import { defaultFaqs } from '../data/faqData';
+import { defaultBlogs } from '../data/blogsData';
 
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
@@ -226,6 +227,9 @@ export const defaultSiteConfig: SiteConfig = {
     }
   ],
 
+  // Blogs and Resources
+  blogs: defaultBlogs,
+
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: {},
 };
@@ -255,6 +259,12 @@ interface SiteConfigContextType {
   addTestimonial: (test: TestimonialItem) => void;
   deleteTestimonial: (id: string) => void;
 
+  // Blogs & Resources Management
+  addBlogPost: (blog: BlogPost) => void;
+  updateBlogPost: (blog: BlogPost) => void;
+  deleteBlogPost: (id: string) => void;
+  togglePublishBlog: (id: string) => void;
+
   // Custom Sections Management
   addCustomSection: (section: CustomSection) => void;
   updateCustomSection: (section: CustomSection) => void;
@@ -268,7 +278,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v6';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v7';
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {
@@ -283,9 +293,10 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           caseStudies: parsed.caseStudies || defaultSiteConfig.caseStudies,
           faqs: parsed.faqs || defaultSiteConfig.faqs,
           testimonials: parsed.testimonials || defaultSiteConfig.testimonials,
+          blogs: parsed.blogs || defaultSiteConfig.blogs,
           customSections: parsed.customSections || defaultSiteConfig.customSections,
           sectionImages: parsed.sectionImages || defaultSiteConfig.sectionImages,
-          pageScale: parsed.pageScale || '90%',
+          pageScale: parsed.pageScale || '100%',
         };
       }
     } catch {
@@ -294,15 +305,14 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     return defaultSiteConfig;
   });
 
-  // Apply default page scale (zoom: 90%) to document root
+  // Ensure clean root zoom (prevents layout clipping and coordinate bugs)
   useEffect(() => {
-    const scale = config.pageScale || '90%';
     try {
-      (document.documentElement.style as any).zoom = scale;
+      document.documentElement.style.removeProperty('zoom');
     } catch {
       // fallback
     }
-  }, [config.pageScale]);
+  }, []);
 
   useEffect(() => {
     try {
@@ -413,6 +423,35 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
+  // Blogs & Resources Management
+  const addBlogPost = (newBlog: BlogPost) => {
+    setConfig((prev) => ({
+      ...prev,
+      blogs: [newBlog, ...(prev.blogs || [])],
+    }));
+  };
+
+  const updateBlogPost = (updatedBlog: BlogPost) => {
+    setConfig((prev) => ({
+      ...prev,
+      blogs: (prev.blogs || []).map((b) => (b.id === updatedBlog.id ? updatedBlog : b)),
+    }));
+  };
+
+  const deleteBlogPost = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      blogs: (prev.blogs || []).filter((b) => b.id !== id),
+    }));
+  };
+
+  const togglePublishBlog = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      blogs: (prev.blogs || []).map((b) => (b.id === id ? { ...b, published: !b.published } : b)),
+    }));
+  };
+
   // Custom Sections Management
   const addCustomSection = (section: CustomSection) => {
     setConfig((prev) => ({
@@ -486,6 +525,10 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         updateTestimonial,
         addTestimonial,
         deleteTestimonial,
+        addBlogPost,
+        updateBlogPost,
+        deleteBlogPost,
+        togglePublishBlog,
         addCustomSection,
         updateCustomSection,
         deleteCustomSection,

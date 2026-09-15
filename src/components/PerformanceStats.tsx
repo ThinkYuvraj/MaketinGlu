@@ -71,7 +71,7 @@ export default function PerformanceStats() {
                 id={`stat-card-${idx}`}
               >
                 {/* Responsive Circular Gauge */}
-                <div className="relative w-18 h-18 sm:w-22 sm:h-22 md:w-24 md:h-24 flex items-center justify-center mb-2 shrink-0">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-2 shrink-0">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                     <defs>
                       <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">

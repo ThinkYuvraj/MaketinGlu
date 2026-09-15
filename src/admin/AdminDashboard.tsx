@@ -18,9 +18,11 @@ import {
   Sliders,
   ShieldCheck,
   Layers,
-  Image as ImageIcon
+  Image as ImageIcon,
+  BookOpen
 } from 'lucide-react';
 import TitlesTab from './components/TitlesTab';
+import BlogsTab from './components/BlogsTab';
 import PackagesTab from './components/PackagesTab';
 import CaseStudiesTab from './components/CaseStudiesTab';
 import FaqTab from './components/FaqTab';
@@ -35,7 +37,7 @@ interface AdminDashboardProps {
   onLogout: () => void;
 }
 
-type TabType = 'titles' | 'sections' | 'images' | 'packages' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
+type TabType = 'titles' | 'blogs' | 'sections' | 'images' | 'packages' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
 
 export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboardProps) {
   const { 
@@ -54,6 +56,10 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     updateTestimonial, 
     addTestimonial, 
     deleteTestimonial,
+    addBlogPost,
+    updateBlogPost,
+    deleteBlogPost,
+    togglePublishBlog,
     addCustomSection,
     updateCustomSection,
     deleteCustomSection,
@@ -213,6 +219,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
   const tabs: { id: TabType; label: string; icon: any; count?: number }[] = [
     { id: 'titles', label: 'Titles & Copy', icon: Type },
+    { id: 'blogs', label: 'Blogs & Resources', icon: BookOpen, count: config.blogs?.length },
     { id: 'sections', label: 'Add / Edit Sections', icon: Layers, count: config.customSections?.length },
     { id: 'images', label: 'Change Images', icon: ImageIcon },
     { id: 'packages', label: 'Service Packages', icon: Package, count: config.packages?.length },
@@ -325,7 +332,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
                     {tab.count !== undefined && (
                       <span
-                        className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${
+                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md ${
                           isActive
                             ? 'bg-slate-950/20 text-slate-950 font-bold'
                             : 'bg-slate-800 text-slate-400'
@@ -353,6 +360,16 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
         <main className="flex-1 bg-[#090e1a] border border-slate-800/90 rounded-3xl p-5 sm:p-7 min-w-0">
           {activeTab === 'titles' && (
             <TitlesTab formData={formData} setFormData={setFormData} />
+          )}
+
+          {activeTab === 'blogs' && (
+            <BlogsTab
+              blogs={config.blogs || []}
+              onAddBlog={addBlogPost}
+              onUpdateBlog={updateBlogPost}
+              onDeleteBlog={deleteBlogPost}
+              onTogglePublish={togglePublishBlog}
+            />
           )}
 
           {activeTab === 'sections' && (

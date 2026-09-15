@@ -14,6 +14,8 @@ import BackToTopButton from './components/common/BackToTopButton';
 import AdminApp from './admin/AdminApp';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesIndexPage from './pages/ServicesIndexPage';
+import BlogsPage from './pages/BlogsPage';
+import BlogDetailPage from './pages/BlogDetailPage';
 import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
@@ -88,6 +90,17 @@ function AppContent() {
         ) : currentRoute.type === 'services-index' ? (
           /* Dedicated All 6 Services Directory (#/services) */
           <ServicesIndexPage 
+            onOpenConsultation={handleOpenConsultation} 
+          />
+        ) : currentRoute.type === 'blogs' ? (
+          /* Dedicated Blogs & Resources Page (#/blogs) */
+          <BlogsPage 
+            onOpenConsultation={handleOpenConsultation} 
+          />
+        ) : currentRoute.type === 'blog-detail' ? (
+          /* Dedicated Blog Article Detail Reader (#/blogs/:slug) */
+          <BlogDetailPage 
+            slug={currentRoute.blogSlug} 
             onOpenConsultation={handleOpenConsultation} 
           />
         ) : (

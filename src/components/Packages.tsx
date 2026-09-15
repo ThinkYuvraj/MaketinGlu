@@ -150,7 +150,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </div>
         )}
 
-        <div className="p-4.5 sm:p-5.5 flex-1 flex flex-col">
+        <div className="p-5 sm:p-6 flex-1 flex flex-col">
           {/* Header Row: Tier Badge + Inclusions */}
           <div className="flex items-center justify-between gap-2 mb-3">
             <span

@@ -143,7 +143,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
         )}
 
-        <div className="p-4.5 sm:p-5.5 flex-1 overflow-hidden flex flex-col justify-between">
+        <div className="p-5 sm:p-6 flex-1 overflow-hidden flex flex-col justify-between">
           <div>
             {/* Header Row: Tier Badge + Inclusions */}
             <div className="flex items-center justify-between gap-2 mb-3">

@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { expertiseData } from '../data/expertiseData';
 
-export type RouteType = 'home' | 'services-index' | 'service-detail' | 'admin';
+export type RouteType = 'home' | 'services-index' | 'service-detail' | 'blogs' | 'blog-detail' | 'admin';
 
 export interface RouteState {
   type: RouteType;
   serviceId?: string;
+  blogSlug?: string;
   anchor?: string;
   path: string;
 }
@@ -14,6 +15,8 @@ interface NavigationContextType {
   currentRoute: RouteState;
   navigateTo: (path: string) => void;
   navigateToService: (serviceId: string) => void;
+  navigateToBlogs: () => void;
+  navigateToBlogDetail: (slug: string) => void;
   navigateToHome: (anchor?: string) => void;
   navigateToAdmin: () => void;
 }
@@ -40,6 +43,9 @@ function parsePathAndHash(): RouteState {
     if (rawHash === 'services' || rawHash === 'expertise') {
       return { type: 'services-index', path: '#/services' };
     }
+    if (rawHash === 'blogs' || rawHash === 'blog' || rawHash === 'resources' || rawHash === 'articles') {
+      return { type: 'blogs', path: '#/blogs' };
+    }
     // Anchor on home page
     return { type: 'home', anchor: rawHash, path: hash };
   } else if (pathname !== '/') {
@@ -53,6 +59,15 @@ function parsePathAndHash(): RouteState {
 
   if (routePath === '/services' || routePath === '/services/') {
     return { type: 'services-index', path: '#/services' };
+  }
+
+  if (routePath === '/blogs' || routePath === '/blogs/' || routePath === '/resources' || routePath === '/resources/') {
+    return { type: 'blogs', path: '#/blogs' };
+  }
+
+  const blogMatch = routePath.match(/^\/(?:blogs|resources|blog)\/([a-zA-Z0-9_-]+)/);
+  if (blogMatch) {
+    return { type: 'blog-detail', blogSlug: blogMatch[1], path: `#/blogs/${blogMatch[1]}` };
   }
 
   const serviceMatch = routePath.match(/^\/services\/([a-zA-Z0-9_-]+)/);
@@ -89,6 +104,10 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         }
       } else if (parsed.type === 'services-index') {
         document.title = "Core Digital Marketing Services & Solutions | MarketingGlu";
+      } else if (parsed.type === 'blogs') {
+        document.title = "Marketing Insights, Guides & Growth Resources | MarketingGlu";
+      } else if (parsed.type === 'blog-detail') {
+        document.title = "Marketing Insights & Strategic Guides | MarketingGlu";
       } else if (parsed.type === 'admin') {
         document.title = "Admin Studio | MarketingGlu";
       } else {
@@ -135,6 +154,14 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
     navigateTo(`/services/${serviceId}`);
   };
 
+  const navigateToBlogs = () => {
+    navigateTo('/blogs');
+  };
+
+  const navigateToBlogDetail = (slug: string) => {
+    navigateTo(`/blogs/${slug}`);
+  };
+
   const navigateToHome = (anchor?: string) => {
     if (anchor) {
       if (currentRoute.type === 'home') {
@@ -161,6 +188,8 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         currentRoute,
         navigateTo,
         navigateToService,
+        navigateToBlogs,
+        navigateToBlogDetail,
         navigateToHome,
         navigateToAdmin,
       }}

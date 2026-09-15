@@ -169,7 +169,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.98 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 w-84 mt-2 bg-slate-950 border border-cyan-500/40 rounded-2xl p-3 shadow-2xl shadow-black z-50"
+                  className="absolute top-full left-0 w-80 sm:w-88 mt-2 bg-slate-950 border border-cyan-500/40 rounded-2xl p-3 shadow-2xl shadow-black z-50"
                 >
                   <div className="px-3 py-2 border-b border-slate-800 mb-1.5 flex items-center justify-between">
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
