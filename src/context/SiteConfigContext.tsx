@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { SiteConfig, PackageItem, TestimonialItem } from '../types';
+import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem } from '../types';
+import { caseStudiesData } from '../data/caseStudiesData';
+import { defaultFaqs } from '../data/faqData';
 
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
@@ -20,6 +22,27 @@ export const defaultSiteConfig: SiteConfig = {
     'As a digital marketing agency, we are dedicated to helping businesses achieve their online marketing goals. Our team of experts is highly skilled in creating and executing effective digital marketing strategies that drive measurable results.',
   heroPrimaryCta: 'Book Free Consultation',
   heroSecondaryCta: 'Explore Portfolio',
+
+  // Packages Section Titles & Copy
+  packagesSectionBadge: 'TRANSPARENT SERVICE TIERS',
+  packagesSectionTitle1: 'Tailored Digital Marketing',
+  packagesSectionTitle2: 'Service Packages',
+  packagesSectionDescription:
+    'Explore our curated packages calibrated for your growth stage. Plans rotate automatically or swipe freely on mobile to compare.',
+
+  // Case Studies Section Titles & Copy
+  casesSectionBadge: 'PROVEN OUTCOMES',
+  casesSectionTitle1: 'Case Studies &',
+  casesSectionTitle2: 'Recent Work',
+  casesSectionDescription:
+    'Real-world revenue and lead-generation outcomes engineered for scaling brands.',
+
+  // FAQ Section Titles & Copy
+  faqSectionBadge: 'Knowledge Base',
+  faqSectionTitle1: 'Frequently Asked',
+  faqSectionTitle2: 'Questions',
+  faqSectionDescription:
+    'Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.',
 
   themeAccent: 'cyan',
   animationsEnabled: true,
@@ -108,6 +131,9 @@ export const defaultSiteConfig: SiteConfig = {
     },
   ],
 
+  caseStudies: caseStudiesData,
+  faqs: defaultFaqs,
+
   testimonials: [
     {
       id: 'lalita-1',
@@ -160,7 +186,23 @@ interface SiteConfigContextType {
   config: SiteConfig;
   updateConfig: (newConfig: Partial<SiteConfig>) => void;
   resetConfig: () => void;
+  
+  // Package Management
+  addPackage: (pkg: PackageItem) => void;
   updatePackage: (pkg: PackageItem) => void;
+  deletePackage: (id: string) => void;
+
+  // Case Study Management
+  addCaseStudy: (study: CaseStudy) => void;
+  updateCaseStudy: (study: CaseStudy) => void;
+  deleteCaseStudy: (id: string) => void;
+
+  // FAQ Management
+  addFaq: (faq: FAQItem) => void;
+  updateFaq: (faq: FAQItem) => void;
+  deleteFaq: (id: number | string) => void;
+
+  // Testimonials Management
   updateTestimonial: (test: TestimonialItem) => void;
   addTestimonial: (test: TestimonialItem) => void;
   deleteTestimonial: (id: string) => void;
@@ -168,14 +210,22 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v4';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v5';
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return { ...defaultSiteConfig, ...JSON.parse(saved) };
+        const parsed = JSON.parse(saved);
+        return { 
+          ...defaultSiteConfig, 
+          ...parsed,
+          packages: parsed.packages || defaultSiteConfig.packages,
+          caseStudies: parsed.caseStudies || defaultSiteConfig.caseStudies,
+          faqs: parsed.faqs || defaultSiteConfig.faqs,
+          testimonials: parsed.testimonials || defaultSiteConfig.testimonials,
+        };
       }
     } catch {
       // fallback
@@ -204,6 +254,14 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   };
 
+  // Packages
+  const addPackage = (newPkg: PackageItem) => {
+    setConfig((prev) => ({
+      ...prev,
+      packages: [...prev.packages, newPkg],
+    }));
+  };
+
   const updatePackage = (updatedPkg: PackageItem) => {
     setConfig((prev) => ({
       ...prev,
@@ -211,6 +269,58 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
+  const deletePackage = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      packages: prev.packages.filter((p) => p.id !== id),
+    }));
+  };
+
+  // Case Studies
+  const addCaseStudy = (newStudy: CaseStudy) => {
+    setConfig((prev) => ({
+      ...prev,
+      caseStudies: [newStudy, ...prev.caseStudies],
+    }));
+  };
+
+  const updateCaseStudy = (updatedStudy: CaseStudy) => {
+    setConfig((prev) => ({
+      ...prev,
+      caseStudies: prev.caseStudies.map((s) => (s.id === updatedStudy.id ? updatedStudy : s)),
+    }));
+  };
+
+  const deleteCaseStudy = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      caseStudies: prev.caseStudies.filter((s) => s.id !== id),
+    }));
+  };
+
+  // FAQs
+  const addFaq = (newFaq: FAQItem) => {
+    setConfig((prev) => ({
+      ...prev,
+      faqs: [newFaq, ...prev.faqs],
+    }));
+  };
+
+  const updateFaq = (updatedFaq: FAQItem) => {
+    setConfig((prev) => ({
+      ...prev,
+      faqs: prev.faqs.map((f) => (f.id === updatedFaq.id ? updatedFaq : f)),
+    }));
+  };
+
+  const deleteFaq = (id: number | string) => {
+    setConfig((prev) => ({
+      ...prev,
+      faqs: prev.faqs.filter((f) => f.id !== id),
+    }));
+  };
+
+  // Testimonials
   const updateTestimonial = (updatedTest: TestimonialItem) => {
     setConfig((prev) => ({
       ...prev,
@@ -238,7 +348,15 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         config,
         updateConfig,
         resetConfig,
+        addPackage,
         updatePackage,
+        deletePackage,
+        addCaseStudy,
+        updateCaseStudy,
+        deleteCaseStudy,
+        addFaq,
+        updateFaq,
+        deleteFaq,
         updateTestimonial,
         addTestimonial,
         deleteTestimonial,

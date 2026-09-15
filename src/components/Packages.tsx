@@ -24,13 +24,21 @@ interface PackagesProps {
 
 export default function Packages({ onSelectPackage }: PackagesProps) {
   const { config } = useSiteConfig();
-  const packagesData = config.packages;
+  const packagesData = config.packages && config.packages.length > 0 ? config.packages : [];
   const totalPackages = packagesData.length;
 
-  // Active index (starts at 1 for Advance Package which is Most Popular)
-  const [currentIndex, setCurrentIndex] = useState<number>(1);
+  // Active index (defaults to popular package if available, else 0)
+  const initialIndex = Math.max(0, packagesData.findIndex((p) => p.popular));
+  const [currentIndex, setCurrentIndex] = useState<number>(initialIndex >= 0 ? initialIndex : 0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
+
+  // Keep index within bounds if packages list shrinks
+  useEffect(() => {
+    if (totalPackages > 0 && currentIndex >= totalPackages) {
+      setCurrentIndex(0);
+    }
+  }, [totalPackages, currentIndex]);
 
   // 5-second timer progress (0% - 100%)
   const [progress, setProgress] = useState<number>(0);
@@ -38,6 +46,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
   // Auto-advance logic: tick progress every 50ms (5000ms total = 5s)
   useEffect(() => {
+    if (totalPackages <= 1) return;
     if (isPaused) {
       if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
       return;
@@ -259,18 +268,18 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
-            <span>TRANSPARENT SERVICE TIERS</span>
+            <span>{config.packagesSectionBadge || 'TRANSPARENT SERVICE TIERS'}</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-            Tailored Digital Marketing{' '}
+            {config.packagesSectionTitle1 || 'Tailored Digital Marketing'}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
-              Service Packages
+              {config.packagesSectionTitle2 || 'Service Packages'}
             </span>
           </h2>
 
           <p className="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
-            Explore our curated packages calibrated for your growth stage. Plans rotate automatically or swipe freely on mobile to compare.
+            {config.packagesSectionDescription || 'Explore our curated packages calibrated for your growth stage. Plans rotate automatically or swipe freely on mobile to compare.'}
           </p>
         </div>
 

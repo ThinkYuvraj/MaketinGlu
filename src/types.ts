@@ -1,3 +1,8 @@
+export interface PackageFeature {
+  name: string;
+  included: boolean;
+}
+
 export interface PackageItem {
   id: string;
   name: string;
@@ -5,8 +10,34 @@ export interface PackageItem {
   tagline: string;
   popular?: boolean;
   priceNote: string;
-  features: { name: string; included: boolean }[];
+  features: PackageFeature[];
   highlight: string;
+}
+
+export interface CaseStudyStat {
+  label: string;
+  value: string;
+}
+
+export interface CaseStudy {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  stats: CaseStudyStat[];
+  accent: string;
+  type?: 'nexa' | 'techduniya' | 'custom';
+  clientUrl?: string;
+  year?: string;
+}
+
+export interface FAQItem {
+  id: number | string;
+  category: string;
+  categoryLabel: string;
+  question: string;
+  answer: string;
+  highlights?: string[];
 }
 
 export interface TestimonialItem {
@@ -43,6 +74,24 @@ export interface SiteConfig {
   heroPrimaryCta: string;
   heroSecondaryCta: string;
 
+  // Packages Section Titles
+  packagesSectionBadge: string;
+  packagesSectionTitle1: string;
+  packagesSectionTitle2: string;
+  packagesSectionDescription: string;
+
+  // Case Studies Section Titles
+  casesSectionBadge: string;
+  casesSectionTitle1: string;
+  casesSectionTitle2: string;
+  casesSectionDescription: string;
+
+  // FAQ Section Titles
+  faqSectionBadge: string;
+  faqSectionTitle1: string;
+  faqSectionTitle2: string;
+  faqSectionDescription: string;
+
   // UI/UX Styling
   themeAccent: 'cyan' | 'sky' | 'emerald' | 'violet' | 'amber';
   animationsEnabled: boolean;
@@ -55,7 +104,9 @@ export interface SiteConfig {
     smo: number;
   };
 
-  // Packages & Testimonials
+  // Content Collections
   packages: PackageItem[];
+  caseStudies: CaseStudy[];
+  faqs: FAQItem[];
   testimonials: TestimonialItem[];
 }

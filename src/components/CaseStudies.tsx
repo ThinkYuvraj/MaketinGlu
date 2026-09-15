@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, TrendingUp, Users, ShoppingCart, Sparkles, ExternalLink, Activity } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Users, ShoppingCart, Sparkles, ExternalLink, Activity, BarChart3, Target } from 'lucide-react';
 import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion, standardEase } from '../lib/animations';
-import { caseStudiesData, CaseStudy } from '../data/caseStudiesData';
+import { caseStudiesData } from '../data/caseStudiesData';
+import { CaseStudy } from '../types';
+import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from './common/Container';
 
 interface CaseStudiesProps {
@@ -10,7 +12,10 @@ interface CaseStudiesProps {
 }
 
 export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
+  const { config } = useSiteConfig();
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
+
+  const casesList = config.caseStudies && config.caseStudies.length > 0 ? config.caseStudies : caseStudiesData;
 
   return (
     <section id="cases" className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14]">
@@ -21,14 +26,19 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-2 shadow-sm shadow-cyan-500/10">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span>PROVEN OUTCOMES</span>
+              <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              Case Studies &{' '}
+              {config.casesSectionTitle1 || 'Case Studies &'}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
-                Recent Work
+                {config.casesSectionTitle2 || 'Recent Work'}
               </span>
             </h2>
+            {config.casesSectionDescription && (
+              <p className="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl">
+                {config.casesSectionDescription}
+              </p>
+            )}
           </div>
 
           <button
@@ -40,7 +50,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
           </button>
         </div>
 
-        {/* 2 Featured Case Study Cards */}
+        {/* Featured Case Study Cards */}
         <motion.div 
           variants={staggerContainerVariants}
           initial="hidden"
@@ -48,12 +58,12 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
           viewport={{ once: true, margin: "-40px" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
         >
-          {caseStudiesData.map((item) => (
+          {casesList.map((item) => (
             <motion.div
               key={item.id}
               variants={staggerItemVariants}
               {...cardHoverMotion}
-              className="rounded-2xl bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300  group hover:shadow-2xl cursor-pointer flex flex-col"
+              className="rounded-2xl bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300 group hover:shadow-2xl cursor-pointer flex flex-col"
               id={`case-card-${item.id}`}
             >
               {/* Graphic Mockup Preview Window - Compact */}
@@ -113,7 +123,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       <span className="text-cyan-400 font-mono text-[9px]">95% SPEED GAIN</span>
                     </div>
                   </div>
-                ) : (
+                ) : item.type === 'techduniya' ? (
                   // TechDuniya Organic SMO Push mockup
                   <div className="relative z-10 w-full h-full flex flex-col justify-between">
                     <div className="flex items-center justify-between">
@@ -153,6 +163,36 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         <span>TechDuniya Media</span>
                       </span>
                       <span className="text-teal-400 font-mono text-[9px]">COMMUNITY EXPANSION</span>
+                    </div>
+                  </div>
+                ) : (
+                  // Custom dynamic case study mockup
+                  <div className="relative z-10 w-full h-full flex flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                      <div className="px-2.5 py-0.5 rounded-md bg-cyan-950/80 border border-cyan-500/40 text-[9.5px] font-mono tracking-widest text-cyan-300 uppercase">
+                        {item.category || 'GROWTH CASE STUDY'}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-[10px] font-mono text-emerald-400 font-semibold">VERIFIED</span>
+                      </div>
+                    </div>
+
+                    <div className="my-auto grid grid-cols-3 gap-2">
+                      {item.stats && item.stats.slice(0, 3).map((st, sIdx) => (
+                        <div key={sIdx} className="p-2 rounded-lg bg-slate-900/90 border border-slate-800 text-center">
+                          <div className="text-sm font-extrabold text-cyan-400">{st.value}</div>
+                          <div className="text-[8px] text-slate-400 truncate mt-0.5">{st.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 bg-slate-900/70 px-2 py-1 rounded-md border border-slate-800/80">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <Target className="w-3 h-3 text-cyan-400 shrink-0" />
+                        <span className="truncate">{item.title}</span>
+                      </span>
+                      <span className="text-cyan-400 font-mono text-[9px] shrink-0">OPTIMIZED ROI</span>
                     </div>
                   </div>
                 )}
@@ -207,73 +247,71 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
         {/* Modal for detailed case study breakdown */}
         <AnimatePresence>
           {activeCase && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md"
+              onClick={() => setActiveCase(null)}
+            >
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2, ease: standardEase }}
-                className="w-full max-w-xl bg-[#090e1a] border border-cyan-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-lg sm:max-w-xl bg-[#090e1a] border border-cyan-500/40 rounded-2xl sm:rounded-3xl p-4 sm:p-7 shadow-2xl relative max-h-[92vh] overflow-y-auto"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-mono font-bold text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-full uppercase">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <span className="text-[10px] sm:text-xs font-mono font-bold text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full uppercase tracking-wider">
                     {activeCase.category}
                   </span>
                   <button
                     onClick={() => setActiveCase(null)}
-                    className="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+                    className="text-slate-400 hover:text-white p-1 sm:p-2 rounded-xl hover:bg-slate-800 transition-colors min-h-[36px] min-w-[36px] sm:min-h-[40px] sm:min-w-[40px] flex items-center justify-center cursor-pointer"
                     aria-label="Close case study details modal"
                   >
                     ✕
                   </button>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-black text-white mb-2">
+                <h3 className="text-lg sm:text-2xl font-black text-white mb-1.5 sm:mb-2 leading-snug">
                   {activeCase.title}
                 </h3>
-                <p className="text-sm text-slate-300 leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-3 sm:mb-5">
                   {activeCase.description}
                 </p>
 
-                <div className="grid grid-cols-3 gap-3 mb-6">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-3 sm:mb-4">
                   {activeCase.stats.map((s, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                      <div className="text-base sm:text-lg font-bold text-cyan-300">{s.value}</div>
-                      <div className="text-[10px] text-slate-400 font-medium">{s.label}</div>
+                    <div key={idx} className="p-2 sm:p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
+                      <div className="text-sm sm:text-lg font-bold text-cyan-300 leading-tight">{s.value}</div>
+                      <div className="text-[9px] sm:text-[10px] text-slate-400 font-medium mt-0.5 leading-tight">{s.label}</div>
                     </div>
                   ))}
                 </div>
 
-                <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-300 bg-slate-900/70 p-4 rounded-xl border border-slate-800">
-                  <div className="font-bold text-white flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-cyan-400" />
+                <div className="space-y-1.5 sm:space-y-2 mb-3.5 sm:mb-5 text-xs text-slate-300 bg-slate-900/70 p-3 sm:p-4 rounded-xl border border-slate-800">
+                  <div className="font-bold text-white flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                    <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
                     <span>Key Growth Pillars Executed</span>
                   </div>
-                  <ul className="list-disc list-inside space-y-1.5 text-slate-400 text-xs">
-                    <li>Full technical Core Web Vitals remediation to hit green metric thresholds.</li>
-                    <li>Restructured mobile customer purchase journey and one-click checkout triggers.</li>
-                    <li>Targeted high-intent keyword acquisition and localized Google rankings.</li>
+                  <ul className="list-disc list-inside space-y-1 sm:space-y-1.5 text-slate-400 text-[11px] sm:text-xs leading-normal">
+                    <li>Core Web Vitals remediation to green metric thresholds.</li>
+                    <li>Restructured checkout journey & one-click mobile triggers.</li>
+                    <li>Targeted high-intent keyword acquisition & localized Google rankings.</li>
                     <li>Automated retargeting funnels recovering high-intent abandonment traffic.</li>
                   </ul>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div>
                   <motion.button
                     {...buttonHoverMotion}
                     onClick={() => {
                       setActiveCase(null);
                       onOpenConsultation();
                     }}
-                    className="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/20 cursor-pointer min-h-[44px] flex items-center justify-center"
+                    className="w-full py-2.5 sm:py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/20 cursor-pointer min-h-[42px] sm:min-h-[44px] flex items-center justify-center transition-transform"
                   >
                     Discuss a Similar Strategy
                   </motion.button>
-                  <button
-                    onClick={() => setActiveCase(null)}
-                    className="py-3 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[44px]"
-                  >
-                    Close
-                  </button>
                 </div>
               </motion.div>
             </div>
