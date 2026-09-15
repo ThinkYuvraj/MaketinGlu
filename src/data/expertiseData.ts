@@ -4,7 +4,20 @@ import {
   Search, 
   Palette, 
   MousePointerClick, 
-  Megaphone 
+  Megaphone,
+  TrendingUp,
+  Code,
+  Zap,
+  ShieldCheck,
+  Layers,
+  Smartphone,
+  Sparkles,
+  BarChart,
+  Bot,
+  Cpu,
+  Award,
+  FileText,
+  Video
 } from 'lucide-react';
 
 import websiteDesignImg from '../assets/website-design.png';
@@ -13,6 +26,39 @@ import graphicDesignImg from '../assets/graphic-design.png';
 import seoImg from '../assets/seo-optimization.png';
 import ppcImg from '../assets/ppc-campaigns.png';
 import smoImg from '../assets/smo-optimization.png';
+
+export const SERVICE_ICON_MAP: Record<string, any> = {
+  Globe,
+  ShoppingBag,
+  Search,
+  Palette,
+  MousePointerClick,
+  Megaphone,
+  TrendingUp,
+  Code,
+  Zap,
+  ShieldCheck,
+  Layers,
+  Smartphone,
+  Sparkles,
+  BarChart,
+  Bot,
+  Cpu,
+  Award,
+  FileText,
+  Video
+};
+
+export function getExpertiseIcon(service?: { icon?: any; iconName?: string }) {
+  if (!service) return Globe;
+  if (typeof service.icon === 'function' || (typeof service.icon === 'object' && service.icon !== null)) {
+    return service.icon;
+  }
+  if (service.iconName && SERVICE_ICON_MAP[service.iconName]) {
+    return SERVICE_ICON_MAP[service.iconName];
+  }
+  return Globe;
+}
 
 export interface ExpertisePillar {
   title: string;
@@ -47,7 +93,8 @@ export interface ExpertiseItem {
   summary: string;
   metricBadge: string;
   metricSubtitle: string;
-  icon: typeof Globe;
+  icon?: any;
+  iconName?: string;
   image: string;
   pillars: ExpertisePillar[];
   deliverables: string[];
@@ -58,9 +105,9 @@ export interface ExpertiseItem {
   methodology: ExpertiseMethodology[];
   techStack: ExpertiseTechItem[];
   faqs: ExpertiseFAQ[];
-  caseStudyPreview: { client: string; result: string; metric: string; quote: string };
-  priceEstimate: string;
-  timelineEstimate: string;
+  caseStudyPreview?: { client: string; result: string; metric: string; quote: string };
+  priceEstimate?: string;
+  timelineEstimate?: string;
 }
 
 export const expertiseData: ExpertiseItem[] = [
@@ -74,6 +121,7 @@ export const expertiseData: ExpertiseItem[] = [
     metricBadge: "99.9% Uptime & Sub-Second Loads",
     metricSubtitle: "Dynamic & Static Architecture",
     icon: Globe,
+    iconName: "Globe",
     image: websiteDesignImg,
     heroStats: [
       { label: "Core Web Vitals", value: "< 0.8s", desc: "First Contentful Paint & sub-second load times" },
@@ -197,6 +245,7 @@ export const expertiseData: ExpertiseItem[] = [
     metricBadge: "Up to 3.4x Cart Conversion Lift",
     metricSubtitle: "Streamlined Checkout & Fast Gateways",
     icon: ShoppingBag,
+    iconName: "ShoppingBag",
     image: ecommerceImg,
     heroStats: [
       { label: "Checkout Velocity", value: "+95%", desc: "Accelerated payment completions across UPI and cards" },
@@ -315,6 +364,7 @@ export const expertiseData: ExpertiseItem[] = [
     metricBadge: "Top-Tier SERP Ranking Framework",
     metricSubtitle: "Google Ranking & Organic Growth",
     icon: Search,
+    iconName: "Search",
     image: seoImg,
     heroStats: [
       { label: "Top-3 Rankings", value: "85%+", desc: "Target commercial keywords placed in Google Top 3" },
@@ -433,6 +483,7 @@ export const expertiseData: ExpertiseItem[] = [
     metricBadge: "Complete Vector & Brand Suite",
     metricSubtitle: "Brand Management & Catalog Design",
     icon: Palette,
+    iconName: "Palette",
     image: graphicDesignImg,
     heroStats: [
       { label: "Vector Assets", value: "100%", desc: "Infinite resolution master source files in AI, SVG & PDF" },
@@ -551,6 +602,7 @@ export const expertiseData: ExpertiseItem[] = [
     metricBadge: "Full Multi-Touch ROAS Attribution",
     metricSubtitle: "Google, Meta, LinkedIn & TikTok Ads",
     icon: MousePointerClick,
+    iconName: "MousePointerClick",
     image: ppcImg,
     heroStats: [
       { label: "Average ROAS", value: "4.8x", desc: "Return on ad spend across active client campaigns" },
@@ -669,6 +721,7 @@ export const expertiseData: ExpertiseItem[] = [
     metricBadge: "Compounding Organic Inbound Pipeline",
     metricSubtitle: "Social Media Management & Catalogs",
     icon: Megaphone,
+    iconName: "Megaphone",
     image: smoImg,
     heroStats: [
       { label: "Audience Reach", value: "350K+", desc: "Average organic and viral brand impressions per month" },

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Phone, Menu, X, Sparkles, ArrowRight, ChevronDown, Layers } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { useNavigation } from '../context/NavigationContext';
-import { expertiseData } from '../data/expertiseData';
+import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import Logo from './Logo';
 import { buttonHoverMotion, standardEase } from '../lib/animations';
 
@@ -19,6 +19,8 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesExpanded, setMobileServicesExpanded] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const navServices = config.services && config.services.length > 0 ? config.services : expertiseData;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -184,8 +186,8 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                   </div>
 
                   <div className="space-y-1">
-                    {expertiseData.map((item) => {
-                      const Icon = item.icon;
+                    {navServices.map((item) => {
+                      const Icon = getExpertiseIcon(item);
                       const isActive = currentRoute.type === 'service-detail' && currentRoute.serviceId === item.id;
                       return (
                         <button
@@ -354,7 +356,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
                   {mobileServicesExpanded && (
                     <div className="px-2 pb-2.5 pt-1 space-y-1 bg-slate-900/60 rounded-xl">
-                      {expertiseData.map((item) => (
+                      {navServices.map((item) => (
                         <button
                           key={item.id}
                           onClick={() => {

@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { Globe } from 'lucide-react';
 import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost } from '../types';
 import { caseStudiesData } from '../data/caseStudiesData';
 import { defaultFaqs } from '../data/faqData';
 import { defaultBlogs } from '../data/blogsData';
+import { expertiseData, ExpertiseItem, SERVICE_ICON_MAP } from '../data/expertiseData';
 
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
@@ -230,6 +232,9 @@ export const defaultSiteConfig: SiteConfig = {
   // Blogs and Resources
   blogs: defaultBlogs,
 
+  // Services Provided
+  services: expertiseData,
+
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: {},
 };
@@ -243,6 +248,12 @@ interface SiteConfigContextType {
   addPackage: (pkg: PackageItem) => void;
   updatePackage: (pkg: PackageItem) => void;
   deletePackage: (id: string) => void;
+
+  // Services Management
+  addService: (service: ExpertiseItem) => void;
+  updateService: (service: ExpertiseItem) => void;
+  deleteService: (id: string) => void;
+  reorderServices: (fromIndex: number, toIndex: number) => void;
 
   // Case Study Management
   addCaseStudy: (study: CaseStudy) => void;
@@ -278,7 +289,14 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v7';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v8';
+
+const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
+  return raw.map((s) => ({
+    ...s,
+    icon: (s.iconName && SERVICE_ICON_MAP[s.iconName]) ? SERVICE_ICON_MAP[s.iconName] : (typeof s.icon === 'function' ? s.icon : Globe),
+  }));
+};
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {
@@ -289,6 +307,7 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         return { 
           ...defaultSiteConfig, 
           ...parsed,
+          services: parsed.services ? hydrateServices(parsed.services) : defaultSiteConfig.services,
           packages: parsed.packages || defaultSiteConfig.packages,
           caseStudies: parsed.caseStudies || defaultSiteConfig.caseStudies,
           faqs: parsed.faqs || defaultSiteConfig.faqs,
@@ -333,6 +352,51 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     } catch {
       // fallback
     }
+  };
+
+  // Services Management
+  const addService = (newService: ExpertiseItem) => {
+    const hydrated: ExpertiseItem = {
+      ...newService,
+      icon: (newService.iconName && SERVICE_ICON_MAP[newService.iconName]) ? SERVICE_ICON_MAP[newService.iconName] : (typeof newService.icon === 'function' ? newService.icon : Globe),
+    };
+    setConfig((prev) => ({
+      ...prev,
+      services: [...(prev.services || []), hydrated],
+    }));
+  };
+
+  const updateService = (updatedService: ExpertiseItem) => {
+    const hydrated: ExpertiseItem = {
+      ...updatedService,
+      icon: (updatedService.iconName && SERVICE_ICON_MAP[updatedService.iconName]) ? SERVICE_ICON_MAP[updatedService.iconName] : (typeof updatedService.icon === 'function' ? updatedService.icon : Globe),
+    };
+    setConfig((prev) => ({
+      ...prev,
+      services: (prev.services || []).map((s) => (s.id === updatedService.id ? hydrated : s)),
+    }));
+  };
+
+  const deleteService = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      services: (prev.services || []).filter((s) => s.id !== id),
+    }));
+  };
+
+  const reorderServices = (fromIndex: number, toIndex: number) => {
+    setConfig((prev) => {
+      const current = [...(prev.services || [])];
+      if (fromIndex < 0 || fromIndex >= current.length || toIndex < 0 || toIndex >= current.length) {
+        return prev;
+      }
+      const [moved] = current.splice(fromIndex, 1);
+      current.splice(toIndex, 0, moved);
+      return {
+        ...prev,
+        services: current,
+      };
+    });
   };
 
   // Packages
@@ -516,6 +580,10 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         addPackage,
         updatePackage,
         deletePackage,
+        addService,
+        updateService,
+        deleteService,
+        reorderServices,
         addCaseStudy,
         updateCaseStudy,
         deleteCaseStudy,

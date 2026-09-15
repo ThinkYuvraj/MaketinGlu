@@ -19,9 +19,11 @@ import {
   ShieldCheck,
   Layers,
   Image as ImageIcon,
-  BookOpen
+  BookOpen,
+  Briefcase
 } from 'lucide-react';
 import TitlesTab from './components/TitlesTab';
+import ServicesTab from './components/ServicesTab';
 import BlogsTab from './components/BlogsTab';
 import PackagesTab from './components/PackagesTab';
 import CaseStudiesTab from './components/CaseStudiesTab';
@@ -37,13 +39,17 @@ interface AdminDashboardProps {
   onLogout: () => void;
 }
 
-type TabType = 'titles' | 'blogs' | 'sections' | 'images' | 'packages' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
+type TabType = 'titles' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
 
 export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboardProps) {
   const { 
     config, 
     updateConfig, 
     resetConfig, 
+    addService,
+    updateService,
+    deleteService,
+    reorderServices,
     updatePackage, 
     addPackage,
     deletePackage,
@@ -219,10 +225,11 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
   const tabs: { id: TabType; label: string; icon: any; count?: number }[] = [
     { id: 'titles', label: 'Titles & Copy', icon: Type },
+    { id: 'services', label: 'Services Provided', icon: Briefcase, count: config.services?.length },
     { id: 'blogs', label: 'Blogs & Resources', icon: BookOpen, count: config.blogs?.length },
+    { id: 'packages', label: 'Service Packages', icon: Package, count: config.packages?.length },
     { id: 'sections', label: 'Add / Edit Sections', icon: Layers, count: config.customSections?.length },
     { id: 'images', label: 'Change Images', icon: ImageIcon },
-    { id: 'packages', label: 'Service Packages', icon: Package, count: config.packages?.length },
     { id: 'cases', label: 'Case Studies', icon: Sparkles, count: config.caseStudies?.length },
     { id: 'faq', label: 'FAQ Knowledge', icon: HelpCircle, count: config.faqs?.length },
     { id: 'testimonials', label: 'Client Reviews', icon: MessageSquare, count: config.testimonials?.length },
@@ -360,6 +367,16 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
         <main className="flex-1 bg-[#090e1a] border border-slate-800/90 rounded-3xl p-5 sm:p-7 min-w-0">
           {activeTab === 'titles' && (
             <TitlesTab formData={formData} setFormData={setFormData} />
+          )}
+
+          {activeTab === 'services' && (
+            <ServicesTab
+              services={config.services || []}
+              onAddService={addService}
+              onUpdateService={updateService}
+              onDeleteService={deleteService}
+              onReorderServices={reorderServices}
+            />
           )}
 
           {activeTab === 'blogs' && (

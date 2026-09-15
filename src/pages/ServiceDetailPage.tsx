@@ -14,7 +14,7 @@ import {
   HelpCircle,
   Award
 } from 'lucide-react';
-import { ExpertiseItem, expertiseData } from '../data/expertiseData';
+import { ExpertiseItem, expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import { useNavigation } from '../context/NavigationContext';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from '../components/common/Container';
@@ -34,8 +34,10 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
     setOpenFaqIndex(openFaqIndex === idx ? null : idx);
   };
 
-  const otherServices = expertiseData.filter(item => item.id !== service.id);
-  const ActiveIcon = service.icon;
+  const allServices = config.services && config.services.length > 0 ? config.services : expertiseData;
+  const currentService = allServices.find((s) => s.id === service.id) || service;
+  const otherServices = allServices.filter((item) => item.id !== currentService.id);
+  const ActiveIcon = getExpertiseIcon(currentService);
 
   return (
     <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-24 sm:pt-28 pb-20">
@@ -486,14 +488,14 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
               onClick={() => navigateTo('#/services')}
               className="inline-flex items-center gap-1 text-xs font-bold text-cyan-400 hover:text-white cursor-pointer"
             >
-              <span>View All 6 Disciplines</span>
+              <span>View All {allServices.length} Disciplines</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {otherServices.map((other) => {
-              const OtherIcon = other.icon;
+              const OtherIcon = getExpertiseIcon(other);
               return (
                 <button
                   key={other.id}

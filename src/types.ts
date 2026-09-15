@@ -1,3 +1,5 @@
+import { ExpertiseItem } from './data/expertiseData';
+
 export interface PackageFeature {
   name: string;
   included: boolean;
@@ -169,6 +171,7 @@ export interface SiteConfig {
   };
 
   // Content Collections
+  services: ExpertiseItem[];
   packages: PackageItem[];
   caseStudies: CaseStudy[];
   faqs: FAQItem[];

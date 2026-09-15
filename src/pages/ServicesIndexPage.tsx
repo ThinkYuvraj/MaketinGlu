@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, CheckCircle2, ArrowLeft, Zap, MessageCircle } from 'lucide-react';
-import { expertiseData } from '../data/expertiseData';
+import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import { useNavigation } from '../context/NavigationContext';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from '../components/common/Container';
@@ -56,11 +56,14 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
           </p>
         </div>
 
-        {/* 6 Disciplines Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
-          {expertiseData.map((service, idx) => {
-            const Icon = service.icon;
-            return (
+        {/* Disciplines Grid */}
+        {(() => {
+          const services = config.services && config.services.length > 0 ? config.services : expertiseData;
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+              {services.map((service, idx) => {
+                const Icon = getExpertiseIcon(service);
+                return (
               <div
                 key={service.id}
                 className="group rounded-3xl bg-[#090f1f] border border-slate-800 hover:border-cyan-500/50 hover:bg-[#0c152a] p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 relative overflow-hidden"
@@ -139,6 +142,8 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
             );
           })}
         </div>
+          );
+        })()}
 
         {/* Global Strategy Consultation Banner */}
         <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border border-cyan-500/40 text-center shadow-2xl relative overflow-hidden">

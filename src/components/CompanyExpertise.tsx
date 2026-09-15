@@ -12,9 +12,10 @@ import {
   ChevronRight,
   MousePointerClick
 } from 'lucide-react';
-import { expertiseData, ExpertiseItem } from '../data/expertiseData';
+import { expertiseData, ExpertiseItem, getExpertiseIcon } from '../data/expertiseData';
 import Container from './common/Container';
 import { useNavigation } from '../context/NavigationContext';
+import { useSiteConfig } from '../context/SiteConfigContext';
 import { buttonHoverMotion } from '../lib/animations';
 
 interface CompanyExpertiseProps {
@@ -23,7 +24,8 @@ interface CompanyExpertiseProps {
 
 export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertiseProps) {
   const { navigateToService } = useNavigation();
-  const services = expertiseData;
+  const { config } = useSiteConfig();
+  const services = config.services && config.services.length > 0 ? config.services : expertiseData;
   const totalServices = services.length;
 
   // Active carousel state
@@ -104,7 +106,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
   // Render individual discipline card (exact match to Packages architecture)
   const renderCardContent = (service: ExpertiseItem, isFocused: boolean, isLeftOrRightFaded = false, itemIndex = 0) => {
-    const Icon = service.icon;
+    const Icon = getExpertiseIcon(service);
     const isPopular = service.id === 'seo' || service.id === 'web-design';
     const popularBadgeText = service.id === 'seo' 
       ? 'MOST POPULAR • HIGH-ROI ACCELERATION' 
@@ -280,7 +282,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>OUR 6 CORE DISCIPLINES</span>
+            <span>OUR {services.length} CORE DISCIPLINES</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">

@@ -67,8 +67,9 @@ function AppContent() {
   }
 
   // Resolve service for dedicated service detail page
+  const availableServices = config.services && config.services.length > 0 ? config.services : expertiseData;
   const activeService = currentRoute.type === 'service-detail'
-    ? expertiseData.find(item => item.id === currentRoute.serviceId)
+    ? availableServices.find(item => item.id === currentRoute.serviceId)
     : null;
 
   return (
