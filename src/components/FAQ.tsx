@@ -192,7 +192,7 @@ export default function FAQ() {
         className={`rounded-xl border transition-all duration-200 overflow-hidden shrink-0 ${
           isOpen
             ? 'bg-[#0a1226] border-cyan-500/40 shadow-md shadow-cyan-500/5 ring-1 ring-cyan-500/20'
-            : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022]'
+            : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022] hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-cyan-500/5'
         }`}
         id={`faq-item-${faq.id}`}
       >
@@ -257,7 +257,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="relative py-8 lg:py-10 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden">
+    <section id="faq" className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white ">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[220px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -354,48 +354,8 @@ export default function FAQ() {
           </div>
         </div>
 
-        {/* SCROLLABLE FLEX BOX CONTAINER */}
-        <div className="max-w-3xl mx-auto rounded-2xl bg-[#080d1a]/95 border border-slate-800 shadow-xl backdrop-blur-sm overflow-hidden flex flex-col">
-          
-          {/* Scroll Box Top Bar */}
-          <div className="px-4 py-2.5 sm:px-5 sm:py-3 bg-[#0a1224] border-b border-slate-800/90 flex items-center justify-between gap-3 text-xs shrink-0">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="font-bold text-white text-[12px] sm:text-xs">
-                {activeCategory === 'all' 
-                  ? 'All Questions' 
-                  : categoryFilters.find(c => c.id === activeCategory)?.label || 'Questions'}
-              </span>
-              <span className="text-[10px] sm:text-[10.5px] text-cyan-400 font-mono font-semibold bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded-full">
-                {filteredFaqs.length} {filteredFaqs.length === 1 ? 'item' : 'items'}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 sm:gap-3 text-[11px]">
-              <span className="hidden sm:inline-flex items-center gap-1 text-slate-400 text-[10.5px]">
-                <ArrowDown className="w-3 h-3 text-cyan-400 animate-bounce" />
-                Scrollable Flex Container
-              </span>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={expandAll}
-                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/30 text-[10px] font-semibold transition-colors cursor-pointer"
-                >
-                  Expand All
-                </button>
-                <button
-                  type="button"
-                  onClick={collapseAll}
-                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/30 text-[10px] font-semibold transition-colors cursor-pointer"
-                >
-                  Collapse All
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* THE SCROLLABLE FLEX BOX OF QUESTIONS */}
+        {/* FAQ LIST */}
+        <div className="max-w-3xl mx-auto flex flex-col">
           {filteredFaqs.length === 0 ? (
             <div className="text-center py-10 px-4">
               <HelpCircle className="w-6 h-6 text-slate-500 mx-auto mb-2" />
@@ -414,46 +374,13 @@ export default function FAQ() {
           ) : (
             <div 
               ref={scrollContainerRef}
-              className="flex flex-col gap-2.5 p-3 sm:p-4 overflow-y-auto max-h-[420px] sm:max-h-[460px] faq-scroll-box scroll-smooth"
+              className="flex flex-col gap-2.5 p-3 sm:p-4 w-full"
               tabIndex={0}
               aria-label="Scrollable list of frequently asked questions"
             >
               {filteredFaqs.map(renderCard)}
             </div>
           )}
-
-          {/* Scroll Box Bottom Status Bar */}
-          <div className="px-4 py-2 sm:px-5 bg-[#070c17] border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
-            <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="text-slate-400">
-                Showing {filteredFaqs.length} questions • Scroll within box to explore
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={scrollToBottom}
-                className="text-slate-400 hover:text-cyan-300 flex items-center gap-1 transition-colors cursor-pointer text-[10px]"
-                title="Scroll to bottom"
-              >
-                <span>Bottom</span>
-                <ArrowDown className="w-2.5 h-2.5" />
-              </button>
-              <span className="text-slate-700">|</span>
-              <button
-                type="button"
-                onClick={scrollToTop}
-                className="text-slate-400 hover:text-cyan-300 flex items-center gap-1 transition-colors cursor-pointer text-[10px]"
-                title="Scroll back to top"
-              >
-                <span>Top</span>
-                <ArrowUp className="w-2.5 h-2.5" />
-              </button>
-            </div>
-          </div>
-
         </div>
 
         {/* Compact Inquiry Strip */}

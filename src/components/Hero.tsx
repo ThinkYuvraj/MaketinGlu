@@ -22,7 +22,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section 
       id="hero-section"
-      className="relative pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-12 overflow-hidden flex flex-col justify-between"
+      className="relative pt-36 sm:pt-40 md:pt-48 pb-6 sm:pb-8  min-h-[100vh] sm:min-h-[90vh] flex flex-col justify-center"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] sm:w-[600px] h-[220px] sm:h-[300px] bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
@@ -37,50 +37,53 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             className="max-w-4xl lg:max-w-5xl mx-auto"
           >
             {/* Location Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0a1122]/90 border border-cyan-500/30 text-[10px] sm:text-xs font-semibold tracking-wider text-cyan-400 mb-3.5 sm:mb-5 shadow-sm shadow-cyan-500/10 backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-              <span>{config.locationBadge}</span>
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#0a1122]/90 to-[#0b162b]/90 border border-cyan-500/20 text-[10px] sm:text-xs font-semibold tracking-[0.15em] text-cyan-300 mb-5 sm:mb-8 shadow-lg shadow-cyan-900/20 backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+              </span>
+              <span className="uppercase">{config.locationBadge}</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="tracking-tight leading-[1.08] mb-3.5 sm:mb-5">
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-2 sm:mb-3.5">
-                <span className="text-white italic">MARKETIN</span>
-                <span className="text-blue-500 not-italic">GLU</span>
+            <h1 className="tracking-tight leading-[1.05] mb-5 sm:mb-7">
+              <span className="block text-[2.75rem] sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black mb-3 sm:mb-5 drop-shadow-2xl">
+                <span className="text-white italic tracking-tighter">MARKETIN</span>
+                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
-              <span className="block text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold italic text-white tracking-wide leading-tight sm:leading-snug">
+              <span className="block text-lg sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-100 tracking-wider leading-tight sm:leading-snug drop-shadow-md">
                 <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span> <br className="hidden sm:inline" />
-                <span>{config.heroTitleLine2 || 'SOLUTIONS'}</span>
+                <span className="text-slate-300 font-bold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
               </span>
             </h1>
 
             {/* Description */}
-            <p className="max-w-2xl lg:max-w-3xl mx-auto text-xs sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-2">
+            <p className="max-w-2xl lg:max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-slate-400 font-medium leading-relaxed mb-8 sm:mb-10 px-4">
               {config.heroDescription}
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto mb-8 sm:mb-10">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 max-w-md sm:max-w-none mx-auto mb-10 sm:mb-14">
               {/* Primary CTA */}
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation()}
-                className="w-full sm:w-auto min-h-[46px] sm:min-h-[50px] px-7 sm:px-8 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs sm:text-base shadow-lg shadow-cyan-500/40 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all border border-cyan-400/20 hover:-translate-y-0.5"
                 id="hero-btn-consultation"
               >
                 <span>{config.heroPrimaryCta}</span>
-                <Plus className="w-4 h-4 text-slate-950 stroke-[3]" />
+                <ArrowRight className="w-4 h-4 stroke-[3]" />
               </motion.button>
 
               {/* Secondary CTA */}
               <motion.button
                 {...buttonHoverMotion}
                 onClick={onExplorePortfolio}
-                className="w-full sm:w-auto min-h-[46px] sm:min-h-[50px] px-6 sm:px-7 py-3 rounded-xl bg-[#0c1322] hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 text-slate-200 font-semibold text-xs sm:text-base flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-transparent hover:bg-[#0c1322] border-2 border-slate-700/80 hover:border-cyan-500/40 text-slate-200 font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer transition-all hover:-translate-y-0.5"
                 id="hero-btn-portfolio"
               >
                 <span>{config.heroSecondaryCta}</span>
-                <ArrowRight className="w-4 h-4 text-slate-400" />
+                <ChevronDown className="w-4 h-4 text-slate-400" />
               </motion.button>
             </div>
           </motion.div>

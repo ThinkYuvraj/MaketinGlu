@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import ConsultationModal from './components/ConsultationModal';
 import AnimatedSection from './components/AnimatedSection';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
+import BackToTopButton from './components/common/BackToTopButton';
 import AdminApp from './admin/AdminApp';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesIndexPage from './pages/ServicesIndexPage';
@@ -75,7 +76,7 @@ function AppContent() {
           /* Default Main Homepage Flow */
           <>
             {/* Section 1: Hero Section */}
-            <AnimatedSection id="home" delayMs={0} className="home-slide home-slide--hero">
+            <AnimatedSection id="home" delayMs={0} className="relative">
               <Hero
                 onOpenConsultation={() => handleOpenConsultation()}
                 onExplorePortfolio={handleExplorePortfolio}
@@ -83,33 +84,33 @@ function AppContent() {
             </AnimatedSection>
 
             {/* Section 2: Our Performance In Numbers */}
-            <AnimatedSection delayMs={60} className="home-slide">
+            <AnimatedSection delayMs={60} className="relative">
               <PerformanceStats />
             </AnimatedSection>
 
             {/* Section 3: Unified Company Expertise & Growth Disciplines */}
-            <AnimatedSection id="expertise" delayMs={60} className="home-slide">
+            <AnimatedSection id="expertise" delayMs={60} className="relative">
               <CompanyExpertise
                 onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
               />
             </AnimatedSection>
 
             {/* Section 4: Tailored Marketing Packages */}
-            <AnimatedSection delayMs={60} className="home-slide">
+            <AnimatedSection delayMs={60} className="relative">
               <Packages
                 onSelectPackage={(pkgName) => handleOpenConsultation(`Package: ${pkgName}`)}
               />
             </AnimatedSection>
 
             {/* Section 5: Case Studies & Proven Results (Portfolio) */}
-            <AnimatedSection delayMs={60} className="home-slide">
+            <AnimatedSection delayMs={60} className="relative">
               <CaseStudies
                 onOpenConsultation={() => handleOpenConsultation()}
               />
             </AnimatedSection>
 
             {/* Section 6: Frequently Asked Questions (FAQ) */}
-            <AnimatedSection delayMs={60} className="home-slide">
+            <AnimatedSection delayMs={60} className="relative">
               <FAQ />
             </AnimatedSection>
           </>
@@ -126,6 +127,8 @@ function AppContent() {
       <MobileBottomBar
         onOpenConsultation={() => handleOpenConsultation('Quick Mobile Audit')}
       />
+      
+      <BackToTopButton />
 
       {/* Interactive Consultation / Quote Modal */}
       <ConsultationModal

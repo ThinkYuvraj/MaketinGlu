@@ -112,12 +112,12 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
     return (
       <div
-        className={`relative w-full rounded-3xl flex flex-col justify-between transition-all duration-500 overflow-hidden ${
+        className={`relative w-full rounded-3xl flex flex-col justify-between transition-all duration-500  ${
           isFocused
             ? isPopular
-              ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20'
-              : 'bg-[#0b1325] border-2 border-slate-700 shadow-2xl shadow-black/60'
-            : 'bg-[#080e1c] border border-slate-800/80 shadow-md'
+              ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/40'
+              : 'bg-[#0b1325] border-2 border-slate-700 shadow-2xl shadow-black/60 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/20'
+            : 'bg-[#080e1c] border border-slate-800/80 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/10 hover:border-slate-700'
         }`}
       >
         {/* Top Banner for Popular Package */}
@@ -218,8 +218,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               }}
               className={`w-full min-h-[40px] py-2 px-4 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isPopular && isFocused
-                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
-                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15'
+                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-cyan-400/40 hover:scale-[1.02]'
+                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15 hover:-translate-y-0.5 hover:shadow-cyan-400/30 hover:scale-[1.02]'
               }`}
               id={`btn-select-${pkg.id}`}
             >
@@ -246,7 +246,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative py-8 sm:py-12 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white overflow-hidden"
+      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white "
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -333,7 +333,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               </div>
 
               {/* Swipable Card Container with popLayout for concurrent slide */}
-              <div className="relative overflow-hidden px-1 min-h-[530px]">
+              <div className="relative overflow-hidden px-1 min-h-[450px]">
                 <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                   <motion.div
                     key={packagesData[currentIndex].id}

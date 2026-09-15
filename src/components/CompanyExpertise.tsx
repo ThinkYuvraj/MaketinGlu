@@ -114,12 +114,12 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
     return (
       <div
-        className={`relative w-full h-full rounded-3xl flex flex-col justify-between transition-all duration-500 overflow-hidden ${
+        className={`relative w-full h-full rounded-3xl flex flex-col justify-between transition-all duration-500  ${
           isFocused
             ? isPopular
-              ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20'
-              : 'bg-[#0b1325] border-2 border-slate-700 shadow-2xl shadow-black/60'
-            : 'bg-[#080e1c] border border-slate-800/80 shadow-md'
+              ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/40'
+              : 'bg-[#0b1325] border-2 border-slate-700 shadow-2xl shadow-black/60 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/20'
+            : 'bg-[#080e1c] border border-slate-800/80 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/10 hover:border-slate-700'
         }`}
       >
         {/* Top Banner for Flagship/Popular Disciplines */}
@@ -143,7 +143,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
         )}
 
-        <div className="p-4.5 sm:p-5.5 flex-1 flex flex-col justify-between">
+        <div className="p-4.5 sm:p-5.5 flex-1 overflow-hidden flex flex-col justify-between">
           <div>
             {/* Header Row: Tier Badge + Inclusions */}
             <div className="flex items-center justify-between gap-2 mb-3">
@@ -228,8 +228,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               }}
               className={`w-full min-h-[42px] py-2 px-4 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isPopular && isFocused
-                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
-                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15'
+                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-cyan-400/40 hover:scale-[1.02]'
+                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15 hover:-translate-y-0.5 hover:shadow-cyan-400/30 hover:scale-[1.02]'
               }`}
               id={`expertise-select-${service.id}`}
             >
@@ -256,7 +256,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   return (
     <section 
       id="expertise" 
-      className="relative py-8 sm:py-12 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14] border-t border-slate-800/80 "
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -408,7 +408,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               </div>
 
               {/* Swipable Card Container with popLayout for concurrent slide */}
-              <div className="relative overflow-hidden px-1 min-h-[530px]">
+              <div className="relative overflow-hidden px-1 min-h-[450px]">
                 <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                   <motion.div
                     key={services[safeCurrentIndex].id}

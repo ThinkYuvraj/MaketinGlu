@@ -29,7 +29,7 @@ export default function PerformanceStats() {
   ];
 
   return (
-    <section id="growth" className="relative py-6 sm:py-8 lg:py-10 bg-[#070b14] border-t border-slate-900/90">
+    <section id="growth" className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-900/90">
       <span id="performance" className="absolute -top-24" />
       <Container>
         

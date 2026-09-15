@@ -29,95 +29,15 @@
   }
 }
 
-/* Desktop homepage sections are composed as distinct, full-window slides. */
-@media (min-width: 1024px) and (min-height: 700px) {
-  html {
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: 0;
-  }
-
-  .home-slide {
-    height: 100svh;
-    min-height: 100svh;
-    display: flex;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
-  .home-slide > section {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .home-slide > #hero-section {
-    padding-top: 5.5rem;
-    padding-bottom: 1.25rem;
-  }
-
-  .home-slide > #growth,
-  .home-slide > #cases {
-    padding-top: 4.5rem;
-    padding-bottom: 3rem;
-  }
-
-  .home-slide > #expertise,
-  .home-slide > #packages,
-  .home-slide > #faq {
-    padding-top: 4.25rem;
-    padding-bottom: 2.25rem;
-  }
-
-  .home-slide #faq .faq-scroll-box {
-    max-height: min(31svh, 285px);
-  }
-
-  .home-slide #faq .faq-inquiry {
-    margin-top: 1rem;
-    padding: 0.875rem 1rem;
-  }
-
-  .home-slide #packages .package-inquiry {
-    margin-top: 1.5rem;
-    padding: 0.875rem 1rem;
-  }
-
-  .home-slide #packages .package-inquiry-copy {
-    font-size: 0.75rem;
-    line-height: 1.35;
-  }
-}
-
 .glow-cyan {
   box-shadow: 0 0 35px -5px rgba(14, 165, 233, 0.3);
 }
-
 .glow-cyan-sm {
   box-shadow: 0 0 15px -2px rgba(14, 165, 233, 0.25);
 }
 
 .glow-cyan-hover:hover {
   box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
-}
-
-/* Custom scrollbar for FAQ flex box container */
-.faq-scroll-box::-webkit-scrollbar {
-  width: 6px;
-}
-.faq-scroll-box::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
-  border-radius: 9999px;
-  margin: 6px 0;
-}
-.faq-scroll-box::-webkit-scrollbar-thumb {
-  background: rgba(56, 189, 248, 0.35);
-  border-radius: 9999px;
-}
-.faq-scroll-box::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.65);
 }
 
 
