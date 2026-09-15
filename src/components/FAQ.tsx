@@ -97,23 +97,23 @@ export default function FAQ() {
         <button
           type="button"
           onClick={() => toggle(faq.id)}
-          className="w-full px-4 py-3.5 sm:px-5 sm:py-4 flex items-center justify-between gap-3 text-left transition-colors cursor-pointer"
+          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 flex items-center justify-between gap-2.5 text-left transition-colors cursor-pointer"
           aria-expanded={isOpen}
         >
           {/* Flexbox container for Category Tag + Question title */}
-          <div className="flex items-center gap-2.5 sm:gap-3.5 flex-1 min-w-0 flex-wrap sm:flex-nowrap">
-            <span className="shrink-0 text-[9px] sm:text-[9.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/25 px-2 py-0.5 rounded">
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-1 min-w-0 flex-wrap sm:flex-nowrap">
+            <span className="shrink-0 text-[8px] sm:text-[8.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/25 px-1.5 py-0.5 rounded">
               {faq.categoryLabel}
             </span>
-            <h3 className="text-xs sm:text-[13.5px] font-bold text-white tracking-tight leading-snug">
+            <h3 className="text-[11.5px] sm:text-xs font-bold text-white tracking-tight leading-snug">
               {faq.question}
             </h3>
           </div>
 
-          <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center shrink-0 transition-colors duration-200 ${
+          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded flex items-center justify-center shrink-0 transition-colors duration-200 ${
             isOpen ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400 hover:text-white'
           }`}>
-            {isOpen ? <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
+            {isOpen ? <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> : <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />}
           </div>
         </button>
 
@@ -123,23 +123,23 @@ export default function FAQ() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: standardEase }}
+              transition={{ duration: 0.18, ease: standardEase }}
               className="overflow-hidden bg-[#080e1c]/80 border-t border-slate-800/60"
             >
-              <div className="px-4 pb-4 pt-2.5 sm:px-5 sm:pb-5 space-y-2.5">
-                <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed">
+              <div className="px-3 pb-3 pt-2 sm:px-3.5 sm:pb-3.5 space-y-2">
+                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
                   {faq.answer}
                 </p>
 
                 {/* Feature Highlights */}
                 {faq.highlights && faq.highlights.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <div className="flex flex-wrap items-center gap-1 pt-0.5">
                     {faq.highlights.map((item, hIdx) => (
                       <span
                         key={hIdx}
-                        className="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-2 py-0.5 rounded-md"
+                        className="inline-flex items-center gap-1 text-[9px] sm:text-[9.5px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded"
                       >
-                        <Sparkles className="w-2.5 h-2.5 text-cyan-400 shrink-0" />
+                        <Sparkles className="w-2 h-2 text-cyan-400 shrink-0" />
                         <span>{item}</span>
                       </span>
                     ))}
@@ -160,9 +160,9 @@ export default function FAQ() {
     return (
       <div
         key={faq.id}
-        className={`rounded-xl border transition-all duration-200 overflow-hidden shrink-0 ${
+        className={`rounded-lg border transition-all duration-200 overflow-hidden shrink-0 ${
           isOpen
-            ? 'bg-[#0a1226] border-cyan-500/40 shadow-md shadow-cyan-500/5 ring-1 ring-cyan-500/20'
+            ? 'bg-[#0a1226] border-cyan-500/40 shadow-sm shadow-cyan-500/5 ring-1 ring-cyan-500/20'
             : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022]'
         }`}
         id={`faq-card-${faq.id}`}
@@ -170,22 +170,22 @@ export default function FAQ() {
         <button
           type="button"
           onClick={() => toggle(faq.id)}
-          className="w-full px-3.5 py-3 sm:px-4 sm:py-3.5 flex items-center justify-between gap-3 text-left transition-colors cursor-pointer"
+          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 flex items-center justify-between gap-2.5 text-left transition-colors cursor-pointer"
           aria-expanded={isOpen}
         >
-          <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0 flex-wrap sm:flex-nowrap">
-            <span className="shrink-0 text-[9px] sm:text-[9.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded">
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-1 min-w-0 flex-wrap sm:flex-nowrap">
+            <span className="shrink-0 text-[8px] sm:text-[8.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded">
               {faq.categoryLabel}
             </span>
-            <h3 className="text-xs sm:text-[13px] font-bold text-white tracking-tight leading-snug">
+            <h3 className="text-[11.5px] sm:text-xs font-bold text-white tracking-tight leading-snug">
               {faq.question}
             </h3>
           </div>
 
-          <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center shrink-0 transition-colors duration-200 ${
+          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded flex items-center justify-center shrink-0 transition-colors duration-200 ${
             isOpen ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400 hover:text-white'
           }`}>
-            {isOpen ? <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
+            {isOpen ? <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> : <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />}
           </div>
         </button>
 
@@ -195,23 +195,23 @@ export default function FAQ() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: standardEase }}
+              transition={{ duration: 0.18, ease: standardEase }}
               className="overflow-hidden"
             >
-              <div className="px-3.5 pb-3.5 pt-1 sm:px-4 sm:pb-4 border-t border-slate-800/60 space-y-2.5 bg-[#080d1a]/60">
-                <p className="text-[12px] sm:text-xs text-slate-300 leading-relaxed pt-1.5">
+              <div className="px-3 pb-3 pt-1 sm:px-3.5 sm:pb-3.5 border-t border-slate-800/60 space-y-2 bg-[#080d1a]/60">
+                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed pt-1">
                   {faq.answer}
                 </p>
 
                 {/* Feature Highlights */}
                 {faq.highlights && faq.highlights.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <div className="flex flex-wrap items-center gap-1 pt-0.5">
                     {faq.highlights.map((item, hIdx) => (
                       <span
                         key={hIdx}
-                        className="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-2 py-0.5 rounded-md"
+                        className="inline-flex items-center gap-1 text-[9px] sm:text-[9.5px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded"
                       >
-                        <Sparkles className="w-2.5 h-2.5 text-cyan-400 shrink-0" />
+                        <Sparkles className="w-2 h-2 text-cyan-400 shrink-0" />
                         <span>{item}</span>
                       </span>
                     ))}
@@ -268,32 +268,32 @@ export default function FAQ() {
         </div>
 
         {/* Controls Toolbar: Search + Category Chips + Layout & Expansion */}
-        <div className="max-w-3xl mx-auto mb-4 space-y-2.5">
+        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto mb-3 space-y-2">
           {/* Compact Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search questions (e.g., 'rankings', 'ownership', 'spend', 'ROI')..."
-              className="w-full pl-9 pr-8 py-2 rounded-xl bg-[#090e1c] border border-slate-800 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-cyan-400/80 transition-colors shadow-inner"
+              className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-white text-[11px] placeholder-slate-500 focus:outline-none focus:border-cyan-400/80 transition-colors shadow-inner"
               aria-label="Search FAQs"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 hover:text-white p-0.5 rounded hover:bg-slate-800"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 hover:text-white p-0.5 rounded hover:bg-slate-800"
                 aria-label="Clear search"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-3 h-3" />
               </button>
             )}
           </div>
 
           {/* Modular Category Chips */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex items-center gap-1 overflow-x-auto pb-0.5 scrollbar-none">
             {categoryFilters.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.id;
@@ -304,15 +304,15 @@ export default function FAQ() {
                   key={cat.id}
                   type="button"
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold whitespace-nowrap transition-all cursor-pointer ${
                     isActive
                       ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-xs shadow-cyan-500/20'
                       : 'bg-[#090e1c] border border-slate-800/90 text-slate-400 hover:text-white hover:border-slate-700'
                   }`}
                 >
-                  <Icon className="w-3 h-3" />
+                  <Icon className="w-2.5 h-2.5" />
                   <span>{cat.label}</span>
-                  <span className={`text-[9.5px] px-1 rounded ${
+                  <span className={`text-[9px] px-1 rounded ${
                     isActive ? 'bg-slate-950/20 text-slate-900 font-extrabold' : 'bg-slate-800/80 text-slate-400'
                   }`}>
                     {count}
@@ -323,38 +323,44 @@ export default function FAQ() {
           </div>
 
           {/* View Toolbar: Layout Mode Switcher & Quick Actions */}
-          <div className="flex items-center justify-between gap-2 pt-1 px-1">
-            <span className="text-[11px] text-slate-400 font-medium">
-              Showing <strong className="text-cyan-400 font-semibold">{filteredFaqs.length}</strong> questions
-            </span>
+          <div className="flex items-center justify-between gap-2 pt-0.5 px-0.5">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] text-slate-400 font-medium">
+                Showing <strong className="text-cyan-400 font-semibold">{filteredFaqs.length}</strong> questions
+              </span>
+              <span className="inline-flex items-center gap-1 text-[9px] font-medium px-1.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-cyan-300">
+                <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse" />
+                Scrollable Box
+              </span>
+            </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               {/* Layout Switcher */}
-              <div className="flex items-center p-0.5 rounded-lg bg-[#090e1c] border border-slate-800">
+              <div className="flex items-center p-0.5 rounded-md bg-[#090e1c] border border-slate-800">
                 <button
                   type="button"
                   onClick={() => setLayoutMode('list')}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                     layoutMode === 'list'
                       ? 'bg-cyan-500 text-slate-950 shadow-xs'
                       : 'text-slate-400 hover:text-white'
                   }`}
                   title="List Layout Format"
                 >
-                  <List className="w-3 h-3" />
-                  <span>List Layout</span>
+                  <List className="w-2.5 h-2.5" />
+                  <span>List</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setLayoutMode('cards')}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                     layoutMode === 'cards'
                       ? 'bg-cyan-500 text-slate-950 shadow-xs'
                       : 'text-slate-400 hover:text-white'
                   }`}
                   title="Card Grid Format"
                 >
-                  <LayoutGrid className="w-3 h-3" />
+                  <LayoutGrid className="w-2.5 h-2.5" />
                   <span>Cards</span>
                 </button>
               </div>
@@ -363,7 +369,7 @@ export default function FAQ() {
               <button
                 type="button"
                 onClick={openIds.length === filteredFaqs.length ? collapseAll : expandAll}
-                className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 px-2 py-1 rounded hover:bg-cyan-950/40 transition-colors cursor-pointer"
+                className="text-[10px] font-semibold text-cyan-400 hover:text-cyan-300 px-1.5 py-0.5 rounded hover:bg-cyan-950/40 transition-colors cursor-pointer"
               >
                 {openIds.length === filteredFaqs.length ? 'Collapse All' : 'Expand All'}
               </button>
@@ -371,48 +377,65 @@ export default function FAQ() {
           </div>
         </div>
 
-        {/* FAQ LIST / FLEXBOX CONTAINER */}
-        <div className="max-w-3xl mx-auto flex flex-col">
+        {/* FAQ SCROLLABLE BOX CONTAINER (Compact Sizing) */}
+        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto w-full">
           {filteredFaqs.length === 0 ? (
-            <div className="text-center py-10 px-4">
-              <HelpCircle className="w-6 h-6 text-slate-500 mx-auto mb-2" />
+            <div className="text-center py-8 px-4 rounded-xl border border-slate-800/80 bg-[#090e1c]/80">
+              <HelpCircle className="w-5 h-5 text-slate-500 mx-auto mb-1.5" />
               <p className="text-xs font-bold text-white">No questions match your filter</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[10.5px] text-slate-400 mt-0.5">
                 Try a different keyword or reset filters.
               </p>
               <button
                 type="button"
                 onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
-                className="mt-3 px-3 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
+                className="mt-2.5 px-2.5 py-1 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-[11px] font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
               >
                 Reset Search
               </button>
             </div>
-          ) : layoutMode === 'list' ? (
-            /* LIST LAYOUT FORMAT (Flexbox with subtle dividers) */
-            <div 
-              ref={scrollContainerRef}
-              className="flex flex-col divide-y divide-slate-800/80 rounded-2xl border border-slate-800/90 bg-[#090e1c]/80 overflow-hidden shadow-2xl backdrop-blur-sm"
-              tabIndex={0}
-              aria-label="Frequently asked questions list layout"
-            >
-              {filteredFaqs.map(renderListItem)}
-            </div>
           ) : (
-            /* CARD FORMAT (Individual Flexbox Cards) */
-            <div 
-              ref={scrollContainerRef}
-              className="flex flex-col gap-2.5 w-full"
-              tabIndex={0}
-              aria-label="Frequently asked questions cards"
-            >
-              {filteredFaqs.map(renderCard)}
+            <div className="relative rounded-xl border border-slate-800/90 bg-[#060a16]/90 p-1.5 sm:p-2 shadow-xl backdrop-blur-sm">
+              {/* Scrollable Questions Viewport (Smaller Height) */}
+              <div 
+                ref={scrollContainerRef}
+                className="max-h-[250px] sm:max-h-[285px] overflow-y-auto custom-scrollbar scroll-smooth pr-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-cyan-500/50 rounded-lg"
+                tabIndex={0}
+                aria-label="Frequently asked questions scrollable viewport"
+              >
+                {layoutMode === 'list' ? (
+                  /* LIST LAYOUT FORMAT inside Scrollable Box */
+                  <div 
+                    className="flex flex-col divide-y divide-slate-800/80 rounded-lg border border-slate-800/80 bg-[#090e1c]/90 overflow-hidden"
+                  >
+                    {filteredFaqs.map(renderListItem)}
+                  </div>
+                ) : (
+                  /* CARD FORMAT inside Scrollable Box */
+                  <div 
+                    className="flex flex-col gap-1.5 w-full"
+                  >
+                    {filteredFaqs.map(renderCard)}
+                  </div>
+                )}
+              </div>
+
+              {/* Compact Scroll Footer Indicator */}
+              <div className="mt-1.5 pt-1.5 border-t border-slate-800/70 flex items-center justify-between px-1.5 text-[9.5px] sm:text-[10px] text-slate-400">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  <span>Scroll inside box to browse all {filteredFaqs.length} questions</span>
+                </div>
+                <div className="flex items-center gap-2 font-mono text-[9.5px] text-slate-500">
+                  <span>{openIds.length} expanded</span>
+                </div>
+              </div>
             </div>
           )}
         </div>
 
         {/* Compact Inquiry Strip */}
-        <div className="faq-inquiry mt-6 p-4 sm:p-4.5 rounded-xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+        <div className="faq-inquiry mt-5 p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 shadow-md">
           <div className="flex items-center gap-2.5 text-center sm:text-left">
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 hidden sm:flex text-cyan-400">
               <Sparkles className="w-3.5 h-3.5" />

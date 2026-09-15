@@ -301,7 +301,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         </div>
 
         {/* 3-Card Rotating Showcase View (Matching Packages) */}
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full mx-auto">
           
           {/* DESKTOP 3-CARD ROTATING VIEW (Matching Packages) */}
           <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6 items-stretch min-h-[500px] relative">

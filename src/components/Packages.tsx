@@ -283,7 +283,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full mx-auto">
             
             {/* DESKTOP 3-CARD ANIMATION VIEW */}
             <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6 items-stretch min-h-[500px] relative">

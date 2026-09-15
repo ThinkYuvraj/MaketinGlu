@@ -34,7 +34,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: standardEase }}
-            className="max-w-4xl lg:max-w-5xl mx-auto"
+            className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
             {/* Location Badge */}
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#0a1122]/90 to-[#0b162b]/90 border border-cyan-500/20 text-[10px] sm:text-xs font-semibold tracking-[0.15em] text-cyan-300 mb-5 sm:mb-8 shadow-lg shadow-cyan-900/20 backdrop-blur-md">

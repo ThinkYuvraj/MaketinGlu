@@ -103,7 +103,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
       {/* Top Announcement Bar (Configurable in Admin Studio) */}
       {config.announcement.enabled && (
         <div className="bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border-b border-cyan-500/20 py-1.5 px-3 sm:px-4 text-center text-[11px] sm:text-xs">
-          <div className="max-w-7xl mx-auto flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
+          <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <span className="truncate max-w-[200px] sm:max-w-none font-medium">{config.announcement.text}</span>
             <button
@@ -117,7 +117,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
+      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex items-center justify-between">
         
         {/* Brand Logo with White Background Badge & Typography */}
         <button
