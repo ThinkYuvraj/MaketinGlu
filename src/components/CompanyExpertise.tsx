@@ -145,10 +145,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
         )}
 
-        <div className="p-5 sm:p-6 flex-1 overflow-hidden flex flex-col justify-between">
+        <div className="p-4 sm:p-4.5 xl:p-5 flex-1 overflow-hidden flex flex-col justify-between">
           <div>
             {/* Header Row: Tier Badge + Inclusions */}
-            <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="flex items-center justify-between gap-2 mb-2.5">
               <span
                 className={`text-[9.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
                   isPopular && isFocused
@@ -166,12 +166,12 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </div>
 
             {/* Package / Discipline Title & Description */}
-            <div className="mb-3">
+            <div className="mb-2.5">
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                <div className="w-6 h-6 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
                   <Icon className="w-3.5 h-3.5" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-black text-white tracking-tight leading-snug line-clamp-1">
+                <h3 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug line-clamp-1">
                   {service.title.split(',')[0]}
                 </h3>
               </div>
@@ -184,8 +184,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </div>
 
             {/* Investment Model Tag */}
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#050812] border border-slate-800/80 mb-3.5">
-              <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 uppercase">
+            <div className="p-2 sm:p-2.5 rounded-xl bg-[#050812] border border-slate-800/80 mb-3">
+              <div className="flex items-center justify-between text-[9px] font-mono text-slate-400 uppercase">
                 <span>Investment Model</span>
                 <span className="text-cyan-400 font-bold">{service.timelineEstimate}</span>
               </div>
@@ -198,8 +198,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </div>
 
             {/* Deliverables Checklist */}
-            <div className="space-y-1.5 pt-2 pb-3.5 border-t border-slate-800/80 flex-1">
-              <div className="text-[9.5px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+            <div className="space-y-1 pt-1.5 pb-2.5 border-t border-slate-800/80 flex-1">
+              <div className="text-[9.5px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
                 Core Inclusions & Deliverables:
               </div>
 
@@ -221,14 +221,14 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-1.5 pt-3 border-t border-slate-800/80 mt-auto">
+          <div className="space-y-1.5 pt-2.5 border-t border-slate-800/80 mt-auto">
             <motion.button
               {...buttonHoverMotion}
               onClick={(e) => {
                 e.stopPropagation();
                 navigateToService(service.id);
               }}
-              className={`w-full min-h-[42px] py-2 px-4 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
+              className={`w-full min-h-[38px] py-1.5 px-3.5 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isPopular && isFocused
                   ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
                   : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15'
@@ -244,7 +244,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="w-full min-h-[38px] py-1.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+              className="w-full min-h-[34px] py-1 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
               <span>WhatsApp Inquiry</span>
@@ -303,17 +303,17 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         </div>
 
         {/* 3-Card Rotating Showcase View (Matching Packages) */}
-        <div className="w-full mx-auto">
+        <div className="w-full max-w-4xl xl:max-w-5xl mx-auto">
           
-          {/* DESKTOP 3-CARD ROTATING VIEW (Matching Packages) */}
-          <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6 items-stretch min-h-[500px] relative">
+          {/* DESKTOP 3-CARD ROTATING VIEW (Matching Packages) - Scaled down to 90% */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-3.5 xl:gap-4.5 items-stretch min-h-[420px] relative">
             
             {/* Column 1: Left Faded Card */}
             {totalServices > 1 && (
               <motion.div
                 key={`left-${services[leftIndex].id}`}
-                initial={{ opacity: 0.2, scale: 0.88, x: slideDirection === 'right' ? 50 : -50 }}
-                animate={{ opacity: 0.45, scale: 0.92, x: 0 }}
+                initial={{ opacity: 0.2, scale: 0.74, x: slideDirection === 'right' ? 40 : -40 }}
+                animate={{ opacity: 0.45, scale: 0.78, x: 0 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => handleSelectTab(leftIndex)}
                 className="cursor-pointer hover:opacity-85 transition-opacity h-full flex flex-col group"
@@ -325,8 +325,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             {/* Column 2: Center Highlighted Active Card */}
             <motion.div
               key={`center-${services[centerIndex].id}`}
-              initial={{ opacity: 0.5, scale: 0.96, x: slideDirection === 'right' ? 65 : -65 }}
-              animate={{ opacity: 1, scale: 1.02, x: 0 }}
+              initial={{ opacity: 0.5, scale: 0.84, x: slideDirection === 'right' ? 50 : -50 }}
+              animate={{ opacity: 1, scale: 0.90, x: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className={`z-20 relative h-full flex flex-col ${totalServices === 1 ? 'lg:col-start-2' : ''}`}
             >
@@ -337,8 +337,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             {totalServices > 1 && (
               <motion.div
                 key={`right-${services[rightIndex].id}`}
-                initial={{ opacity: 0.2, scale: 0.88, x: slideDirection === 'right' ? 50 : -50 }}
-                animate={{ opacity: 0.45, scale: 0.92, x: 0 }}
+                initial={{ opacity: 0.2, scale: 0.74, x: slideDirection === 'right' ? 40 : -40 }}
+                animate={{ opacity: 0.45, scale: 0.78, x: 0 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => handleSelectTab(rightIndex)}
                 className="cursor-pointer hover:opacity-85 transition-opacity h-full flex flex-col group"
@@ -350,7 +350,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
 
             {/* Progress Bar & Desktop Navigation Controls */}
-            <div className="hidden lg:flex items-center justify-between max-w-xl mx-auto mt-6 px-4">
+            <div className="hidden lg:flex items-center justify-between max-w-md mx-auto mt-4 px-4">
               <button
                 type="button"
                 onClick={handlePrev}
