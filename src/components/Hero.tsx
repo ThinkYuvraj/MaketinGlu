@@ -68,7 +68,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation()}
-                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all border border-cyan-400/20 hover:-translate-y-0.5"
+                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all border border-cyan-400/20"
                 id="hero-btn-consultation"
               >
                 <span>{config.heroPrimaryCta}</span>
@@ -79,7 +79,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
               <motion.button
                 {...buttonHoverMotion}
                 onClick={onExplorePortfolio}
-                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-transparent hover:bg-[#0c1322] border-2 border-slate-700/80 hover:border-cyan-500/40 text-slate-200 font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer transition-all hover:-translate-y-0.5"
+                className="w-full sm:w-auto min-h-[52px] sm:min-h-[56px] px-8 sm:px-10 py-3.5 rounded-xl bg-transparent hover:bg-[#0c1322] border-2 border-slate-700/80 hover:border-cyan-500/40 text-slate-200 font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer transition-all"
                 id="hero-btn-portfolio"
               >
                 <span>{config.heroSecondaryCta}</span>

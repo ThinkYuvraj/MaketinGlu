@@ -42,10 +42,6 @@ export const staggerItemVariants: Variants = {
 
 // Unified Card Hover Physics
 export const cardHoverMotion = {
-  whileHover: { 
-    y: -5,
-    transition: { duration: 0.25, ease: standardEase } 
-  },
   whileTap: { 
     scale: 0.99,
     transition: { duration: 0.15 } 
@@ -54,10 +50,6 @@ export const cardHoverMotion = {
 
 // Unified Button Hover & Tap Physics
 export const buttonHoverMotion = {
-  whileHover: { 
-    scale: 1.025,
-    transition: { duration: 0.2, ease: standardEase } 
-  },
   whileTap: { 
     scale: 0.975,
     transition: { duration: 0.1 } 

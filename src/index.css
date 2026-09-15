@@ -2,11 +2,11 @@
 
 @layer base {
   html {
-    background-color: #070b14;
+    background-color: #020617;
   }
 
   body {
-    background-color: #070b14;
+    background-color: #020617;
     color: #f1f5f9;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     min-width: 320px;
@@ -18,7 +18,7 @@
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #070b14;
+    background: #020617;
   }
   ::-webkit-scrollbar-thumb {
     background: #1e293b;
@@ -41,3 +41,4 @@
 }
 
 
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .hide-scrollbar::-webkit-scrollbar { display: none; }

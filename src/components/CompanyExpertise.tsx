@@ -117,9 +117,9 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         className={`relative w-full h-full rounded-3xl flex flex-col justify-between transition-all duration-500  ${
           isFocused
             ? isPopular
-              ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/40'
-              : 'bg-[#0b1325] border-2 border-slate-700 shadow-2xl shadow-black/60 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/20'
-            : 'bg-[#080e1c] border border-slate-800/80 shadow-md hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/10 hover:border-slate-700'
+              ? 'bg-gradient-to-b from-[#111f3d] via-[#0b1428] to-[#070c18] border-2 border-cyan-400 shadow-2xl shadow-cyan-500/20'
+              : 'bg-[#0b1325] border-2 border-slate-700 shadow-2xl shadow-black/60'
+            : 'bg-[#080e1c] border border-slate-800/80 shadow-md hover:border-slate-700'
         }`}
       >
         {/* Top Banner for Flagship/Popular Disciplines */}
@@ -133,7 +133,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         {/* Faded overlay hint when not in center on desktop */}
         {isLeftOrRightFaded && (
           <div className="absolute inset-0 z-30 bg-[#070b14]/70 backdrop-blur-[1px] flex flex-col items-center justify-center p-4 text-center cursor-pointer group-hover:bg-[#070b14]/50 transition-all">
-            <div className="px-4 py-2.5 rounded-xl bg-slate-900/95 border border-cyan-500/60 text-cyan-300 font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-xl group-hover:scale-105 transition-transform">
+            <div className="px-4 py-2.5 rounded-xl bg-slate-900/95 border border-cyan-500/60 text-cyan-300 font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-xl transition-transform">
               <MousePointerClick className="w-4 h-4 text-cyan-400" />
               <span>Click to view {service.tabLabel}</span>
             </div>
@@ -228,8 +228,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               }}
               className={`w-full min-h-[42px] py-2 px-4 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isPopular && isFocused
-                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-cyan-400/40 hover:scale-[1.02]'
-                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15 hover:-translate-y-0.5 hover:shadow-cyan-400/30 hover:scale-[1.02]'
+                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
+                  : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15'
               }`}
               id={`expertise-select-${service.id}`}
             >

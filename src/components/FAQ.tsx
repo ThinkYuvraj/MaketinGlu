@@ -192,7 +192,7 @@ export default function FAQ() {
         className={`rounded-xl border transition-all duration-200 overflow-hidden shrink-0 ${
           isOpen
             ? 'bg-[#0a1226] border-cyan-500/40 shadow-md shadow-cyan-500/5 ring-1 ring-cyan-500/20'
-            : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022] hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-cyan-500/5'
+            : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022]'
         }`}
         id={`faq-item-${faq.id}`}
       >
@@ -282,17 +282,17 @@ export default function FAQ() {
           </p>
 
           {/* Trust badges */}
-          <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2 text-[10.5px]">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300">
-              <ShieldCheck className="w-3 h-3 text-cyan-400" />
+          <div className="mt-4 sm:mt-5 flex flex-row items-center justify-start sm:justify-center gap-2.5 sm:gap-3 text-[10.5px] sm:text-[11px] overflow-x-auto hide-scrollbar w-[calc(100%+32px)] sm:w-full -mx-4 sm:mx-0 px-4 sm:px-0 pb-2 sm:pb-0">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300 shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
               100% Asset Ownership
             </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300">
-              <Calendar className="w-3 h-3 text-cyan-400" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300 shrink-0">
+              <Calendar className="w-3.5 h-3.5 text-cyan-400" />
               Month-to-Month Retainers
             </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300">
-              <Sparkles className="w-3 h-3 text-cyan-400" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300 shrink-0">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               Zero Media Markups
             </span>
           </div>

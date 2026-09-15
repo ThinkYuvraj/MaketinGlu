@@ -274,7 +274,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           <motion.button
             {...buttonHoverMotion}
             onClick={onOpenConsultation}
-            className="px-4 xl:px-6 py-2 xl:py-2.5 rounded-xl border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs md:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm hover:shadow-cyan-400/40 hover:-translate-y-0.5 hover:scale-[1.02] whitespace-nowrap min-h-[42px] flex items-center justify-center"
+            className="px-4 xl:px-6 py-2 xl:py-2.5 rounded-xl border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs md:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[42px] flex items-center justify-center"
             id="btn-get-free-quote"
           >
             Get Free Quote

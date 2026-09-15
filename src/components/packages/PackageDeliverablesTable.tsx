@@ -87,7 +87,7 @@ export default function PackageDeliverablesTable({
                 {/* Category Header */}
                 <div className="p-4 sm:p-5 bg-gradient-to-b from-[#0e172a] to-[#0a1122] border-b border-slate-800/80">
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+                    <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 transition-transform">
                       <CategoryIcon className="w-4 h-4" />
                     </div>
                     <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-900/90 border border-slate-800 px-2 py-0.5 rounded-md">

@@ -53,7 +53,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               key={item.id}
               variants={staggerItemVariants}
               {...cardHoverMotion}
-              className="rounded-2xl bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300  group hover:shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1 hover:scale-[1.02] cursor-pointer flex flex-col"
+              className="rounded-2xl bg-[#0c1322] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300  group hover:shadow-2xl cursor-pointer flex flex-col"
               id={`case-card-${item.id}`}
             >
               {/* Graphic Mockup Preview Window - Compact */}
@@ -193,7 +193,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
                   <button
                     onClick={() => setActiveCase(item)}
-                    className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800/90 border border-slate-800 hover:border-cyan-500/40 text-xs font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-1.5 transition-all cursor-pointer min-h-[38px] hover:-translate-y-0.5 hover:shadow-cyan-500/10 hover:scale-[1.02]"
+                    className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800/90 border border-slate-800 hover:border-cyan-500/40 text-xs font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-1.5 transition-all cursor-pointer min-h-[38px]"
                   >
                     <span>Read Full Impact Breakdown</span>
                     <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
@@ -264,7 +264,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       setActiveCase(null);
                       onOpenConsultation();
                     }}
-                    className="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/20 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-cyan-500/40 cursor-pointer min-h-[44px] flex items-center justify-center"
+                    className="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/20 cursor-pointer min-h-[44px] flex items-center justify-center"
                   >
                     Discuss a Similar Strategy
                   </motion.button>
