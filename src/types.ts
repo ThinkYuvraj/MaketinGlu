@@ -32,6 +32,12 @@ export interface CaseStudy {
   clientUrl?: string;
   year?: string;
   imageUrl?: string;
+  client?: string;
+  tags?: string[];
+  challenge?: string;
+  solution?: string;
+  deliverables?: string[];
+  beforeAfter?: { metric: string; before: string; after: string }[];
 }
 
 export interface FAQItem {

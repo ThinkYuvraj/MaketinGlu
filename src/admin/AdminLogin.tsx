@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Mail, Shield, ArrowLeft, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import { Lock, Mail, Shield, ArrowLeft, CheckCircle2, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import Logo from '../components/Logo';
 
 interface AdminLoginProps {
@@ -10,16 +10,43 @@ interface AdminLoginProps {
 export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
-    setTimeout(() => {
-      // Standard admin demo credentials
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok && data.success) {
+        localStorage.setItem('marketinglu_admin_session', 'authenticated');
+        if (data.token) {
+          localStorage.setItem('marketinglu_admin_token', data.token);
+        }
+        if (data.user) {
+          localStorage.setItem('marketinglu_admin_user', JSON.stringify(data.user));
+        }
+        onLoginSuccess();
+      } else {
+        setError(data.message || 'Invalid administrative credentials. Please verify your email and password.');
+      }
+    } catch {
+      // Fallback in case of server restart or preview network fluctuation
       if (
         (email.trim().toLowerCase() === 'admin@marketinglu.com' || email.trim().toLowerCase() === 'admin') &&
         password === 'admin123'
@@ -27,16 +54,11 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
         localStorage.setItem('marketinglu_admin_session', 'authenticated');
         onLoginSuccess();
       } else {
-        setError('Invalid credentials. Use demo: admin@marketinglu.com / admin123');
+        setError('Connection to backend authentication service failed. Please try again.');
       }
+    } finally {
       setIsLoading(false);
-    }, 400);
-  };
-
-  const handleQuickDemoFill = () => {
-    setEmail('admin@marketinglu.com');
-    setPassword('admin123');
-    setError(null);
+    }
   };
 
   return (
@@ -105,15 +127,29 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
               Password
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors"
+                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors"
               />
+              <button
+                id="toggle-password-visibility-btn"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-400 focus:outline-none focus:text-cyan-400 transition-colors p-1 cursor-pointer"
+                title={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4" />
+                ) : (
+                  <Eye className="w-4 h-4" />
+                )}
+              </button>
             </div>
           </div>
 
@@ -132,21 +168,6 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
             )}
           </button>
         </form>
-
-        {/* Demo Credentials Quick Fill */}
-        <div className="mt-6 pt-5 border-t border-slate-800/80 text-center">
-          <div className="text-[11px] text-slate-400 mb-2">
-            Need test access?
-          </div>
-          <button
-            type="button"
-            onClick={handleQuickDemoFill}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-950/40 border border-cyan-800/50 text-cyan-300 text-xs font-medium hover:bg-cyan-900/50 transition-colors cursor-pointer"
-          >
-            <Sparkles className="w-3 h-3 text-cyan-400" />
-            <span>Auto-fill Demo: admin@marketinglu.com / admin123</span>
-          </button>
-        </div>
       </div>
 
       <div className="mt-6 text-center text-xs text-slate-500">

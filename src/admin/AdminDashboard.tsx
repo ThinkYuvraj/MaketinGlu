@@ -33,13 +33,14 @@ import CompanyTab from './components/CompanyTab';
 import ThemeStatsTab from './components/ThemeStatsTab';
 import SectionsTab from './components/SectionsTab';
 import ImagesMediaTab from './components/ImagesMediaTab';
+import SecurityTab from './components/SecurityTab';
 
 interface AdminDashboardProps {
   onBackToSite: () => void;
   onLogout: () => void;
 }
 
-type TabType = 'titles' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design';
+type TabType = 'titles' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design' | 'security';
 
 export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboardProps) {
   const { 
@@ -235,6 +236,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     { id: 'testimonials', label: 'Client Reviews', icon: MessageSquare, count: config.testimonials?.length },
     { id: 'company', label: 'Agency & Contact', icon: Building2 },
     { id: 'design', label: 'Theme & Stats', icon: Palette },
+    { id: 'security', label: 'Admin Credentials', icon: ShieldCheck },
   ];
 
   return (
@@ -450,6 +452,10 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
           {activeTab === 'design' && (
             <ThemeStatsTab formData={formData} setFormData={setFormData} />
+          )}
+
+          {activeTab === 'security' && (
+            <SecurityTab />
           )}
         </main>
       </div>

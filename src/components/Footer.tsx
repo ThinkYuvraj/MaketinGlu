@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, ArrowRight, Lock } from 'lucide-react';
 import Logo from './Logo';
 import Container from './common/Container';
 import { useSiteConfig } from '../context/SiteConfigContext';
@@ -23,6 +23,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
     { name: 'Growth Performance', action: () => navigateTo('#/#growth') },
     { name: 'Client Case Studies', action: () => navigateTo('#/#cases') },
     { name: 'Contact & Consultation', action: () => onOpenConsultation() },
+    { name: 'Admin Login', action: () => (onOpenAdmin ? onOpenAdmin() : navigateTo('#/admin')) },
   ];
 
   const allServices = config.services && config.services.length > 0 ? config.services : expertiseData;
@@ -186,6 +187,23 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
             <span className="text-slate-400 font-medium">
               © 2026 MarketingGlu. ISO 9001:2015 Certified Agency.
             </span>
+            <span className="text-slate-700 hidden sm:inline">&bull;</span>
+            <button
+              id="footer-admin-login-btn"
+              type="button"
+              onClick={() => {
+                if (onOpenAdmin) {
+                  onOpenAdmin();
+                } else {
+                  navigateTo('#/admin');
+                }
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 hover:bg-slate-850 transition-all text-xs font-semibold cursor-pointer shadow-sm group"
+              title="Admin Portal Login"
+            >
+              <Lock className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
+              <span>Admin Login</span>
+            </button>
           </div>
         </div>
 
