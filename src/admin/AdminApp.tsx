@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import AdminLogin from './AdminLogin';
 import AdminDashboard from './AdminDashboard';
+import {
+  useAdminSessionExpiration,
+  clearLocalStorage,
+  resetActivityTimer,
+  isSessionExpired,
+  INACTIVITY_TIMEOUT_MS,
+} from './sessionExpiration';
 
 interface AdminAppProps {
   onBackToSite: () => void;
@@ -8,12 +15,40 @@ interface AdminAppProps {
 
 export default function AdminApp({ onBackToSite }: AdminAppProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    // If the session has already expired based on 30m inactivity, clear and return unauthenticated
+    if (isSessionExpired()) {
+      clearLocalStorage();
+      return false;
+    }
     return localStorage.getItem('marketinglu_admin_session') === 'authenticated';
+  });
+
+  // Automatically clears local storage and redirects the user back to the public homepage after 30 minutes of inactivity
+  const handleSessionExpired = useCallback(() => {
+    clearLocalStorage();
+    setIsAuthenticated(false);
+    onBackToSite();
+    if (typeof window !== 'undefined' && window.location.hash !== '#/' && window.location.hash !== '') {
+      window.location.hash = '#/';
+    }
+  }, [onBackToSite]);
+
+  // Hook tracking user interaction events and enforcing 30m inactivity window
+  useAdminSessionExpiration({
+    onExpire: handleSessionExpired,
+    timeoutMs: INACTIVITY_TIMEOUT_MS,
+    enabled: isAuthenticated,
   });
 
   useEffect(() => {
     const token = localStorage.getItem('marketinglu_admin_token');
     if (token) {
+      // Check inactivity on initial verification
+      if (isSessionExpired()) {
+        handleSessionExpired();
+        return;
+      }
+
       // Validate session with backend server
       fetch('/api/admin/verify', {
         headers: {
@@ -23,8 +58,7 @@ export default function AdminApp({ onBackToSite }: AdminAppProps) {
       .then(res => res.json())
       .then(data => {
         if (!data.valid) {
-          localStorage.removeItem('marketinglu_admin_session');
-          localStorage.removeItem('marketinglu_admin_token');
+          clearLocalStorage();
           setIsAuthenticated(false);
         }
       })
@@ -32,9 +66,10 @@ export default function AdminApp({ onBackToSite }: AdminAppProps) {
         // If server is unreachable momentarily, maintain session
       });
     }
-  }, []);
+  }, [handleSessionExpired]);
 
   const handleLoginSuccess = () => {
+    resetActivityTimer();
     setIsAuthenticated(true);
   };
 
@@ -50,10 +85,9 @@ export default function AdminApp({ onBackToSite }: AdminAppProps) {
         // Ignore logout network error
       }
     }
-    localStorage.removeItem('marketinglu_admin_session');
-    localStorage.removeItem('marketinglu_admin_token');
-    localStorage.removeItem('marketinglu_admin_user');
+    clearLocalStorage();
     setIsAuthenticated(false);
+    onBackToSite();
   };
 
   if (!isAuthenticated) {

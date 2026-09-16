@@ -20,7 +20,8 @@ import {
   Layers,
   Image as ImageIcon,
   BookOpen,
-  Briefcase
+  Briefcase,
+  RefreshCw
 } from 'lucide-react';
 import TitlesTab from './components/TitlesTab';
 import ServicesTab from './components/ServicesTab';
@@ -34,6 +35,7 @@ import ThemeStatsTab from './components/ThemeStatsTab';
 import SectionsTab from './components/SectionsTab';
 import ImagesMediaTab from './components/ImagesMediaTab';
 import SecurityTab from './components/SecurityTab';
+import AdminSkeleton from './components/AdminSkeleton';
 
 interface AdminDashboardProps {
   onBackToSite: () => void;
@@ -74,8 +76,33 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
   } = useSiteConfig();
 
   const [activeTab, setActiveTab] = useState<TabType>('titles');
+  const [isTabLoading, setIsTabLoading] = useState(true);
   const [saveToast, setSaveToast] = useState(false);
   const [resetToast, setResetToast] = useState(false);
+
+  // Initial fast hydration feedback on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsTabLoading(false);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSelectTab = (tabId: TabType) => {
+    if (tabId === activeTab) return;
+    setIsTabLoading(true);
+    setActiveTab(tabId);
+    setTimeout(() => {
+      setIsTabLoading(false);
+    }, 220);
+  };
+
+  const handleRefreshData = () => {
+    setIsTabLoading(true);
+    setTimeout(() => {
+      setIsTabLoading(false);
+    }, 280);
+  };
 
   // Local draft state initialized from config
   const [formData, setFormData] = useState({
@@ -258,6 +285,17 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
+            onClick={handleRefreshData}
+            disabled={isTabLoading}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 hover:bg-slate-850 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-cyan-400 transition-colors cursor-pointer min-h-[36px]"
+            title="Refresh & sync data store"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-cyan-400 ${isTabLoading ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">Sync Data</span>
+          </button>
+
+          <button
+            type="button"
             onClick={onBackToSite}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer min-h-[36px]"
           >
@@ -327,7 +365,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => handleSelectTab(tab.id)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                       isActive
                         ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
@@ -367,95 +405,101 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
         {/* Main Content Area */}
         <main className="flex-1 bg-[#090e1a] border border-slate-800/90 rounded-3xl p-5 sm:p-7 min-w-0">
-          {activeTab === 'titles' && (
-            <TitlesTab formData={formData} setFormData={setFormData} />
-          )}
+          {isTabLoading ? (
+            <AdminSkeleton tab={activeTab} />
+          ) : (
+            <>
+              {activeTab === 'titles' && (
+                <TitlesTab formData={formData} setFormData={setFormData} />
+              )}
 
-          {activeTab === 'services' && (
-            <ServicesTab
-              services={config.services || []}
-              onAddService={addService}
-              onUpdateService={updateService}
-              onDeleteService={deleteService}
-              onReorderServices={reorderServices}
-            />
-          )}
+              {activeTab === 'services' && (
+                <ServicesTab
+                  services={config.services || []}
+                  onAddService={addService}
+                  onUpdateService={updateService}
+                  onDeleteService={deleteService}
+                  onReorderServices={reorderServices}
+                />
+              )}
 
-          {activeTab === 'blogs' && (
-            <BlogsTab
-              blogs={config.blogs || []}
-              onAddBlog={addBlogPost}
-              onUpdateBlog={updateBlogPost}
-              onDeleteBlog={deleteBlogPost}
-              onTogglePublish={togglePublishBlog}
-            />
-          )}
+              {activeTab === 'blogs' && (
+                <BlogsTab
+                  blogs={config.blogs || []}
+                  onAddBlog={addBlogPost}
+                  onUpdateBlog={updateBlogPost}
+                  onDeleteBlog={deleteBlogPost}
+                  onTogglePublish={togglePublishBlog}
+                />
+              )}
 
-          {activeTab === 'sections' && (
-            <SectionsTab
-              sections={config.customSections}
-              onAddSection={addCustomSection}
-              onUpdateSection={updateCustomSection}
-              onDeleteSection={deleteCustomSection}
-              onToggleSection={toggleCustomSection}
-            />
-          )}
+              {activeTab === 'sections' && (
+                <SectionsTab
+                  sections={config.customSections}
+                  onAddSection={addCustomSection}
+                  onUpdateSection={updateCustomSection}
+                  onDeleteSection={deleteCustomSection}
+                  onToggleSection={toggleCustomSection}
+                />
+              )}
 
-          {activeTab === 'images' && (
-            <ImagesMediaTab
-              onNotifySave={() => {
-                setSaveToast(true);
-                setTimeout(() => setSaveToast(false), 2500);
-              }}
-            />
-          )}
+              {activeTab === 'images' && (
+                <ImagesMediaTab
+                  onNotifySave={() => {
+                    setSaveToast(true);
+                    setTimeout(() => setSaveToast(false), 2500);
+                  }}
+                />
+              )}
 
-          {activeTab === 'packages' && (
-            <PackagesTab
-              packages={config.packages}
-              onUpdatePackage={updatePackage}
-              onAddPackage={addPackage}
-              onDeletePackage={deletePackage}
-            />
-          )}
+              {activeTab === 'packages' && (
+                <PackagesTab
+                  packages={config.packages}
+                  onUpdatePackage={updatePackage}
+                  onAddPackage={addPackage}
+                  onDeletePackage={deletePackage}
+                />
+              )}
 
-          {activeTab === 'cases' && (
-            <CaseStudiesTab
-              caseStudies={config.caseStudies}
-              onAddCaseStudy={addCaseStudy}
-              onUpdateCaseStudy={updateCaseStudy}
-              onDeleteCaseStudy={deleteCaseStudy}
-            />
-          )}
+              {activeTab === 'cases' && (
+                <CaseStudiesTab
+                  caseStudies={config.caseStudies}
+                  onAddCaseStudy={addCaseStudy}
+                  onUpdateCaseStudy={updateCaseStudy}
+                  onDeleteCaseStudy={deleteCaseStudy}
+                />
+              )}
 
-          {activeTab === 'faq' && (
-            <FaqTab
-              faqs={config.faqs}
-              onAddFaq={addFaq}
-              onUpdateFaq={updateFaq}
-              onDeleteFaq={deleteFaq}
-            />
-          )}
+              {activeTab === 'faq' && (
+                <FaqTab
+                  faqs={config.faqs}
+                  onAddFaq={addFaq}
+                  onUpdateFaq={updateFaq}
+                  onDeleteFaq={deleteFaq}
+                />
+              )}
 
-          {activeTab === 'testimonials' && (
-            <TestimonialsTab
-              testimonials={config.testimonials}
-              onAddTestimonial={addTestimonial}
-              onUpdateTestimonial={updateTestimonial}
-              onDeleteTestimonial={deleteTestimonial}
-            />
-          )}
+              {activeTab === 'testimonials' && (
+                <TestimonialsTab
+                  testimonials={config.testimonials}
+                  onAddTestimonial={addTestimonial}
+                  onUpdateTestimonial={updateTestimonial}
+                  onDeleteTestimonial={deleteTestimonial}
+                />
+              )}
 
-          {activeTab === 'company' && (
-            <CompanyTab formData={formData} setFormData={setFormData} />
-          )}
+              {activeTab === 'company' && (
+                <CompanyTab formData={formData} setFormData={setFormData} />
+              )}
 
-          {activeTab === 'design' && (
-            <ThemeStatsTab formData={formData} setFormData={setFormData} />
-          )}
+              {activeTab === 'design' && (
+                <ThemeStatsTab formData={formData} setFormData={setFormData} />
+              )}
 
-          {activeTab === 'security' && (
-            <SecurityTab />
+              {activeTab === 'security' && (
+                <SecurityTab />
+              )}
+            </>
           )}
         </main>
       </div>

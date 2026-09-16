@@ -1,10 +1,13 @@
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
-import { createServer as createViteServer } from 'vite';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
@@ -20,10 +23,10 @@ const adminCredentials = {
 };
 
 // In-memory active session tokens map (token -> { email, expiresAt })
-const activeSessions = new Map<string, { email: string; expiresAt: number }>();
+const activeSessions = new Map();
 
 // Generate secure random session token
-function generateToken(): string {
+function generateToken() {
   return crypto.randomBytes(32).toString('hex');
 }
 
@@ -38,7 +41,7 @@ setInterval(() => {
 }, 10 * 60 * 1000);
 
 // Helper middleware to authenticate admin requests
-function requireAdminAuth(req: express.Request, res: express.Response, next: express.NextFunction) {
+function requireAdminAuth(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ success: false, message: 'Missing or malformed Authorization header' });
@@ -58,7 +61,7 @@ function requireAdminAuth(req: express.Request, res: express.Response, next: exp
 
   // Renew token for 24 hours of activity
   session.expiresAt = Date.now() + 24 * 60 * 60 * 1000;
-  (req as unknown as { adminUser: { email: string; expiresAt: number } }).adminUser = session;
+  req.adminUser = session;
   next();
 }
 
@@ -68,7 +71,7 @@ function requireAdminAuth(req: express.Request, res: express.Response, next: exp
 
 // 1. Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'MarketingGlu Admin Backend', time: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'MarketingGlu Express Server', time: new Date().toISOString() });
 });
 
 // 2. Admin Login
@@ -83,7 +86,6 @@ app.post('/api/admin/login', (req, res) => {
   const targetEmail = adminCredentials.email.trim().toLowerCase();
   const inputPassword = String(password);
 
-  // Match against configured credentials (or 'admin' alias for convenience)
   const isEmailMatch = inputEmail === targetEmail || inputEmail === 'admin';
   const isPasswordMatch = inputPassword === adminCredentials.password;
 
@@ -94,7 +96,6 @@ app.post('/api/admin/login', (req, res) => {
     });
   }
 
-  // Create new session token (24h expiry)
   const token = generateToken();
   const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
   activeSessions.set(token, { email: adminCredentials.email, expiresAt });
@@ -134,7 +135,7 @@ app.post('/api/admin/logout', (req, res) => {
   res.json({ success: true, message: 'Logged out successfully' });
 });
 
-// 5. Update Admin Credentials (Password / Email)
+// 5. Update Admin Credentials
 app.post('/api/admin/change-credentials', requireAdminAuth, (req, res) => {
   const { currentPassword, newEmail, newPassword } = req.body;
 
@@ -173,18 +174,27 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 });
 
 // ==========================================
-// Vite Middleware / Static serving
+// Static Assets / SPA Fallback
 // ==========================================
 
 async function startServer() {
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
+  if (process.env.NODE_ENV !== 'production' && !process.env.SERVE_DIST) {
+    try {
+      const { createServer: createViteServer } = await import('vite');
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa',
+      });
+      app.use(vite.middlewares);
+    } catch (e) {
+      const distPath = path.join(__dirname, 'dist');
+      app.use(express.static(distPath));
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+      });
+    }
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = path.join(__dirname, 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
@@ -192,7 +202,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`MarketingGlu server running on http://0.0.0.0:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
