@@ -1,6 +1,6 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, CheckCircle2, Calendar, Clock, Sparkles } from 'lucide-react';
+import { X, CheckCircle2, Sparkles } from 'lucide-react';
 import { standardEase } from '../lib/animations';
 
 interface ConsultationModalProps {
@@ -24,8 +24,6 @@ export default function ConsultationModal({
     phone: '',
     company: '',
     service: 'Website Designing & Development',
-    preferredDate: '',
-    preferredTime: '11:00 AM IST',
     notes: ''
   });
   const [submitted, setSubmitted] = useState(false);
@@ -181,38 +179,6 @@ export default function ConsultationModal({
                         <option>Customized Solution</option>
                         <option>Chatbot & AI Lead Automation</option>
                         <option>Full Digital Marketing Audit</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
-                    <div>
-                      <label className="block text-slate-300 font-medium mb-1 flex items-center gap-1 text-[11px]">
-                        <Calendar className="w-3 h-3 text-cyan-400" />
-                        <span>Preferred Date</span>
-                      </label>
-                      <input
-                        type="date"
-                        value={formData.preferredDate}
-                        onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white focus:outline-none focus:border-cyan-400 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-slate-300 font-medium mb-1 flex items-center gap-1 text-[11px]">
-                        <Clock className="w-3 h-3 text-cyan-400" />
-                        <span>Preferred Time Slot</span>
-                      </label>
-                      <select
-                        value={formData.preferredTime}
-                        onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white focus:outline-none focus:border-cyan-400 text-xs"
-                      >
-                        <option>10:00 AM - 11:00 AM IST</option>
-                        <option>11:30 AM - 12:30 PM IST</option>
-                        <option>02:00 PM - 03:00 PM IST</option>
-                        <option>04:00 PM - 05:00 PM IST</option>
-                        <option>06:00 PM - 07:00 PM IST</option>
                       </select>
                     </div>
                   </div>
