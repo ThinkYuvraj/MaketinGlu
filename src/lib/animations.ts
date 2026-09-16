@@ -10,11 +10,51 @@ export const defaultTransition: Transition = {
 
 // Section / Block Fade-Up
 export const fadeInUpVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
     transition: defaultTransition,
+  },
+};
+
+// Subtle Page-level Transition Variants for Route & View Changes
+export const pageTransitionVariants: Variants = {
+  initial: {
+    opacity: 0,
+    y: 8,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.32,
+      ease: standardEase,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -6,
+    transition: {
+      duration: 0.18,
+      ease: standardEase,
+    },
+  },
+};
+
+// Subtle Section-level Fade-in Transition Variants
+export const sectionFadeVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 18,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.48,
+      ease: standardEase,
+    },
   },
 };
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PerformanceStats from './components/PerformanceStats';
@@ -21,6 +22,7 @@ import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
 import CustomSectionRenderer from './components/CustomSectionRenderer';
 import { SectionPosition } from './types';
+import { pageTransitionVariants } from './lib/animations';
 
 function AppContent() {
   const { config } = useSiteConfig();
@@ -61,9 +63,22 @@ function AppContent() {
       ));
   };
 
-  // If viewing admin portal, render dedicated AdminApp interface
+  // If viewing admin portal, render dedicated AdminApp interface with smooth transition
   if (currentRoute.type === 'admin') {
-    return <AdminApp onBackToSite={() => navigateTo('#/')} />;
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="admin-portal"
+          variants={pageTransitionVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="min-h-screen"
+        >
+          <AdminApp onBackToSite={() => navigateTo('#/')} />
+        </motion.div>
+      </AnimatePresence>
+    );
   }
 
   // Resolve service for dedicated service detail page
@@ -71,6 +86,13 @@ function AppContent() {
   const activeService = currentRoute.type === 'service-detail'
     ? availableServices.find(item => item.id === currentRoute.serviceId)
     : null;
+
+  // Determine unique transition key for each page route
+  const routeKey = currentRoute.type === 'service-detail'
+    ? `service-${currentRoute.serviceId || 'unknown'}`
+    : currentRoute.type === 'blog-detail'
+    ? `blog-${currentRoute.blogSlug || 'unknown'}`
+    : currentRoute.type;
 
   return (
     <div className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative pb-16 lg:pb-0">
@@ -80,79 +102,90 @@ function AppContent() {
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Main Content Area based on Active Route */}
+      {/* Main Content Area based on Active Route with Subtle Framer Motion Fade-In Transition */}
       <main className="flex-1">
-        {currentRoute.type === 'service-detail' && activeService ? (
-          /* Dedicated Service Page (e.g. #/services/web-design) */
-          <ServiceDetailPage 
-            service={activeService} 
-            onOpenConsultation={handleOpenConsultation} 
-          />
-        ) : currentRoute.type === 'services-index' ? (
-          /* Dedicated All 6 Services Directory (#/services) */
-          <ServicesIndexPage 
-            onOpenConsultation={handleOpenConsultation} 
-          />
-        ) : currentRoute.type === 'blogs' ? (
-          /* Dedicated Blogs & Resources Page (#/blogs) */
-          <BlogsPage 
-            onOpenConsultation={handleOpenConsultation} 
-          />
-        ) : currentRoute.type === 'blog-detail' ? (
-          /* Dedicated Blog Article Detail Reader (#/blogs/:slug) */
-          <BlogDetailPage 
-            slug={currentRoute.blogSlug} 
-            onOpenConsultation={handleOpenConsultation} 
-          />
-        ) : (
-          /* Default Main Homepage Flow */
-          <>
-            {/* Section 1: Hero Section */}
-            <AnimatedSection id="home" delayMs={0} className="relative">
-              <Hero
-                onOpenConsultation={() => handleOpenConsultation()}
-                onExplorePortfolio={handleExplorePortfolio}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={routeKey}
+            variants={pageTransitionVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="w-full"
+          >
+            {currentRoute.type === 'service-detail' && activeService ? (
+              /* Dedicated Service Page (e.g. #/services/web-design) */
+              <ServiceDetailPage 
+                service={activeService} 
+                onOpenConsultation={handleOpenConsultation} 
               />
-            </AnimatedSection>
-            {renderCustomSections('after-hero')}
-
-            {/* Section 2: Our Performance In Numbers */}
-            <AnimatedSection delayMs={60} className="relative">
-              <PerformanceStats />
-            </AnimatedSection>
-            {renderCustomSections('after-stats')}
-
-            {/* Section 3: Unified Company Expertise & Growth Disciplines */}
-            <AnimatedSection id="expertise" delayMs={60} className="relative">
-              <CompanyExpertise
-                onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
+            ) : currentRoute.type === 'services-index' ? (
+              /* Dedicated All 6 Services Directory (#/services) */
+              <ServicesIndexPage 
+                onOpenConsultation={handleOpenConsultation} 
               />
-            </AnimatedSection>
-            {renderCustomSections('after-expertise')}
-
-            {/* Section 4: Tailored Marketing Packages */}
-            <AnimatedSection delayMs={60} className="relative">
-              <Packages
-                onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
+            ) : currentRoute.type === 'blogs' ? (
+              /* Dedicated Blogs & Resources Page (#/blogs) */
+              <BlogsPage 
+                onOpenConsultation={handleOpenConsultation} 
               />
-            </AnimatedSection>
-            {renderCustomSections('after-packages')}
-
-            {/* Section 5: Case Studies & Proven Results (Portfolio) */}
-            <AnimatedSection delayMs={60} className="relative">
-              <CaseStudies
-                onOpenConsultation={() => handleOpenConsultation()}
+            ) : currentRoute.type === 'blog-detail' ? (
+              /* Dedicated Blog Article Detail Reader (#/blogs/:slug) */
+              <BlogDetailPage 
+                slug={currentRoute.blogSlug} 
+                onOpenConsultation={handleOpenConsultation} 
               />
-            </AnimatedSection>
-            {renderCustomSections('after-cases')}
+            ) : (
+              /* Default Main Homepage Flow with subtle animated sections */
+              <>
+                {/* Section 1: Hero Section */}
+                <AnimatedSection id="home" delayMs={0} className="relative">
+                  <Hero
+                    onOpenConsultation={() => handleOpenConsultation()}
+                    onExplorePortfolio={handleExplorePortfolio}
+                  />
+                </AnimatedSection>
+                {renderCustomSections('after-hero')}
 
-            {/* Section 6: Frequently Asked Questions (FAQ) */}
-            <AnimatedSection delayMs={60} className="relative">
-              <FAQ />
-            </AnimatedSection>
-            {renderCustomSections('after-faq')}
-          </>
-        )}
+                {/* Section 2: Our Performance In Numbers */}
+                <AnimatedSection id="growth" delayMs={60} className="relative">
+                  <PerformanceStats />
+                </AnimatedSection>
+                {renderCustomSections('after-stats')}
+
+                {/* Section 3: Unified Company Expertise & Growth Disciplines */}
+                <AnimatedSection id="expertise" delayMs={60} className="relative">
+                  <CompanyExpertise
+                    onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
+                  />
+                </AnimatedSection>
+                {renderCustomSections('after-expertise')}
+
+                {/* Section 4: Tailored Marketing Packages */}
+                <AnimatedSection id="packages" delayMs={60} className="relative">
+                  <Packages
+                    onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
+                  />
+                </AnimatedSection>
+                {renderCustomSections('after-packages')}
+
+                {/* Section 5: Case Studies & Proven Results (Portfolio) */}
+                <AnimatedSection id="cases" delayMs={60} className="relative">
+                  <CaseStudies
+                    onOpenConsultation={() => handleOpenConsultation()}
+                  />
+                </AnimatedSection>
+                {renderCustomSections('after-cases')}
+
+                {/* Section 6: Frequently Asked Questions (FAQ) */}
+                <AnimatedSection id="faq" delayMs={60} className="relative">
+                  <FAQ />
+                </AnimatedSection>
+                {renderCustomSections('after-faq')}
+              </>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* Footer with Service Links and Discreet Admin Portal Link */}

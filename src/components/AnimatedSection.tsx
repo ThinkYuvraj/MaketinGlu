@@ -17,11 +17,12 @@ export default function AnimatedSection({
   delayMs = 0,
 }: AnimatedSectionProps) {
   const { config } = useSiteConfig();
+  const anchorClass = id ? 'scroll-mt-20 lg:scroll-mt-24' : '';
 
   // If animations disabled via Admin UI/UX settings
   if (!config.animationsEnabled) {
     return (
-      <div id={id} className={className}>
+      <div id={id} className={`${anchorClass} ${className}`.trim()}>
         {children}
       </div>
     );
@@ -30,12 +31,12 @@ export default function AnimatedSection({
   return (
     <motion.div
       id={id}
-      className={className}
-      initial={{ opacity: 0, y: 28 }}
+      className={`${anchorClass} ${className}`.trim()}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: '-40px' }}
       transition={{
-        duration: 0.6,
+        duration: 0.5,
         ease: standardEase,
         delay: delayMs / 1000,
       }}
