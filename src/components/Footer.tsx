@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Lock, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
 import Container from './common/Container';
 import { useSiteConfig } from '../context/SiteConfigContext';
@@ -177,7 +177,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
 
         </motion.div>
 
-        {/* Bottom Bar with discrete Admin Site Access */}
+        {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
             Powered by All in one solutions @ All Right reserved!
@@ -186,21 +186,6 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
             <span className="text-slate-400 font-medium">
               © 2026 MarketingGlu. ISO 9001:2015 Certified Agency.
             </span>
-            <span className="text-slate-700 hidden sm:inline">&bull;</span>
-            <a
-              href="#/admin"
-              onClick={(e) => {
-                if (onOpenAdmin) {
-                  e.preventDefault();
-                  onOpenAdmin();
-                }
-              }}
-              className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-cyan-400 transition-colors cursor-pointer py-1"
-              title="Separate Admin Login & UI/UX Studio"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Admin Site</span>
-            </a>
           </div>
         </div>
 

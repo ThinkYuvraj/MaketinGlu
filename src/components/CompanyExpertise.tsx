@@ -349,54 +349,6 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
           </div>
 
-            {/* Progress Bar & Desktop Navigation Controls */}
-            <div className="hidden lg:flex items-center justify-between max-w-md mx-auto mt-4 px-4">
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40 transition-colors cursor-pointer"
-                aria-label="Previous discipline"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              {/* Discipline Quick Dots */}
-              <div className="flex items-center gap-2">
-                {services.map((service, dotIdx) => (
-                  <button
-                    key={service.id}
-                    type="button"
-                    onClick={() => handleSelectTab(dotIdx)}
-                    className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                      dotIdx === safeCurrentIndex
-                        ? 'w-8 bg-cyan-400 shadow-md shadow-cyan-400/40'
-                        : 'w-2.5 bg-slate-700 hover:bg-slate-500'
-                    }`}
-                    title={`Jump to ${service.tabLabel}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={handleNext}
-                className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40 transition-colors cursor-pointer"
-                aria-label="Next discipline"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Auto-rotation Progress Bar */}
-            <div className="hidden lg:block max-w-xs mx-auto mt-4">
-              <div className="h-1 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-cyan-500 to-sky-400 transition-all duration-75 ease-linear rounded-full"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-
             {/* MOBILE VIEW: Single Swipable Card */}
             <div className="block lg:hidden relative max-w-sm sm:max-w-md mx-auto mt-4">
               
