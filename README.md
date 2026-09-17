@@ -121,6 +121,24 @@ The application uses an optimized hash-based client-side router (`NavigationCont
 
 ---
 
+## 🚀 Deployment Guide
+
+This project can be deployed either as a **Static Site** (Frontend only) or as a **Node.js Full-Stack Application** (Frontend + Express API):
+
+### 1. Static Hosting (Vercel, Netlify, Cloudflare Pages, GitHub Pages)
+- **Framework Preset**: Vite / React
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Node Backend Needed**: None. The React application will run completely in the browser. Admin portal operations feature seamless client-side authentication fallbacks.
+
+### 2. Node.js Hosting (Cloud Run, Render, Railway, Heroku, Plesk, Docker)
+- **Entry File**: `server.js`
+- **Start Command**: `npm start` (or `node server.js`)
+- **Build Command**: `npm run build`
+- **Description**: The bundled `server.js` Express wrapper automatically serves the compiled `dist/` production assets and provides the `/api/admin/*` administrative endpoints.
+
+---
+
 ## 📁 Project Directory Structure
 
 ```
