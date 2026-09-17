@@ -7,6 +7,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const isBackendOnly = process.env.BACKEND_ONLY === 'true' || process.argv.includes('--backend-only');
 
 // Body parsers
 app.use(express.json());
@@ -188,7 +189,7 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 // ==========================================
 
 async function startServer() {
-  if (process.env.BACKEND_ONLY === 'true') {
+  if (isBackendOnly) {
     console.log(`MarketingGlu API backend running in standalone mode on http://0.0.0.0:${PORT}`);
   } else if (process.env.NODE_ENV !== 'production' && !process.env.SERVE_DIST) {
     try {
