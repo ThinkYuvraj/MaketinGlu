@@ -9,7 +9,7 @@
     "dev:server": "node scripts/server-dev.mjs",
     "dev:client": "vite --host 0.0.0.0",
     "build": "vite build && node scripts/build-server.mjs",
-    "start": "node dist/server.cjs",
+    "start": "node server.js",
     "lint": "tsc --noEmit",
     "preview": "vite preview"
   },

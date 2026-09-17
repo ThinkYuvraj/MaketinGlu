@@ -131,13 +131,14 @@ This project can be deployed either as a **Static Site** (Frontend only) or as a
 - **Node Backend Needed**: None. The React application will run completely in the browser. Admin portal operations feature seamless client-side authentication fallbacks.
 
 ### 2. Node.js Hosting (Cloud Run, Render, Railway, Heroku, Plesk, Docker)
-- **Entry File**: `dist/server.cjs` when the host asks for the startup file
+- **Entry File**: `server.js` when the host asks for the startup file
 - **Start Command**: `npm start`
 - **Build Command**: `npm run build`
 - **Description**: The built Express server serves the compiled `dist/` production assets and provides the `/api/admin/*` administrative endpoints.
 
 ### Hostinger Node.js Setup
 - Set the startup command to `npm start`.
+- If Hostinger asks for an application startup file, use `server.js`.
 - Run the build command once after upload: `npm run build`.
 - Add these exact environment variables in the Hostinger Node.js app settings:
   ```bash
