@@ -12,6 +12,18 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Enable CORS to allow Vite local dev server (port 5173 or custom) to query the backend (port 3000)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 // Server-side admin credentials state (configured via env or fallback defaults)
 const adminCredentials = {
   email: process.env.ADMIN_EMAIL || 'admin@marketinglu.com',
@@ -176,7 +188,9 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 // ==========================================
 
 async function startServer() {
-  if (process.env.NODE_ENV !== 'production' && !process.env.SERVE_DIST) {
+  if (process.env.BACKEND_ONLY === 'true') {
+    console.log(`MarketingGlu API backend running in standalone mode on http://0.0.0.0:${PORT}`);
+  } else if (process.env.NODE_ENV !== 'production' && !process.env.SERVE_DIST) {
     try {
       const { createServer: createViteServer } = await import('vite');
       const vite = await createViteServer({
@@ -200,7 +214,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`MarketingGlu server running on http://0.0.0.0:${PORT}`);
+    console.log(`MarketingGlu backend server running on http://0.0.0.0:${PORT}`);
   });
 }
 

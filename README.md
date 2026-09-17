@@ -85,10 +85,24 @@ The application uses an optimized hash-based client-side router (`NavigationCont
    ```
 
 4. **Start the local development server**:
-   ```bash
-   npm run dev
-   ```
-   The application will be accessible at: `http://localhost:3000`
+   
+   **Option A: Dual Server (Vite port for Frontend + Port 3000 for Backend)**
+   - Start backend API server on port `3000`:
+     ```bash
+     npm run dev:server
+     ```
+   - In a separate terminal, start frontend on Vite port `5173`:
+     ```bash
+     npm run dev:client
+     ```
+     *Frontend runs on `http://localhost:5173` with automated `/api` proxy forwarding to `http://localhost:3000`.*
+
+   **Option B: Unified Full-Stack Server**
+   - Start unified server on port `3000` (serving both backend API and frontend via Vite middleware):
+     ```bash
+     npm run dev
+     ```
+     *Accessible at: `http://localhost:3000`*
 
 5. **Type Checking & Linting**:
    ```bash
