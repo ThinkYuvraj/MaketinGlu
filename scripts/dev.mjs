@@ -1,8 +1,67 @@
 import { spawn } from 'node:child_process';
+import net from 'node:net';
 
 const command = process.platform === 'win32' ? process.env.ComSpec || 'cmd.exe' : 'npm';
-const frontendPort = process.env.VITE_PORT || '5173';
-const backendPort = process.env.PORT || '3000';
+const DEFAULT_FRONTEND_PORT = 5173;
+const DEFAULT_BACKEND_PORT = 3000;
+
+function parsePort(value, fallback) {
+  const port = value ? Number.parseInt(value, 10) : fallback;
+  return Number.isInteger(port) && port > 0 && port < 65536 ? port : fallback;
+}
+
+function canUsePort(port) {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+
+    server.once('error', () => {
+      resolve(false);
+    });
+
+    server.once('listening', () => {
+      server.close(() => {
+        resolve(true);
+      });
+    });
+
+    server.listen(port, '0.0.0.0');
+  });
+}
+
+async function findPort(startPort, label, isExplicit) {
+  if (await canUsePort(startPort)) {
+    return startPort;
+  }
+
+  if (isExplicit) {
+    throw new Error(`Requested ${label} port ${startPort} is already in use.`);
+  }
+
+  for (let port = startPort + 1; port < startPort + 20; port += 1) {
+    if (await canUsePort(port)) {
+      console.warn(`[dev] Default ${label} port ${startPort} is busy. Using ${port} instead.`);
+      return port;
+    }
+  }
+
+  throw new Error(`No available ${label} port found near ${startPort}.`);
+}
+
+const frontendPort = await findPort(
+  parsePort(process.env.VITE_PORT, DEFAULT_FRONTEND_PORT),
+  'frontend',
+  Boolean(process.env.VITE_PORT),
+);
+const backendPort = await findPort(
+  parsePort(process.env.PORT, DEFAULT_BACKEND_PORT),
+  'backend',
+  Boolean(process.env.PORT),
+);
+const childEnv = {
+  ...process.env,
+  PORT: String(backendPort),
+  VITE_PORT: String(frontendPort),
+};
 
 const services = [
   {
@@ -64,7 +123,7 @@ for (const service of services) {
       : ['run', service.script];
 
   const child = spawn(command, args, {
-    env: process.env,
+    env: childEnv,
     shell: false,
     stdio: ['inherit', 'pipe', 'pipe'],
   });
