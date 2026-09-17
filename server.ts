@@ -8,6 +8,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const isBackendOnly = process.env.BACKEND_ONLY === 'true' || process.argv.includes('--backend-only');
+const isProduction = process.env.NODE_ENV === 'production';
+
+function readCredentialEnv(name: string, fallback: string): string {
+  const value = process.env[name];
+  if (typeof value === 'string' && value.trim()) {
+    return value.trim();
+  }
+
+  return isProduction ? '' : fallback;
+}
 
 // Body parsers
 app.use(express.json());
@@ -25,11 +35,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// Server-side admin credentials state (configured via env or fallback defaults)
+// Server-side admin credentials state (configured via env or local dev fallbacks)
 const adminCredentials = {
-  email: process.env.ADMIN_EMAIL || 'admin@marketinglu.com',
-  password: process.env.ADMIN_PASSWORD || 'admin123',
+  email: readCredentialEnv('ADMIN_EMAIL', 'admin@marketinglu.com').toLowerCase(),
+  password: readCredentialEnv('ADMIN_PASSWORD', 'admin123'),
 };
+
+function hasConfiguredAdminCredentials(): boolean {
+  return Boolean(adminCredentials.email && adminCredentials.password);
+}
 
 // In-memory active session tokens map (token -> { email, expiresAt })
 const activeSessions = new Map<string, { email: string; expiresAt: number }>();
@@ -80,7 +94,14 @@ function requireAdminAuth(req: express.Request, res: express.Response, next: exp
 
 // 1. Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'MarketingGlu Admin Backend', time: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    service: 'MarketingGlu Admin Backend',
+    time: new Date().toISOString(),
+    adminAuthConfigured: hasConfiguredAdminCredentials(),
+    adminEmailConfigured: Boolean(adminCredentials.email),
+    adminPasswordConfigured: Boolean(adminCredentials.password),
+  });
 });
 
 // 2. Admin Login
@@ -89,6 +110,13 @@ app.post('/api/admin/login', (req, res) => {
 
   if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Email and password are required' });
+  }
+
+  if (!hasConfiguredAdminCredentials()) {
+    return res.status(503).json({
+      success: false,
+      message: 'Admin credentials are not configured on the server. Set ADMIN_EMAIL and ADMIN_PASSWORD in Hostinger, then restart the Node.js app.',
+    });
   }
 
   const inputEmail = String(email).trim().toLowerCase();
@@ -216,6 +244,9 @@ async function startServer() {
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`MarketingGlu backend server running on http://0.0.0.0:${PORT}`);
+    if (!hasConfiguredAdminCredentials()) {
+      console.warn('Admin login is disabled until ADMIN_EMAIL and ADMIN_PASSWORD are configured.');
+    }
   });
 }
 

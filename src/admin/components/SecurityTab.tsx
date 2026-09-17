@@ -249,12 +249,15 @@ export default function SecurityTab() {
       <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-400 space-y-2">
         <h4 className="font-bold text-slate-300">Environment Configuration:</h4>
         <p>
-          You can also set custom credentials permanently in your server environment:
+          Set these exact variables in Hostinger's Node.js app environment, then restart the app:
         </p>
         <div className="font-mono bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-[11px] text-cyan-300 select-all">
           ADMIN_EMAIL=admin@marketinglu.com<br />
           ADMIN_PASSWORD=your_secure_password
         </div>
+        <p>
+          Do not add quotes around the values. Changes made inside this CMS are temporary until these server variables are updated.
+        </p>
       </div>
     </div>
   );

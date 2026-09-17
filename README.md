@@ -131,10 +131,23 @@ This project can be deployed either as a **Static Site** (Frontend only) or as a
 - **Node Backend Needed**: None. The React application will run completely in the browser. Admin portal operations feature seamless client-side authentication fallbacks.
 
 ### 2. Node.js Hosting (Cloud Run, Render, Railway, Heroku, Plesk, Docker)
-- **Entry File**: `server.js`
-- **Start Command**: `npm start` (or `node server.js`)
+- **Entry File**: `dist/server.cjs` when the host asks for the startup file
+- **Start Command**: `npm start`
 - **Build Command**: `npm run build`
-- **Description**: The bundled `server.js` Express wrapper automatically serves the compiled `dist/` production assets and provides the `/api/admin/*` administrative endpoints.
+- **Description**: The built Express server serves the compiled `dist/` production assets and provides the `/api/admin/*` administrative endpoints.
+
+### Hostinger Node.js Setup
+- Set the startup command to `npm start`.
+- Run the build command once after upload: `npm run build`.
+- Add these exact environment variables in the Hostinger Node.js app settings:
+  ```bash
+  ADMIN_EMAIL=admin@marketinglu.com
+  ADMIN_PASSWORD=your_secure_password
+  NODE_ENV=production
+  ```
+- Do not wrap the values in quotes.
+- Restart the Node.js app after changing environment variables.
+- Visit `/api/health`; `adminAuthConfigured` should be `true`. If it is `false`, Hostinger has not injected both `ADMIN_EMAIL` and `ADMIN_PASSWORD` into the running app yet.
 
 ---
 
