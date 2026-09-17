@@ -49,6 +49,15 @@ function hasConfiguredAdminCredentials() {
   return Boolean(adminCredentials.email && adminCredentials.password);
 }
 
+function maskEmail(email) {
+  const [name, domain] = email.split('@');
+  if (!name || !domain) {
+    return null;
+  }
+
+  return `${name[0]}***@${domain}`;
+}
+
 // In-memory active session tokens map (token -> { email, expiresAt })
 const activeSessions = new Map();
 
@@ -104,6 +113,8 @@ app.get('/api/health', (req, res) => {
     adminAuthConfigured: hasConfiguredAdminCredentials(),
     adminEmailConfigured: Boolean(adminCredentials.email),
     adminPasswordConfigured: Boolean(adminCredentials.password),
+    adminEmailHint: maskEmail(adminCredentials.email),
+    nodeEnv: process.env.NODE_ENV || 'development',
   });
 });
 
@@ -124,7 +135,7 @@ app.post('/api/admin/login', (req, res) => {
 
   const inputEmail = String(email).trim().toLowerCase();
   const targetEmail = adminCredentials.email.trim().toLowerCase();
-  const inputPassword = String(password);
+  const inputPassword = String(password).trim();
 
   const isEmailMatch = inputEmail === targetEmail || inputEmail === 'admin';
   const isPasswordMatch = inputPassword === adminCredentials.password;

@@ -31,9 +31,14 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
         }),
       });
 
-      const data = await response.json().catch(() => ({}));
+      const contentType = response.headers.get('content-type') || '';
+      const data = contentType.includes('application/json')
+        ? await response.json().catch(() => ({}))
+        : null;
 
-      if (response.ok && data.success) {
+      if (!data) {
+        setError('The admin API is not returning JSON. Confirm this is deployed as a Node.js app, not static hosting, and that /api/admin/login reaches server.js.');
+      } else if (response.ok && data.success) {
         localStorage.setItem('marketinglu_admin_session', 'authenticated');
         if (data.token) {
           localStorage.setItem('marketinglu_admin_token', data.token);
@@ -43,7 +48,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
         }
         onLoginSuccess();
       } else {
-        setError(data.message || 'Invalid administrative credentials. Please verify your email and password.');
+        setError(data.message || `Admin login failed with status ${response.status}. Check /api/health to confirm the running backend sees your Hostinger env vars.`);
       }
     } catch {
       // Fallback in case of server restart or preview network fluctuation
