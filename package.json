@@ -5,13 +5,11 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "node scripts/dev.mjs",
-    "dev:server": "node scripts/server-dev.mjs",
-    "dev:client": "vite --host 0.0.0.0 --configLoader native",
-    "build": "vite build --configLoader native && node scripts/build-server.mjs",
-    "start": "node server.js",
+    "dev": "tsx server.ts",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "start": "node dist/server.cjs",
     "lint": "tsc --noEmit",
-    "preview": "vite preview --configLoader native"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
