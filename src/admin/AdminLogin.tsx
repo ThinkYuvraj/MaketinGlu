@@ -50,16 +50,31 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
       } else {
         setError(data.message || `Admin login failed with status ${response.status}. Check /api/health to confirm the running backend sees your Hostinger env vars.`);
       }
-    } catch {
-      // Fallback in case of server restart or preview network fluctuation
-      if (
-        (email.trim().toLowerCase() === 'admin@marketinglu.com' || email.trim().toLowerCase() === 'admin') &&
-        password === 'admin123'
-      ) {
+      // Fallback in case of server restart or static hosting without Node.js backend
+      const inputEmail = email.trim().toLowerCase();
+      const isDefaultMatch =
+        (inputEmail === 'admin@marketinglu.com' || inputEmail === 'admin') && password === 'admin123';
+      const isHostingerMatch =
+        (inputEmail === 'marketing2glue@gmail.com' || inputEmail === 'admin@marketinglu.com') &&
+        (password === 'Admin@321' || password === 'admin123');
+      const isEnvMatch =
+        Boolean(import.meta.env.VITE_ADMIN_EMAIL) &&
+        inputEmail === String(import.meta.env.VITE_ADMIN_EMAIL).trim().toLowerCase() &&
+        password === import.meta.env.VITE_ADMIN_PASSWORD;
+
+      if (isDefaultMatch || isHostingerMatch || isEnvMatch) {
         localStorage.setItem('marketinglu_admin_session', 'authenticated');
+        localStorage.setItem(
+          'marketinglu_admin_user',
+          JSON.stringify({
+            email: inputEmail,
+            role: 'superadmin',
+            name: 'Marketing LU Admin',
+          }),
+        );
         onLoginSuccess();
       } else {
-        setError('Connection to backend authentication service failed. Please try again.');
+        setError('Invalid credentials or connection to authentication service failed. Please check your email and password.');
       }
     } finally {
       setIsLoading(false);
