@@ -1,0 +1,10 @@
+# Robots.txt for Marketing Glu / Marketing LU (marketinglu.com)
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+# Host & Sitemap
+Host: https://marketinglu.com
+Sitemap: https://marketinglu.com/sitemap.xml
+

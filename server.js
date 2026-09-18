@@ -23,11 +23,7 @@ function readCredentialEnv(name, fallback) {
   return isProduction ? '' : fallback;
 }
 
-// Body parsers
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Enable CORS for local cross-origin requests
+// 1. Enable CORS first for local and production cross-origin requests
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -35,6 +31,19 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
   if (req.method === 'OPTIONS') {
     return res.sendStatus(204);
+  }
+  next();
+});
+
+// 2. Body parsers with generous limits
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// 3. Custom error handler for malformed request bodies
+app.use((err, req, res, next) => {
+  if (err) {
+    console.error('Request parsing error:', err.message || err);
+    return res.status(400).json({ success: false, message: 'Malformed request body' });
   }
   next();
 });
@@ -228,13 +237,39 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 // Vite Middleware / Static serving
 // ==========================================
 
+function findStaticDirectory() {
+  const candidates = [
+    path.join(process.cwd(), 'dist'),
+    path.join(process.cwd(), 'build'),
+    path.join(process.cwd(), 'public_html'),
+    path.join(__dirname, 'dist'),
+    path.join(__dirname, 'build'),
+    path.join(__dirname, 'public_html'),
+    process.cwd(),
+    __dirname,
+  ];
+
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, 'index.html')) && (fs.existsSync(path.join(dir, 'assets')) || fs.existsSync(path.join(dir, 'public')))) {
+      return dir;
+    }
+  }
+
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, 'index.html'))) {
+      return dir;
+    }
+  }
+
+  return null;
+}
+
 async function startServer() {
-  const distPath = path.join(__dirname, 'dist');
-  const hasDist = fs.existsSync(distPath);
+  const staticDir = findStaticDirectory();
 
   if (process.env.BACKEND_ONLY === 'true') {
     console.log(`MarketingGlu API backend running in standalone mode on http://0.0.0.0:${PORT}`);
-  } else if (process.env.NODE_ENV !== 'production' && !process.env.SERVE_DIST && !hasDist) {
+  } else if (process.env.NODE_ENV !== 'production' && !process.env.SERVE_DIST && !staticDir) {
     try {
       const { createServer: createViteServer } = await import('vite');
       const vite = await createViteServer({
@@ -243,32 +278,48 @@ async function startServer() {
       });
       app.use(vite.middlewares);
     } catch {
-      if (hasDist) {
-        app.use(express.static(distPath));
+      if (staticDir) {
+        app.use(express.static(staticDir));
         app.get('*', (req, res) => {
-          res.sendFile(path.join(distPath, 'index.html'));
+          res.sendFile(path.join(staticDir, 'index.html'));
         });
       }
     }
+  } else if (staticDir) {
+    console.log(`Serving static production files from: ${staticDir}`);
+    app.use(express.static(staticDir));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(staticDir, 'index.html'));
+    });
   } else {
-    if (hasDist) {
-      app.use(express.static(distPath));
-      app.get('*', (req, res) => {
-        res.sendFile(path.join(distPath, 'index.html'));
-      });
-    } else {
-      // Fallback in case dist is not yet built
-      try {
-        const { createServer: createViteServer } = await import('vite');
-        const vite = await createViteServer({
-          server: { middlewareMode: true },
-          appType: 'spa',
-        });
-        app.use(vite.middlewares);
-      } catch (err) {
-        console.warn('Neither dist directory nor Vite dev server could be loaded:', err.message);
-      }
-    }
+    console.warn('Neither dist, build, nor public_html contains index.html. Serving status placeholder.');
+    app.get('*', (req, res) => {
+      res.status(200).send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Marketing LU - Server Active</title>
+          <style>
+            body { background: #070b14; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; padding: 1rem; }
+            .card { background: #0d1527; border: 1px solid #1e293b; border-radius: 12px; padding: 2rem; max-width: 480px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+            h1 { color: #06b6d4; margin-top: 0; font-size: 1.5rem; }
+            p { color: #94a3b8; line-height: 1.6; }
+            code { background: #1e293b; color: #38bdf8; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h1>Marketing LU Server Active</h1>
+            <p>The backend Node.js server is online and running successfully.</p>
+            <p>Frontend production assets are loading. Once <code>npm run build</code> completes, the full interface will be live.</p>
+            <p><a href="/api/health" style="color:#06b6d4;text-decoration:none;">View Server Health Check &rarr;</a></p>
+          </div>
+        </body>
+        </html>
+      `);
+    });
   }
 
   app.listen(PORT, '0.0.0.0', () => {
