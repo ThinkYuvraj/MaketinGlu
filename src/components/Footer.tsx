@@ -204,7 +204,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
         {/* Bottom Bar: Ultra-Compact Single Row */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
           <div className="flex items-center gap-2 text-center sm:text-left flex-wrap justify-center sm:justify-start">
-            <span className="text-slate-400">© 2026 MarketingGlu. All rights reserved.</span>
+            <span className="text-slate-400">© 2026 MarketinGlu. All rights reserved.</span>
             <span className="text-slate-700 hidden sm:inline">&bull;</span>
             <span className="inline-flex items-center gap-1 text-slate-400">
               <ShieldCheck className="w-3 h-3 text-emerald-400" />
