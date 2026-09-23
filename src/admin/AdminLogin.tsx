@@ -22,60 +22,50 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
     try {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          password,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), password }),
       });
 
+      // Handle non-JSON or network-level failures
       const contentType = response.headers.get('content-type') || '';
       const data = contentType.includes('application/json')
         ? await response.json().catch(() => ({}))
         : null;
 
       if (!data) {
-        setError('The admin API is not returning JSON. Confirm this is deployed as a Node.js app, not static hosting, and that /api/admin/login reaches server.js.');
-      } else if (response.ok && data.success) {
-        localStorage.setItem('marketinglu_admin_session', 'authenticated');
+        setError(
+          'Unable to reach the authentication service. Please confirm the Node.js server is running on Hostinger and /api/admin/login is reachable.',
+        );
+        return;
+      }
+
+      if (response.status === 429) {
+        // Brute-force lockout from server rate limiter
+        setError(data.message || 'Too many failed login attempts. Please wait before trying again.');
+        return;
+      }
+
+      if (response.ok && data.success) {
+        // Use sessionStorage (not localStorage) — auto-clears on tab/browser close
+        // and is not accessible to other tabs or persistent scripts.
+        sessionStorage.setItem('marketinglu_admin_session', 'authenticated');
         if (data.token) {
-          localStorage.setItem('marketinglu_admin_token', data.token);
+          sessionStorage.setItem('marketinglu_admin_token', data.token);
         }
         if (data.user) {
-          localStorage.setItem('marketinglu_admin_user', JSON.stringify(data.user));
+          sessionStorage.setItem('marketinglu_admin_user', JSON.stringify(data.user));
         }
         onLoginSuccess();
-      } else {
-        setError(data.message || `Admin login failed with status ${response.status}. Check /api/health to confirm the running backend sees your Hostinger env vars.`);
+        return;
       }
-      // Fallback in case of server restart or static hosting without Node.js backend
-      const inputEmail = email.trim().toLowerCase();
-      const isDefaultMatch =
-        (inputEmail === 'admin@marketinglu.com' || inputEmail === 'admin') && password === 'admin123';
-      const isHostingerMatch =
-        (inputEmail === 'marketing2glue@gmail.com' || inputEmail === 'admin@marketinglu.com') &&
-        (password === 'Admin@321' || password === 'admin123');
-      const isEnvMatch =
-        Boolean(import.meta.env.VITE_ADMIN_EMAIL) &&
-        inputEmail === String(import.meta.env.VITE_ADMIN_EMAIL).trim().toLowerCase() &&
-        password === import.meta.env.VITE_ADMIN_PASSWORD;
 
-      if (isDefaultMatch || isHostingerMatch || isEnvMatch) {
-        localStorage.setItem('marketinglu_admin_session', 'authenticated');
-        localStorage.setItem(
-          'marketinglu_admin_user',
-          JSON.stringify({
-            email: inputEmail,
-            role: 'superadmin',
-            name: 'Marketing LU Admin',
-          }),
-        );
-        onLoginSuccess();
-      } else {
-        setError('Invalid credentials or connection to authentication service failed. Please check your email and password.');
-      }
+      // Server returned a structured error (401, 503, etc.)
+      setError(
+        data.message ||
+          `Admin login failed (status ${response.status}). Check /api/health to confirm your Hostinger environment variables are set.`,
+      );
+    } catch (err) {
+      setError('Network error — could not connect to the authentication server. Please check your connection.');
     } finally {
       setIsLoading(false);
     }

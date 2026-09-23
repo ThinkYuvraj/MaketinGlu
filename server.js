@@ -7,6 +7,20 @@ import fs from 'fs';
 
 dotenv.config();
 
+// ==========================================
+// Process-level crash guards
+// Prevents the Node.js process from dying silently on
+// unhandled errors, which would cause all requests to
+// return 5XX until the host restarts the app.
+// ==========================================
+process.on('uncaughtException', (err) => {
+  console.error('[UNCAUGHT EXCEPTION] Server will NOT exit:', err);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[UNHANDLED REJECTION] Reason:', reason);
+});
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -23,7 +37,26 @@ function readCredentialEnv(name, fallback) {
   return isProduction ? '' : fallback;
 }
 
-// 1. Enable CORS first for local and production cross-origin requests
+// 1. Security HTTP Headers
+// Applied to every response to harden against common web attacks.
+app.use((req, res, next) => {
+  // Prevent clickjacking — blocks your admin being loaded inside an iframe
+  res.setHeader('X-Frame-Options', 'DENY');
+  // Prevent MIME-type sniffing attacks
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  // Enable browser XSS filter (legacy but still useful)
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  // Don't send full Referer header to third parties
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // Basic Content Security Policy
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com;"
+  );
+  next();
+});
+
+// 2. Enable CORS for all origins & methods
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -57,6 +90,61 @@ const adminCredentials = {
 function hasConfiguredAdminCredentials() {
   return Boolean(adminCredentials.email && adminCredentials.password);
 }
+
+// ==========================================
+// Brute-Force Rate Limiter for Admin Login
+// Tracks failed attempts per IP address.
+// After 5 failures in 15 minutes, the IP is blocked
+// and receives 429 Too Many Requests.
+// ==========================================
+const LOGIN_MAX_ATTEMPTS = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+
+/** @type {Map<string, { count: number; firstAttempt: number; blockedUntil: number }>} */
+const loginAttempts = new Map();
+
+function getRateLimitInfo(ip) {
+  const now = Date.now();
+  const record = loginAttempts.get(ip);
+  if (!record) return { blocked: false, remaining: LOGIN_MAX_ATTEMPTS };
+
+  // Reset window if it has expired
+  if (now - record.firstAttempt > LOGIN_WINDOW_MS) {
+    loginAttempts.delete(ip);
+    return { blocked: false, remaining: LOGIN_MAX_ATTEMPTS };
+  }
+
+  if (record.count >= LOGIN_MAX_ATTEMPTS) {
+    const retryAfterSec = Math.ceil((record.firstAttempt + LOGIN_WINDOW_MS - now) / 1000);
+    return { blocked: true, retryAfterSec };
+  }
+
+  return { blocked: false, remaining: LOGIN_MAX_ATTEMPTS - record.count };
+}
+
+function recordFailedLoginAttempt(ip) {
+  const now = Date.now();
+  const record = loginAttempts.get(ip);
+  if (!record || now - record.firstAttempt > LOGIN_WINDOW_MS) {
+    loginAttempts.set(ip, { count: 1, firstAttempt: now, blockedUntil: 0 });
+  } else {
+    record.count += 1;
+  }
+}
+
+function clearLoginAttempts(ip) {
+  loginAttempts.delete(ip);
+}
+
+// Purge stale rate limit records every 30 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, record] of loginAttempts.entries()) {
+    if (now - record.firstAttempt > LOGIN_WINDOW_MS) {
+      loginAttempts.delete(ip);
+    }
+  }
+}, 30 * 60 * 1000);
 
 function maskEmail(email) {
   const [name, domain] = email.split('@');
@@ -127,8 +215,24 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 2. Admin Login
+// 2. Admin Login (with brute-force protection)
 app.post('/api/admin/login', (req, res) => {
+  // Determine client IP (respect proxy headers from Hostinger)
+  const clientIp =
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.socket.remoteAddress ||
+    'unknown';
+
+  // --- Rate limit check ---
+  const rateInfo = getRateLimitInfo(clientIp);
+  if (rateInfo.blocked) {
+    res.setHeader('Retry-After', String(rateInfo.retryAfterSec));
+    return res.status(429).json({
+      success: false,
+      message: `Too many failed login attempts. Please try again in ${Math.ceil(rateInfo.retryAfterSec / 60)} minute(s).`,
+    });
+  }
+
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -150,11 +254,20 @@ app.post('/api/admin/login', (req, res) => {
   const isPasswordMatch = inputPassword === adminCredentials.password;
 
   if (!isEmailMatch || !isPasswordMatch) {
+    // Record this failed attempt for rate limiting
+    recordFailedLoginAttempt(clientIp);
+    const updated = getRateLimitInfo(clientIp);
+    const attemptsLeft = updated.blocked ? 0 : updated.remaining;
     return res.status(401).json({
       success: false,
-      message: 'Invalid admin credentials. Please verify your email and password.',
+      message: attemptsLeft > 0
+        ? `Invalid admin credentials. ${attemptsLeft} attempt(s) remaining before temporary lockout.`
+        : 'Too many failed attempts. Your IP has been temporarily blocked for 15 minutes.',
     });
   }
+
+  // Successful login — clear any recorded failures for this IP
+  clearLoginAttempts(clientIp);
 
   const token = generateToken();
   const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
@@ -280,16 +393,23 @@ async function startServer() {
     } catch {
       if (staticDir) {
         app.use(express.static(staticDir));
-        app.get('*', (req, res) => {
-          res.sendFile(path.join(staticDir, 'index.html'));
+        app.get('*', (req, res, next) => {
+          res.sendFile(path.join(staticDir, 'index.html'), (err) => {
+            if (err) next(err);
+          });
         });
       }
     }
   } else if (staticDir) {
     console.log(`Serving static production files from: ${staticDir}`);
     app.use(express.static(staticDir));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(staticDir, 'index.html'));
+    // SPA fallback: serve index.html for all non-API routes.
+    // Use sendFile callback to forward file-not-found errors to
+    // the global error handler rather than crashing the request.
+    app.get('*', (req, res, next) => {
+      res.sendFile(path.join(staticDir, 'index.html'), (err) => {
+        if (err) next(err);
+      });
     });
   } else {
     console.warn('Neither dist, build, nor public_html contains index.html. Serving status placeholder.');
@@ -322,6 +442,25 @@ async function startServer() {
     });
   }
 
+  // ==========================================
+  // Global Express Error Handler
+  // MUST be the last middleware registered.
+  // Catches any unhandled error thrown in route handlers
+  // and returns a clean 500 JSON response instead of
+  // leaving the request hanging (which Googlebot sees as 5XX).
+  // ==========================================
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  app.use((err, req, res, _next) => {
+    const status = err.status || err.statusCode || 500;
+    console.error(`[SERVER ERROR] ${req.method} ${req.url} → ${status}:`, err.message || err);
+    if (!res.headersSent) {
+      res.status(status).json({
+        success: false,
+        message: status === 500 ? 'Internal server error' : err.message,
+      });
+    }
+  });
+
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`MarketingGlu server running on http://0.0.0.0:${PORT}`);
     if (!hasConfiguredAdminCredentials()) {
@@ -330,4 +469,8 @@ async function startServer() {
   });
 }
 
-startServer();
+// Wrap top-level call so async boot failures are logged
+// rather than causing an unhandled rejection that kills the process.
+startServer().catch((err) => {
+  console.error('[FATAL] startServer() failed to boot:', err);
+});

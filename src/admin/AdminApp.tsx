@@ -20,7 +20,7 @@ export default function AdminApp({ onBackToSite }: AdminAppProps) {
       clearLocalStorage();
       return false;
     }
-    return localStorage.getItem('marketinglu_admin_session') === 'authenticated';
+    return sessionStorage.getItem('marketinglu_admin_session') === 'authenticated';
   });
 
   // Automatically clears local storage and redirects the user back to the public homepage after 30 minutes of inactivity
@@ -41,7 +41,7 @@ export default function AdminApp({ onBackToSite }: AdminAppProps) {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('marketinglu_admin_token');
+    const token = sessionStorage.getItem('marketinglu_admin_token');
     if (token) {
       // Check inactivity on initial verification
       if (isSessionExpired()) {
@@ -74,7 +74,7 @@ export default function AdminApp({ onBackToSite }: AdminAppProps) {
   };
 
   const handleLogout = async () => {
-    const token = localStorage.getItem('marketinglu_admin_token');
+    const token = sessionStorage.getItem('marketinglu_admin_token');
     if (token) {
       try {
         await fetch('/api/admin/logout', {

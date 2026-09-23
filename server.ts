@@ -6,6 +6,20 @@ import fs from 'fs';
 
 dotenv.config();
 
+// ==========================================
+// Process-level crash guards
+// Prevents the Node.js process from dying silently on
+// unhandled errors, which would cause all requests to
+// return 5XX until the host restarts the app.
+// ==========================================
+process.on('uncaughtException', (err: Error) => {
+  console.error('[UNCAUGHT EXCEPTION] Server will NOT exit:', err);
+});
+
+process.on('unhandledRejection', (reason: unknown) => {
+  console.error('[UNHANDLED REJECTION] Reason:', reason);
+});
+
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const isBackendOnly = process.env.BACKEND_ONLY === 'true' || process.argv.includes('--backend-only');
@@ -280,16 +294,23 @@ async function startServer() {
     } catch {
       if (staticDir) {
         app.use(express.static(staticDir));
-        app.get('*', (req, res) => {
-          res.sendFile(path.join(staticDir, 'index.html'));
+        app.get('*', (req, res, next) => {
+          res.sendFile(path.join(staticDir, 'index.html'), (err) => {
+            if (err) next(err);
+          });
         });
       }
     }
   } else if (staticDir) {
     console.log(`Serving static production files from: ${staticDir}`);
     app.use(express.static(staticDir));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(staticDir, 'index.html'));
+    // SPA fallback: serve index.html for all non-API routes.
+    // Use sendFile callback to forward file-not-found errors to
+    // the global error handler rather than crashing the request.
+    app.get('*', (req, res, next) => {
+      res.sendFile(path.join(staticDir, 'index.html'), (err) => {
+        if (err) next(err);
+      });
     });
   } else {
     console.warn('Neither dist, build, nor public_html contains index.html. Serving status placeholder.');
@@ -322,6 +343,24 @@ async function startServer() {
     });
   }
 
+  // ==========================================
+  // Global Express Error Handler
+  // MUST be the last middleware registered.
+  // Catches any unhandled error thrown in route handlers
+  // and returns a clean 500 JSON response instead of
+  // leaving the request hanging (which Googlebot sees as 5XX).
+  // ==========================================
+  app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const status: number = err.status || err.statusCode || 500;
+    console.error(`[SERVER ERROR] ${req.method} ${req.url} → ${status}:`, err.message || err);
+    if (!res.headersSent) {
+      res.status(status).json({
+        success: false,
+        message: status === 500 ? 'Internal server error' : err.message,
+      });
+    }
+  });
+
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`MarketingGlu backend server running on http://0.0.0.0:${PORT}`);
     if (!hasConfiguredAdminCredentials()) {
@@ -330,4 +369,8 @@ async function startServer() {
   });
 }
 
-startServer();
+// Wrap top-level call so async boot failures are logged
+// rather than causing an unhandled rejection that kills the process.
+startServer().catch((err: Error) => {
+  console.error('[FATAL] startServer() failed to boot:', err);
+});

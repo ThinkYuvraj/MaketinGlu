@@ -13,7 +13,7 @@ export default function SecurityTab() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [serverStatus, setServerStatus] = useState<'connected' | 'checking' | 'offline'>('checking');
 
-  const token = localStorage.getItem('marketinglu_admin_token') || '';
+  const token = sessionStorage.getItem('marketinglu_admin_token') || '';
 
   const checkServerStatus = async () => {
     setServerStatus('checking');
