@@ -23,7 +23,10 @@ process.on('unhandledRejection', (reason: unknown) => {
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const isBackendOnly = process.env.BACKEND_ONLY === 'true' || process.argv.includes('--backend-only');
-const isProduction = process.env.NODE_ENV === 'production';
+// Default to 'production' when NODE_ENV is not explicitly set.
+// This ensures the server behaves correctly even if the hosting
+// platform fails to inject the NODE_ENV environment variable.
+const isProduction = process.env.NODE_ENV !== 'development';
 
 function readCredentialEnv(name: string, fallback: string): string {
   const value = process.env[name];
