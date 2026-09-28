@@ -65,7 +65,7 @@ export const defaultSiteConfig: SiteConfig = {
   packagesSectionTitle1: 'Tailored Digital Marketing',
   packagesSectionTitle2: 'Service Packages',
   packagesSectionDescription:
-    'Explore our curated packages calibrated for your growth stage. Plans rotate automatically or swipe freely on mobile to compare.',
+    'Engineered packages calibrated for distinct growth stages. Compare full inclusions, dedicated team allocations, and turnkey execution scopes.',
 
   // Case Studies Section Titles & Copy
   casesSectionBadge: 'PROVEN OUTCOMES',
@@ -345,7 +345,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v8';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v9';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
   return raw.map((s) => ({
@@ -357,12 +357,17 @@ const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('marketinglu_cms_site_config_v8');
       if (saved) {
         const parsed = JSON.parse(saved);
+        const packagesDesc = parsed.packagesSectionDescription && (parsed.packagesSectionDescription.includes('rotate automatically') || parsed.packagesSectionDescription.includes('swipe freely'))
+          ? defaultSiteConfig.packagesSectionDescription
+          : parsed.packagesSectionDescription || defaultSiteConfig.packagesSectionDescription;
+
         return { 
           ...defaultSiteConfig, 
           ...parsed,
+          packagesSectionDescription: packagesDesc,
           services: parsed.services ? hydrateServices(parsed.services) : defaultSiteConfig.services,
           packages: parsed.packages || defaultSiteConfig.packages,
           caseStudies: parsed.caseStudies || defaultSiteConfig.caseStudies,
