@@ -32,6 +32,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
 
   const usefulLinks = [
     { name: 'Home', action: () => navigateTo('#/') },
+    { name: 'About Us', action: () => navigateTo('#/#about') },
     { name: 'Services Hub', action: () => navigateTo('#/services') },
     { name: 'Case Studies', action: () => navigateTo('#/#cases') },
     { name: 'Growth', action: () => navigateTo('#/#growth') },

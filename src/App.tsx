@@ -8,6 +8,9 @@ import Packages from './components/Packages';
 import CaseStudies from './components/CaseStudies';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import AboutUs from './components/AboutUs';
+import Testimonials from './components/Testimonials';
+import AppointmentBanner from './components/AppointmentBanner';
 import ConsultationModal from './components/ConsultationModal';
 import AnimatedSection from './components/AnimatedSection';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
@@ -147,13 +150,20 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-hero')}
 
-                {/* Section 2: Our Performance In Numbers */}
+                {/* Section 2: About Us - Agency Story, Mission & Engineering DNA */}
+                <AnimatedSection id="about" delayMs={40} className="relative">
+                  <AboutUs
+                    onOpenConsultation={(serviceName) => handleOpenConsultation(serviceName)}
+                  />
+                </AnimatedSection>
+
+                {/* Section 3: Our Performance In Numbers */}
                 <AnimatedSection id="growth" delayMs={60} className="relative">
                   <PerformanceStats />
                 </AnimatedSection>
                 {renderCustomSections('after-stats')}
 
-                {/* Section 3: Unified Company Expertise & Growth Disciplines */}
+                {/* Section 4: Unified Company Expertise & Growth Disciplines */}
                 <AnimatedSection id="expertise" delayMs={60} className="relative">
                   <CompanyExpertise
                     onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
@@ -161,7 +171,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-expertise')}
 
-                {/* Section 4: Tailored Marketing Packages */}
+                {/* Section 5: Tailored Marketing Packages */}
                 <AnimatedSection id="packages" delayMs={60} className="relative">
                   <Packages
                     onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
@@ -169,7 +179,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-packages')}
 
-                {/* Section 5: Case Studies & Proven Results (Portfolio) */}
+                {/* Section 6: Case Studies & Proven Results (Portfolio) */}
                 <AnimatedSection id="cases" delayMs={60} className="relative">
                   <CaseStudies
                     onOpenConsultation={() => handleOpenConsultation()}
@@ -177,11 +187,23 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-cases')}
 
-                {/* Section 6: Frequently Asked Questions (FAQ) */}
+                {/* Section 7: Verified Client Testimonials */}
+                <AnimatedSection id="testimonials" delayMs={60} className="relative">
+                  <Testimonials />
+                </AnimatedSection>
+
+                {/* Section 8: Frequently Asked Questions (FAQ) */}
                 <AnimatedSection id="faq" delayMs={60} className="relative">
                   <FAQ />
                 </AnimatedSection>
                 {renderCustomSections('after-faq')}
+
+                {/* Section 9: Free Strategy Call Reservation Banner */}
+                <AnimatedSection id="appointment" delayMs={60} className="relative">
+                  <AppointmentBanner
+                    onOpenConsultation={() => handleOpenConsultation('Appointment Strategy Session')}
+                  />
+                </AnimatedSection>
               </>
             )}
           </motion.div>

@@ -13,7 +13,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   const { config } = useSiteConfig();
 
   const handleScrollDown = () => {
-    const el = document.getElementById('growth') || document.getElementById('expertise');
+    const el = document.getElementById('about') || document.getElementById('growth') || document.getElementById('expertise');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }

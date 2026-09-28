@@ -189,4 +189,16 @@ export interface SiteConfig {
 
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: Record<string, string>;
+
+  // About Us Section
+  aboutBadge?: string;
+  aboutTitle1?: string;
+  aboutTitle2?: string;
+  aboutDescription?: string;
+  aboutStory?: string;
+  aboutMission?: string;
+  aboutYearsExperience?: string;
+  aboutProjectsDelivered?: string;
+  aboutClientSatisfaction?: string;
+  aboutCertification?: string;
 }

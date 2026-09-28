@@ -237,6 +237,21 @@ export const defaultSiteConfig: SiteConfig = {
 
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: {},
+
+  // About Us Section Defaults
+  aboutBadge: 'ABOUT MARKETIN GLU',
+  aboutTitle1: 'Engineering Next-Gen Software &',
+  aboutTitle2: 'High-Impact Digital Growth',
+  aboutDescription:
+    'MarketingGlu (Marketing LU) is an ISO 9001:2015 certified software solutions and digital growth agency headquartered in New Delhi. We eliminate fragmented vendors by uniting custom software architecture, web engineering, enterprise SEO, and performance marketing under one roof.',
+  aboutStory:
+    'Founded with a mission to replace empty marketing buzzwords with engineering precision, MarketingGlu empowers brands with bespoke web systems, sub-second page performance, transparent analytics, and predictable customer acquisition funnels.',
+  aboutMission:
+    'To engineer durable, high-converting digital assets that give ambitious companies a lasting unfair advantage in search, speed, and commercial revenue.',
+  aboutYearsExperience: '8+ Years',
+  aboutProjectsDelivered: '250+ Projects',
+  aboutClientSatisfaction: '99% Retention',
+  aboutCertification: 'ISO 9001:2015 Certified',
 };
 
 interface SiteConfigContextType {

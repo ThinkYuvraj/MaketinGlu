@@ -37,6 +37,9 @@ function parsePathAndHash(): RouteState {
     if (rawHash === 'admin' || rawHash === 'login') {
       return { type: 'admin', path: '#/admin' };
     }
+    if (rawHash === 'about' || rawHash === 'about-us' || rawHash === 'company') {
+      return { type: 'home', anchor: 'about', path: '#about' };
+    }
     if (['web-design', 'ecommerce', 'seo', 'graphic-design', 'ppc', 'smo'].includes(rawHash)) {
       return { type: 'service-detail', serviceId: rawHash, path: `#/services/${rawHash}` };
     }
@@ -55,6 +58,10 @@ function parsePathAndHash(): RouteState {
   // Handle routePath:
   if (routePath.startsWith('/admin') || routePath.startsWith('/login')) {
     return { type: 'admin', path: '#/admin' };
+  }
+
+  if (routePath === '/about' || routePath === '/about/' || routePath === '/about-us' || routePath === '/about-us/') {
+    return { type: 'home', anchor: 'about', path: '#about' };
   }
 
   if (routePath === '/services' || routePath === '/services/') {

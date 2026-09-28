@@ -112,6 +112,17 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     address: config.address,
     locationBadge: config.locationBadge,
 
+    aboutBadge: config.aboutBadge || 'ABOUT MARKETIN GLU',
+    aboutTitle1: config.aboutTitle1 || 'Engineering Next-Gen Software &',
+    aboutTitle2: config.aboutTitle2 || 'High-Impact Digital Growth',
+    aboutDescription: config.aboutDescription || '',
+    aboutStory: config.aboutStory || '',
+    aboutMission: config.aboutMission || '',
+    aboutYearsExperience: config.aboutYearsExperience || '8+ Years',
+    aboutProjectsDelivered: config.aboutProjectsDelivered || '250+ Projects',
+    aboutClientSatisfaction: config.aboutClientSatisfaction || '99% Retention',
+    aboutCertification: config.aboutCertification || 'ISO 9001:2015 Certified',
+
     announcementEnabled: config.announcement.enabled,
     announcementText: config.announcement.text,
     announcementCta: config.announcement.ctaText,
@@ -156,6 +167,17 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
       address: config.address,
       locationBadge: config.locationBadge,
 
+      aboutBadge: config.aboutBadge || 'ABOUT MARKETIN GLU',
+      aboutTitle1: config.aboutTitle1 || 'Engineering Next-Gen Software &',
+      aboutTitle2: config.aboutTitle2 || 'High-Impact Digital Growth',
+      aboutDescription: config.aboutDescription || '',
+      aboutStory: config.aboutStory || '',
+      aboutMission: config.aboutMission || '',
+      aboutYearsExperience: config.aboutYearsExperience || '8+ Years',
+      aboutProjectsDelivered: config.aboutProjectsDelivered || '250+ Projects',
+      aboutClientSatisfaction: config.aboutClientSatisfaction || '99% Retention',
+      aboutCertification: config.aboutCertification || 'ISO 9001:2015 Certified',
+
       announcementEnabled: config.announcement.enabled,
       announcementText: config.announcement.text,
       announcementCta: config.announcement.ctaText,
@@ -199,6 +221,17 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
       email: formData.email,
       address: formData.address,
       locationBadge: formData.locationBadge,
+
+      aboutBadge: formData.aboutBadge,
+      aboutTitle1: formData.aboutTitle1,
+      aboutTitle2: formData.aboutTitle2,
+      aboutDescription: formData.aboutDescription,
+      aboutStory: formData.aboutStory,
+      aboutMission: formData.aboutMission,
+      aboutYearsExperience: formData.aboutYearsExperience,
+      aboutProjectsDelivered: formData.aboutProjectsDelivered,
+      aboutClientSatisfaction: formData.aboutClientSatisfaction,
+      aboutCertification: formData.aboutCertification,
 
       announcement: {
         enabled: formData.announcementEnabled,
@@ -261,7 +294,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     { id: 'cases', label: 'Case Studies', icon: Sparkles, count: config.caseStudies?.length },
     { id: 'faq', label: 'FAQ Knowledge', icon: HelpCircle, count: config.faqs?.length },
     { id: 'testimonials', label: 'Client Reviews', icon: MessageSquare, count: config.testimonials?.length },
-    { id: 'company', label: 'Agency & Contact', icon: Building2 },
+    { id: 'company', label: 'Agency & About Us', icon: Building2 },
     { id: 'design', label: 'Theme & Stats', icon: Palette },
     { id: 'security', label: 'Admin Credentials', icon: ShieldCheck },
   ];

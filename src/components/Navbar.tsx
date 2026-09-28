@@ -104,8 +104,8 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
     >
       {/* Top Announcement Bar (Configurable in Admin Studio) */}
       {config.announcement.enabled && (
-        <div className="bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border-b border-cyan-500/20 py-1.5 px-3 sm:px-4 text-center text-[11px] sm:text-xs">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
+        <div className="bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border-b border-cyan-500/20 py-1.5 px-3 sm:px-4 text-center text-[11px] sm:text-xs w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
             <span className="truncate max-w-[200px] sm:max-w-none font-medium">{config.announcement.text}</span>
             <button
@@ -119,155 +119,203 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex items-center justify-between gap-3 lg:gap-6">
         
-        {/* Brand Logo with White Background Badge & Typography */}
-        <button
-          onClick={() => handleNavClick('#/')}
-          className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
-          id="nav-brand-logo"
-        >
-          <Logo variant="light-badge" size="md" />
-          <span className="text-lg sm:text-xl font-black tracking-tight flex items-center">
-            <span className="text-white italic">MARKETIN</span>
-            <span className="text-blue-500 not-italic">GLU</span>
-          </span>
-        </button>
-
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7 text-sm font-medium text-slate-300">
+        {/* Left: Brand Logo with White Background Badge & Typography */}
+        <div className="shrink-0 flex items-center">
           <button
             onClick={() => handleNavClick('#/')}
-            className={`hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium ${
-              currentRoute.type === 'home' && !window.location.hash.includes('#') ? 'text-cyan-400' : ''
-            }`}
+            className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
+            id="nav-brand-logo"
           >
-            Home
+            <Logo variant="light-badge" size="md" />
+            <span className="text-lg sm:text-xl font-black tracking-tight flex items-center">
+              <span className="text-white italic">MARKETIN</span>
+              <span className="text-blue-500 not-italic">GLU</span>
+            </span>
           </button>
+        </div>
 
-          {/* Services Dropdown */}
-          <div 
-            className="relative"
-            ref={dropdownRef}
-            onMouseEnter={() => setServicesDropdownOpen(true)}
-            onMouseLeave={() => setServicesDropdownOpen(false)}
-          >
+        {/* Center: Perfectly Centered Desktop Nav Links with Balanced Spacing & Active States */}
+        <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-2 xl:px-4">
+          <nav className="flex items-center gap-1 xl:gap-1.5 2xl:gap-2.5 text-[13px] xl:text-sm font-medium">
+            {/* 1. Home */}
             <button
-              onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-              className={`flex items-center gap-1.5 hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium ${
-                currentRoute.type === 'service-detail' || currentRoute.type === 'services-index' ? 'text-cyan-400' : ''
+              onClick={() => handleNavClick('#/')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                currentRoute.type === 'home' && (!window.location.hash || window.location.hash === '#/' || window.location.hash === '#home')
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
-              aria-expanded={servicesDropdownOpen}
             >
-              <span>Services</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180 text-cyan-400' : 'text-slate-500'}`} />
+              Home
             </button>
 
-            {/* Dropdown Menu */}
-            <AnimatePresence>
-              {servicesDropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 w-80 sm:w-88 mt-2 bg-slate-950 border border-cyan-500/40 rounded-2xl p-3 shadow-2xl shadow-black z-50"
-                >
-                  <div className="px-3 py-2 border-b border-slate-800 mb-1.5 flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
-                      CORE CAPABILITIES
-                    </span>
-                    <button
-                      onClick={() => handleNavClick('#/services')}
-                      className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer transition-colors"
-                    >
-                      All Services &rarr;
-                    </button>
-                  </div>
+            {/* 2. About Us */}
+            <button
+              onClick={() => handleNavClick('#about')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                window.location.hash === '#about' || window.location.hash === '#/about' || window.location.hash === '#about-us'
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+              }`}
+            >
+              About Us
+            </button>
 
-                  <div className="space-y-1">
-                    {navServices.map((item) => {
-                      const Icon = getExpertiseIcon(item);
-                      const isActive = currentRoute.type === 'service-detail' && currentRoute.serviceId === item.id;
-                      return (
-                        <button
-                          key={item.id}
-                          onClick={() => {
-                            setServicesDropdownOpen(false);
-                            navigateToService(item.id);
-                          }}
-                          className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
-                            isActive
-                              ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300'
-                              : 'hover:bg-slate-900 text-slate-200 hover:text-white'
-                          }`}
-                        >
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                            isActive ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800 text-cyan-400'
-                          }`}>
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="text-xs font-bold truncate">{item.tabLabel}</div>
-                            <div className="text-[10px] text-slate-400 truncate">{item.category.split('&')[0].trim()}</div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
+            {/* 3. Services Dropdown */}
+            <div 
+              className="relative"
+              ref={dropdownRef}
+              onMouseEnter={() => setServicesDropdownOpen(true)}
+              onMouseLeave={() => setServicesDropdownOpen(false)}
+            >
+              <button
+                onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                className={`flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                  currentRoute.type === 'service-detail' || currentRoute.type === 'services-index' || window.location.hash === '#expertise'
+                    ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                }`}
+                aria-expanded={servicesDropdownOpen}
+              >
+                <span>Services</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180 text-cyan-400' : 'text-slate-400'}`} />
+              </button>
 
-                  <div className="mt-2.5 pt-2.5 border-t border-slate-800">
-                    <button
-                      onClick={() => handleNavClick('#/services')}
-                      className="w-full py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[42px]"
-                      id="nav-dropdown-know-more"
-                    >
-                      <Layers className="w-4 h-4 text-slate-950 shrink-0" />
-                      <span>Know More &bull; All Services</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+              {/* Dropdown Menu */}
+              <AnimatePresence>
+                {servicesDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 w-80 sm:w-88 mt-2 bg-slate-950 border border-cyan-500/40 rounded-2xl p-3 shadow-2xl shadow-black z-50"
+                  >
+                    <div className="px-3 py-2 border-b border-slate-800 mb-1.5 flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
+                        CORE CAPABILITIES
+                      </span>
+                      <button
+                        onClick={() => handleNavClick('#/services')}
+                        className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer transition-colors"
+                      >
+                        All Services &rarr;
+                      </button>
+                    </div>
 
-          <button
-            onClick={() => handleNavClick('#growth')}
-            className="hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium"
-          >
-            Performance
-          </button>
-          <button
-            onClick={() => handleNavClick('#packages')}
-            className="hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium"
-          >
-            Packages
-          </button>
-          <button
-            onClick={() => handleNavClick('#cases')}
-            className="hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium"
-          >
-            Portfolio
-          </button>
-          <button
-            onClick={() => handleNavClick('#/blogs')}
-            className={`hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium ${
-              currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail' ? 'text-cyan-400' : ''
-            }`}
-          >
-            Blogs
-          </button>
-          <button
-            onClick={() => handleNavClick('#faq')}
-            className="hover:text-cyan-400 transition-colors duration-200 py-1 cursor-pointer font-medium"
-          >
-            FAQs
-          </button>
-        </nav>
+                    <div className="space-y-1">
+                      {navServices.map((item) => {
+                        const Icon = getExpertiseIcon(item);
+                        const isActive = currentRoute.type === 'service-detail' && currentRoute.serviceId === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => {
+                              setServicesDropdownOpen(false);
+                              navigateToService(item.id);
+                            }}
+                            className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
+                              isActive
+                                ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300'
+                                : 'hover:bg-slate-900 text-slate-200 hover:text-white'
+                            }`}
+                          >
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                              isActive ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800 text-cyan-400'
+                            }`}>
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-bold truncate">{item.tabLabel}</div>
+                              <div className="text-[10px] text-slate-400 truncate">{item.category.split('&')[0].trim()}</div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-2.5 pt-2.5 border-t border-slate-800">
+                      <button
+                        onClick={() => handleNavClick('#/services')}
+                        className="w-full py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[42px]"
+                        id="nav-dropdown-know-more"
+                      >
+                        <Layers className="w-4 h-4 text-slate-950 shrink-0" />
+                        <span>Know More &bull; All Services</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* 4. Portfolio (Case Studies) */}
+            <button
+              onClick={() => handleNavClick('#cases')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                window.location.hash === '#cases' || window.location.hash === '#/cases'
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+              }`}
+            >
+              Portfolio
+            </button>
+
+            {/* 5. Packages */}
+            <button
+              onClick={() => handleNavClick('#packages')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                window.location.hash === '#packages' || window.location.hash === '#/packages'
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+              }`}
+            >
+              Packages
+            </button>
+
+            {/* 6. Performance */}
+            <button
+              onClick={() => handleNavClick('#growth')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                window.location.hash === '#growth' || window.location.hash === '#/growth'
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+              }`}
+            >
+              Performance
+            </button>
+
+            {/* 7. Blogs */}
+            <button
+              onClick={() => handleNavClick('#/blogs')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail'
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+              }`}
+            >
+              Blogs
+            </button>
+
+            {/* 8. FAQs */}
+            <button
+              onClick={() => handleNavClick('#faq')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                window.location.hash === '#faq' || window.location.hash === '#/faq'
+                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+              }`}
+            >
+              FAQs
+            </button>
+          </nav>
+        </div>
 
         {/* Right Desktop CTA Area (Phone & Quote CTA) */}
-        <div className="hidden sm:flex items-center gap-2.5 sm:gap-3 xl:gap-5">
+        <div className="hidden sm:flex items-center justify-end shrink-0 gap-2.5 xl:gap-4">
           {/* Phone number */}
           <a 
             href={`tel:${config.phone.replace(/\s+/g, '')}`}
@@ -349,6 +397,14 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                   <ArrowRight className="w-4 h-4 text-slate-500" />
                 </button>
 
+                <button
+                  onClick={() => handleNavClick('#about')}
+                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
+                >
+                  <span className="font-semibold">About Us</span>
+                  <ArrowRight className="w-4 h-4 text-slate-500" />
+                </button>
+
                 {/* Mobile Services Accordion */}
                 <div className="border-b border-slate-800/40 rounded-xl overflow-hidden">
                   <button
@@ -390,10 +446,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </div>
 
                 <button
-                  onClick={() => handleNavClick('#growth')}
+                  onClick={() => handleNavClick('#cases')}
                   className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
                 >
-                  <span className="font-semibold">Performance</span>
+                  <span className="font-semibold">Portfolio</span>
                   <ArrowRight className="w-4 h-4 text-slate-500" />
                 </button>
 
@@ -406,10 +462,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('#cases')}
+                  onClick={() => handleNavClick('#growth')}
                   className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
                 >
-                  <span className="font-semibold">Portfolio</span>
+                  <span className="font-semibold">Performance</span>
                   <ArrowRight className="w-4 h-4 text-slate-500" />
                 </button>
 
