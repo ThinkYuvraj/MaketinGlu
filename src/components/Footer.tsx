@@ -216,7 +216,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
           <div className="flex items-center gap-3 sm:gap-4 flex-wrap justify-center sm:justify-end">
             <button
               type="button"
-              onClick={onOpenConsultation}
+              onClick={() => navigateTo('#/terms')}
               className="hover:text-cyan-300 transition-colors cursor-pointer"
             >
               Enterprise Terms
@@ -224,10 +224,10 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
             <span className="text-slate-800">&bull;</span>
             <button
               type="button"
-              onClick={onOpenConsultation}
+              onClick={() => navigateTo('#/privacy')}
               className="hover:text-cyan-300 transition-colors cursor-pointer"
             >
-              Privacy
+              Privacy Policy
             </button>
             <span className="text-slate-800">&bull;</span>
             

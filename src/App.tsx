@@ -20,6 +20,8 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesIndexPage from './pages/ServicesIndexPage';
 import BlogsPage from './pages/BlogsPage';
 import BlogDetailPage from './pages/BlogDetailPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsConditionsPage from './pages/TermsConditionsPage';
 import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
@@ -138,6 +140,12 @@ function AppContent() {
                 slug={currentRoute.blogSlug} 
                 onOpenConsultation={handleOpenConsultation} 
               />
+            ) : currentRoute.type === 'privacy' ? (
+              /* Dedicated Privacy Policy Page (#/privacy) */
+              <PrivacyPolicyPage />
+            ) : currentRoute.type === 'terms' ? (
+              /* Dedicated Terms & Conditions Page (#/terms) */
+              <TermsConditionsPage />
             ) : (
               /* Default Main Homepage Flow with subtle animated sections */
               <>
@@ -151,11 +159,9 @@ function AppContent() {
                 {renderCustomSections('after-hero')}
 
                 {/* Section 2: About Us - Agency Story, Mission & Engineering DNA */}
-                <AnimatedSection id="about" delayMs={40} className="relative">
-                  <AboutUs
-                    onOpenConsultation={(serviceName) => handleOpenConsultation(serviceName)}
-                  />
-                </AnimatedSection>
+                <AboutUs
+                  onOpenConsultation={(serviceName) => handleOpenConsultation(serviceName)}
+                />
 
                 {/* Section 3: Our Performance In Numbers */}
                 <AnimatedSection id="growth" delayMs={60} className="relative">

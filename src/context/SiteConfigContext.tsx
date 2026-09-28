@@ -11,7 +11,7 @@ export const defaultAboutPillars: AboutPillar[] = [
     id: 'pillar-1',
     title: 'Full-Stack Technical Precision',
     description:
-      'We build sub-second web platforms, scalable SaaS architectures, and seamless e-commerce systems with modern engineering standards—never bloated third-party templates.',
+      'We build sub-second web platforms, scalable SaaS architectures, and seamless e-commerce systems with modern engineering standards - never bloated third-party templates.',
     tag: 'ENGINEERING',
     iconName: 'Zap',
     accent: 'cyan',
@@ -38,7 +38,7 @@ export const defaultAboutPillars: AboutPillar[] = [
     id: 'pillar-4',
     title: 'Direct Senior Strategist Access',
     description:
-      'Direct communication with senior engineers and marketing directors in New Delhi via dedicated WhatsApp & Slack channels—never outsourced to junior interns.',
+      'Direct communication with senior engineers and marketing directors in New Delhi via dedicated WhatsApp & Slack channels - never outsourced to junior interns.',
     tag: 'PARTNERSHIP',
     iconName: 'Users2',
     accent: 'amber',
@@ -265,7 +265,7 @@ export const defaultSiteConfig: SiteConfig = {
         {
           id: 'item-3',
           title: 'Direct Senior Strategist Access',
-          description: 'Weekly video calls, dedicated WhatsApp and Slack channels with senior marketing architects—never passed to interns.',
+          description: 'Weekly video calls, dedicated WhatsApp and Slack channels with senior marketing architects - never passed to interns.',
           tag: 'EXPERTISE',
           icon: 'Sparkles',
           statValue: '24/7',

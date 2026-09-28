@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { expertiseData } from '../data/expertiseData';
 
-export type RouteType = 'home' | 'services-index' | 'service-detail' | 'blogs' | 'blog-detail' | 'admin';
+export type RouteType = 'home' | 'services-index' | 'service-detail' | 'blogs' | 'blog-detail' | 'admin' | 'privacy' | 'terms';
 
 export interface RouteState {
   type: RouteType;
@@ -46,6 +46,12 @@ function parsePathAndHash(): RouteState {
     if (rawHash === 'services' || rawHash === 'expertise') {
       return { type: 'services-index', path: '#/services' };
     }
+    if (rawHash === 'privacy' || rawHash === 'privacy-policy') {
+      return { type: 'privacy', path: '#/privacy' };
+    }
+    if (rawHash === 'terms' || rawHash === 'terms-conditions' || rawHash === 'terms-and-conditions' || rawHash === 'terms-of-service') {
+      return { type: 'terms', path: '#/terms' };
+    }
     if (rawHash === 'blogs' || rawHash === 'blog' || rawHash === 'resources' || rawHash === 'articles') {
       return { type: 'blogs', path: '#/blogs' };
     }
@@ -62,6 +68,14 @@ function parsePathAndHash(): RouteState {
 
   if (routePath === '/about' || routePath === '/about/' || routePath === '/about-us' || routePath === '/about-us/') {
     return { type: 'home', anchor: 'about', path: '#about' };
+  }
+
+  if (routePath === '/privacy' || routePath === '/privacy/' || routePath === '/privacy-policy') {
+    return { type: 'privacy', path: '#/privacy' };
+  }
+
+  if (routePath === '/terms' || routePath === '/terms/' || routePath === '/terms-conditions' || routePath === '/terms-and-conditions') {
+    return { type: 'terms', path: '#/terms' };
   }
 
   if (routePath === '/services' || routePath === '/services/') {
@@ -117,6 +131,10 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         document.title = "Marketing Insights & Strategic Guides | MarketingGlu";
       } else if (parsed.type === 'admin') {
         document.title = "Admin Studio | MarketingGlu";
+      } else if (parsed.type === 'privacy') {
+        document.title = "Privacy Policy | MarketingGlu";
+      } else if (parsed.type === 'terms') {
+        document.title = "Terms & Conditions | MarketingGlu";
       } else {
         document.title = "MarketingGlu - Digital Marketing Solutions";
       }

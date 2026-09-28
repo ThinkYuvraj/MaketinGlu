@@ -100,17 +100,20 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
       if (elem) {
         elem.scrollIntoView({ behavior: 'smooth' });
       }
+      window.history.pushState(null, '', href);
+      window.dispatchEvent(new Event('hashchange'));
     }
   };
 
   const isHashActive = (hashTarget: string) => {
+    const currentHash = window.location.hash || '';
     if (hashTarget === '#/' || hashTarget === '#home') {
-      return currentRoute.type === 'home' && (!window.location.hash || window.location.hash === '#/' || window.location.hash === '#home');
+      return currentRoute.type === 'home' && (!currentHash || currentHash === '#/' || currentHash === '#home');
     }
     if (hashTarget === '#about') {
-      return window.location.hash === '#about' || window.location.hash === '#/about' || window.location.hash === '#about-us';
+      return currentHash === '#about' || currentHash === '#/about' || currentHash === '#about-us';
     }
-    return window.location.hash === hashTarget || window.location.hash === `#/${hashTarget.replace('#', '')}`;
+    return currentHash === hashTarget || currentHash === `#/${hashTarget.replace('#', '')}`;
   };
 
   const rawPhone = config.phone.replace(/[^0-9+]/g, '');
@@ -343,10 +346,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           {/* Phone Quick Link */}
           <a 
             href={`tel:${config.phone.replace(/\s+/g, '')}`}
-            className="flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1 px-1.5 xl:py-1.5 xl:px-2.5 rounded-full hover:bg-slate-900/60 border border-transparent hover:border-slate-800"
+            className="flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1 px-1.5 xl:py-1.5 xl:px-2.5 rounded-xl hover:bg-slate-900/60 border border-transparent hover:border-slate-800"
             title={`Call Support: ${config.phone}`}
           >
-            <div className="w-7 h-7 rounded-full bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
+            <div className="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
               <Phone className="w-3.5 h-3.5" />
             </div>
             <span className="hidden xl:inline whitespace-nowrap font-bold text-xs">{config.phone}</span>
@@ -356,7 +359,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           <motion.button
             {...buttonHoverMotion}
             onClick={onOpenConsultation}
-            className="px-3 xl:px-4 py-1.5 xl:py-2 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-[11px] xl:text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[34px] xl:min-h-[38px] flex items-center justify-center"
+            className="px-3 xl:px-4 py-1.5 xl:py-2 rounded-xl border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-[11px] xl:text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[34px] xl:min-h-[38px] flex items-center justify-center"
             id="btn-get-free-quote"
           >
             Get Free Quote
