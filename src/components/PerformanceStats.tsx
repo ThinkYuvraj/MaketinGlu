@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { TrendingUp, CheckCircle2, Sparkles, Zap, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { staggerContainerVariants, staggerItemVariants, cardHoverMotion } from '../lib/animations';
@@ -107,24 +107,30 @@ export default function PerformanceStats() {
     return () => clearInterval(interval);
   }, [isPaused, handleNext]);
 
-  // Mobile drag animation variants
-  const mobileSlideVariants = {
+  // 144Hz Smooth drag animation variants
+  const mobileSlideVariants: Variants = {
     enter: (direction: string) => ({
-      x: direction === 'right' ? 260 : -260,
-      opacity: 0,
-      scale: 0.95,
+      x: direction === 'right' ? '100%' : '-100%',
+      opacity: 0.2,
+      scale: 0.96,
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
       scale: 1,
+      transition: {
+        x: { type: "spring" as const, stiffness: 320, damping: 32, mass: 0.7 },
+        opacity: { duration: 0.25 },
+        scale: { duration: 0.25 },
+      },
     },
     exit: (direction: string) => ({
       zIndex: 0,
-      x: direction === 'right' ? -260 : 260,
-      opacity: 0,
-      scale: 0.95,
+      x: direction === 'right' ? '-100%' : '100%',
+      opacity: 0.1,
+      scale: 0.96,
+      transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
     }),
   };
 
@@ -277,13 +283,13 @@ export default function PerformanceStats() {
           </p>
         </div>
 
-        {/* DESKTOP & TABLET: 4 Vertical Rectangle Cards in Multi-Column Grid */}
+        {/* DESKTOP (>=1024px): 4 Columns Grid */}
         <motion.div 
           variants={staggerContainerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
-          className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+          className="hidden lg:grid lg:grid-cols-4 gap-5 sm:gap-6"
         >
           {stats.map((item, idx) => (
             <motion.div 
@@ -296,20 +302,22 @@ export default function PerformanceStats() {
           ))}
         </motion.div>
 
-        {/* MOBILE VIEW: Single Swipable Card with Gestures, Dots & Controls */}
-        <div className="block md:hidden relative max-w-sm sm:max-w-md mx-auto">
+        {/* MOBILE & TABLET (<1024px): Caret Carousel with Navigation, Dots & Swipe */}
+        <div className="block lg:hidden relative max-w-lg mx-auto">
           
-          {/* Swipe guidance indicator */}
-          <div className="text-center mb-3">
-            <span className="text-[11px] font-medium text-slate-400 flex items-center justify-center gap-1.5">
-              <ChevronLeft className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-              <span className="font-semibold text-slate-300">Swipe left or right to switch performance metrics</span>
-              <ChevronRight className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          {/* Caret guidance and slide tracker */}
+          <div className="flex items-center justify-between mb-3 px-2">
+            <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block"></span>
+              <span className="font-semibold text-slate-300">Capability {currentIndex + 1} of {totalStats}</span>
+            </span>
+            <span className="text-[11px] text-cyan-400 font-mono font-medium">
+              Swipe or use carets &rarr;
             </span>
           </div>
 
           {/* Swipable Card Container with popLayout */}
-          <div className="relative overflow-hidden px-1 min-h-[460px]">
+          <div className="relative overflow-hidden px-1 min-h-[440px] sm:min-h-[480px]">
             <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
               <motion.div
                 key={stats[currentIndex].id}
@@ -342,20 +350,20 @@ export default function PerformanceStats() {
             </AnimatePresence>
           </div>
 
-          {/* Mobile pagination controls with Prev / Next */}
-          <div className="flex items-center justify-between mt-5 px-1">
+          {/* Mobile/Tablet pagination controls with Carets Prev / Next */}
+          <div className="flex items-center justify-between mt-5 px-2">
             <button
               type="button"
               onClick={handlePrev}
-              className="min-h-[44px] flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
-              aria-label="Previous metric"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
+              aria-label="Previous capability metric"
             >
               <ChevronLeft className="w-4 h-4 text-cyan-400" />
-              <span>Previous</span>
+              <span className="hidden sm:inline">Prev</span>
             </button>
 
             {/* Pagination Dots */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {stats.map((stat, dotIdx) => (
                 <button
                   key={stat.id}
@@ -363,8 +371,8 @@ export default function PerformanceStats() {
                   onClick={() => handleSelectStat(dotIdx)}
                   className={`h-2 rounded-md transition-all cursor-pointer ${
                     dotIdx === currentIndex
-                      ? 'w-7 bg-cyan-400 shadow-md shadow-cyan-400/40'
-                      : 'w-2 bg-slate-700 hover:bg-slate-500'
+                      ? 'w-7 sm:w-8 bg-cyan-400 shadow-md shadow-cyan-400/40'
+                      : 'w-2 sm:w-2.5 bg-slate-700 hover:bg-slate-500'
                   }`}
                   aria-label={`Go to metric ${dotIdx + 1}: ${stat.label}`}
                 />
@@ -374,10 +382,10 @@ export default function PerformanceStats() {
             <button
               type="button"
               onClick={handleNext}
-              className="min-h-[44px] flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
-              aria-label="Next metric"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
+              aria-label="Next capability metric"
             >
-              <span>Next</span>
+              <span className="hidden sm:inline">Next</span>
               <ChevronRight className="w-4 h-4 text-cyan-400" />
             </button>
           </div>

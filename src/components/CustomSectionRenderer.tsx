@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShieldCheck, 
   Award, 
@@ -14,6 +14,7 @@ import {
   HeartHandshake, 
   ArrowRight, 
   ChevronRight, 
+  ChevronLeft,
   Globe, 
   Star,
   Check,
@@ -47,7 +48,23 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
   section,
   onOpenConsultation,
 }) => {
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
+
   if (!section.enabled) return null;
+
+  const items = section.items || [];
+  const totalItems = items.length;
+
+  const handleNext = () => {
+    setSlideDirection('right');
+    setCurrentCardIndex((prev) => (prev + 1) % totalItems);
+  };
+
+  const handlePrev = () => {
+    setSlideDirection('left');
+    setCurrentCardIndex((prev) => (prev - 1 + totalItems) % totalItems);
+  };
 
   const renderIcon = (iconName?: string) => {
     if (!iconName) return <Sparkles className="w-5 h-5 text-cyan-400" />;
@@ -66,6 +83,56 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
     }
   };
 
+  const renderCard = (item: CustomSectionItem, idx: number) => (
+    <div
+      key={item.id || idx}
+      className="group relative rounded-2xl bg-[#090e1c] border border-slate-800/90 hover:border-cyan-500/40 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 shadow-lg hover:shadow-cyan-500/10 h-full"
+    >
+      <div>
+        {/* Top Bar: Tag & Icon */}
+        <div className="flex items-center justify-between mb-5">
+          {item.tag ? (
+            <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
+              {item.tag}
+            </span>
+          ) : (
+            <span />
+          )}
+          <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 group-hover:border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-inner group-hover:scale-110 transition-transform">
+            {renderIcon(item.icon)}
+          </div>
+        </div>
+
+        {/* Item Image (if any) */}
+        {item.imageUrl && (
+          <div className="relative rounded-xl overflow-hidden mb-4 border border-slate-800 aspect-video bg-[#070b14]">
+            <img 
+              src={item.imageUrl} 
+              alt={item.title} 
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+            />
+          </div>
+        )}
+
+        {/* Title & Description */}
+        <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-2 leading-snug">
+          {item.title}
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          {item.description}
+        </p>
+      </div>
+
+      {/* Optional Metric Stat Box */}
+      {(item.statValue || item.statLabel) && (
+        <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+          <span className="text-xs text-slate-400">{item.statLabel}</span>
+          <span className="text-base font-extrabold text-cyan-400 font-mono">{item.statValue}</span>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <section 
       id={section.id} 
@@ -79,9 +146,9 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
 
       <Container>
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           {section.badge && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               <span>{section.badge}</span>
             </div>
@@ -104,63 +171,97 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
         </div>
 
         {/* LAYOUT: CARDS */}
-        {section.layout === 'cards' && section.items && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {section.items.map((item, idx) => (
-              <motion.div
-                key={item.id || idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="group relative rounded-2xl bg-[#090e1c] border border-slate-800/90 hover:border-cyan-500/40 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 shadow-lg hover:shadow-cyan-500/10"
-              >
-                <div>
-                  {/* Top Bar: Tag & Icon */}
-                  <div className="flex items-center justify-between mb-5">
-                    {item.tag ? (
-                      <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
-                        {item.tag}
-                      </span>
-                    ) : (
-                      <span />
-                    )}
-                    <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 group-hover:border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-inner group-hover:scale-110 transition-transform">
-                      {renderIcon(item.icon)}
-                    </div>
-                  </div>
+        {section.layout === 'cards' && items.length > 0 && (
+          <>
+            {/* Desktop Grid (>=1024px) */}
+            <div className="hidden lg:grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {items.map((item, idx) => (
+                <motion.div
+                  key={item.id || idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.1 }}
+                  whileHover={{ y: -4 }}
+                >
+                  {renderCard(item, idx)}
+                </motion.div>
+              ))}
+            </div>
 
-                  {/* Item Image (if any) */}
-                  {item.imageUrl && (
-                    <div className="relative rounded-xl overflow-hidden mb-4 border border-slate-800 aspect-video bg-[#070b14]">
-                      <img 
-                        src={item.imageUrl} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                      />
-                    </div>
-                  )}
+            {/* Mobile & Tablet (<1024px) Caret Carousel */}
+            <div className="block lg:hidden relative max-w-lg mx-auto">
+              <div className="flex items-center justify-between mb-3 px-2">
+                <span className="text-[11px] font-medium text-slate-400">
+                  Feature {currentCardIndex + 1} of {totalItems}
+                </span>
+                <span className="text-[11px] text-cyan-400 font-mono">
+                  Swipe or use carets &rarr;
+                </span>
+              </div>
 
-                  {/* Title & Description */}
-                  <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-2 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                    {item.description}
-                  </p>
+              <div className="relative overflow-hidden px-1 min-h-[360px]">
+                <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
+                  <motion.div
+                    key={items[currentCardIndex]?.id || currentCardIndex}
+                    custom={slideDirection}
+                    initial={{ x: slideDirection === 'right' ? '100%' : '-100%', opacity: 0.2 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: slideDirection === 'right' ? '-100%' : '100%', opacity: 0.2 }}
+                    transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    onDragEnd={(_, info) => {
+                      if (info.offset.x < -35) handleNext();
+                      else if (info.offset.x > 35) handlePrev();
+                    }}
+                    className="w-full touch-pan-y"
+                  >
+                    {renderCard(items[currentCardIndex], currentCardIndex)}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Caret Controls */}
+              <div className="flex items-center justify-between mt-5 px-2">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 transition-all cursor-pointer shadow-md"
+                  aria-label="Previous card"
+                >
+                  <ChevronLeft className="w-4 h-4 text-cyan-400" />
+                  <span className="hidden sm:inline">Prev</span>
+                </button>
+
+                <div className="flex items-center gap-1.5">
+                  {items.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      onClick={() => setCurrentCardIndex(dotIdx)}
+                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                        dotIdx === currentCardIndex
+                          ? 'w-7 bg-cyan-400 shadow-md shadow-cyan-400/40'
+                          : 'w-2 bg-slate-700 hover:bg-slate-500'
+                      }`}
+                      aria-label={`Go to card ${dotIdx + 1}`}
+                    />
+                  ))}
                 </div>
 
-                {/* Optional Metric Stat Box */}
-                {(item.statValue || item.statLabel) && (
-                  <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                    <span className="text-xs text-slate-400">{item.statLabel}</span>
-                    <span className="text-base font-extrabold text-cyan-400 font-mono">{item.statValue}</span>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 transition-all cursor-pointer shadow-md"
+                  aria-label="Next card"
+                >
+                  <span className="hidden sm:inline">Next</span>
+                  <ChevronRight className="w-4 h-4 text-cyan-400" />
+                </button>
+              </div>
+            </div>
+          </>
         )}
 
         {/* LAYOUT: SPLIT IMAGE */}
@@ -198,12 +299,11 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
 
               {/* Action Buttons */}
               {(section.primaryCtaText || section.secondaryCtaText) && (
-                <div className="flex flex-wrap gap-3.5 pt-2">
+                <div className="flex flex-wrap gap-4 pt-4">
                   {section.primaryCtaText && (
                     <button
-                      type="button"
                       onClick={() => handleCtaClick(section.primaryCtaLink, section.primaryCtaText)}
-                      className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-400 hover:from-cyan-400 hover:to-sky-300 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-cyan-500/20 cursor-pointer transition-all active:scale-95"
+                      className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 flex items-center gap-2 cursor-pointer transition-all"
                     >
                       <span>{section.primaryCtaText}</span>
                       <ArrowRight className="w-4 h-4" />
@@ -211,37 +311,35 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                   )}
                   {section.secondaryCtaText && (
                     <button
-                      type="button"
                       onClick={() => handleCtaClick(section.secondaryCtaLink, section.secondaryCtaText)}
-                      className="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs sm:text-sm flex items-center gap-2 cursor-pointer transition-all active:scale-95"
+                      className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-sm flex items-center gap-2 cursor-pointer transition-all"
                     >
                       <span>{section.secondaryCtaText}</span>
-                      <ChevronRight className="w-4 h-4 text-cyan-400" />
+                      <ExternalLink className="w-4 h-4 text-slate-400" />
                     </button>
                   )}
                 </div>
               )}
             </div>
 
-            {/* Visual Column */}
+            {/* Visual Media Column */}
             <div className={`lg:col-span-6 ${section.imagePosition === 'left' ? 'lg:order-1' : 'lg:order-2'}`}>
-              <div className="relative group">
-                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 via-sky-500/15 to-blue-600/20 rounded-3xl blur-2xl opacity-70 group-hover:opacity-100 transition duration-500" />
-                <div className="relative rounded-2xl bg-[#090e1c] border border-cyan-500/30 overflow-hidden shadow-2xl p-3 sm:p-4">
-                  {section.imageUrl ? (
-                    <img 
-                      src={section.imageUrl} 
-                      alt={section.imageAlt || section.title} 
-                      className="w-full h-64 sm:h-80 md:h-96 rounded-xl object-cover transform transition duration-500 group-hover:scale-[1.02]"
-                    />
-                  ) : (
-                    <div className="w-full h-64 sm:h-80 md:h-96 rounded-xl bg-gradient-to-br from-slate-900 via-[#0a1122] to-[#070b14] flex flex-col items-center justify-center p-6 text-center border border-slate-800">
-                      <Sparkles className="w-12 h-12 text-cyan-400 mb-3 animate-pulse" />
-                      <div className="text-base font-bold text-white">{section.title}</div>
-                      <div className="text-xs text-slate-400 mt-1 max-w-xs">{section.description}</div>
+              <div className="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-[#090e1c] aspect-[4/3] group">
+                {section.imageUrl ? (
+                  <img
+                    src={section.imageUrl}
+                    alt={section.imageAlt || section.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-[#0c1428] to-[#070c18]">
+                    <div className="w-16 h-16 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 mb-4 shadow-lg shadow-cyan-500/20">
+                      <Sparkles className="w-8 h-8" />
                     </div>
-                  )}
-                </div>
+                    <h4 className="text-lg font-bold text-white mb-1">Visual Asset Showcase</h4>
+                    <p className="text-xs text-slate-400 max-w-sm">Configure or upload custom visuals for this section in the Admin Studio.</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -249,51 +347,25 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
 
         {/* LAYOUT: BANNER */}
         {section.layout === 'banner' && (
-          <div className="relative rounded-3xl bg-gradient-to-br from-[#0c162d] via-[#091020] to-[#060a14] border border-cyan-500/30 p-8 sm:p-12 lg:p-14 max-w-5xl mx-auto shadow-2xl overflow-hidden">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
-              <div className="max-w-2xl">
-                {section.badge && (
-                  <span className="inline-block px-3 py-1 rounded-md bg-cyan-950 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase mb-3">
-                    {section.badge}
-                  </span>
-                )}
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight">
-                  {section.title}{' '}
-                  {section.titleHighlight && (
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-300">
-                      {section.titleHighlight}
-                    </span>
-                  )}
-                </h3>
-                {section.description && (
-                  <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-                    {section.description}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shrink-0">
-                {section.primaryCtaText && (
-                  <button
-                    type="button"
-                    onClick={() => handleCtaClick(section.primaryCtaLink, section.primaryCtaText)}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 cursor-pointer transition-all active:scale-95"
-                  >
-                    <span>{section.primaryCtaText}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                )}
-                {section.secondaryCtaText && (
-                  <button
-                    type="button"
-                    onClick={() => handleCtaClick(section.secondaryCtaLink, section.secondaryCtaText)}
-                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
-                  >
-                    <span>{section.secondaryCtaText}</span>
-                  </button>
-                )}
-              </div>
+          <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-r from-sky-950/70 via-[#0a1b2d] to-cyan-950/70 border border-cyan-500/30 p-8 sm:p-12 text-center relative overflow-hidden shadow-2xl">
+            <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                {section.titleHighlight ? `${section.title} ${section.titleHighlight}` : section.title}
+              </h3>
+              {section.description && (
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  {section.description}
+                </p>
+              )}
+              {section.primaryCtaText && (
+                <button
+                  onClick={() => handleCtaClick(section.primaryCtaLink, section.primaryCtaText)}
+                  className="px-8 py-3.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-sm shadow-xl shadow-cyan-400/20 inline-flex items-center gap-2 cursor-pointer transition-all"
+                >
+                  <span>{section.primaryCtaText}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -304,23 +376,18 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
             {section.items.map((item, idx) => (
               <div 
                 key={item.id || idx}
-                className="p-5 sm:p-6 rounded-2xl bg-[#090e1c] border border-slate-800 text-center hover:border-cyan-500/40 transition-colors shadow-lg"
+                className="p-6 rounded-2xl bg-[#090e1c] border border-slate-800 text-center flex flex-col justify-center items-center space-y-2"
               >
-                <div className="text-2xl sm:text-4xl font-black text-cyan-400 font-mono tracking-tight">
+                <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-300 font-mono">
                   {item.statValue || '100%'}
                 </div>
-                <div className="text-xs sm:text-sm font-bold text-white mt-1">
-                  {item.title}
-                </div>
-                {item.description && (
-                  <div className="text-[11px] text-slate-400 mt-1 leading-snug">
-                    {item.description}
-                  </div>
-                )}
+                <div className="text-xs font-bold text-white">{item.title}</div>
+                <p className="text-[11px] text-slate-400">{item.description}</p>
               </div>
             ))}
           </div>
         )}
+
       </Container>
     </section>
   );

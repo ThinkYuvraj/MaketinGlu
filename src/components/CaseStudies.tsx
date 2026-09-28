@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { 
   ArrowUpRight, 
   Sparkles, 
@@ -9,10 +9,12 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   ArrowRight, 
-  X,
-  Gauge,
-  Layers,
-  BarChart2
+  X, 
+  Gauge, 
+  Layers, 
+  BarChart2,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion, standardEase } from '../lib/animations';
 import { caseStudiesData } from '../data/caseStudiesData';
@@ -27,8 +29,52 @@ interface CaseStudiesProps {
 export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const { config } = useSiteConfig();
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
   const casesList = config.caseStudies && config.caseStudies.length > 0 ? config.caseStudies : caseStudiesData;
+  const totalCases = casesList.length;
+
+  const handleNext = () => {
+    setSlideDirection('right');
+    setCurrentIndex((prev) => (prev + 1) % totalCases);
+  };
+
+  const handlePrev = () => {
+    setSlideDirection('left');
+    setCurrentIndex((prev) => (prev - 1 + totalCases) % totalCases);
+  };
+
+  const handleSelectTab = (idx: number) => {
+    setSlideDirection(idx > currentIndex ? 'right' : 'left');
+    setCurrentIndex(idx);
+  };
+
+  const mobileSlideVariants: Variants = {
+    enter: (direction: 'left' | 'right') => ({
+      x: direction === 'right' ? '100%' : '-100%',
+      opacity: 0.15,
+      scale: 0.96,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      zIndex: 1,
+      transition: {
+        x: { type: "spring" as const, stiffness: 320, damping: 32, mass: 0.65 },
+        opacity: { duration: 0.25 },
+        scale: { duration: 0.25 },
+      },
+    },
+    exit: (direction: 'left' | 'right') => ({
+      x: direction === 'right' ? '-100%' : '100%',
+      opacity: 0.15,
+      scale: 0.96,
+      zIndex: 0,
+      transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+    }),
+  };
 
   return (
     <section id="cases" className="relative flex flex-col justify-center py-14 sm:py-18 lg:py-24 bg-[#060a13] border-t border-slate-800/80">
@@ -36,55 +82,39 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
       <Container>
-        {/* Section Header - Centered */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 flex flex-col items-center justify-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
+        {/* Centered Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
           </div>
+
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {config.casesSectionTitle1 || 'Case Studies &'}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">
               {config.casesSectionTitle2 || 'Recent Work'}
             </span>
           </h2>
-          <p className="mt-2 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto">
-            {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands.'}
+
+          <p className="mt-2.5 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto">
+            {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands across D2C, SaaS, and retail.'}
           </p>
-          <button
-            type="button"
-            onClick={onOpenConsultation}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors py-1.5 mt-3 cursor-pointer group"
-          >
-            <span>View All Cases</span>
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
         </div>
 
-        {/* Featured Case Study Grid */}
-        <motion.div 
-          variants={staggerContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 w-full"
-        >
-          {casesList.map((item) => {
+        {/* Render Single Case Card Helper */}
+        {(() => {
+          const renderCaseCard = (item: CaseStudy) => {
             const caseImg = item.imageUrl || config.sectionImages?.[`case-${item.id}`];
             const isNexa = item.type === 'nexa' || item.id === 'nexa';
             const isTechDuniya = item.type === 'techduniya' || item.id === 'techduniya';
 
             return (
-              <motion.div
-                key={item.id}
-                variants={staggerItemVariants}
-                {...cardHoverMotion}
-                className="rounded-2xl bg-gradient-to-b from-[#0c1324] to-[#070c18] border border-slate-800/90 hover:border-cyan-500/50 transition-all duration-300 group hover:shadow-2xl hover:shadow-cyan-950/30 flex flex-col overflow-hidden"
+              <div
+                className="rounded-2xl bg-gradient-to-b from-[#0c1324] to-[#070c18] border border-slate-800/90 hover:border-cyan-500/50 transition-all duration-300 group hover:shadow-2xl hover:shadow-cyan-950/30 flex flex-col overflow-hidden h-full select-none"
                 id={`case-card-${item.id}`}
               >
-                {/* 1. VISUAL SHOWCASE HEADER (Clean, Authentic, No Box-in-Box clutter) */}
+                {/* 1. VISUAL SHOWCASE HEADER */}
                 <div className="relative h-44 sm:h-52 bg-[#050914] overflow-hidden border-b border-slate-800/80 p-4 sm:p-5 flex flex-col justify-between">
-                  {/* Subtle decorative background grid lines */}
                   <div 
                     className="absolute inset-0 opacity-[0.03] pointer-events-none"
                     style={{
@@ -93,13 +123,11 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     }}
                   />
 
-                  {/* Ambient Glow */}
                   <div className={`absolute top-0 right-0 w-56 h-56 rounded-full blur-3xl opacity-20 pointer-events-none ${
                     isNexa ? 'bg-cyan-500' : 'bg-sky-500'
                   }`} />
 
                   {caseImg ? (
-                    // Custom Uploaded Image
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <img 
                         src={caseImg} 
@@ -124,9 +152,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       </div>
                     </div>
                   ) : isNexa ? (
-                    // Nexa Store High-Fidelity Performance Graphic
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
-                      {/* Top Bar: Client & Status */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="w-6 h-6 rounded-md bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
@@ -139,13 +165,12 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           <span className="text-[11px] text-slate-400">D2C Fashion</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-950/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-medium">
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           <span>LIVE AUDIT</span>
                         </div>
                       </div>
 
-                      {/* Center Graphical Simulation: Speed Timeline & Conversion Surge */}
                       <div className="my-auto py-1">
                         <div className="flex items-center justify-between mb-2 text-xs">
                           <div className="flex items-center gap-2">
@@ -159,7 +184,6 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           </span>
                         </div>
 
-                        {/* Interactive-looking SVG retention curve */}
                         <div className="w-full h-10 sm:h-12 relative flex items-center">
                           <svg className="w-full h-full overflow-visible" viewBox="0 0 300 45" preserveAspectRatio="none">
                             <defs>
@@ -169,9 +193,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                                 <stop offset="100%" stopColor="#2dd4bf" stopOpacity="1" />
                               </linearGradient>
                             </defs>
-                            {/* Baseline dotted */}
                             <line x1="0" y1="35" x2="300" y2="35" stroke="#334155" strokeDasharray="3 3" strokeWidth="1" />
-                            {/* Retention curve */}
                             <path 
                               d="M0,35 Q70,33 130,22 T240,8 L300,5" 
                               fill="none" 
@@ -179,23 +201,19 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                               strokeWidth="2.5" 
                               strokeLinecap="round" 
                             />
-                            {/* Key nodes */}
                             <circle cx="130" cy="22" r="3" fill="#38bdf8" className="animate-pulse" />
                             <circle cx="300" cy="5" r="3.5" fill="#2dd4bf" />
                           </svg>
                         </div>
                       </div>
 
-                      {/* Bottom Visual Meta */}
                       <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/60">
                         <span className="text-slate-400">Headless Architecture &amp; Core Web Vitals (99/100)</span>
                         <span className="text-cyan-300 font-mono font-bold">₹2.3M GMV Attributed</span>
                       </div>
                     </div>
                   ) : isTechDuniya ? (
-                    // TechDuniya High-Fidelity Social Growth Graphic
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
-                      {/* Top Bar: Client & Status */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="w-6 h-6 rounded-md bg-blue-950 border border-blue-500/40 flex items-center justify-center text-blue-400">
@@ -208,13 +226,12 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           <span className="text-[11px] text-slate-400">Tech &amp; Gadgets</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400 font-medium">
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400 font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                           <span>VIRAL MOMENTUM</span>
                         </div>
                       </div>
 
-                      {/* Center Waveform Graphic */}
                       <div className="my-auto py-1">
                         <div className="flex items-center justify-between mb-2 text-xs">
                           <div className="flex items-center gap-2">
@@ -228,7 +245,6 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           </span>
                         </div>
 
-                        {/* High-Growth Waveform SVG */}
                         <div className="w-full h-10 sm:h-12 relative flex items-center">
                           <svg className="w-full h-full overflow-visible" viewBox="0 0 300 45" preserveAspectRatio="none">
                             <defs>
@@ -252,18 +268,16 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         </div>
                       </div>
 
-                      {/* Bottom Visual Meta */}
                       <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/60">
                         <span className="text-slate-400">Algorithmic Content Hooks &amp; Creator Syndication</span>
                         <span className="text-sky-300 font-mono font-bold">8.4% Engagement CTR</span>
                       </div>
                     </div>
                   ) : (
-                    // Default Custom Case Study Graphic
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-slate-200">{item.client || item.title}</span>
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400">
                           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                           DEPLOYED
                         </span>
@@ -275,33 +289,29 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         <p className="text-xs text-slate-400 mt-1">{item.category}</p>
                       </div>
                       <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-800/60 flex items-center justify-between">
-                        <span>MarketinGlu Performance Framework</span>
+                        <span>Marketing LU Performance Framework</span>
                         <span className="text-cyan-400 font-mono">VERIFIED</span>
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* 2. CARD EDITORIAL BODY (No redundant boxes, elegant typography & clear tags) */}
+                {/* 2. CARD EDITORIAL BODY */}
                 <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    {/* Category & Year Tag */}
                     <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-cyan-400 mb-2">
                       <span>{item.category}</span>
                       <span className="text-slate-500">{item.year || '2025-2026'}</span>
                     </div>
 
-                    {/* Headline */}
                     <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug mb-2">
                       {item.title}
                     </h3>
 
-                    {/* Description narrative */}
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-2">
                       {item.description}
                     </p>
 
-                    {/* Strategic Tags / Deliverables */}
                     {item.tags && item.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mt-3">
                         {item.tags.map((tag, tIdx) => (
@@ -316,7 +326,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     )}
                   </div>
 
-                  {/* 3. CLEAN DIVIDED METRICS RIBBON (Flat, High-Contrast, Zero Nested Cards) */}
+                  {/* 3. METRICS RIBBON */}
                   <div>
                     <div className="py-3 px-1 my-1 border-y border-slate-800/80 grid grid-cols-3 divide-x divide-slate-800/80">
                       {item.stats.slice(0, 3).map((stat, idx) => (
@@ -335,17 +345,148 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <button
                       type="button"
                       onClick={() => setActiveCase(item)}
-                      className="w-full mt-3 py-2.5 px-4 rounded-xl bg-slate-900/90 hover:bg-slate-850 border border-slate-800 hover:border-cyan-500/50 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-all cursor-pointer group/btn"
+                      className="w-full mt-3 py-2.5 px-4 rounded-xl bg-slate-900/90 hover:bg-slate-850 border border-slate-800 hover:border-cyan-500/50 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-all cursor-pointer group/btn min-h-[44px]"
                     >
                       <span>Explore Full Impact Analysis</span>
                       <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
-          })}
-        </motion.div>
+          };
+
+          return (
+            <>
+              {/* DESKTOP VIEW (>=1024px): 2-Column Grid */}
+              <motion.div 
+                variants={staggerContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-40px" }}
+                className="hidden lg:grid lg:grid-cols-2 gap-6 sm:gap-8 w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto"
+              >
+                {casesList.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    variants={staggerItemVariants}
+                    {...cardHoverMotion}
+                  >
+                    {renderCaseCard(item)}
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* MOBILE & TABLET VIEW (<1024px): Caret Carousel with Swipe & Indicators */}
+              <div className="block lg:hidden relative max-w-lg mx-auto">
+                {/* Case Study Quick Tabs */}
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  {casesList.map((cItem, tabIdx) => {
+                    const isSelected = tabIdx === currentIndex;
+                    return (
+                      <button
+                        key={cItem.id}
+                        onClick={() => handleSelectTab(tabIdx)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                          isSelected
+                            ? 'bg-cyan-400 text-slate-950 border-cyan-400 shadow-md shadow-cyan-400/20'
+                            : 'bg-slate-900/80 text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                        }`}
+                      >
+                        {cItem.client || `Case ${tabIdx + 1}`}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Caret guidance and slide tracker */}
+                <div className="flex items-center justify-between mb-3 px-2">
+                  <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block"></span>
+                    <span className="font-semibold text-slate-300">Case Study {currentIndex + 1} of {totalCases}</span>
+                  </span>
+                  <span className="text-[11px] text-cyan-400 font-mono font-medium">
+                    Swipe or use carets &rarr;
+                  </span>
+                </div>
+
+                {/* Swipable Card Container */}
+                <div className="relative overflow-hidden px-1 min-h-[510px] sm:min-h-[540px]">
+                  <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
+                    <motion.div
+                      key={casesList[currentIndex].id}
+                      custom={slideDirection}
+                      variants={mobileSlideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{
+                        x: { type: "spring", stiffness: 280, damping: 28, mass: 0.8 },
+                        opacity: { duration: 0.25 },
+                        scale: { duration: 0.25 },
+                      }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={(_, info) => {
+                        const swipeThreshold = 35;
+                        const velocityThreshold = 250;
+                        if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+                          handleNext();
+                        } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+                          handlePrev();
+                        }
+                      }}
+                      className="w-full touch-pan-y cursor-grab active:cursor-grabbing"
+                    >
+                      {renderCaseCard(casesList[currentIndex])}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Mobile/Tablet pagination controls with Carets Prev / Next */}
+                <div className="flex items-center justify-between mt-5 px-2">
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
+                    aria-label="Previous case study"
+                  >
+                    <ChevronLeft className="w-4 h-4 text-cyan-400" />
+                    <span className="hidden sm:inline">Prev</span>
+                  </button>
+
+                  {/* Pagination Dots */}
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {casesList.map((_, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        type="button"
+                        onClick={() => handleSelectTab(dotIdx)}
+                        className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                          dotIdx === currentIndex
+                            ? 'w-7 sm:w-8 bg-cyan-400 shadow-md shadow-cyan-400/40'
+                            : 'w-2 sm:w-2.5 bg-slate-700 hover:bg-slate-500'
+                        }`}
+                        aria-label={`Go to case study ${dotIdx + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
+                    aria-label="Next case study"
+                  >
+                    <span className="hidden sm:inline">Next</span>
+                    <ChevronRight className="w-4 h-4 text-cyan-400" />
+                  </button>
+                </div>
+              </div>
+            </>
+          );
+        })()}
 
         {/* DETAILED CASE STUDY BREAKDOWN MODAL */}
         <AnimatePresence>
