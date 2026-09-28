@@ -7,9 +7,6 @@ import { defineConfig } from 'vite';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(() => {
-  const backendPort = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-  const frontendPort = process.env.VITE_PORT ? parseInt(process.env.VITE_PORT, 10) : 5173;
-
   return {
     plugins: [react(), tailwindcss()],
     resolve: {
@@ -18,16 +15,9 @@ export default defineConfig(() => {
       },
     },
     server: {
-      port: frontendPort,
+      port: 3000,
       host: '0.0.0.0',
       allowedHosts: true,
-      proxy: {
-        '/api': {
-          target: `http://localhost:${backendPort}`,
-          changeOrigin: true,
-          secure: false,
-        },
-      },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify-file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
