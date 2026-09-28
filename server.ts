@@ -33,7 +33,15 @@ function readCredentialEnv(name: string, fallback: string): string {
   return fallback;
 }
 
-// 1. Enable CORS first for all origins & methods
+// 1. Security HTTP Headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+// 2. Enable CORS first for all origins & methods
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -76,6 +84,66 @@ function maskEmail(email: string): string | null {
 
   return `${name[0]}***@${domain}`;
 }
+
+// ==========================================
+// Brute-Force Rate Limiter for Admin Login
+// Tracks failed attempts per IP address.
+// After 5 failures in 15 minutes, the IP is blocked
+// and receives 429 Too Many Requests.
+// ==========================================
+const LOGIN_MAX_ATTEMPTS = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+
+interface LoginAttemptRecord {
+  count: number;
+  firstAttempt: number;
+  blockedUntil: number;
+}
+
+const loginAttempts = new Map<string, LoginAttemptRecord>();
+
+function getRateLimitInfo(ip: string): { blocked: boolean; remaining?: number; retryAfterSec?: number } {
+  const now = Date.now();
+  const record = loginAttempts.get(ip);
+  if (!record) return { blocked: false, remaining: LOGIN_MAX_ATTEMPTS };
+
+  // Reset window if it has expired
+  if (now - record.firstAttempt > LOGIN_WINDOW_MS) {
+    loginAttempts.delete(ip);
+    return { blocked: false, remaining: LOGIN_MAX_ATTEMPTS };
+  }
+
+  if (record.count >= LOGIN_MAX_ATTEMPTS) {
+    const retryAfterSec = Math.ceil((record.firstAttempt + LOGIN_WINDOW_MS - now) / 1000);
+    return { blocked: true, retryAfterSec };
+  }
+
+  return { blocked: false, remaining: LOGIN_MAX_ATTEMPTS - record.count };
+}
+
+function recordFailedLoginAttempt(ip: string): void {
+  const now = Date.now();
+  const record = loginAttempts.get(ip);
+  if (!record || now - record.firstAttempt > LOGIN_WINDOW_MS) {
+    loginAttempts.set(ip, { count: 1, firstAttempt: now, blockedUntil: 0 });
+  } else {
+    record.count += 1;
+  }
+}
+
+function clearLoginAttempts(ip: string): void {
+  loginAttempts.delete(ip);
+}
+
+// Purge stale rate limit records every 30 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, record] of loginAttempts.entries()) {
+    if (now - record.firstAttempt > LOGIN_WINDOW_MS) {
+      loginAttempts.delete(ip);
+    }
+  }
+}, 30 * 60 * 1000);
 
 // In-memory active session tokens map (token -> { email, expiresAt })
 const activeSessions = new Map<string, { email: string; expiresAt: number }>();
@@ -140,6 +208,22 @@ app.get('/api/health', (req, res) => {
 
 // 2. Admin Login
 app.post('/api/admin/login', (req, res) => {
+  const forwardedHeader = req.headers['x-forwarded-for'];
+  const forwardedIp = Array.isArray(forwardedHeader) ? forwardedHeader[0] : forwardedHeader;
+  const clientIp =
+    (forwardedIp || '').split(',')[0].trim() ||
+    req.socket.remoteAddress ||
+    'unknown';
+
+  const rateInfo = getRateLimitInfo(clientIp);
+  if (rateInfo.blocked && rateInfo.retryAfterSec) {
+    res.setHeader('Retry-After', String(rateInfo.retryAfterSec));
+    return res.status(429).json({
+      success: false,
+      message: `Too many failed login attempts. Please try again in ${Math.ceil(rateInfo.retryAfterSec / 60)} minute(s).`,
+    });
+  }
+
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -162,11 +246,18 @@ app.post('/api/admin/login', (req, res) => {
   const isPasswordMatch = inputPassword === adminCredentials.password;
 
   if (!isEmailMatch || !isPasswordMatch) {
+    recordFailedLoginAttempt(clientIp);
+    const updated = getRateLimitInfo(clientIp);
+    const attemptsLeft = updated.blocked ? 0 : updated.remaining;
     return res.status(401).json({
       success: false,
-      message: 'Invalid admin credentials. Please verify your email and password.',
+      message: typeof attemptsLeft === 'number' && attemptsLeft > 0
+        ? `Invalid admin credentials. ${attemptsLeft} attempt(s) remaining before temporary lockout.`
+        : 'Too many failed attempts. Your IP has been temporarily blocked for 15 minutes.',
     });
   }
+
+  clearLoginAttempts(clientIp);
 
   // Create new session token (24h expiry)
   const token = generateToken();
