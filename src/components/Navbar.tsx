@@ -141,35 +141,35 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      {/* Main Navigation Bar Row - Balanced 3-Column Symmetrical Layout */}
-      <div className="w-full px-3.5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-2 sm:py-2.5 flex items-center justify-between gap-3 lg:gap-4">
+      {/* Main Navigation Bar Row - Fluid Responsive Layout */}
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-4 xl:px-8 2xl:px-12 py-2 sm:py-2.5 flex items-center justify-between gap-2 lg:gap-3 xl:gap-6">
         
-        {/* Left: Brand Logo with Balanced Width */}
-        <div className="shrink-0 lg:w-[220px] xl:w-[260px] flex items-center">
+        {/* Left: Brand Logo */}
+        <div className="shrink-0 flex items-center">
           <button
             onClick={() => handleNavClick('#/')}
-            className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
+            className="flex items-center gap-2 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
             id="nav-brand-logo"
             aria-label="MarketingGlu Homepage"
           >
             <Logo variant="light-badge" size="md" />
-            <span className="text-base sm:text-lg lg:text-xl font-black tracking-tight flex items-center">
+            <span className="text-base sm:text-lg lg:text-base xl:text-lg font-black tracking-tight flex items-center whitespace-nowrap">
               <span className="text-white italic">MARKETIN</span>
               <span className="text-blue-500 not-italic">GLU</span>
             </span>
           </button>
         </div>
 
-        {/* Center: Desktop Nav Links inside a Sleek Floating Glass Pill Dock (Dead-Center) */}
-        <div className="hidden lg:flex flex-1 items-center justify-center min-w-0">
-          <nav className="flex items-center p-1 rounded-full bg-slate-900/80 border border-slate-800/90 shadow-lg shadow-black/30 backdrop-blur-md">
+        {/* Center: Desktop Nav Links inside a Sleek Floating Glass Pill Dock */}
+        <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-1 xl:px-2">
+          <nav className="flex items-center gap-0.5 xl:gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/70 border border-slate-800/80 shadow-md backdrop-blur-md">
             {/* 1. Home */}
             <button
               onClick={() => handleNavClick('#/')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#/')
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               Home
@@ -184,10 +184,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             >
               <button
                 onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-                className={`flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+                className={`flex items-center gap-1 px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                   currentRoute.type === 'service-detail' || currentRoute.type === 'services-index' || window.location.hash === '#expertise'
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                    ? 'text-cyan-400 font-bold'
+                    : 'text-slate-300 hover:text-cyan-300 font-medium'
                 }`}
                 aria-expanded={servicesDropdownOpen}
               >
@@ -230,7 +230,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                             }}
                             className={`w-full flex items-center gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                               isActive
-                                ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300'
+                                ? 'bg-cyan-950/80 border border-cyan-500/50 text-cyan-300 font-bold'
                                 : 'hover:bg-slate-900 text-slate-200 hover:text-white'
                             }`}
                           >
@@ -267,10 +267,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 3. Portfolio */}
             <button
               onClick={() => handleNavClick('#cases')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#cases')
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               Portfolio
@@ -279,10 +279,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 4. Packages */}
             <button
               onClick={() => handleNavClick('#packages')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#packages')
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               Packages
@@ -291,10 +291,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 5. Performance */}
             <button
               onClick={() => handleNavClick('#growth')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#growth')
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               Performance
@@ -303,10 +303,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 6. About Us */}
             <button
               onClick={() => handleNavClick('#about')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#about')
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               About Us
@@ -315,10 +315,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 7. Blogs */}
             <button
               onClick={() => handleNavClick('#/blogs')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               Blogs
@@ -327,10 +327,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 8. FAQs */}
             <button
               onClick={() => handleNavClick('#faq')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#faq')
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+                  ? 'text-cyan-400 font-bold'
+                  : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
               FAQs
@@ -338,26 +338,25 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </nav>
         </div>
 
-        {/* Right Desktop CTA Area with Balanced Width */}
-        <div className="hidden lg:flex lg:w-[220px] xl:w-[260px] shrink-0 items-center justify-end gap-2 xl:gap-3">
+        {/* Right Desktop CTA Area */}
+        <div className="hidden lg:flex shrink-0 items-center justify-end gap-1.5 xl:gap-3">
           {/* Phone Quick Link */}
           <a 
             href={`tel:${config.phone.replace(/\s+/g, '')}`}
-            className="flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1.5 px-2 rounded-full hover:bg-slate-900/60 border border-transparent hover:border-slate-800"
+            className="flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1 px-1.5 xl:py-1.5 xl:px-2.5 rounded-full hover:bg-slate-900/60 border border-transparent hover:border-slate-800"
             title={`Call Support: ${config.phone}`}
           >
             <div className="w-7 h-7 rounded-full bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
               <Phone className="w-3.5 h-3.5" />
             </div>
             <span className="hidden xl:inline whitespace-nowrap font-bold text-xs">{config.phone}</span>
-            <span className="xl:hidden inline font-bold text-xs text-cyan-300">Call</span>
           </a>
 
           {/* Get Free Quote CTA */}
           <motion.button
             {...buttonHoverMotion}
             onClick={onOpenConsultation}
-            className="px-3.5 xl:px-4 py-2 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[38px] flex items-center justify-center"
+            className="px-3 xl:px-4 py-1.5 xl:py-2 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-[11px] xl:text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[34px] xl:min-h-[38px] flex items-center justify-center"
             id="btn-get-free-quote"
           >
             Get Free Quote
