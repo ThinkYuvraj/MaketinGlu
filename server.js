@@ -274,7 +274,7 @@ app.post('/api/admin/login', (req, res) => {
     user: {
       email: adminCredentials.email,
       role: 'superadmin',
-      name: 'Marketing LU Admin',
+      name: 'MarketingGlu Admin',
     },
     expiresAt,
   });
@@ -288,7 +288,7 @@ app.get('/api/admin/verify', requireAdminAuth, (req, res) => {
     user: {
       email: adminCredentials.email,
       role: 'superadmin',
-      name: 'Marketing LU Admin',
+      name: 'MarketingGlu Admin',
     },
   });
 });
@@ -379,7 +379,7 @@ async function startServer() {
     console.log('Starting Vite in middleware mode for development...');
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, hmr: false },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -422,7 +422,7 @@ async function startServer() {
       console.warn('No production build directory found. Falling back to Vite dev server.');
       const { createServer: createViteServer } = await import('vite');
       const vite = await createViteServer({
-        server: { middlewareMode: true },
+        server: { middlewareMode: true, hmr: false },
         appType: 'spa',
       });
       app.use(vite.middlewares);

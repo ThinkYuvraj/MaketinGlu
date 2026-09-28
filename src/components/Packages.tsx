@@ -131,15 +131,15 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
       >
         {/* Top Banner for Popular Package */}
         {isPopular && (
-          <div className="rounded-t-[22px] bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 text-center py-1.5 px-4 text-[10px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm">
-            <Sparkles className="w-3 h-3 fill-slate-950" />
-            <span>MOST POPULAR • HIGH-ROI ACCELERATION</span>
+          <div className="bg-gradient-to-r from-cyan-500/15 via-sky-500/20 to-blue-500/15 border-b border-cyan-500/30 py-1.5 px-3 text-cyan-300 text-center text-[10px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5">
+            <Sparkles className="w-3 h-3 text-cyan-400" />
+            <span>Most Popular • High-ROI Acceleration</span>
           </div>
         )}
 
         {/* Faded overlay hint when not in center on desktop */}
         {isLeftOrRightFaded && (
-          <div className="absolute inset-0 z-30 bg-[#070b14]/70 backdrop-blur-[1px] flex flex-col items-center justify-center p-4 text-center cursor-pointer group-hover:bg-[#070b14]/50 transition-all">
+          <div className="absolute inset-0 z-30 bg-[#070b14]/75 backdrop-blur-[1px] flex flex-col items-center justify-center p-4 text-center cursor-pointer group-hover:bg-[#070b14]/55 transition-all">
             <div className="px-4 py-2.5 rounded-xl bg-slate-900/95 border border-cyan-500/60 text-cyan-300 font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-xl transition-transform">
               <MousePointerClick className="w-4 h-4 text-cyan-400" />
               <span>Click to view {pkg.name}</span>
@@ -150,91 +150,94 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </div>
         )}
 
-        <div className="p-4 sm:p-4.5 xl:p-5 flex-1 flex flex-col">
-          {/* Header Row: Tier Badge + Inclusions */}
-          <div className="flex items-center justify-between gap-2 mb-2.5">
-            <span
-              className={`text-[9.5px] sm:text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                isPopular && isFocused
-                  ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-500/40'
-                  : 'bg-slate-900 text-slate-400 border border-slate-800'
-              }`}
-            >
-              {pkg.id === 'basic' ? 'Tier 01 • Starter' : isPopular ? 'Tier 02 • Growth' : 'Tier 03 • Enterprise'}
-            </span>
+        <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+          <div>
+            {/* Header Row: Tier Badge + Inclusions */}
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <span
+                className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                  isPopular && isFocused
+                    ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-500/40'
+                    : 'bg-slate-900 text-slate-400 border border-slate-800'
+                }`}
+              >
+                {pkg.id === 'basic' ? 'Tier 01 • Starter' : isPopular ? 'Tier 02 • Growth' : 'Tier 03 • Enterprise'}
+              </span>
 
-            <span className="text-[10px] sm:text-[11px] font-medium text-slate-400 flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              {pkg.features?.length || 13} Deliverables
-            </span>
-          </div>
-
-          {/* Package Title & Description */}
-          <div className="mb-2.5">
-            <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
-              {pkg.name}
-            </h3>
-            <p className="text-xs text-cyan-400 font-bold mt-0.5">
-              {pkg.highlight}
-            </p>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2">
-              {pkg.tagline}
-            </p>
-          </div>
-
-          {/* Investment Model Tag */}
-          <div className="p-2 sm:p-2.5 rounded-xl bg-[#050812] border border-slate-800/80 mb-3">
-            <div className="text-[9px] font-mono text-slate-400 uppercase">
-              Investment Model
-            </div>
-            <div className="text-sm sm:text-base font-extrabold text-white mt-0.5">
-              {pkg.priceNote}
-            </div>
-            <div className="flex items-center gap-1 text-[10px] text-cyan-400 mt-0.5 font-medium">
-              <Check className="w-2.5 h-2.5 stroke-[3] text-cyan-400" />
-              <span>Flexible Month-to-Month · Zero Lock-In</span>
-            </div>
-          </div>
-
-          {/* Deliverables Checklist */}
-          <div className="space-y-1 pt-1.5 pb-2.5 border-t border-slate-800/80 flex-1">
-            <div className="text-[9.5px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-              Core Inclusions & Deliverables:
+              <span className="text-[10px] font-mono font-medium text-slate-400 flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                {pkg.features?.length || 13} Deliverables
+              </span>
             </div>
 
-            {pkg.features && pkg.features.slice(0, 5).map((feat, fIdx) => (
-              <div key={fIdx} className="flex items-start gap-1.5 text-xs text-slate-200">
-                <div className="w-3.5 h-3.5 rounded-md bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-2 h-2 text-cyan-400 stroke-[3]" />
+            {/* Package Title & Description */}
+            <div className="mb-3">
+              <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                {pkg.name}
+              </h3>
+              <p className="text-xs text-cyan-400 font-bold mt-0.5">
+                {pkg.highlight}
+              </p>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2">
+                {pkg.tagline}
+              </p>
+            </div>
+
+            {/* Investment Model Tag */}
+            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800/90 mb-3 group-hover:border-cyan-500/20 transition-colors">
+              <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                <span>Investment Model</span>
+                <span className="text-cyan-400 font-bold">Standard Retainer</span>
+              </div>
+              <div className="text-base sm:text-lg font-black text-white mt-1 font-mono tracking-tight">
+                {pkg.priceNote}
+              </div>
+              <div className="flex items-center gap-1.5 text-[10px] text-cyan-300 mt-1 font-medium">
+                <Check className="w-3 h-3 stroke-[3] text-cyan-400 shrink-0" />
+                <span>Flexible Month-to-Month • Zero Lock-In</span>
+              </div>
+            </div>
+
+            {/* Deliverables Checklist */}
+            <div className="space-y-1.5 pt-2 pb-3 border-t border-slate-800/80 flex-1">
+              <div className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                Core Inclusions & Deliverables:
+              </div>
+
+              {pkg.features && pkg.features.slice(0, 5).map((feat, fIdx) => (
+                <div key={fIdx} className="flex items-start gap-2 text-xs text-slate-200">
+                  <div className="w-3.5 h-3.5 rounded-md bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 text-cyan-400 stroke-[3]" />
+                  </div>
+                  <span className="leading-snug text-slate-300">{feat.name}</span>
                 </div>
-                <span className="leading-tight line-clamp-1">{feat.name}</span>
-              </div>
-            ))}
+              ))}
 
-            {pkg.features && pkg.features.length > 5 && (
-              <div className="text-[10px] text-cyan-400 font-semibold pt-0.5">
-                + {pkg.features.length - 5} more specialized deliverables included
-              </div>
-            )}
+              {pkg.features && pkg.features.length > 5 && (
+                <div className="text-[10px] text-cyan-400 font-mono font-semibold pt-1">
+                  + {pkg.features.length - 5} more specialized deliverables included
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-1.5 pt-2.5 border-t border-slate-800/80 mt-auto">
+          <div className="flex flex-col gap-2 pt-3 border-t border-slate-800/80 mt-auto">
             <motion.button
               {...buttonHoverMotion}
               onClick={(e) => {
                 e.stopPropagation();
                 onSelectPackage(pkg.name);
               }}
-              className={`w-full min-h-[38px] py-1.5 px-3.5 rounded-xl font-extrabold text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
+              className={`w-full min-h-[40px] py-2 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md ${
                 isPopular && isFocused
-                  ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
+                  ? 'bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
                   : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/15'
               }`}
               id={`btn-select-${pkg.id}`}
             >
               <span>Select {pkg.name}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </motion.button>
 
             <a
@@ -242,7 +245,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="w-full min-h-[34px] py-1 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+              className="w-full min-h-[36px] py-1.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-medium text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
               <span>WhatsApp Inquiry</span>
@@ -284,42 +287,66 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </p>
         </div>
 
-        <div className="w-full max-w-4xl xl:max-w-5xl mx-auto">
+        <div className="w-full max-w-6xl xl:max-w-7xl mx-auto relative px-2 sm:px-4">
             
-            {/* DESKTOP 3-CARD ANIMATION VIEW - Scaled down to 90% */}
-            <div className="hidden lg:grid lg:grid-cols-3 gap-3.5 xl:gap-4.5 items-stretch min-h-[420px] relative">
+            {/* Floating Caret Buttons for Desktop (Left & Right) */}
+            {totalPackages > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="hidden lg:flex absolute -left-4 xl:-left-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-2xl bg-slate-900/90 hover:bg-cyan-500 hover:text-slate-950 border border-cyan-500/40 hover:border-cyan-400 text-cyan-400 items-center justify-center shadow-2xl shadow-cyan-950/80 backdrop-blur-md transition-all active:scale-90 cursor-pointer group"
+                  aria-label="Previous package"
+                >
+                  <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="hidden lg:flex absolute -right-4 xl:-right-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-2xl bg-slate-900/90 hover:bg-cyan-500 hover:text-slate-950 border border-cyan-500/40 hover:border-cyan-400 text-cyan-400 items-center justify-center shadow-2xl shadow-cyan-950/80 backdrop-blur-md transition-all active:scale-90 cursor-pointer group"
+                  aria-label="Next package"
+                >
+                  <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              </>
+            )}
+
+            {/* DESKTOP 3-CARD TRUE 3D CAROUSEL VIEW - Generous width with 3D depth */}
+            <div className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-8 items-stretch min-h-[460px] relative [perspective:1400px] [transform-style:preserve-3d]">
               
-              {/* Column 1: Left Faded Card */}
+              {/* Column 1: Left 3D Depth Card */}
               <motion.div
                 key={`left-${packagesData[leftIndex].id}`}
-                initial={{ opacity: 0.2, scale: 0.74, x: slideDirection === 'right' ? 40 : -40 }}
-                animate={{ opacity: 0.45, scale: 0.78, x: 0 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0.3, scale: 0.85, x: slideDirection === 'right' ? 60 : -60, rotateY: 18 }}
+                animate={{ opacity: 0.55, scale: 0.90, x: 0, rotateY: 14 }}
+                whileHover={{ opacity: 0.85, scale: 0.93, rotateY: 8 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => handleSelectTab(leftIndex)}
-                className="cursor-pointer hover:opacity-85 transition-opacity h-full flex flex-col group"
+                className="cursor-pointer transition-all h-full flex flex-col group [transform-origin:right_center] z-10"
               >
                 {renderCardContent(packagesData[leftIndex], false, true)}
               </motion.div>
 
-              {/* Column 2: Center Highlighted Active Card */}
+              {/* Column 2: Center Elevated Active Card */}
               <motion.div
                 key={`center-${packagesData[centerIndex].id}`}
-                initial={{ opacity: 0.5, scale: 0.84, x: slideDirection === 'right' ? 50 : -50 }}
-                animate={{ opacity: 1, scale: 0.90, x: 0 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="z-20 relative h-full flex flex-col"
+                initial={{ opacity: 0.6, scale: 0.92, x: slideDirection === 'right' ? 60 : -60, rotateY: 0 }}
+                animate={{ opacity: 1, scale: 1.02, x: 0, rotateY: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="z-30 relative h-full flex flex-col shadow-[0_20px_60px_-15px_rgba(6,182,212,0.3)] rounded-3xl"
               >
                 {renderCardContent(packagesData[centerIndex], true, false)}
               </motion.div>
 
-              {/* Column 3: Right Faded Card */}
+              {/* Column 3: Right 3D Depth Card */}
               <motion.div
                 key={`right-${packagesData[rightIndex].id}`}
-                initial={{ opacity: 0.2, scale: 0.74, x: slideDirection === 'right' ? 40 : -40 }}
-                animate={{ opacity: 0.45, scale: 0.78, x: 0 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0.3, scale: 0.85, x: slideDirection === 'right' ? 60 : -60, rotateY: -18 }}
+                animate={{ opacity: 0.55, scale: 0.90, x: 0, rotateY: -14 }}
+                whileHover={{ opacity: 0.85, scale: 0.93, rotateY: -8 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => handleSelectTab(rightIndex)}
-                className="cursor-pointer hover:opacity-85 transition-opacity h-full flex flex-col group"
+                className="cursor-pointer transition-all h-full flex flex-col group [transform-origin:left_center] z-10"
               >
                 {renderCardContent(packagesData[rightIndex], false, true)}
               </motion.div>
@@ -427,7 +454,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             <div>
               <h4 className="text-xs sm:text-sm font-semibold text-white">Need a Customized Retainer or Multi-Location Scope?</h4>
               <p className="package-inquiry-copy text-[11px] sm:text-xs text-slate-400 mt-0.5 leading-snug">
-                Marketing LU crafts bespoke omni-channel campaigns tailored to unique market footprints and international expansions.
+                MarketingGlu crafts bespoke omni-channel campaigns tailored to unique market footprints and international expansions.
               </p>
             </div>
           </div>

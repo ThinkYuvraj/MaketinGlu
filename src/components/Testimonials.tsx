@@ -5,9 +5,7 @@ import {
   Star,
   ChevronLeft,
   ChevronRight,
-  CheckCircle2,
-  SlidersHorizontal,
-  Table as TableIcon
+  CheckCircle2
 } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { staggerContainerVariants, staggerItemVariants, cardHoverMotion, buttonHoverMotion, standardEase } from '../lib/animations';
@@ -16,20 +14,18 @@ import Container from './common/Container';
 export default function Testimonials() {
   const { config } = useSiteConfig();
   const carouselTestimonials = config.testimonials;
-  const consolidatedReviews = config.testimonials;
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<'carousel' | 'table'>('carousel');
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Auto-play carousel rotation matching website behavior
   useEffect(() => {
-    if (!isAutoPlaying || activeTab !== 'carousel') return;
+    if (!isAutoPlaying) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % carouselTestimonials.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isAutoPlaying, activeTab]);
+  }, [isAutoPlaying, carouselTestimonials.length]);
 
   const handlePrev = () => {
     setIsAutoPlaying(false);
@@ -100,34 +96,8 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex p-1 rounded-xl bg-slate-900/90 border border-slate-800">
-            <button
-              onClick={() => setActiveTab('carousel')}
-              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[40px] ${activeTab === 'carousel' ? 'bg-cyan-500 text-slate-950 shadow-sm' : 'text-slate-400 hover:text-white'
-                }`}
-              id="tab-carousel"
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Carousel View</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('table')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === 'table'
-                ? 'bg-cyan-500 text-slate-950 shadow-sm'
-                : 'text-slate-400 hover:text-white'
-                }`}
-              id="tab-table"
-            >
-              <TableIcon className="w-3.5 h-3.5" />
-              <span>Consolidated List</span>
-            </button>
-          </div>
-        </div>
-
-        {/* TAB 1: CAROUSEL VIEW - Stretches generously across desktop */}
-        {activeTab === 'carousel' && (
-          <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto">
+        {/* FEATURED TESTIMONIAL CAROUSEL */}
+        <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto">
             {/* Main Featured Testimonial Card */}
             <div
               className="relative p-5 sm:p-8 lg:p-12 xl:p-14 rounded-2xl sm:rounded-3xl bg-[#0c1322] border border-cyan-500/25 shadow-2xl transition-all duration-300 group"
@@ -242,7 +212,7 @@ export default function Testimonials() {
               animate="visible"
               className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mt-6 sm:mt-8"
             >
-              {consolidatedReviews.map((item, idx) => (
+              {carouselTestimonials.map((item, idx) => (
                 <motion.div
                   key={item.id}
                   variants={staggerItemVariants}
@@ -271,125 +241,6 @@ export default function Testimonials() {
               ))}
             </motion.div>
           </div>
-        )}
-
-        {/* TAB 2: CONSOLIDATED LIST VIEW (Exact table requested by user) - Stretches on desktop */}
-        {activeTab === 'table' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: standardEase }}
-            className="max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto"
-          >
-            <div className="rounded-2xl bg-[#0c1322] border border-slate-800/90 overflow-hidden shadow-xl">
-              <div className="p-4 sm:p-6 bg-slate-900/60 border-b border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div>
-                  <h3 className="text-base font-bold text-white">
-                    Consolidated Reviews
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    Extracted from Marketing LU's verified testimonials section
-                  </p>
-                </div>
-                <div className="text-xs font-semibold text-cyan-400 bg-cyan-950/40 border border-cyan-800/50 px-3 py-1 rounded-md">
-                  3 Verified Reviews Included
-                </div>
-              </div>
-
-              {/* Mobile Card Stack (<640px) for optimal vertical readability */}
-              <div className="block sm:hidden divide-y divide-slate-800/80 p-4 space-y-4">
-                {consolidatedReviews.map((rev) => (
-                  <div key={rev.id} className="pt-4 first:pt-0 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-lg bg-gradient-to-tr ${rev.avatarColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
-                          {rev.initial}
-                        </div>
-                        <div>
-                          <div className="font-bold text-white text-sm">
-                            {rev.name}
-                          </div>
-                          <div className="text-[11px] text-slate-400">
-                            {rev.role}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-400/10 border border-amber-400/20 text-amber-300 font-bold text-xs">
-                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                        <span>{rev.rating}/5</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-slate-200 leading-relaxed pl-12">
-                      “{rev.quote}”
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Table view (>=640px) */}
-              <div className="hidden sm:block overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-300">
-                  <thead className="text-xs uppercase bg-slate-900/90 text-slate-400 border-b border-slate-800">
-                    <tr>
-                      <th scope="col" className="px-6 py-4 font-bold text-white">
-                        Reviewer
-                      </th>
-                      <th scope="col" className="px-6 py-4 font-bold text-white whitespace-nowrap">
-                        Rating
-                      </th>
-                      <th scope="col" className="px-6 py-4 font-bold text-white">
-                        Review
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800/80 font-normal">
-                    {consolidatedReviews.map((rev) => (
-                      <tr
-                        key={rev.id}
-                        className="hover:bg-slate-900/40 transition-colors"
-                      >
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${rev.avatarColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
-                              {rev.initial}
-                            </div>
-                            <div>
-                              <div className="font-bold text-white text-sm">
-                                {rev.name}
-                              </div>
-                              <div className="text-[11px] text-slate-400">
-                                {rev.role} · {rev.source}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-400/10 border border-amber-400/20 text-amber-300 font-bold text-xs">
-                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                            <span>{rev.rating}.0 / 5.0</span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
-                            “{rev.quote}”
-                          </p>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Note matching user's extracted observation */}
-              <div className="p-4 bg-slate-900/40 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>
-                  Client testimonials are verified from live campaigns and client reviews across MarketingGlu.
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        )}
 
       </Container>
     </section>

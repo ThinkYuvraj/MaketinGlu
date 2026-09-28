@@ -36,28 +36,25 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
       <Container>
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              {config.casesSectionTitle1 || 'Case Studies &'}{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">
-                {config.casesSectionTitle2 || 'Recent Work'}
-              </span>
-            </h2>
-            <p className="mt-2 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed">
-              {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands.'}
-            </p>
+        {/* Section Header - Centered */}
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 flex flex-col items-center justify-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
           </div>
-
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            {config.casesSectionTitle1 || 'Case Studies &'}{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">
+              {config.casesSectionTitle2 || 'Recent Work'}
+            </span>
+          </h2>
+          <p className="mt-2 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto">
+            {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands.'}
+          </p>
           <button
             type="button"
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors py-1 cursor-pointer self-start sm:self-auto group"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors py-1.5 mt-3 cursor-pointer group"
           >
             <span>View All Cases</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -278,7 +275,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         <p className="text-xs text-slate-400 mt-1">{item.category}</p>
                       </div>
                       <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-800/60 flex items-center justify-between">
-                        <span>Marketing LU Performance Framework</span>
+                        <span>MarketingGlu Performance Framework</span>
                         <span className="text-cyan-400 font-mono">VERIFIED</span>
                       </div>
                     </div>

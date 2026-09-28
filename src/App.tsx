@@ -204,7 +204,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-faq')}
 
-                {/* Section 9: Free Strategy Call Reservation Banner */}
+                {/* Section 9: Free Strategy Call Reservation Banner (Compact) */}
                 <AnimatedSection id="appointment" delayMs={60} className="relative">
                   <AppointmentBanner
                     onOpenConsultation={() => handleOpenConsultation('Appointment Strategy Session')}

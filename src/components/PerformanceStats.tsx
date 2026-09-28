@@ -143,13 +143,23 @@ export default function PerformanceStats() {
 
         <div>
           {/* Top Header Badge */}
-          <div className="flex items-center justify-between gap-2 mb-4">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/25 text-[10px] font-bold text-cyan-400 tracking-wide uppercase">
-              <CardIcon className="w-3 h-3 text-cyan-400" />
-              <span>{item.badge}</span>
-            </span>
-            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-              {item.category}
+          <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800/80">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-cyan-950/80 border border-cyan-500/35 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm shadow-cyan-950/40">
+                <CardIcon className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] font-bold text-white uppercase tracking-wide truncate">
+                  {item.badge}
+                </div>
+                <div className="text-[10px] font-mono text-slate-400 uppercase tracking-tight truncate">
+                  {item.category}
+                </div>
+              </div>
+            </div>
+            <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-[9px] font-mono text-cyan-300 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              VERIFIED
             </span>
           </div>
 
@@ -222,13 +232,17 @@ export default function PerformanceStats() {
         </div>
 
         {/* Bottom Impact KPI Badge */}
-        <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs bg-slate-900/40 rounded-xl px-3 py-2 border border-slate-800/40">
-          <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-            {item.metricLabel}
-          </span>
-          <span className="text-xs font-extrabold text-cyan-300">
+        <div className="mt-4 p-2.5 sm:p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 group-hover:border-cyan-500/30 transition-all shadow-sm">
+          <div className="flex items-center justify-between text-[10px] font-mono uppercase font-bold text-slate-400 tracking-wider mb-1">
+            <span>{item.metricLabel}</span>
+            <span className="text-[9px] text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-1.5 py-0.5 rounded flex items-center gap-1 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              SLA
+            </span>
+          </div>
+          <div className="text-xs sm:text-sm font-black text-cyan-300 font-mono tracking-tight">
             {item.metricValue}
-          </span>
+          </div>
         </div>
       </div>
     );

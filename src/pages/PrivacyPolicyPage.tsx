@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-sm text-slate-400 mt-2">
-              Last updated: January 2026. Effective for MarketingGlu (Marketing LU) and associated digital services.
+              Last updated: January 2026. Effective for MarketingGlu and associated digital services.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
                 <span>1. Overview and Commitment</span>
               </h2>
               <p>
-                MarketingGlu ("Marketing LU", "we", "us", or "our"), located in Janak Puri, New Delhi, India, is committed to safeguarding client privacy and proprietary commercial data. This Privacy Policy details how we collect, store, process, and protect your information when engaging our software engineering, web development, SEO, and performance marketing services.
+                MarketingGlu ("we", "us", or "our"), located in Janak Puri, New Delhi, India, is committed to safeguarding client privacy and proprietary commercial data. This Privacy Policy details how we collect, store, process, and protect your information when engaging our software engineering, web development, SEO, and performance marketing services.
               </p>
             </section>
 

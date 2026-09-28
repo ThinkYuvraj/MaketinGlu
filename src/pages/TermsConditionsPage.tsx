@@ -34,7 +34,7 @@ export default function TermsConditionsPage() {
               Terms &amp; Conditions
             </h1>
             <p className="text-sm text-slate-400 mt-2">
-              Last updated: January 2026. Standard service agreement terms for MarketingGlu (Marketing LU).
+              Last updated: January 2026. Standard service agreement terms for MarketingGlu.
             </p>
           </div>
 

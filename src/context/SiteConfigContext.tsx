@@ -69,7 +69,7 @@ export const defaultSiteConfig: SiteConfig = {
   heroTitleLine1: 'CUSTOM SOFTWARE &',
   heroTitleLine2: 'DIGITAL ENGINEERING',
   heroDescription:
-    'MarketingGlu (Marketing LU) engineers bespoke software systems, high-throughput web platforms, and technical search infrastructure. We provide full-stack architecture, conversion-focused e-commerce, and algorithmic SEO with 100% code sovereignty.',
+    'MarketingGlu engineers bespoke software systems, high-throughput web platforms, and technical search infrastructure. We provide full-stack architecture, conversion-focused e-commerce, and algorithmic SEO with 100% code sovereignty.',
   heroPrimaryCta: 'Request Technical Audit',
   heroSecondaryCta: 'Explore Portfolio',
 
@@ -276,11 +276,11 @@ export const defaultSiteConfig: SiteConfig = {
 
   // About Us Section Defaults
   aboutEnabled: true,
-  aboutBadge: 'ABOUT MARKETIN GLU',
+  aboutBadge: 'ABOUT MARKETINGGLU',
   aboutTitle1: 'Engineering Next-Gen Software &',
   aboutTitle2: 'High-Impact Digital Growth',
   aboutDescription:
-    'MarketingGlu (Marketing LU) is an ISO 9001:2015 certified software solutions and digital growth agency headquartered in New Delhi. We eliminate fragmented vendors by uniting custom software architecture, web engineering, enterprise SEO, and performance marketing under one roof.',
+    'MarketingGlu is an ISO 9001:2015 certified software solutions and digital growth agency headquartered in New Delhi. We eliminate fragmented vendors by uniting custom software architecture, web engineering, enterprise SEO, and performance marketing under one roof.',
   aboutStory:
     'Founded with a mission to replace empty marketing buzzwords with engineering precision, MarketingGlu empowers brands with bespoke web systems, sub-second page performance, transparent analytics, and predictable customer acquisition funnels.',
   aboutMission:
@@ -348,7 +348,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v9';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v10';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
   return raw.map((s) => ({
