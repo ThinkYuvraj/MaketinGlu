@@ -1,10 +1,44 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Globe } from 'lucide-react';
-import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost } from '../types';
+import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost, AboutPillar } from '../types';
 import { caseStudiesData } from '../data/caseStudiesData';
 import { defaultFaqs } from '../data/faqData';
 import { defaultBlogs } from '../data/blogsData';
 import { expertiseData, ExpertiseItem, SERVICE_ICON_MAP } from '../data/expertiseData';
+
+export const defaultAboutPillars: AboutPillar[] = [
+  {
+    id: 'pillar-1',
+    title: 'Full-Stack Technical Precision',
+    description: 'We build sub-second web platforms, scalable SaaS architectures, and seamless e-commerce systems with modern engineering standards - never bloated third-party templates.',
+    tag: 'ENGINEERING',
+    iconName: 'Zap',
+    accent: 'cyan',
+  },
+  {
+    id: 'pillar-2',
+    title: '100% Commercial IP Ownership',
+    description: 'Zero agency handcuffs. You retain 100% full legal ownership of your domains, codebase, ad accounts, analytics setups, and visual design assets from day one.',
+    tag: 'SOVEREIGNTY',
+    iconName: 'Lock',
+    accent: 'emerald',
+  },
+  {
+    id: 'pillar-3',
+    title: 'Algorithmic Organic Dominance',
+    description: 'Our technical SEO audits, intent-mapped keyword clusters, and high-authority link architectures systematically rank your brand at the summit of Google search.',
+    tag: 'SEARCH ENGINE',
+    iconName: 'Compass',
+    accent: 'sky',
+  },
+];
+
+export const defaultAboutChecklist: string[] = [
+  'In-house full stack engineering & sub-second Core Web Vitals',
+  'High-ROAS Google Ads, Meta Ads & continuous conversion rate optimization',
+  'Direct communication line with senior architects on WhatsApp & Slack',
+  'Flexible month-to-month agreements with zero lock-in contracts',
+];
 
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
