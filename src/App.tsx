@@ -6,11 +6,9 @@ import PerformanceStats from './components/PerformanceStats';
 import CompanyExpertise from './components/CompanyExpertise';
 import Packages from './components/Packages';
 import CaseStudies from './components/CaseStudies';
+import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
-import AboutUs from './components/AboutUs';
-import Testimonials from './components/Testimonials';
-import AppointmentBanner from './components/AppointmentBanner';
 import ConsultationModal from './components/ConsultationModal';
 import AnimatedSection from './components/AnimatedSection';
 import MobileBottomBar from './components/mobile/MobileBottomBar';
@@ -20,16 +18,16 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesIndexPage from './pages/ServicesIndexPage';
 import BlogsPage from './pages/BlogsPage';
 import BlogDetailPage from './pages/BlogDetailPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsConditionsPage from './pages/TermsConditionsPage';
 import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
 import CustomSectionRenderer from './components/CustomSectionRenderer';
 import { SectionPosition } from './types';
 import { pageTransitionVariants } from './lib/animations';
+import { useSmoothScroll } from './lib/useSmoothScroll';
 
 function AppContent() {
+  useSmoothScroll();
   const { config } = useSiteConfig();
   const { currentRoute, navigateTo } = useNavigation();
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
@@ -140,12 +138,6 @@ function AppContent() {
                 slug={currentRoute.blogSlug} 
                 onOpenConsultation={handleOpenConsultation} 
               />
-            ) : currentRoute.type === 'privacy' ? (
-              /* Dedicated Privacy Policy Page (#/privacy) */
-              <PrivacyPolicyPage />
-            ) : currentRoute.type === 'terms' ? (
-              /* Dedicated Terms & Conditions Page (#/terms) */
-              <TermsConditionsPage />
             ) : (
               /* Default Main Homepage Flow with subtle animated sections */
               <>
@@ -158,18 +150,13 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-hero')}
 
-                {/* Section 2: About Us - Agency Story, Mission & Engineering DNA */}
-                <AboutUs
-                  onOpenConsultation={(serviceName) => handleOpenConsultation(serviceName)}
-                />
-
-                {/* Section 3: Our Performance In Numbers */}
+                {/* Section 2: Our Performance In Numbers */}
                 <AnimatedSection id="growth" delayMs={60} className="relative">
                   <PerformanceStats />
                 </AnimatedSection>
                 {renderCustomSections('after-stats')}
 
-                {/* Section 4: Unified Company Expertise & Growth Disciplines */}
+                {/* Section 3: Unified Company Expertise & Growth Disciplines */}
                 <AnimatedSection id="expertise" delayMs={60} className="relative">
                   <CompanyExpertise
                     onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
@@ -177,7 +164,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-expertise')}
 
-                {/* Section 5: Tailored Marketing Packages */}
+                {/* Section 4: Tailored Marketing Packages */}
                 <AnimatedSection id="packages" delayMs={60} className="relative">
                   <Packages
                     onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
@@ -185,7 +172,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-packages')}
 
-                {/* Section 6: Case Studies & Proven Results (Portfolio) */}
+                {/* Section 5: Case Studies & Proven Results (Portfolio) */}
                 <AnimatedSection id="cases" delayMs={60} className="relative">
                   <CaseStudies
                     onOpenConsultation={() => handleOpenConsultation()}
@@ -193,23 +180,17 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-cases')}
 
-                {/* Section 7: Verified Client Testimonials */}
+                {/* Section 6: Client Testimonials & Verified Reviews */}
                 <AnimatedSection id="testimonials" delayMs={60} className="relative">
                   <Testimonials />
                 </AnimatedSection>
+                {renderCustomSections('after-testimonials')}
 
-                {/* Section 8: Frequently Asked Questions (FAQ) */}
+                {/* Section 7: Frequently Asked Questions (FAQ) */}
                 <AnimatedSection id="faq" delayMs={60} className="relative">
                   <FAQ />
                 </AnimatedSection>
                 {renderCustomSections('after-faq')}
-
-                {/* Section 9: Free Strategy Call Reservation Banner (Compact) */}
-                <AnimatedSection id="appointment" delayMs={60} className="relative">
-                  <AppointmentBanner
-                    onOpenConsultation={() => handleOpenConsultation('Appointment Strategy Session')}
-                  />
-                </AnimatedSection>
               </>
             )}
           </motion.div>
