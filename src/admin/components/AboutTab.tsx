@@ -75,12 +75,12 @@ const ACCENT_STYLES: {
     text: 'text-amber-400',
     gradient: 'from-amber-500/20 to-orange-500/10',
   },
-  violet: {
-    label: 'Electric Violet',
-    bg: 'bg-purple-950/40',
-    border: 'border-purple-500/30',
-    text: 'text-purple-400',
-    gradient: 'from-purple-500/20 to-indigo-500/10',
+  blue: {
+    label: 'Navy Blue',
+    bg: 'bg-blue-950/40',
+    border: 'border-blue-500/30',
+    text: 'text-blue-400',
+    gradient: 'from-blue-500/20 to-sky-500/10',
   },
 };
 
@@ -592,7 +592,7 @@ export default function AboutTab({ formData, setFormData, onSave }: AboutTabProp
                   Accent Color Theme
                 </label>
                 <div className="grid grid-cols-5 gap-2">
-                  {(['cyan', 'emerald', 'sky', 'amber', 'violet'] as const).map((acc) => (
+                  {(['cyan', 'emerald', 'sky', 'amber', 'blue'] as const).map((acc) => (
                     <button
                       key={acc}
                       type="button"
@@ -711,7 +711,7 @@ export default function AboutTab({ formData, setFormData, onSave }: AboutTabProp
                   Accent Color Theme
                 </label>
                 <div className="grid grid-cols-5 gap-2">
-                  {(['cyan', 'emerald', 'sky', 'amber', 'violet'] as const).map((acc) => (
+                  {(['cyan', 'emerald', 'sky', 'amber', 'blue'] as const).map((acc) => (
                     <button
                       key={acc}
                       type="button"

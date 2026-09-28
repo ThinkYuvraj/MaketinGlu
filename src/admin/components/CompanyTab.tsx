@@ -4,6 +4,7 @@ import { Building2, Phone, Mail, MapPin, Globe, Sparkles, Award, ShieldCheck, He
 interface CompanyTabProps {
   formData: {
     brandName: string;
+    customDomain?: string;
     phone: string;
     email: string;
     address: string;
@@ -55,6 +56,20 @@ export default function CompanyTab({ formData, setFormData }: CompanyTabProps) {
               value={formData.brandName}
               onChange={(e) => setFormData({ ...formData, brandName: e.target.value })}
               className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-bold focus:border-cyan-400 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Custom Domain / Production URL</span>
+            </label>
+            <input
+              type="text"
+              value={formData.customDomain || ''}
+              placeholder="https://marketinglu.com"
+              onChange={(e) => setFormData({ ...formData, customDomain: e.target.value })}
+              className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-cyan-300 font-mono text-xs focus:border-cyan-400 focus:outline-none"
             />
           </div>
 

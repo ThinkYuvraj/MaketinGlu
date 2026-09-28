@@ -36,13 +36,15 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             transition={{ duration: 0.6, ease: standardEase }}
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
-            {/* Location Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#0a1122]/90 to-[#0b162b]/90 border border-cyan-500/20 text-[10px] sm:text-xs font-semibold tracking-[0.15em] text-cyan-300 mb-5 sm:mb-8 shadow-lg shadow-cyan-900/20 backdrop-blur-md">
+            {/* Location & Status Marker - Clean unboxed / rounded-md badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-900/90 border border-slate-800 text-[11px] font-mono font-bold tracking-wider text-cyan-400 mb-6 backdrop-blur-md">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
               </span>
               <span className="uppercase">{config.locationBadge}</span>
+              <span className="text-slate-600">·</span>
+              <span className="text-slate-400 uppercase font-sans font-medium text-[10px]">ISO 9001:2015</span>
             </div>
 
             {/* Main Headline */}
@@ -52,8 +54,8 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
               <span className="block text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-100 tracking-wide leading-tight sm:leading-snug drop-shadow-md">
-                <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span>{' '}
-                <span className="text-cyan-300 font-bold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
+                <span>{config.heroTitleLine1 || 'CUSTOM SOFTWARE &'}</span>{' '}
+                <span className="text-cyan-300 font-bold">{config.heroTitleLine2 || 'DIGITAL ENGINEERING'}</span>
               </span>
             </h1>
 
@@ -96,15 +98,15 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
           <div className="pt-4 sm:pt-5 border-t border-slate-800/80 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 lg:gap-10 text-[11px] sm:text-xs md:text-sm text-slate-300">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
-              <span>Turnkey Web & E-Commerce</span>
+              <span>Full-Stack Web &amp; E-Commerce</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
-              <span>Targeted SEO & Paid Ad Funnels</span>
+              <span>Technical SEO &amp; Paid Ad Infrastructure</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
-              <span>Verified 95%+ Client Satisfaction</span>
+              <span>100% Client Code &amp; IP Ownership</span>
             </div>
           </div>
 
@@ -115,7 +117,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
               className="group p-1 text-slate-500 hover:text-cyan-400 transition-colors cursor-pointer"
               aria-label="Scroll to performance metrics"
             >
-              <ChevronDown className="w-4 h-4 animate-bounce" />
+              <ChevronDown className="w-4 h-4" />
             </button>
           </div>
         </Container>

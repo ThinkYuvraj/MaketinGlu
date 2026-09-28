@@ -219,7 +219,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
         {/* Category & Meta Header */}
         <div className="mb-6">
           <div className="flex flex-wrap items-center gap-2.5 mb-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-3 py-1 rounded-full">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-3 py-1 rounded-lg">
               {blog.category}
             </span>
             <span className="text-xs text-slate-400 flex items-center gap-1">

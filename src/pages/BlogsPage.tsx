@@ -104,7 +104,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
 
         {/* Page Hero Header */}
         <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-4 shadow-sm shadow-cyan-500/10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-4 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>STRATEGIC PLAYBOOKS &amp; KNOWLEDGE HUB</span>
           </div>
@@ -142,7 +142,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
             )}
           </div>
 
-          {/* Category Pills */}
+          {/* Category Filters */}
           <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             {blogCategories.map((category) => {
               const count =
@@ -156,7 +156,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
                   key={category}
                   type="button"
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
                       : 'bg-slate-900/90 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white'
@@ -164,7 +164,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
                 >
                   <span>{category}</span>
                   <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                    className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
                       isSelected
                         ? 'bg-slate-950/25 text-slate-950 font-bold'
                         : 'bg-slate-800 text-slate-400'
@@ -375,7 +375,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
         {/* Free Agency Resource Toolkit & Audits */}
         <div className="mb-16 rounded-3xl bg-gradient-to-r from-cyan-950/40 via-[#0a1124] to-sky-950/40 border border-cyan-500/30 p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[10px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-[10px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
               <Zap className="w-3 h-3" />
               <span>FREE STRATEGY ASSETS</span>
             </div>

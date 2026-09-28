@@ -39,7 +39,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
 
         {/* Page Title & Mission */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-4 shadow-sm shadow-cyan-500/10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-4 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR CORE EXPERTISE &amp; DISCIPLINE PAGES</span>
           </div>
@@ -74,7 +74,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                 <div>
                   {/* Top Bar: Category Pill & Icon */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
                       {service.category.split('&')[0].trim()}
                     </span>
                     <div className="w-10 h-10 rounded-xl bg-slate-800/90 group-hover:bg-cyan-400 group-hover:text-slate-950 text-cyan-400 flex items-center justify-center transition-all duration-300 shrink-0 shadow-md">

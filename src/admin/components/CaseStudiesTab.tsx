@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Plus, Trash2 } from 'lucide-react';
+import { Sparkles, Plus, Trash2, X } from 'lucide-react';
 import { CaseStudy, CaseStudyStat } from '../../types';
 
 interface CaseStudiesTabProps {
@@ -206,8 +206,9 @@ export default function CaseStudiesTab({
                 type="button"
                 onClick={() => setShowAddModal(false)}
                 className="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+                aria-label="Close modal"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 

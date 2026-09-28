@@ -163,15 +163,15 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </button>
         </div>
 
-        {/* Center: Desktop Nav Links inside a Sleek Floating Glass Pill Dock */}
+        {/* Center: Desktop Nav Links inside a Sleek Floating Dock */}
         <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-1 xl:px-2">
-          <nav className="flex items-center gap-0.5 xl:gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/70 border border-slate-800/80 shadow-md backdrop-blur-md">
+          <nav className="flex items-center gap-1 xl:gap-2 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 shadow-md backdrop-blur-md">
             {/* 1. Home */}
             <button
               onClick={() => handleNavClick('#/')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#/')
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -187,9 +187,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             >
               <button
                 onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-                className={`flex items-center gap-1 px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+                className={`flex items-center gap-1 px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                   currentRoute.type === 'service-detail' || currentRoute.type === 'services-index' || window.location.hash === '#expertise'
-                    ? 'text-cyan-400 font-bold'
+                    ? 'text-cyan-400 font-bold bg-cyan-950/40'
                     : 'text-slate-300 hover:text-cyan-300 font-medium'
                 }`}
                 aria-expanded={servicesDropdownOpen}
@@ -270,9 +270,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 3. Portfolio */}
             <button
               onClick={() => handleNavClick('#cases')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#cases')
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -282,9 +282,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 4. Packages */}
             <button
               onClick={() => handleNavClick('#packages')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#packages')
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -294,9 +294,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 5. Performance */}
             <button
               onClick={() => handleNavClick('#growth')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#growth')
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -306,9 +306,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 6. About Us */}
             <button
               onClick={() => handleNavClick('#about')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#about')
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -318,9 +318,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 7. Blogs */}
             <button
               onClick={() => handleNavClick('#/blogs')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail'
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -330,9 +330,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 8. FAQs */}
             <button
               onClick={() => handleNavClick('#faq')}
-              className={`px-2 xl:px-3 py-1 rounded-full transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
+              className={`px-2 xl:px-3 py-1 rounded-md transition-colors cursor-pointer whitespace-nowrap text-xs xl:text-[13px] ${
                 isHashActive('#faq')
-                  ? 'text-cyan-400 font-bold'
+                  ? 'text-cyan-400 font-bold bg-cyan-950/40'
                   : 'text-slate-300 hover:text-cyan-300 font-medium'
               }`}
             >
@@ -449,7 +449,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
                 
                 {/* Agency Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-[10px] font-mono font-bold tracking-wider text-cyan-300 uppercase">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/60 border border-cyan-500/30 text-[10px] font-mono font-bold tracking-wider text-cyan-300 uppercase">
                   <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
                   <span>ISO 9001:2015 &bull; NEW DELHI</span>
                 </div>

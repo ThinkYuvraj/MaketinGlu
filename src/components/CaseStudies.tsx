@@ -39,7 +39,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
             </div>
@@ -142,7 +142,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           <span className="text-[11px] text-slate-400">D2C Fashion</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-medium">
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-950/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           <span>LIVE AUDIT</span>
                         </div>
@@ -211,7 +211,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           <span className="text-[11px] text-slate-400">Tech &amp; Gadgets</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400 font-medium">
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400 font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                           <span>VIRAL MOMENTUM</span>
                         </div>
@@ -266,7 +266,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-slate-200">{item.client || item.title}</span>
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400">
                           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                           DEPLOYED
                         </span>

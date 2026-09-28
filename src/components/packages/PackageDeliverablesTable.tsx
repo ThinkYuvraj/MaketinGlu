@@ -35,7 +35,7 @@ export default function PackageDeliverablesTable({
             <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">
               Included Deliverables Matrix
             </span>
-            <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-md">
               {activePackage.features?.length || 13} Verified Inclusions
             </span>
           </div>
@@ -115,7 +115,7 @@ export default function PackageDeliverablesTable({
                           className="p-2.5 rounded-xl bg-[#0c1426]/80 hover:bg-[#0f1a33] border border-slate-800/70 hover:border-cyan-500/30 transition-all"
                         >
                           <div className="flex items-start gap-2.5">
-                            <div className="w-4 h-4 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center shrink-0 mt-0.5 shadow-sm shadow-cyan-400/30">
+                            <div className="w-4 h-4 rounded-md bg-cyan-400 text-slate-950 flex items-center justify-center shrink-0 mt-0.5 shadow-sm shadow-cyan-400/30">
                               <Check className="w-2.5 h-2.5 stroke-[3]" />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -190,7 +190,7 @@ export default function PackageDeliverablesTable({
 
                       {/* Right: Exact tier deliverable value */}
                       <div className="flex items-center gap-2.5 bg-slate-900/90 md:bg-cyan-950/20 px-3 py-2 rounded-xl border border-slate-800 md:border-cyan-500/20 md:max-w-[48%] self-stretch md:self-center">
-                        <div className="w-5 h-5 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center shrink-0 shadow-sm shadow-cyan-400/40">
+                        <div className="w-5 h-5 rounded-md bg-cyan-400 text-slate-950 flex items-center justify-center shrink-0 shadow-sm shadow-cyan-400/40">
                           <Check className="w-3 h-3 stroke-[3]" />
                         </div>
                         <span className="text-xs sm:text-[13px] font-bold text-cyan-300">

@@ -109,6 +109,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
   // Local draft state initialized from config
   const [formData, setFormData] = useState({
     brandName: config.brandName,
+    customDomain: config.customDomain || 'https://marketinglu.com',
     phone: config.phone,
     email: config.email,
     address: config.address,
@@ -167,6 +168,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
   useEffect(() => {
     setFormData({
       brandName: config.brandName,
+      customDomain: config.customDomain || 'https://marketinglu.com',
       phone: config.phone,
       email: config.email,
       address: config.address,
@@ -225,6 +227,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
   const handleSaveAll = () => {
     updateConfig({
       brandName: formData.brandName,
+      customDomain: formData.customDomain || 'https://marketinglu.com',
       phone: formData.phone,
       email: formData.email,
       address: formData.address,

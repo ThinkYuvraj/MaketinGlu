@@ -190,8 +190,9 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             <div className="text-sm sm:text-base font-extrabold text-white mt-0.5">
               {pkg.priceNote}
             </div>
-            <div className="text-[10px] text-cyan-400 mt-0.5 font-medium">
-              ✓ Flexible Month-to-Month • Zero Lock-In
+            <div className="flex items-center gap-1 text-[10px] text-cyan-400 mt-0.5 font-medium">
+              <Check className="w-2.5 h-2.5 stroke-[3] text-cyan-400" />
+              <span>Flexible Month-to-Month · Zero Lock-In</span>
             </div>
           </div>
 
@@ -203,7 +204,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
             {pkg.features && pkg.features.slice(0, 5).map((feat, fIdx) => (
               <div key={fIdx} className="flex items-start gap-1.5 text-xs text-slate-200">
-                <div className="w-3.5 h-3.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-3.5 h-3.5 rounded-md bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="w-2 h-2 text-cyan-400 stroke-[3]" />
                 </div>
                 <span className="leading-tight line-clamp-1">{feat.name}</span>
@@ -266,7 +267,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.packagesSectionBadge || 'TRANSPARENT SERVICE TIERS'}</span>
           </div>
@@ -393,7 +394,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                       key={dotIdx}
                       type="button"
                       onClick={() => handleSelectTab(dotIdx)}
-                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                      className={`h-2 rounded-md transition-all cursor-pointer ${
                         dotIdx === currentIndex
                           ? 'w-7 bg-cyan-400 shadow-md shadow-cyan-400/40'
                           : 'w-2 bg-slate-700 hover:bg-slate-500'

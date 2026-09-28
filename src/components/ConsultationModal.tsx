@@ -1,6 +1,6 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, CheckCircle2, Sparkles } from 'lucide-react';
+import { X, CheckCircle2, Sparkles, Lock } from 'lucide-react';
 import { standardEase } from '../lib/animations';
 
 interface ConsultationModalProps {
@@ -82,7 +82,7 @@ export default function ConsultationModal({
 
             {submitted ? (
               <div className="text-center py-6 space-y-3">
-                <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto text-emerald-400">
+                <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center justify-center mx-auto text-emerald-400">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white">Consultation Reserved!</h3>
@@ -204,8 +204,9 @@ export default function ConsultationModal({
                     >
                       {isSubmitting ? 'Reserving Your Slot...' : 'Confirm Appointment Reservation →'}
                     </button>
-                    <p className="text-center text-[10px] text-slate-400 mt-1.5">
-                      🔒 Zero spam guarantee. 100% complimentary tactical consultation.
+                    <p className="text-center text-[10px] text-slate-400 mt-1.5 flex items-center justify-center gap-1">
+                      <Lock className="w-2.5 h-2.5 text-cyan-400" />
+                      <span>Zero spam guarantee. 100% complimentary technical consultation.</span>
                     </p>
                   </div>
                 </form>

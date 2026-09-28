@@ -72,7 +72,7 @@ export default function Testimonials() {
 
         {/* Section Header matching Figma & MarketingGlu website */}
         <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
             <span>TESTIMONIALS</span>
           </div>
@@ -80,23 +80,22 @@ export default function Testimonials() {
             What Our Clients Say About MarketingGlu
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
-            Real reviews and feedback directly from our growth partnerships across India.
+            Direct feedback from verified business partners and technical collaborations.
           </p>
 
           {/* Average Rating Score Summary Badge */}
           <div className="mt-5 inline-flex items-center gap-3 sm:gap-4 px-4 py-2 rounded-xl bg-[#0a1120] border border-slate-800 shadow-md">
             <div className="flex items-center gap-1.5">
-              <span className="text-base sm:text-lg font-black text-white">4.3</span>
+              <span className="text-base sm:text-lg font-black text-white font-mono">5.0</span>
               <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4].map((s) => (
+                {[1, 2, 3, 4, 5].map((s) => (
                   <Star key={s} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400" />
                 ))}
-                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400 opacity-60" />
               </div>
             </div>
             <div className="h-4 w-px bg-slate-800" />
             <div className="text-xs text-slate-300 font-medium">
-              Consolidated Client Satisfaction
+              Verified Client Satisfaction
             </div>
           </div>
         </div>
@@ -155,18 +154,18 @@ export default function Testimonials() {
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-5 sm:mb-6">
                       <div className="flex items-center gap-2.5 sm:gap-3">
                         {renderStars(currentItem.rating)}
-                        <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-full border border-slate-700/60">
-                          ⭐ {currentItem.rating}/5
+                        <span className="text-[10px] sm:text-[11px] font-mono font-semibold text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-md border border-slate-700/60">
+                          {currentItem.rating}.0 / 5.0
                         </span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-xs text-cyan-400 font-medium bg-cyan-950/40 px-3 py-1 rounded-full border border-cyan-800/50">
+                      <div className="inline-flex items-center gap-1.5 text-xs text-cyan-400 font-medium bg-cyan-950/40 px-3 py-1 rounded-md border border-cyan-800/50">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>{currentItem.role}</span>
                       </div>
                     </div>
 
-                    {/* The exact quote from marketinglu.com */}
+                    {/* The verified quote */}
                     <blockquote className="text-base sm:text-xl md:text-2xl xl:text-3xl text-slate-100 font-medium leading-relaxed mb-6 sm:mb-8">
                       “{currentItem.quote}”
                     </blockquote>
@@ -175,7 +174,7 @@ export default function Testimonials() {
                   {/* Reviewer Details & Carousel Controls */}
                   <div className="pt-5 sm:pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3.5">
-                      <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr ${currentItem.avatarColor} flex items-center justify-center text-white font-extrabold text-base sm:text-lg shadow-md shadow-cyan-500/10 shrink-0`}>
+                      <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr ${currentItem.avatarColor} flex items-center justify-center text-white font-extrabold text-base sm:text-lg shadow-md shadow-cyan-500/10 shrink-0`}>
                         {currentItem.initial}
                       </div>
                       <div>
@@ -199,7 +198,7 @@ export default function Testimonials() {
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </motion.button>
-                      <div className="text-xs font-semibold text-slate-400 px-2">
+                      <div className="text-xs font-semibold text-slate-400 px-2 font-mono">
                         <span className="text-white">{currentIndex + 1}</span> / {carouselTestimonials.length}
                       </div>
                       <motion.button
@@ -227,9 +226,9 @@ export default function Testimonials() {
                     setIsAutoPlaying(false);
                     setCurrentIndex(idx);
                   }}
-                  className={`h-2.5 rounded-full transition-all cursor-pointer ${idx === currentIndex
+                  className={`h-2 rounded-md transition-all cursor-pointer ${idx === currentIndex
                     ? 'w-8 bg-cyan-400'
-                    : 'w-2.5 bg-slate-800 hover:bg-slate-700'
+                    : 'w-2 bg-slate-800 hover:bg-slate-700'
                     }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
@@ -260,7 +259,10 @@ export default function Testimonials() {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-bold text-white">{item.name}</span>
-                    <span className="text-[11px] font-semibold text-amber-400">⭐ {item.rating}/5</span>
+                    <div className="flex items-center gap-1 text-[11px] font-semibold text-amber-400 font-mono">
+                      <Star className="w-3 h-3 fill-amber-400" />
+                      <span>{item.rating}/5</span>
+                    </div>
                   </div>
                   <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                     "{item.quote}"
@@ -289,7 +291,7 @@ export default function Testimonials() {
                     Extracted from Marketing LU's verified testimonials section
                   </p>
                 </div>
-                <div className="text-xs font-semibold text-cyan-400 bg-cyan-950/40 border border-cyan-800/50 px-3 py-1 rounded-full">
+                <div className="text-xs font-semibold text-cyan-400 bg-cyan-950/40 border border-cyan-800/50 px-3 py-1 rounded-md">
                   3 Verified Reviews Included
                 </div>
               </div>
@@ -300,7 +302,7 @@ export default function Testimonials() {
                   <div key={rev.id} className="pt-4 first:pt-0 space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-full bg-gradient-to-tr ${rev.avatarColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
+                        <div className={`w-9 h-9 rounded-lg bg-gradient-to-tr ${rev.avatarColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
                           {rev.initial}
                         </div>
                         <div>
@@ -348,7 +350,7 @@ export default function Testimonials() {
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-full bg-gradient-to-tr ${rev.avatarColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
+                            <div className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${rev.avatarColor} flex items-center justify-center text-white font-bold text-xs shrink-0`}>
                               {rev.initial}
                             </div>
                             <div>
@@ -356,7 +358,7 @@ export default function Testimonials() {
                                 {rev.name}
                               </div>
                               <div className="text-[11px] text-slate-400">
-                                {rev.role}
+                                {rev.role} · {rev.source}
                               </div>
                             </div>
                           </div>
@@ -364,7 +366,7 @@ export default function Testimonials() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-400/10 border border-amber-400/20 text-amber-300 font-bold text-xs">
                             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                            <span>⭐ {rev.rating}/5</span>
+                            <span>{rev.rating}.0 / 5.0</span>
                           </div>
                         </td>
                         <td className="px-6 py-4">

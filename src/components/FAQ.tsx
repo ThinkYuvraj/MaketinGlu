@@ -234,7 +234,7 @@ export default function FAQ() {
 
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-wide uppercase mb-2.5">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-wide uppercase mb-2.5">
             <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.faqSectionBadge || 'Knowledge Base'}</span>
           </div>

@@ -261,7 +261,7 @@ app.post('/api/admin/login', (req, res) => {
     });
   }
 
-  // Successful login — clear any recorded failures for this IP
+  // Successful login - clear any recorded failures for this IP
   clearLoginAttempts(clientIp);
 
   const token = generateToken();

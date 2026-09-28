@@ -46,7 +46,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
       }
 
       if (response.ok && data.success) {
-        // Use sessionStorage (not localStorage) — auto-clears on tab/browser close
+        // Use sessionStorage (not localStorage) - auto-clears on tab/browser close
         // and is not accessible to other tabs or persistent scripts.
         sessionStorage.setItem('marketinglu_admin_session', 'authenticated');
         if (data.token) {
@@ -65,7 +65,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
           `Admin login failed (status ${response.status}). Check /api/health to confirm your Hostinger environment variables are set.`,
       );
     } catch (err) {
-      setError('Network error — could not connect to the authentication server. Please check your connection.');
+      setError('Network error: could not connect to the authentication server. Please check your connection.');
     } finally {
       setIsLoading(false);
     }

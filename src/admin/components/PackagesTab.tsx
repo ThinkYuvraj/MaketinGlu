@@ -300,8 +300,9 @@ export default function PackagesTab({
                 type="button"
                 onClick={() => setShowAddModal(false)}
                 className="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+                aria-label="Close modal"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 

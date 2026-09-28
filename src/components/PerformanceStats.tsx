@@ -144,7 +144,7 @@ export default function PerformanceStats() {
         <div>
           {/* Top Header Badge */}
           <div className="flex items-center justify-between gap-2 mb-4">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/25 text-[10px] font-bold text-cyan-400 tracking-wide uppercase">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/25 text-[10px] font-bold text-cyan-400 tracking-wide uppercase">
               <CardIcon className="w-3 h-3 text-cyan-400" />
               <span>{item.badge}</span>
             </span>
@@ -248,7 +248,7 @@ export default function PerformanceStats() {
         
         {/* Consistent Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-2">
             <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
             <span>VERIFIED CAPABILITY METRICS</span>
           </div>
@@ -347,7 +347,7 @@ export default function PerformanceStats() {
                   key={stat.id}
                   type="button"
                   onClick={() => handleSelectStat(dotIdx)}
-                  className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                  className={`h-2 rounded-md transition-all cursor-pointer ${
                     dotIdx === currentIndex
                       ? 'w-7 bg-cyan-400 shadow-md shadow-cyan-400/40'
                       : 'w-2 bg-slate-700 hover:bg-slate-500'

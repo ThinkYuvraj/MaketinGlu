@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, Plus, Trash2, Star } from 'lucide-react';
+import { MessageSquare, Plus, Trash2, Star, X } from 'lucide-react';
 import { TestimonialItem } from '../../types';
 
 interface TestimonialsTabProps {
@@ -184,8 +184,9 @@ export default function TestimonialsTab({
                 type="button"
                 onClick={() => setShowAddModal(false)}
                 className="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+                aria-label="Close modal"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 

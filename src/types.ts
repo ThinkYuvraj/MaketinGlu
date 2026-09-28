@@ -129,12 +129,13 @@ export interface AboutPillar {
   description: string;
   tag: string;
   iconName?: string;
-  accent?: 'cyan' | 'emerald' | 'sky' | 'amber' | 'violet';
+  accent?: 'cyan' | 'emerald' | 'sky' | 'amber' | 'blue';
 }
 
 export interface SiteConfig {
   // Brand & Contact
   brandName: string;
+  customDomain?: string;
   phone: string;
   email: string;
   address: string;

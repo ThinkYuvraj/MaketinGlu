@@ -66,11 +66,6 @@ const PILLAR_ACCENTS: {
     text: 'text-blue-400',
     bg: 'bg-blue-950/40',
   },
-  violet: {
-    border: 'border-cyan-500/30 hover:border-cyan-400/60',
-    text: 'text-cyan-400',
-    bg: 'bg-cyan-950/40',
-  },
 };
 
 export default function AboutUs({ onOpenConsultation }: AboutUsProps) {

@@ -92,10 +92,10 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
               
               {/* Category & Badge */}
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-3 py-1 rounded-full shadow-sm">
+                <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-3 py-1 rounded-lg shadow-sm">
                   {service.category}
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
                   <CheckCircle2 className="w-3 h-3" />
                   <span>Verified Capability</span>
                 </span>
@@ -227,7 +227,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
         {/* Section 2: The 4 Core Architectural Pillars */}
         <div className="mb-16">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
               <Zap className="w-3.5 h-3.5 text-cyan-400" />
               <span>CORE ARCHITECTURAL PILLARS</span>
             </div>
@@ -254,7 +254,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
                       {pillar.title}
                     </h3>
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-500/30 shrink-0">
+                  <span className="text-[10px] font-mono font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-500/30 shrink-0">
                     {pillar.tag}
                   </span>
                 </div>
@@ -348,7 +348,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
         {/* Section 4: 4-Stage Execution Methodology */}
         <div className="mb-16">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3">
               <Clock className="w-3.5 h-3.5 text-cyan-400" />
               <span>OUR PROVEN PROCESS</span>
             </div>
@@ -371,7 +371,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
                     <span className="text-2xl font-black text-cyan-400 font-mono">
                       {phase.step}
                     </span>
-                    <span className="text-[11px] font-semibold text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-md">
                       {phase.duration}
                     </span>
                   </div>
@@ -522,7 +522,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
         {/* Section 8: Bottom Strategy Consultation Banner */}
         <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border border-cyan-500/40 text-center shadow-2xl relative overflow-hidden">
           <div className="max-w-2xl mx-auto space-y-4">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-3 py-1 rounded-full">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-3 py-1 rounded-lg">
               LET'S BUILD SOMETHING EXTRAORDINARY
             </span>
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">

@@ -48,7 +48,7 @@ export default function ExpertiseDetailView({
             <div className="lg:col-span-7 xl:col-span-7 2xl:col-span-7 space-y-6 sm:space-y-7">
               {/* Category Pill */}
               <div className="flex items-center gap-2">
-                <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-full">
+                <span className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-md">
                   {activeExpertise.category}
                 </span>
               </div>

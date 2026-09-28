@@ -32,8 +32,8 @@ export default function SectionHeader({
     >
       <div className={isCenter ? '' : 'max-w-3xl'}>
         {badgeText && (
-          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-3 ${isCenter ? 'mx-auto' : ''}`}>
-            {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5 text-cyan-400 shrink-0" />}
+          <div className={`flex items-center gap-2 text-xs font-mono font-semibold tracking-widest text-cyan-400 uppercase mb-3 ${isCenter ? 'justify-center' : ''}`}>
+            <span className="w-1.5 h-1.5 bg-cyan-400 shrink-0" />
             <span>{badgeText}</span>
           </div>
         )}

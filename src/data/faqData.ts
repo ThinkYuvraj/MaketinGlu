@@ -53,7 +53,7 @@ export const defaultFaqs: FAQItem[] = [
     category: 'process',
     categoryLabel: 'Contracts & Onboarding',
     question: "Are we locked into long-term contracts, or can we cancel anytime?",
-    answer: "We do not lock our clients into rigid annual contracts. Our marketing retainers operate on flexible month-to-month agreements following an initial 90-day onboarding runway (which provides essential algorithmic machine-learning calibration for paid campaigns and search engine indexing for SEO). We believe client retention should be earned every month through verified revenue, transparent reporting, and consistent execution—not legal handcuffs.",
+    answer: "We do not lock our clients into rigid annual contracts. Our marketing retainers operate on flexible month-to-month agreements following an initial 90-day onboarding runway (which provides essential algorithmic machine-learning calibration for paid campaigns and search engine indexing for SEO). We believe client retention should be earned every month through verified revenue, transparent reporting, and consistent execution, not legal handcuffs.",
     highlights: ["Month-to-Month Retainers", "Initial 90-Day Runway", "No Penalty Exit"]
   },
   {

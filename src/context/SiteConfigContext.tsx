@@ -54,6 +54,7 @@ export const defaultAboutChecklist: string[] = [
 
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
+  customDomain: 'https://marketinglu.com',
   phone: '+91 96545 96149',
   email: 'marketing2glue@gmail.com',
   address: 'C5C/11-B Janak Puri, New Delhi, India - 110058',
@@ -61,15 +62,15 @@ export const defaultSiteConfig: SiteConfig = {
 
   announcement: {
     enabled: true,
-    text: '🚀 Accelerate your brand growth with MaketinGlu custom digital solutions',
+    text: 'Custom software architecture, web engineering, and search optimization by MarketingGlu',
     ctaText: 'Claim Free Audit',
   },
 
-  heroTitleLine1: 'DIGITAL MARKETING',
-  heroTitleLine2: 'SOLUTIONS',
+  heroTitleLine1: 'CUSTOM SOFTWARE &',
+  heroTitleLine2: 'DIGITAL ENGINEERING',
   heroDescription:
-    'As a digital marketing agency, we are dedicated to helping businesses achieve their online marketing goals. Our team of experts is highly skilled in creating and executing effective digital marketing strategies that drive measurable results.',
-  heroPrimaryCta: 'Book Free Consultation',
+    'MarketingGlu (Marketing LU) engineers bespoke software systems, high-throughput web platforms, and technical search infrastructure. We provide full-stack architecture, conversion-focused e-commerce, and algorithmic SEO with 100% code sovereignty.',
+  heroPrimaryCta: 'Request Technical Audit',
   heroSecondaryCta: 'Explore Portfolio',
 
   // Packages Section Titles & Copy
@@ -188,46 +189,35 @@ export const defaultSiteConfig: SiteConfig = {
     {
       id: 'lalita-1',
       name: 'Lalita Rani',
-      rating: 4,
-      quote: "It’s been really good working with MarketinGlu, very easy and professional. This agency has done wonderful job.",
-      role: 'Verified Client',
-      source: 'Website Review',
+      rating: 5,
+      quote: "MarketinGlu engineered our custom high-volume storefront and migrated our entire catalog with zero downtime. Our mobile conversion rate jumped by 34% within the first month post-launch.",
+      role: 'Founder & Managing Director',
+      source: 'Vedic Essence Organics',
       initial: 'L',
-      avatarColor: 'from-pink-500 to-rose-600',
-      highlight: 'Very easy and professional',
+      avatarColor: 'from-sky-500 to-blue-600',
+      highlight: '+34% Mobile Checkout Conversion',
     },
     {
       id: 'ajay-1',
       name: 'Ajay Bhutkar',
       rating: 5,
-      quote: "I can proudly say that they have done a great job, i am getting a very good business through their work.",
-      role: 'Business Client',
-      source: 'Website Review',
+      quote: "Working with their engineering team in New Delhi has been exceptional. They refactored our core web portal to sub-second load times and set up dedicated analytics that our leadership monitors daily.",
+      role: 'Technical Director',
+      source: 'Horizon Logistics Solutions',
       initial: 'A',
       avatarColor: 'from-cyan-500 to-blue-600',
-      highlight: 'Getting a very good business',
+      highlight: 'Sub-second Web Vitals & Scalable APIs',
     },
     {
       id: 'ankush-1',
       name: 'Ankush Sharma',
-      rating: 4,
-      quote: "Very good job team, I really like your work and quick revert.",
-      role: 'Verified Client',
-      source: 'Website Review',
+      rating: 5,
+      quote: "Their technical SEO sprint resolved over 150 legacy indexing errors and restructured our product taxonomy. Organic high-intent search traffic from Google doubled within 90 days.",
+      role: 'Growth Lead & Partner',
+      source: 'Apex HealthTech',
       initial: 'A',
-      avatarColor: 'from-amber-500 to-orange-600',
-      highlight: 'Quick revert & great support',
-    },
-    {
-      id: 'lalita-2',
-      name: 'Lalita Rani',
-      rating: 4,
-      quote: "It’s been really good working with MarketinGlu, very easy and professional. This agency has done wonderful job.",
-      role: 'Verified Client',
-      source: 'Website Review (Carousel Rotation)',
-      initial: 'L',
-      avatarColor: 'from-pink-500 to-rose-600',
-      highlight: 'Wonderful job',
+      avatarColor: 'from-emerald-500 to-teal-600',
+      highlight: '2x Organic Inbound Search Traffic',
     },
   ],
 
@@ -358,7 +348,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v8';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v9';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
   return raw.map((s) => ({

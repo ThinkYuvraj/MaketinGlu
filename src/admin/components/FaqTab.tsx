@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { HelpCircle, Plus, Trash2, Search } from 'lucide-react';
+import { HelpCircle, Plus, Trash2, Search, X } from 'lucide-react';
 import { FAQItem } from '../../data/faqData';
 
 interface FaqTabProps {
@@ -259,8 +259,9 @@ export default function FaqTab({ faqs, onAddFaq, onUpdateFaq, onDeleteFaq }: Faq
                 type="button"
                 onClick={() => setShowAddModal(false)}
                 className="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+                aria-label="Close modal"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 
