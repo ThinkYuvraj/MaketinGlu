@@ -73,7 +73,7 @@ export default function Testimonials() {
             <span>TESTIMONIALS</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-1 mb-3 tracking-tight">
-            What Our Clients Say About MarketingGlu
+            What Our Clients Say About MarketinGlu
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed">
             Direct feedback from verified business partners and technical collaborations.

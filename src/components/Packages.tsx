@@ -241,7 +241,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </motion.button>
 
             <a
-              href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketingGlu, I am interested in inquiring about the ${pkg.name} package.`)}`}
+              href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketinGlu, I am interested in inquiring about the ${pkg.name} package.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
@@ -454,7 +454,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             <div>
               <h4 className="text-xs sm:text-sm font-semibold text-white">Need a Customized Retainer or Multi-Location Scope?</h4>
               <p className="package-inquiry-copy text-[11px] sm:text-xs text-slate-400 mt-0.5 leading-snug">
-                MarketingGlu crafts bespoke omni-channel campaigns tailored to unique market footprints and international expansions.
+                MarketinGlu crafts bespoke omni-channel campaigns tailored to unique market footprints and international expansions.
               </p>
             </div>
           </div>

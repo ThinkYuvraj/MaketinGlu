@@ -275,7 +275,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         <p className="text-xs text-slate-400 mt-1">{item.category}</p>
                       </div>
                       <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-800/60 flex items-center justify-between">
-                        <span>MarketingGlu Performance Framework</span>
+                        <span>MarketinGlu Performance Framework</span>
                         <span className="text-cyan-400 font-mono">VERIFIED</span>
                       </div>
                     </div>

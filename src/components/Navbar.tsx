@@ -153,7 +153,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             onClick={() => handleNavClick('#/')}
             className="flex items-center gap-2 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
             id="nav-brand-logo"
-            aria-label="MarketingGlu Homepage"
+            aria-label="MarketinGlu Homepage"
           >
             <Logo variant="light-badge" size="md" />
             <span className="text-base sm:text-lg lg:text-base xl:text-lg font-black tracking-tight flex items-center whitespace-nowrap">
@@ -641,7 +641,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
                   {/* WhatsApp chat */}
                   <a 
-                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi MarketingGlu, I would like to inquire about your digital services.')}`}
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi MarketinGlu, I would like to inquire about your digital services.')}`}
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-xs text-emerald-300 font-bold min-h-[44px]"

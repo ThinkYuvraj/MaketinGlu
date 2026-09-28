@@ -452,7 +452,7 @@ export default function FAQ() {
 
           <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
             <a
-              href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi MarketingGlu, I have a specific question regarding your digital marketing services.')}`}
+              href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi MarketinGlu, I have a specific question regarding your digital marketing services.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"

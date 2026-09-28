@@ -53,7 +53,7 @@ export const defaultAboutChecklist: string[] = [
 ];
 
 export const defaultSiteConfig: SiteConfig = {
-  brandName: 'MaketinGlu',
+  brandName: 'MarketinGlu',
   customDomain: 'https://marketinglu.com',
   phone: '+91 96545 96149',
   email: 'marketing2glue@gmail.com',
@@ -62,14 +62,14 @@ export const defaultSiteConfig: SiteConfig = {
 
   announcement: {
     enabled: true,
-    text: 'Custom software architecture, web engineering, and search optimization by MarketingGlu',
+    text: 'Custom software architecture, web engineering, and search optimization by MarketinGlu',
     ctaText: 'Claim Free Audit',
   },
 
   heroTitleLine1: 'CUSTOM SOFTWARE &',
   heroTitleLine2: 'DIGITAL ENGINEERING',
   heroDescription:
-    'MarketingGlu engineers bespoke software systems, high-throughput web platforms, and technical search infrastructure. We provide full-stack architecture, conversion-focused e-commerce, and algorithmic SEO with 100% code sovereignty.',
+    'MarketinGlu engineers bespoke software systems, high-throughput web platforms, and technical search infrastructure. We provide full-stack architecture, conversion-focused e-commerce, and algorithmic SEO with 100% code sovereignty.',
   heroPrimaryCta: 'Request Technical Audit',
   heroSecondaryCta: 'Explore Portfolio',
 
@@ -276,13 +276,13 @@ export const defaultSiteConfig: SiteConfig = {
 
   // About Us Section Defaults
   aboutEnabled: true,
-  aboutBadge: 'ABOUT MARKETINGGLU',
+  aboutBadge: 'ABOUT MARKETINGLU',
   aboutTitle1: 'Engineering Next-Gen Software &',
   aboutTitle2: 'High-Impact Digital Growth',
   aboutDescription:
-    'MarketingGlu is an ISO 9001:2015 certified software solutions and digital growth agency headquartered in New Delhi. We eliminate fragmented vendors by uniting custom software architecture, web engineering, enterprise SEO, and performance marketing under one roof.',
+    'MarketinGlu is an ISO 9001:2015 certified software solutions and digital growth agency headquartered in New Delhi. We eliminate fragmented vendors by uniting custom software architecture, web engineering, enterprise SEO, and performance marketing under one roof.',
   aboutStory:
-    'Founded with a mission to replace empty marketing buzzwords with engineering precision, MarketingGlu empowers brands with bespoke web systems, sub-second page performance, transparent analytics, and predictable customer acquisition funnels.',
+    'Founded with a mission to replace empty marketing buzzwords with engineering precision, MarketinGlu empowers brands with bespoke web systems, sub-second page performance, transparent analytics, and predictable customer acquisition funnels.',
   aboutMission:
     'To engineer durable, high-converting digital assets that give ambitious companies a lasting unfair advantage in search, speed, and commercial revenue.',
   aboutYearsExperience: '8+ Years',
@@ -348,7 +348,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v10';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v11';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
   return raw.map((s) => ({

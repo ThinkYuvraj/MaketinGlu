@@ -241,7 +241,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </motion.button>
 
             <a
-              href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketingGlu, I am interested in inquiring about ${service.title}.`)}`}
+              href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketinGlu, I am interested in inquiring about ${service.title}.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}

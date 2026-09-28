@@ -121,22 +121,22 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
       if (parsed.type === 'service-detail' && parsed.serviceId) {
         const item = expertiseData.find(e => e.id === parsed.serviceId);
         if (item) {
-          document.title = `${item.title} | MarketingGlu`;
+          document.title = `${item.title} | MarketinGlu`;
         }
       } else if (parsed.type === 'services-index') {
-        document.title = "Core Digital Marketing Services & Solutions | MarketingGlu";
+        document.title = "Core Digital Marketing Services & Solutions | MarketinGlu";
       } else if (parsed.type === 'blogs') {
-        document.title = "Marketing Insights, Guides & Growth Resources | MarketingGlu";
+        document.title = "Marketing Insights, Guides & Growth Resources | MarketinGlu";
       } else if (parsed.type === 'blog-detail') {
-        document.title = "Marketing Insights & Strategic Guides | MarketingGlu";
+        document.title = "Marketing Insights & Strategic Guides | MarketinGlu";
       } else if (parsed.type === 'admin') {
-        document.title = "Admin Studio | MarketingGlu";
+        document.title = "Admin Studio | MarketinGlu";
       } else if (parsed.type === 'privacy') {
-        document.title = "Privacy Policy | MarketingGlu";
+        document.title = "Privacy Policy | MarketinGlu";
       } else if (parsed.type === 'terms') {
-        document.title = "Terms & Conditions | MarketingGlu";
+        document.title = "Terms & Conditions | MarketinGlu";
       } else {
-        document.title = "MarketingGlu - Digital Marketing Solutions";
+        document.title = "MarketinGlu - Digital Marketing Solutions";
       }
 
       // Smooth scroll to top when changing full pages

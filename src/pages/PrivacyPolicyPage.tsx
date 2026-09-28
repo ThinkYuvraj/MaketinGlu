@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Privacy Policy | MarketingGlu";
+    document.title = "Privacy Policy | MarketinGlu";
   }, []);
 
   return (
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
                 For questions regarding data protection, please contact:
               </p>
               <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-xs">
-                <div>MarketingGlu Legal &amp; Compliance</div>
+                <div>MarketinGlu Legal &amp; Compliance</div>
                 <div>Address: {config.address}</div>
                 <div>Email: {config.email}</div>
                 <div>Phone: {config.phone}</div>

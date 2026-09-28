@@ -73,12 +73,12 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
     return null;
   }
 
-  const badgeText = config.aboutBadge || 'ABOUT MARKETIN GLU';
+  const badgeText = config.aboutBadge || 'ABOUT MARKETINGLU';
   const title1 = config.aboutTitle1 || 'Engineering Next-Gen Software &';
   const title2 = config.aboutTitle2 || 'High-Impact Digital Growth';
   const description =
     config.aboutDescription ||
-    'MarketingGlu is an ISO 9001:2015 certified software architecture and digital growth firm headquartered in New Delhi. We eliminate fragmented agencies by uniting custom software, enterprise SEO, and performance funnels under one roof.';
+    'MarketinGlu is an ISO 9001:2015 certified software architecture and digital growth firm headquartered in New Delhi. We eliminate fragmented agencies by uniting custom software, enterprise SEO, and performance funnels under one roof.';
   const story =
     config.aboutStory ||
     'Founded to replace empty agency buzzwords with engineering precision, we deliver sub-second platforms, verifiable search dominance, and predictable customer acquisition with 100% client code and IP sovereignty.';
@@ -137,9 +137,6 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
           <div className="inline-flex items-center justify-center gap-2 px-2.5 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-[10px] font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2">
             <Sparkles className="w-3 h-3 text-cyan-400" />
             <span>{badgeText}</span>
-            <span className="text-slate-600"></span>
-            <span className="text-slate-600"></span>
-            
           </div>
 
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight text-center">
