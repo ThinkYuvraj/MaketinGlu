@@ -1,6 +1,6 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, CheckCircle2, Sparkles, Lock } from 'lucide-react';
+import { X, CheckCircle2, Sparkles, Send, ShieldCheck } from 'lucide-react';
 import { standardEase } from '../lib/animations';
 
 interface ConsultationModalProps {
@@ -44,7 +44,7 @@ export default function ConsultationModal({
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 600);
+    }, 500);
   };
 
   const handleReset = () => {
@@ -55,44 +55,48 @@ export default function ConsultationModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm"
-          onClick={onClose}
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
+          {/* Backdrop overlay */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={onClose}
+          />
+
+          {/* Modal Content Panel */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ duration: 0.22, ease: standardEase }}
-            className="relative w-full max-w-[460px] bg-[#0b1324] border border-cyan-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-2xl text-slate-100 glow-cyan max-h-[92vh] overflow-y-auto"
+            className="relative z-10 w-full max-w-[480px] bg-[#0c1424] border border-cyan-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl text-slate-100 glow-cyan max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button 
               onClick={onClose}
-              className="absolute top-3 right-3 text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800/80 transition-colors min-w-[32px] min-h-[32px] flex items-center justify-center cursor-pointer"
+              className="absolute top-3.5 right-3.5 text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-4 h-4" />
             </button>
 
             {submitted ? (
-              <div className="text-center py-6 space-y-3">
-                <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center justify-center mx-auto text-emerald-400">
-                  <CheckCircle2 className="w-6 h-6" />
+              <div className="text-center py-6 space-y-3.5">
+                <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto text-emerald-400 shadow-lg shadow-emerald-500/20">
+                  <CheckCircle2 className="w-7 h-7" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white">Consultation Reserved!</h3>
+                <h3 className="text-xl font-bold text-white tracking-tight">Consultation Reserved!</h3>
                 <p className="text-slate-300 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
-                  Thank you, <strong className="text-white">{formData.name || 'there'}</strong>! Our senior growth architect will reach out via <span className="text-cyan-400">{formData.email || 'email'}</span> and WhatsApp at <span className="text-cyan-400">{formData.phone || '+91 96545 96149'}</span> to confirm your session.
+                  Thank you, <strong className="text-white">{formData.name || 'there'}</strong>! Our senior growth architect will reach out via <span className="text-cyan-400 font-semibold">{formData.email || 'email'}</span> and WhatsApp at <span className="text-cyan-400 font-semibold">{formData.phone || '+91 96545 96149'}</span> to confirm your session.
                 </p>
-                <div className="pt-2">
+                <div className="pt-3">
                   <button
                     onClick={handleReset}
-                    className="px-5 py-2 rounded-lg bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer shadow-md shadow-cyan-500/20"
+                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer shadow-md shadow-cyan-500/20"
                   >
                     Done
                   </button>
@@ -100,23 +104,23 @@ export default function ConsultationModal({
               </div>
             ) : (
               <div>
-                <div className="mb-3 pr-6">
-                  <div className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-cyan-400 mb-1">
+                <div className="mb-4 pr-6">
+                  <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full mb-2">
                     <Sparkles className="w-3 h-3 text-cyan-400" />
-                    <span>Priority Allocation</span>
+                    <span>PRIORITY ALLOCATION</span>
                   </div>
-                  <h2 className="text-base sm:text-lg font-bold text-white tracking-tight leading-snug">
+                  <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug">
                     {title}
                   </h2>
-                  <p className="text-slate-400 text-[11px] sm:text-xs mt-0.5 leading-normal">
+                  <p className="text-slate-400 text-xs mt-1 leading-relaxed">
                     {subtitle}
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-2.5 text-xs">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                <form onSubmit={handleSubmit} className="space-y-3 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-slate-300 font-medium mb-1 text-[11px]">
+                      <label className="block text-slate-300 font-semibold mb-1 text-[11px]">
                         Full Name *
                       </label>
                       <input
@@ -125,11 +129,11 @@ export default function ConsultationModal({
                         placeholder="Sanjay Mehra"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-300 font-medium mb-1 text-[11px]">
+                      <label className="block text-slate-300 font-semibold mb-1 text-[11px]">
                         Email Address *
                       </label>
                       <input
@@ -138,14 +142,14 @@ export default function ConsultationModal({
                         placeholder="name@company.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs transition-colors"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-slate-300 font-medium mb-1 text-[11px]">
+                      <label className="block text-slate-300 font-semibold mb-1 text-[11px]">
                         Phone (with WhatsApp) *
                       </label>
                       <input
@@ -154,17 +158,17 @@ export default function ConsultationModal({
                         placeholder="+91 98765 43210"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-300 font-medium mb-1 text-[11px]">
+                      <label className="block text-slate-300 font-semibold mb-1 text-[11px]">
                         Primary Growth Service
                       </label>
                       <select
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs transition-colors"
                       >
                         <option>Website Designing & Development</option>
                         <option>E-Commerce Website Solutions</option>
@@ -184,7 +188,7 @@ export default function ConsultationModal({
                   </div>
 
                   <div>
-                    <label className="block text-slate-300 font-medium mb-1 text-[11px]">
+                    <label className="block text-slate-300 font-semibold mb-1 text-[11px]">
                       Company Website or Brief Goals (Optional)
                     </label>
                     <textarea
@@ -192,28 +196,29 @@ export default function ConsultationModal({
                       placeholder="e.g. Need to boost conversion and redesign checkout..."
                       value={formData.notes}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                      className="w-full px-2.5 py-1.5 rounded-md sm:rounded-lg bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 resize-none text-xs"
+                      className="w-full px-3 py-2 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 resize-none text-xs transition-colors"
                     />
                   </div>
 
-                  <div className="pt-1">
+                  <div className="pt-1.5">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full min-h-[38px] py-2 px-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer shadow-md shadow-cyan-500/20 flex items-center justify-center gap-1.5"
+                      className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 font-black text-xs sm:text-sm hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
                     >
-                      {isSubmitting ? 'Reserving Your Slot...' : 'Confirm Appointment Reservation →'}
+                      <Send className="w-3.5 h-3.5" />
+                      <span>{isSubmitting ? 'Reserving Your Slot...' : 'Confirm Appointment Reservation'}</span>
                     </button>
-                    <p className="text-center text-[10px] text-slate-400 mt-1.5 flex items-center justify-center gap-1">
-                      <Lock className="w-2.5 h-2.5 text-cyan-400" />
-                      <span>Zero spam guarantee. 100% complimentary technical consultation.</span>
-                    </p>
+                    <div className="flex items-center justify-center gap-1.5 text-center text-[10px] text-slate-400 mt-2">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span>Zero spam guarantee. 100% complimentary tactical consultation.</span>
+                    </div>
                   </div>
                 </form>
               </div>
             )}
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

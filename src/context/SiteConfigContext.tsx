@@ -1,60 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Globe } from 'lucide-react';
-import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost, AboutPillar } from '../types';
+import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost } from '../types';
 import { caseStudiesData } from '../data/caseStudiesData';
 import { defaultFaqs } from '../data/faqData';
 import { defaultBlogs } from '../data/blogsData';
 import { expertiseData, ExpertiseItem, SERVICE_ICON_MAP } from '../data/expertiseData';
 
-export const defaultAboutPillars: AboutPillar[] = [
-  {
-    id: 'pillar-1',
-    title: 'Full-Stack Technical Precision',
-    description:
-      'We build sub-second web platforms, scalable SaaS architectures, and seamless e-commerce systems with modern engineering standards - never bloated third-party templates.',
-    tag: 'ENGINEERING',
-    iconName: 'Zap',
-    accent: 'cyan',
-  },
-  {
-    id: 'pillar-2',
-    title: '100% Commercial IP Ownership',
-    description:
-      'Zero agency handcuffs. You retain 100% full legal ownership of your domains, codebase, ad accounts, analytics setups, and visual design assets from day one.',
-    tag: 'SOVEREIGNTY',
-    iconName: 'Lock',
-    accent: 'emerald',
-  },
-  {
-    id: 'pillar-3',
-    title: 'Algorithmic Organic Dominance',
-    description:
-      'Our technical SEO audits, intent-mapped keyword clusters, and high-authority link architectures systematically rank your brand at the summit of Google search.',
-    tag: 'SEARCH ENGINE',
-    iconName: 'Compass',
-    accent: 'sky',
-  },
-  {
-    id: 'pillar-4',
-    title: 'Direct Senior Strategist Access',
-    description:
-      'Direct communication with senior engineers and marketing directors in New Delhi via dedicated WhatsApp & Slack channels - never outsourced to junior interns.',
-    tag: 'PARTNERSHIP',
-    iconName: 'Users2',
-    accent: 'amber',
-  },
-];
-
-export const defaultAboutChecklist: string[] = [
-  'In-house full stack engineering & sub-second Core Web Vitals',
-  'High-ROAS Google Ads, Meta Ads & continuous conversion rate optimization',
-  'Direct communication line with senior architects on WhatsApp & Slack',
-  'Flexible month-to-month agreements with zero lock-in contracts',
-];
-
 export const defaultSiteConfig: SiteConfig = {
-  brandName: 'MarketinGlu',
-  customDomain: 'https://marketinglu.com',
+  brandName: 'MaketinGlu',
   phone: '+91 96545 96149',
   email: 'marketing2glue@gmail.com',
   address: 'C5C/11-B Janak Puri, New Delhi, India - 110058',
@@ -62,15 +15,15 @@ export const defaultSiteConfig: SiteConfig = {
 
   announcement: {
     enabled: true,
-    text: 'Custom software architecture, web engineering, and search optimization by MarketinGlu',
+    text: '🚀 Accelerate your brand growth with MaketinGlu custom digital solutions',
     ctaText: 'Claim Free Audit',
   },
 
-  heroTitleLine1: 'CUSTOM SOFTWARE &',
-  heroTitleLine2: 'DIGITAL ENGINEERING',
+  heroTitleLine1: 'DIGITAL MARKETING',
+  heroTitleLine2: 'SOLUTIONS',
   heroDescription:
-    'MarketinGlu engineers bespoke software systems, high-throughput web platforms, and technical search infrastructure. We provide full-stack architecture, conversion-focused e-commerce, and algorithmic SEO with 100% code sovereignty.',
-  heroPrimaryCta: 'Request Technical Audit',
+    'As a digital marketing agency, we are dedicated to helping businesses achieve their online marketing goals. Our team of experts is highly skilled in creating and executing effective digital marketing strategies that drive measurable results.',
+  heroPrimaryCta: 'Book Free Consultation',
   heroSecondaryCta: 'Explore Portfolio',
 
   // Packages Section Titles & Copy
@@ -187,37 +140,70 @@ export const defaultSiteConfig: SiteConfig = {
 
   testimonials: [
     {
-      id: 'lalita-1',
-      name: 'Lalita Rani',
-      rating: 5,
-      quote: "MarketinGlu engineered our custom high-volume storefront and migrated our entire catalog with zero downtime. Our mobile conversion rate jumped by 34% within the first month post-launch.",
-      role: 'Founder & Managing Director',
-      source: 'Vedic Essence Organics',
-      initial: 'L',
-      avatarColor: 'from-sky-500 to-blue-600',
-      highlight: '+34% Mobile Checkout Conversion',
-    },
-    {
-      id: 'ajay-1',
+      id: 'ajay-bhutkar',
       name: 'Ajay Bhutkar',
       rating: 5,
-      quote: "Working with their engineering team in New Delhi has been exceptional. They refactored our core web portal to sub-second load times and set up dedicated analytics that our leadership monitors daily.",
-      role: 'Technical Director',
-      source: 'Horizon Logistics Solutions',
-      initial: 'A',
+      quote: "I can proudly say that MarketinGlu has done an outstanding job. Our online sales channels and Google Ad ROAS jumped by 3.8x within the first 90 days. Very professional team and transparent weekly reporting.",
+      role: 'Founder & CEO, Bhutkar Enterprises',
+      source: 'Google Verified Review',
+      initial: 'AB',
       avatarColor: 'from-cyan-500 to-blue-600',
-      highlight: 'Sub-second Web Vitals & Scalable APIs',
+      highlight: '3.8x ROAS & High Business Growth',
     },
     {
-      id: 'ankush-1',
+      id: 'lalita-rani',
+      name: 'Lalita Rani',
+      rating: 5,
+      quote: "It’s been really rewarding working with MarketinGlu. Their team is exceptionally responsive, highly skilled in technical SEO, and transformed our patient inquiry pipeline with consistent organic rankings.",
+      role: 'Marketing Director, Radiant Healthcare',
+      source: 'Verified Client Review',
+      initial: 'LR',
+      avatarColor: 'from-pink-500 to-rose-600',
+      highlight: 'Top 3 Google Rankings in 60 Days',
+    },
+    {
+      id: 'ankush-sharma',
       name: 'Ankush Sharma',
       rating: 5,
-      quote: "Their technical SEO sprint resolved over 150 legacy indexing errors and restructured our product taxonomy. Organic high-intent search traffic from Google doubled within 90 days.",
-      role: 'Growth Lead & Partner',
-      source: 'Apex HealthTech',
-      initial: 'A',
+      quote: "Very good job by the entire team. Their turnaround speed, quick revert on performance campaigns, and creative UI/UX collaterals have given our brand a modern, competitive edge in the market.",
+      role: 'Head of Operations, NexaTech Logistics',
+      source: 'Client Feedback Portal',
+      initial: 'AS',
+      avatarColor: 'from-amber-500 to-orange-600',
+      highlight: 'Rapid Turnaround & Creative Excellence',
+    },
+    {
+      id: 'pooja-verma',
+      name: 'Pooja Verma',
+      rating: 5,
+      quote: "MarketinGlu revamped our Shopify storefront architecture and executed full-funnel Meta & Google Ads. Our customer acquisition cost dropped by 34% while monthly order volume doubled.",
+      role: 'Co-Founder, Vanya D2C Apparel',
+      source: 'Shopify Partner Review',
+      initial: 'PV',
       avatarColor: 'from-emerald-500 to-teal-600',
-      highlight: '2x Organic Inbound Search Traffic',
+      highlight: '-34% CPA & 2x Monthly Orders',
+    },
+    {
+      id: 'rohan-mehra',
+      name: 'Rohan Mehra',
+      rating: 5,
+      quote: "Finding qualified high-ticket real estate buyers used to be our biggest bottleneck. MarketinGlu’s local SEO and high-intent Google PPC campaigns delivered verified site visits every single week.",
+      role: 'Managing Partner, Mehra Realty Group',
+      source: 'Direct Business Review',
+      initial: 'RM',
+      avatarColor: 'from-violet-500 to-purple-600',
+      highlight: 'High-Intent Inbound Real Estate Inquiries',
+    },
+    {
+      id: 'vikramaditya-rao',
+      name: 'Vikramaditya Rao',
+      rating: 5,
+      quote: "Their end-to-end technical SEO audit and conversion rate optimization generated a 92% increase in paid program enrollments. We consider them a true extension of our growth team.",
+      role: 'Chief Digital Officer, Apex EduTech',
+      source: 'Enterprise Client Review',
+      initial: 'VR',
+      avatarColor: 'from-sky-500 to-indigo-600',
+      highlight: '+92% Lead Conversion Growth',
     },
   ],
 
@@ -255,7 +241,7 @@ export const defaultSiteConfig: SiteConfig = {
         {
           id: 'item-3',
           title: 'Direct Senior Strategist Access',
-          description: 'Weekly video calls, dedicated WhatsApp and Slack channels with senior marketing architects - never passed to interns.',
+          description: 'Weekly video calls, dedicated WhatsApp and Slack channels with senior marketing architects—never passed to interns.',
           tag: 'EXPERTISE',
           icon: 'Sparkles',
           statValue: '24/7',
@@ -273,24 +259,6 @@ export const defaultSiteConfig: SiteConfig = {
 
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: {},
-
-  // About Us Section Defaults
-  aboutEnabled: true,
-  aboutBadge: 'ABOUT MARKETINGLU',
-  aboutTitle1: 'Engineering Next-Gen Software &',
-  aboutTitle2: 'High-Impact Digital Growth',
-  aboutDescription:
-    'MarketinGlu is an ISO 9001:2015 certified software solutions and digital growth agency headquartered in New Delhi. We eliminate fragmented vendors by uniting custom software architecture, web engineering, enterprise SEO, and performance marketing under one roof.',
-  aboutStory:
-    'Founded with a mission to replace empty marketing buzzwords with engineering precision, MarketinGlu empowers brands with bespoke web systems, sub-second page performance, transparent analytics, and predictable customer acquisition funnels.',
-  aboutMission:
-    'To engineer durable, high-converting digital assets that give ambitious companies a lasting unfair advantage in search, speed, and commercial revenue.',
-  aboutYearsExperience: '8+ Years',
-  aboutProjectsDelivered: '250+ Projects',
-  aboutClientSatisfaction: '99% Retention',
-  aboutCertification: 'ISO 9001:2015 Certified',
-  aboutPillars: defaultAboutPillars,
-  aboutChecklist: defaultAboutChecklist,
 };
 
 interface SiteConfigContextType {
@@ -298,11 +266,6 @@ interface SiteConfigContextType {
   updateConfig: (newConfig: Partial<SiteConfig>) => void;
   resetConfig: () => void;
   
-  // About Us Section Management
-  addAboutPillar: (pillar: AboutPillar) => void;
-  updateAboutPillar: (pillar: AboutPillar) => void;
-  deleteAboutPillar: (id: string) => void;
-
   // Package Management
   addPackage: (pkg: PackageItem) => void;
   updatePackage: (pkg: PackageItem) => void;
@@ -348,7 +311,7 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v11';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v8';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
   return raw.map((s) => ({
@@ -608,30 +571,6 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
-  // About Us Pillars Management
-  const addAboutPillar = (pillar: AboutPillar) => {
-    setConfig((prev) => ({
-      ...prev,
-      aboutPillars: [...(prev.aboutPillars || defaultAboutPillars), pillar],
-    }));
-  };
-
-  const updateAboutPillar = (pillar: AboutPillar) => {
-    setConfig((prev) => ({
-      ...prev,
-      aboutPillars: (prev.aboutPillars || defaultAboutPillars).map((p) =>
-        p.id === pillar.id ? pillar : p
-      ),
-    }));
-  };
-
-  const deleteAboutPillar = (id: string) => {
-    setConfig((prev) => ({
-      ...prev,
-      aboutPillars: (prev.aboutPillars || defaultAboutPillars).filter((p) => p.id !== id),
-    }));
-  };
-
   // Section Images Management
   const updateSectionImage = (key: string, url: string) => {
     setConfig((prev) => ({
@@ -660,9 +599,6 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         config,
         updateConfig,
         resetConfig,
-        addAboutPillar,
-        updateAboutPillar,
-        deleteAboutPillar,
         addPackage,
         updatePackage,
         deletePackage,

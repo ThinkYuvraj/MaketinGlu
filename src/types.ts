@@ -78,6 +78,7 @@ export type SectionPosition =
   | 'after-expertise' 
   | 'after-packages' 
   | 'after-cases' 
+  | 'after-testimonials'
   | 'after-faq';
 
 export type SectionLayout = 'cards' | 'split-image' | 'banner' | 'stats';

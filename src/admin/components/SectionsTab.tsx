@@ -33,6 +33,7 @@ const positionLabels: Record<SectionPosition, string> = {
   'after-expertise': 'Position: After Services & Expertise',
   'after-packages': 'Position: After Service Packages',
   'after-cases': 'Position: After Case Studies & Work',
+  'after-testimonials': 'Position: After Testimonials & Reviews',
   'after-faq': 'Position: After FAQ (Before Footer)',
 };
 
