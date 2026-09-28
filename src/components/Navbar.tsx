@@ -16,15 +16,13 @@ import {
   BookOpen,
   HelpCircle,
   MessageSquare,
-  ShieldCheck,
-  CheckCircle2,
-  ExternalLink
+  ShieldCheck
 } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { useNavigation } from '../context/NavigationContext';
 import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import Logo from './Logo';
-import { buttonHoverMotion, standardEase } from '../lib/animations';
+import { buttonHoverMotion } from '../lib/animations';
 
 interface NavbarProps {
   onOpenConsultation: () => void;
@@ -143,11 +141,11 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      {/* Main Navigation Bar Row */}
-      <div className="w-full px-3.5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex items-center justify-between gap-3 lg:gap-6">
+      {/* Main Navigation Bar Row - Balanced 3-Column Symmetrical Layout */}
+      <div className="w-full px-3.5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-2 sm:py-2.5 flex items-center justify-between gap-3 lg:gap-4">
         
-        {/* Left: Brand Logo with White Background Badge & Typography */}
-        <div className="shrink-0 flex items-center">
+        {/* Left: Brand Logo with Balanced Width */}
+        <div className="shrink-0 lg:w-[220px] xl:w-[260px] flex items-center">
           <button
             onClick={() => handleNavClick('#/')}
             className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
@@ -162,34 +160,22 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </button>
         </div>
 
-        {/* Center: Desktop Nav Links (Visible only on lg: >=1024px) */}
-        <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-2 xl:px-4">
-          <nav className="flex items-center gap-1 xl:gap-1.5 2xl:gap-2.5 text-[13px] xl:text-sm font-medium">
+        {/* Center: Desktop Nav Links inside a Sleek Floating Glass Pill Dock (Dead-Center) */}
+        <div className="hidden lg:flex flex-1 items-center justify-center min-w-0">
+          <nav className="flex items-center p-1 rounded-full bg-slate-900/80 border border-slate-800/90 shadow-lg shadow-black/30 backdrop-blur-md">
             {/* 1. Home */}
             <button
               onClick={() => handleNavClick('#/')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                 isHashActive('#/')
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
               }`}
             >
               Home
             </button>
 
-            {/* 2. About Us */}
-            <button
-              onClick={() => handleNavClick('#about')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                isHashActive('#about')
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
-              }`}
-            >
-              About Us
-            </button>
-
-            {/* 3. Services Dropdown */}
+            {/* 2. Services Dropdown */}
             <div 
               className="relative"
               ref={dropdownRef}
@@ -198,10 +184,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             >
               <button
                 onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-                className={`flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+                className={`flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                   currentRoute.type === 'service-detail' || currentRoute.type === 'services-index' || window.location.hash === '#expertise'
-                    ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
                 }`}
                 aria-expanded={servicesDropdownOpen}
               >
@@ -265,7 +251,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     <div className="mt-2.5 pt-2.5 border-t border-slate-800">
                       <button
                         onClick={() => handleNavClick('#/services')}
-                        className="w-full py-2.5 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[42px]"
+                        className="w-full py-2 px-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[40px]"
                         id="nav-dropdown-know-more"
                       >
                         <Layers className="w-4 h-4 text-slate-950 shrink-0" />
@@ -278,49 +264,61 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               </AnimatePresence>
             </div>
 
-            {/* 4. Portfolio (Case Studies) */}
+            {/* 3. Portfolio */}
             <button
               onClick={() => handleNavClick('#cases')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                 isHashActive('#cases')
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
               }`}
             >
               Portfolio
             </button>
 
-            {/* 5. Packages */}
+            {/* 4. Packages */}
             <button
               onClick={() => handleNavClick('#packages')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                 isHashActive('#packages')
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
               }`}
             >
               Packages
             </button>
 
-            {/* 6. Performance */}
+            {/* 5. Performance */}
             <button
               onClick={() => handleNavClick('#growth')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                 isHashActive('#growth')
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
               }`}
             >
               Performance
             </button>
 
+            {/* 6. About Us */}
+            <button
+              onClick={() => handleNavClick('#about')}
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
+                isHashActive('#about')
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              About Us
+            </button>
+
             {/* 7. Blogs */}
             <button
               onClick={() => handleNavClick('#/blogs')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                 currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail'
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
               }`}
             >
               Blogs
@@ -329,10 +327,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             {/* 8. FAQs */}
             <button
               onClick={() => handleNavClick('#faq')}
-              className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap text-xs xl:text-[13px] font-semibold ${
                 isHashActive('#faq')
-                  ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-xs shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
               }`}
             >
               FAQs
@@ -340,25 +338,26 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </nav>
         </div>
 
-        {/* Right Desktop CTA Area (Visible strictly on lg: >=1024px) */}
-        <div className="hidden lg:flex items-center justify-end shrink-0 gap-2.5 xl:gap-4">
-          {/* Phone number */}
+        {/* Right Desktop CTA Area with Balanced Width */}
+        <div className="hidden lg:flex lg:w-[220px] xl:w-[260px] shrink-0 items-center justify-end gap-2 xl:gap-3">
+          {/* Phone Quick Link */}
           <a 
             href={`tel:${config.phone.replace(/\s+/g, '')}`}
-            className="flex items-center gap-2 text-xs md:text-sm font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1.5 px-2.5 rounded-lg hover:bg-slate-900/60"
-            title="Call MarketingGlu Support"
+            className="flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1.5 px-2 rounded-full hover:bg-slate-900/60 border border-transparent hover:border-slate-800"
+            title={`Call Support: ${config.phone}`}
           >
-            <div className="w-7 h-7 xl:w-8 xl:h-8 rounded-full bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
-              <Phone className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
+            <div className="w-7 h-7 rounded-full bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
+              <Phone className="w-3.5 h-3.5" />
             </div>
-            <span className="whitespace-nowrap font-bold">{config.phone}</span>
+            <span className="hidden xl:inline whitespace-nowrap font-bold text-xs">{config.phone}</span>
+            <span className="xl:hidden inline font-bold text-xs text-cyan-300">Call</span>
           </a>
 
           {/* Get Free Quote CTA */}
           <motion.button
             {...buttonHoverMotion}
             onClick={onOpenConsultation}
-            className="px-4 xl:px-6 py-2 xl:py-2.5 rounded-xl border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs md:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[42px] flex items-center justify-center"
+            className="px-3.5 xl:px-4 py-2 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[38px] flex items-center justify-center"
             id="btn-get-free-quote"
           >
             Get Free Quote
@@ -444,7 +443,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </button>
               </div>
 
-              {/* Scrollable Navigation List */}
+              {/* Scrollable Navigation List - Reordered to Match Desktop Flow */}
               <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
                 
                 {/* Agency Badge */}
@@ -455,7 +454,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
                 {/* Primary Nav Links */}
                 <div className="space-y-1 font-medium text-slate-300 text-sm">
-                  {/* Home */}
+                  {/* 1. Home */}
                   <button
                     onClick={() => handleNavClick('#/')}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
@@ -471,23 +470,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     <ArrowRight className="w-4 h-4 text-slate-500" />
                   </button>
 
-                  {/* About Us */}
-                  <button
-                    onClick={() => handleNavClick('#about')}
-                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
-                      isHashActive('#about')
-                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
-                        : 'hover:bg-slate-900/80 hover:text-white'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Building2 className="w-4 h-4 text-cyan-400" />
-                      <span>About Us</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-slate-500" />
-                  </button>
-
-                  {/* Services Accordion */}
+                  {/* 2. Services Accordion */}
                   <div className="border border-slate-800/80 rounded-2xl overflow-hidden bg-slate-950/40">
                     <button
                       onClick={() => setMobileServicesExpanded(!mobileServicesExpanded)}
@@ -543,7 +526,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     )}
                   </div>
 
-                  {/* Portfolio */}
+                  {/* 3. Portfolio */}
                   <button
                     onClick={() => handleNavClick('#cases')}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
@@ -559,7 +542,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     <ArrowRight className="w-4 h-4 text-slate-500" />
                   </button>
 
-                  {/* Packages */}
+                  {/* 4. Packages */}
                   <button
                     onClick={() => handleNavClick('#packages')}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
@@ -575,7 +558,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     <ArrowRight className="w-4 h-4 text-slate-500" />
                   </button>
 
-                  {/* Performance */}
+                  {/* 5. Performance */}
                   <button
                     onClick={() => handleNavClick('#growth')}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
@@ -591,7 +574,23 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     <ArrowRight className="w-4 h-4 text-slate-500" />
                   </button>
 
-                  {/* Blogs */}
+                  {/* 6. About Us */}
+                  <button
+                    onClick={() => handleNavClick('#about')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#about')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Building2 className="w-4 h-4 text-cyan-400" />
+                      <span>About Us &amp; Mission</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* 7. Blogs */}
                   <button
                     onClick={() => handleNavClick('#/blogs')}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
@@ -607,7 +606,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     <ArrowRight className="w-4 h-4 text-slate-500" />
                   </button>
 
-                  {/* FAQs */}
+                  {/* 8. FAQs */}
                   <button
                     onClick={() => handleNavClick('#faq')}
                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
@@ -626,7 +625,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
               </div>
 
-              {/* Bottom Quick Contact & Consultation Triggers (with pb-28 for mobile bottom bar clearance) */}
+              {/* Bottom Quick Contact & Consultation Triggers */}
               <div className="p-4 sm:p-5 border-t border-slate-800 bg-[#060a14] space-y-2.5 pb-28 sm:pb-6">
                 <div className="grid grid-cols-2 gap-2">
                   {/* Phone hotline */}
