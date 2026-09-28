@@ -2,13 +2,14 @@ import React from 'react';
 import { Loader2, Sparkles } from 'lucide-react';
 
 interface AdminSkeletonProps {
-  tab?: 'titles' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design' | 'security';
+  tab?: 'titles' | 'about' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design' | 'security';
 }
 
 export default function AdminSkeleton({ tab = 'titles' }: AdminSkeletonProps) {
   const getTabCategory = () => {
     switch (tab) {
       case 'titles':
+      case 'about':
       case 'company':
       case 'design':
         return 'form';
@@ -24,6 +25,7 @@ export default function AdminSkeleton({ tab = 'titles' }: AdminSkeletonProps) {
   const getTabLabel = () => {
     switch (tab) {
       case 'titles': return 'Titles & Copywriting';
+      case 'about': return 'About Us & Pillars';
       case 'services': return 'Services Provided';
       case 'blogs': return 'Blogs & Publishing';
       case 'packages': return 'Service Packages';

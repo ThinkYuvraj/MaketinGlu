@@ -123,6 +123,15 @@ export interface BlogPost {
   views?: number;
 }
 
+export interface AboutPillar {
+  id: string;
+  title: string;
+  description: string;
+  tag: string;
+  iconName?: string;
+  accent?: 'cyan' | 'emerald' | 'sky' | 'amber' | 'violet';
+}
+
 export interface SiteConfig {
   // Brand & Contact
   brandName: string;
@@ -191,6 +200,7 @@ export interface SiteConfig {
   sectionImages: Record<string, string>;
 
   // About Us Section
+  aboutEnabled?: boolean;
   aboutBadge?: string;
   aboutTitle1?: string;
   aboutTitle2?: string;
@@ -201,4 +211,6 @@ export interface SiteConfig {
   aboutProjectsDelivered?: string;
   aboutClientSatisfaction?: string;
   aboutCertification?: string;
+  aboutPillars?: AboutPillar[];
+  aboutChecklist?: string[];
 }

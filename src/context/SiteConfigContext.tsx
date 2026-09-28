@@ -1,10 +1,56 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Globe } from 'lucide-react';
-import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost } from '../types';
+import { SiteConfig, PackageItem, TestimonialItem, CaseStudy, FAQItem, CustomSection, BlogPost, AboutPillar } from '../types';
 import { caseStudiesData } from '../data/caseStudiesData';
 import { defaultFaqs } from '../data/faqData';
 import { defaultBlogs } from '../data/blogsData';
 import { expertiseData, ExpertiseItem, SERVICE_ICON_MAP } from '../data/expertiseData';
+
+export const defaultAboutPillars: AboutPillar[] = [
+  {
+    id: 'pillar-1',
+    title: 'Full-Stack Technical Precision',
+    description:
+      'We build sub-second web platforms, scalable SaaS architectures, and seamless e-commerce systems with modern engineering standards—never bloated third-party templates.',
+    tag: 'ENGINEERING',
+    iconName: 'Zap',
+    accent: 'cyan',
+  },
+  {
+    id: 'pillar-2',
+    title: '100% Commercial IP Ownership',
+    description:
+      'Zero agency handcuffs. You retain 100% full legal ownership of your domains, codebase, ad accounts, analytics setups, and visual design assets from day one.',
+    tag: 'SOVEREIGNTY',
+    iconName: 'Lock',
+    accent: 'emerald',
+  },
+  {
+    id: 'pillar-3',
+    title: 'Algorithmic Organic Dominance',
+    description:
+      'Our technical SEO audits, intent-mapped keyword clusters, and high-authority link architectures systematically rank your brand at the summit of Google search.',
+    tag: 'SEARCH ENGINE',
+    iconName: 'Compass',
+    accent: 'sky',
+  },
+  {
+    id: 'pillar-4',
+    title: 'Direct Senior Strategist Access',
+    description:
+      'Direct communication with senior engineers and marketing directors in New Delhi via dedicated WhatsApp & Slack channels—never outsourced to junior interns.',
+    tag: 'PARTNERSHIP',
+    iconName: 'Users2',
+    accent: 'amber',
+  },
+];
+
+export const defaultAboutChecklist: string[] = [
+  'In-house full stack engineering & sub-second Core Web Vitals',
+  'High-ROAS Google Ads, Meta Ads & continuous conversion rate optimization',
+  'Direct communication line with senior architects on WhatsApp & Slack',
+  'Flexible month-to-month agreements with zero lock-in contracts',
+];
 
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
@@ -239,6 +285,7 @@ export const defaultSiteConfig: SiteConfig = {
   sectionImages: {},
 
   // About Us Section Defaults
+  aboutEnabled: true,
   aboutBadge: 'ABOUT MARKETIN GLU',
   aboutTitle1: 'Engineering Next-Gen Software &',
   aboutTitle2: 'High-Impact Digital Growth',
@@ -252,6 +299,8 @@ export const defaultSiteConfig: SiteConfig = {
   aboutProjectsDelivered: '250+ Projects',
   aboutClientSatisfaction: '99% Retention',
   aboutCertification: 'ISO 9001:2015 Certified',
+  aboutPillars: defaultAboutPillars,
+  aboutChecklist: defaultAboutChecklist,
 };
 
 interface SiteConfigContextType {
@@ -259,6 +308,11 @@ interface SiteConfigContextType {
   updateConfig: (newConfig: Partial<SiteConfig>) => void;
   resetConfig: () => void;
   
+  // About Us Section Management
+  addAboutPillar: (pillar: AboutPillar) => void;
+  updateAboutPillar: (pillar: AboutPillar) => void;
+  deleteAboutPillar: (id: string) => void;
+
   // Package Management
   addPackage: (pkg: PackageItem) => void;
   updatePackage: (pkg: PackageItem) => void;
@@ -564,6 +618,30 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   };
 
+  // About Us Pillars Management
+  const addAboutPillar = (pillar: AboutPillar) => {
+    setConfig((prev) => ({
+      ...prev,
+      aboutPillars: [...(prev.aboutPillars || defaultAboutPillars), pillar],
+    }));
+  };
+
+  const updateAboutPillar = (pillar: AboutPillar) => {
+    setConfig((prev) => ({
+      ...prev,
+      aboutPillars: (prev.aboutPillars || defaultAboutPillars).map((p) =>
+        p.id === pillar.id ? pillar : p
+      ),
+    }));
+  };
+
+  const deleteAboutPillar = (id: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      aboutPillars: (prev.aboutPillars || defaultAboutPillars).filter((p) => p.id !== id),
+    }));
+  };
+
   // Section Images Management
   const updateSectionImage = (key: string, url: string) => {
     setConfig((prev) => ({
@@ -592,6 +670,9 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         config,
         updateConfig,
         resetConfig,
+        addAboutPillar,
+        updateAboutPillar,
+        deleteAboutPillar,
         addPackage,
         updatePackage,
         deletePackage,

@@ -24,6 +24,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import TitlesTab from './components/TitlesTab';
+import AboutTab from './components/AboutTab';
 import ServicesTab from './components/ServicesTab';
 import BlogsTab from './components/BlogsTab';
 import PackagesTab from './components/PackagesTab';
@@ -36,13 +37,14 @@ import SectionsTab from './components/SectionsTab';
 import ImagesMediaTab from './components/ImagesMediaTab';
 import SecurityTab from './components/SecurityTab';
 import AdminSkeleton from './components/AdminSkeleton';
+import { defaultAboutPillars, defaultAboutChecklist } from '../context/SiteConfigContext';
 
 interface AdminDashboardProps {
   onBackToSite: () => void;
   onLogout: () => void;
 }
 
-type TabType = 'titles' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design' | 'security';
+type TabType = 'titles' | 'about' | 'services' | 'blogs' | 'packages' | 'sections' | 'images' | 'cases' | 'faq' | 'testimonials' | 'company' | 'design' | 'security';
 
 export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboardProps) {
   const { 
@@ -112,6 +114,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     address: config.address,
     locationBadge: config.locationBadge,
 
+    aboutEnabled: config.aboutEnabled ?? true,
     aboutBadge: config.aboutBadge || 'ABOUT MARKETIN GLU',
     aboutTitle1: config.aboutTitle1 || 'Engineering Next-Gen Software &',
     aboutTitle2: config.aboutTitle2 || 'High-Impact Digital Growth',
@@ -122,6 +125,8 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     aboutProjectsDelivered: config.aboutProjectsDelivered || '250+ Projects',
     aboutClientSatisfaction: config.aboutClientSatisfaction || '99% Retention',
     aboutCertification: config.aboutCertification || 'ISO 9001:2015 Certified',
+    aboutPillars: config.aboutPillars || defaultAboutPillars,
+    aboutChecklist: config.aboutChecklist || defaultAboutChecklist,
 
     announcementEnabled: config.announcement.enabled,
     announcementText: config.announcement.text,
@@ -167,6 +172,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
       address: config.address,
       locationBadge: config.locationBadge,
 
+      aboutEnabled: config.aboutEnabled ?? true,
       aboutBadge: config.aboutBadge || 'ABOUT MARKETIN GLU',
       aboutTitle1: config.aboutTitle1 || 'Engineering Next-Gen Software &',
       aboutTitle2: config.aboutTitle2 || 'High-Impact Digital Growth',
@@ -177,6 +183,8 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
       aboutProjectsDelivered: config.aboutProjectsDelivered || '250+ Projects',
       aboutClientSatisfaction: config.aboutClientSatisfaction || '99% Retention',
       aboutCertification: config.aboutCertification || 'ISO 9001:2015 Certified',
+      aboutPillars: config.aboutPillars || defaultAboutPillars,
+      aboutChecklist: config.aboutChecklist || defaultAboutChecklist,
 
       announcementEnabled: config.announcement.enabled,
       announcementText: config.announcement.text,
@@ -222,6 +230,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
       address: formData.address,
       locationBadge: formData.locationBadge,
 
+      aboutEnabled: formData.aboutEnabled !== false,
       aboutBadge: formData.aboutBadge,
       aboutTitle1: formData.aboutTitle1,
       aboutTitle2: formData.aboutTitle2,
@@ -232,6 +241,8 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
       aboutProjectsDelivered: formData.aboutProjectsDelivered,
       aboutClientSatisfaction: formData.aboutClientSatisfaction,
       aboutCertification: formData.aboutCertification,
+      aboutPillars: formData.aboutPillars || defaultAboutPillars,
+      aboutChecklist: formData.aboutChecklist || defaultAboutChecklist,
 
       announcement: {
         enabled: formData.announcementEnabled,
@@ -286,6 +297,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
 
   const tabs: { id: TabType; label: string; icon: any; count?: number }[] = [
     { id: 'titles', label: 'Titles & Copy', icon: Type },
+    { id: 'about', label: 'About Us Section', icon: Building2, count: (formData.aboutPillars || defaultAboutPillars).length },
     { id: 'services', label: 'Services Provided', icon: Briefcase, count: config.services?.length },
     { id: 'blogs', label: 'Blogs & Resources', icon: BookOpen, count: config.blogs?.length },
     { id: 'packages', label: 'Service Packages', icon: Package, count: config.packages?.length },
@@ -294,7 +306,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     { id: 'cases', label: 'Case Studies', icon: Sparkles, count: config.caseStudies?.length },
     { id: 'faq', label: 'FAQ Knowledge', icon: HelpCircle, count: config.faqs?.length },
     { id: 'testimonials', label: 'Client Reviews', icon: MessageSquare, count: config.testimonials?.length },
-    { id: 'company', label: 'Agency & About Us', icon: Building2 },
+    { id: 'company', label: 'Agency & Coordinates', icon: Building2 },
     { id: 'design', label: 'Theme & Stats', icon: Palette },
     { id: 'security', label: 'Admin Credentials', icon: ShieldCheck },
   ];
@@ -444,6 +456,14 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
             <>
               {activeTab === 'titles' && (
                 <TitlesTab formData={formData} setFormData={setFormData} />
+              )}
+
+              {activeTab === 'about' && (
+                <AboutTab
+                  formData={formData}
+                  setFormData={setFormData}
+                  onSave={handleSaveAll}
+                />
               )}
 
               {activeTab === 'services' && (

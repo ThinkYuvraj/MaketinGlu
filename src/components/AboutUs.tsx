@@ -15,19 +15,69 @@ import {
   Compass,
   Users2,
   TrendingUp,
+  HeartHandshake
 } from 'lucide-react';
 import Container from './common/Container';
-import { useSiteConfig } from '../context/SiteConfigContext';
+import { useSiteConfig, defaultAboutPillars, defaultAboutChecklist } from '../context/SiteConfigContext';
 import { useNavigation } from '../context/NavigationContext';
-import { buttonHoverMotion, cardHoverMotion, fadeInUpVariants, staggerContainerVariants, staggerItemVariants } from '../lib/animations';
+import { buttonHoverMotion, cardHoverMotion } from '../lib/animations';
+import { AboutPillar } from '../types';
 
 interface AboutUsProps {
   onOpenConsultation?: (serviceName?: string) => void;
 }
 
+const PILLAR_ICONS: { [key: string]: React.ElementType } = {
+  Zap,
+  Lock,
+  Compass,
+  Users2,
+  ShieldCheck,
+  Sparkles,
+  Layers,
+  TrendingUp,
+  Award,
+  CheckCircle2,
+  HeartHandshake,
+};
+
+const PILLAR_ACCENTS: {
+  [key: string]: { borderColor: string; iconColor: string; bgGradient: string };
+} = {
+  cyan: {
+    borderColor: 'border-cyan-500/30',
+    iconColor: 'text-cyan-400',
+    bgGradient: 'from-cyan-500/20 to-blue-500/10',
+  },
+  emerald: {
+    borderColor: 'border-emerald-500/30',
+    iconColor: 'text-emerald-400',
+    bgGradient: 'from-emerald-500/20 to-teal-500/10',
+  },
+  sky: {
+    borderColor: 'border-sky-500/30',
+    iconColor: 'text-sky-400',
+    bgGradient: 'from-sky-500/20 to-indigo-500/10',
+  },
+  amber: {
+    borderColor: 'border-amber-500/30',
+    iconColor: 'text-amber-400',
+    bgGradient: 'from-amber-500/20 to-orange-500/10',
+  },
+  violet: {
+    borderColor: 'border-purple-500/30',
+    iconColor: 'text-purple-400',
+    bgGradient: 'from-purple-500/20 to-indigo-500/10',
+  },
+};
+
 export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   const { config } = useSiteConfig();
   const { navigateTo } = useNavigation();
+
+  if (config.aboutEnabled === false) {
+    return null;
+  }
 
   const badgeText = config.aboutBadge || 'ABOUT MARKETIN GLU';
   const title1 = config.aboutTitle1 || 'Engineering Next-Gen Software &';
@@ -69,48 +119,13 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
     },
   ];
 
-  const pillars = [
-    {
-      title: 'Full-Stack Technical Precision',
-      description:
-        'We build sub-second web platforms, scalable SaaS architectures, and seamless e-commerce systems with modern engineering standards—never bloated third-party templates.',
-      icon: Zap,
-      tag: 'ENGINEERING',
-      color: 'from-cyan-500/20 to-blue-500/10',
-      borderColor: 'border-cyan-500/30',
-      iconColor: 'text-cyan-400',
-    },
-    {
-      title: '100% Commercial IP Ownership',
-      description:
-        'Zero agency handcuffs. You retain 100% full legal ownership of your domains, codebase, ad accounts, analytics setups, and visual design assets from day one.',
-      icon: Lock,
-      tag: 'SOVEREIGNTY',
-      color: 'from-emerald-500/20 to-teal-500/10',
-      borderColor: 'border-emerald-500/30',
-      iconColor: 'text-emerald-400',
-    },
-    {
-      title: 'Algorithmic Organic Dominance',
-      description:
-        'Our technical SEO audits, intent-mapped keyword clusters, and high-authority link architectures systematically rank your brand at the summit of Google search.',
-      icon: Compass,
-      tag: 'SEARCH ENGINE',
-      color: 'from-sky-500/20 to-indigo-500/10',
-      borderColor: 'border-sky-500/30',
-      iconColor: 'text-sky-400',
-    },
-    {
-      title: 'Direct Senior Strategist Access',
-      description:
-        'Direct communication with senior engineers and marketing directors in New Delhi via dedicated WhatsApp & Slack channels—never outsourced to junior interns.',
-      icon: Users2,
-      tag: 'PARTNERSHIP',
-      color: 'from-amber-500/20 to-orange-500/10',
-      borderColor: 'border-amber-500/30',
-      iconColor: 'text-amber-400',
-    },
-  ];
+  const pillars: AboutPillar[] = config.aboutPillars && config.aboutPillars.length > 0
+    ? config.aboutPillars
+    : defaultAboutPillars;
+
+  const checklist: string[] = config.aboutChecklist && config.aboutChecklist.length > 0
+    ? config.aboutChecklist
+    : defaultAboutChecklist;
 
   return (
     <section
@@ -192,14 +207,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 </div>
               </div>
 
-              {/* Value checklist */}
+              {/* Dynamic Value checklist */}
               <div className="mt-6 pt-5 border-t border-slate-800 space-y-2.5">
-                {[
-                  'In-house full stack engineering & sub-second Core Web Vitals',
-                  'High-ROAS Google Ads, Meta Ads & continuous conversion rate optimization',
-                  'Direct communication line with senior architects on WhatsApp & Slack',
-                  'Flexible month-to-month agreements with zero lock-in contracts',
-                ].map((item, idx) => (
+                {checklist.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-200">
                     <div className="w-4 h-4 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center shrink-0 mt-0.5 text-cyan-300">
                       <CheckCircle2 className="w-2.5 h-2.5" />
@@ -229,15 +239,17 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             </div>
           </div>
 
-          {/* Right Column: 4 Core Pillars (span 6) */}
+          {/* Right Column: Dynamic Core Pillars (span 6) */}
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {pillars.map((pillar, idx) => {
-              const Icon = pillar.icon;
+            {pillars.map((pillar) => {
+              const Icon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
+              const accent = PILLAR_ACCENTS[pillar.accent || 'cyan'] || PILLAR_ACCENTS.cyan;
+
               return (
                 <motion.div
-                  key={idx}
+                  key={pillar.id}
                   {...cardHoverMotion}
-                  className={`p-5 rounded-2xl bg-[#090e1c] border ${pillar.borderColor} flex flex-col justify-between shadow-xl transition-all relative overflow-hidden`}
+                  className={`p-5 rounded-2xl bg-[#090e1c] border ${accent.borderColor} flex flex-col justify-between shadow-xl transition-all relative overflow-hidden`}
                 >
                   <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-cyan-500/5 to-transparent rounded-full pointer-events-none" />
 
@@ -246,7 +258,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-2 py-0.5 rounded-md">
                         {pillar.tag}
                       </span>
-                      <div className={`w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center ${pillar.iconColor}`}>
+                      <div className={`w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center ${accent.iconColor}`}>
                         <Icon className="w-4 h-4" />
                       </div>
                     </div>

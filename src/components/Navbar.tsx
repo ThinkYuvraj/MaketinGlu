@@ -1,6 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Phone, Menu, X, Sparkles, ArrowRight, ChevronDown, Layers } from 'lucide-react';
+import { 
+  Phone, 
+  Menu, 
+  X, 
+  Sparkles, 
+  ArrowRight, 
+  ChevronDown, 
+  Layers,
+  Home,
+  Building2,
+  Briefcase,
+  Package,
+  TrendingUp,
+  BookOpen,
+  HelpCircle,
+  MessageSquare,
+  ShieldCheck,
+  CheckCircle2,
+  ExternalLink
+} from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { useNavigation } from '../context/NavigationContext';
 import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
@@ -86,13 +105,18 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
     }
   };
 
-  const navLinks = [
-    { name: 'Home', href: '#/' },
-    { name: 'Performance', href: '#growth' },
-    { name: 'Packages', href: '#packages' },
-    { name: 'Portfolio', href: '#cases' },
-    { name: 'FAQs', href: '#faq' },
-  ];
+  const isHashActive = (hashTarget: string) => {
+    if (hashTarget === '#/' || hashTarget === '#home') {
+      return currentRoute.type === 'home' && (!window.location.hash || window.location.hash === '#/' || window.location.hash === '#home');
+    }
+    if (hashTarget === '#about') {
+      return window.location.hash === '#about' || window.location.hash === '#/about' || window.location.hash === '#about-us';
+    }
+    return window.location.hash === hashTarget || window.location.hash === `#/${hashTarget.replace('#', '')}`;
+  };
+
+  const rawPhone = config.phone.replace(/[^0-9+]/g, '');
+  const whatsappNumber = rawPhone.replace('+', '');
 
   return (
     <header 
@@ -104,10 +128,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
     >
       {/* Top Announcement Bar (Configurable in Admin Studio) */}
       {config.announcement.enabled && (
-        <div className="bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border-b border-cyan-500/20 py-1.5 px-3 sm:px-4 text-center text-[11px] sm:text-xs w-full">
-          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
+        <div className="bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border-b border-cyan-500/20 py-1.5 px-3 sm:px-4 text-center text-[10.5px] sm:text-xs w-full">
+          <div className="w-full px-3 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 flex items-center justify-center gap-1.5 sm:gap-2 text-slate-200">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span className="truncate max-w-[200px] sm:max-w-none font-medium">{config.announcement.text}</span>
+            <span className="truncate max-w-[190px] xs:max-w-[280px] sm:max-w-none font-medium">{config.announcement.text}</span>
             <button
               onClick={onOpenConsultation}
               className="inline-flex items-center gap-1 font-bold text-cyan-300 hover:text-white underline ml-1 cursor-pointer shrink-0"
@@ -119,7 +143,8 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         </div>
       )}
 
-      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex items-center justify-between gap-3 lg:gap-6">
+      {/* Main Navigation Bar Row */}
+      <div className="w-full px-3.5 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex items-center justify-between gap-3 lg:gap-6">
         
         {/* Left: Brand Logo with White Background Badge & Typography */}
         <div className="shrink-0 flex items-center">
@@ -127,23 +152,24 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             onClick={() => handleNavClick('#/')}
             className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
             id="nav-brand-logo"
+            aria-label="MarketingGlu Homepage"
           >
             <Logo variant="light-badge" size="md" />
-            <span className="text-lg sm:text-xl font-black tracking-tight flex items-center">
+            <span className="text-base sm:text-lg lg:text-xl font-black tracking-tight flex items-center">
               <span className="text-white italic">MARKETIN</span>
               <span className="text-blue-500 not-italic">GLU</span>
             </span>
           </button>
         </div>
 
-        {/* Center: Perfectly Centered Desktop Nav Links with Balanced Spacing & Active States */}
+        {/* Center: Desktop Nav Links (Visible only on lg: >=1024px) */}
         <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-2 xl:px-4">
           <nav className="flex items-center gap-1 xl:gap-1.5 2xl:gap-2.5 text-[13px] xl:text-sm font-medium">
             {/* 1. Home */}
             <button
               onClick={() => handleNavClick('#/')}
               className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                currentRoute.type === 'home' && (!window.location.hash || window.location.hash === '#/' || window.location.hash === '#home')
+                isHashActive('#/')
                   ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
@@ -155,7 +181,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             <button
               onClick={() => handleNavClick('#about')}
               className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                window.location.hash === '#about' || window.location.hash === '#/about' || window.location.hash === '#about-us'
+                isHashActive('#about')
                   ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
@@ -256,7 +282,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             <button
               onClick={() => handleNavClick('#cases')}
               className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                window.location.hash === '#cases' || window.location.hash === '#/cases'
+                isHashActive('#cases')
                   ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
@@ -268,7 +294,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             <button
               onClick={() => handleNavClick('#packages')}
               className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                window.location.hash === '#packages' || window.location.hash === '#/packages'
+                isHashActive('#packages')
                   ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
@@ -280,7 +306,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             <button
               onClick={() => handleNavClick('#growth')}
               className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                window.location.hash === '#growth' || window.location.hash === '#/growth'
+                isHashActive('#growth')
                   ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
@@ -304,7 +330,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             <button
               onClick={() => handleNavClick('#faq')}
               className={`px-2.5 xl:px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
-                window.location.hash === '#faq' || window.location.hash === '#/faq'
+                isHashActive('#faq')
                   ? 'bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm shadow-cyan-500/10'
                   : 'text-slate-300 hover:text-white hover:bg-slate-900/80'
               }`}
@@ -314,8 +340,8 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </nav>
         </div>
 
-        {/* Right Desktop CTA Area (Phone & Quote CTA) */}
-        <div className="hidden sm:flex items-center justify-end shrink-0 gap-2.5 xl:gap-4">
+        {/* Right Desktop CTA Area (Visible strictly on lg: >=1024px) */}
+        <div className="hidden lg:flex items-center justify-end shrink-0 gap-2.5 xl:gap-4">
           {/* Phone number */}
           <a 
             href={`tel:${config.phone.replace(/\s+/g, '')}`}
@@ -339,23 +365,34 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </motion.button>
         </div>
 
-        {/* Mobile quick action buttons: Phone + Hamburger */}
-        <div className="flex lg:hidden items-center gap-2 sm:gap-2.5">
-          {/* Direct Phone Tap for Mobile Header */}
+        {/* Right Tablet & Mobile Action Buttons (Visible strictly below lg: <1024px) */}
+        <div className="flex lg:hidden items-center gap-2 sm:gap-3">
+          {/* Tablet Quote CTA Button (Shown on sm: & md: 640px - 1023px) */}
+          <motion.button
+            {...buttonHoverMotion}
+            onClick={onOpenConsultation}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-cyan-400/80 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs font-bold transition-all shadow-sm cursor-pointer whitespace-nowrap"
+            id="tablet-quote-btn"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Get Quote</span>
+          </motion.button>
+
+          {/* Direct Phone Tap for Tablet and Mobile (<1024px) */}
           <a
             href={`tel:${config.phone.replace(/\s+/g, '')}`}
-            className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-cyan-400 rounded-xl border border-slate-800 bg-slate-900/90 active:bg-slate-800 transition-colors shadow-sm"
+            className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-cyan-400 rounded-xl border border-slate-800 bg-slate-900/90 active:bg-slate-800 hover:border-cyan-500/40 transition-colors shadow-sm shrink-0 min-h-[42px] min-w-[42px]"
             aria-label="Call Direct Line"
-            title="Call MarketingGlu"
+            title={`Call ${config.phone}`}
           >
             <Phone className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
           </a>
 
-          {/* Hamburger button with 44px min touch target */}
+          {/* Hamburger toggle button (min 44px touch target) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-slate-300 hover:text-white rounded-xl border border-slate-800 bg-slate-900/90 active:bg-slate-800 transition-colors shadow-sm cursor-pointer"
-            aria-label="Toggle Navigation Menu"
+            className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-slate-200 hover:text-white rounded-xl border border-slate-800 bg-slate-900/90 active:bg-slate-800 hover:border-cyan-500/40 transition-colors shadow-sm cursor-pointer shrink-0 min-h-[42px] min-w-[42px]"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open navigation menu"}
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-5 h-5 text-cyan-400" /> : <Menu className="w-5 h-5" />}
@@ -364,157 +401,272 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
       </div>
 
-      {/* Mobile Drawer Menu Backdrop & Panel */}
+      {/* Slide-In Drawer for Mobile & Tablet (<1024px) */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <>
-            {/* Backdrop overlay */}
+          <div className="lg:hidden fixed inset-0 z-50">
+            {/* Backdrop overlay covering full screen */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="lg:hidden fixed inset-0 top-[60px] bg-black/60 backdrop-blur-xs z-30"
+              className="absolute inset-0 bg-black/75 backdrop-blur-sm"
               aria-hidden="true"
             />
 
-            {/* Slide-down Drawer attached right below header */}
+            {/* Slide-In Drawer Panel from Right */}
             <motion.div 
-              initial={{ opacity: 0, y: -12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.22, ease: standardEase }}
-              className="lg:hidden fixed top-full left-0 right-0 z-40 bg-slate-950 border-b border-slate-800 px-4 sm:px-6 py-5 space-y-4 shadow-2xl max-h-[calc(100vh-70px)] overflow-y-auto"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+              className="absolute top-0 right-0 bottom-0 w-full sm:w-[420px] md:w-[460px] bg-[#070c18] border-l border-slate-800/90 shadow-2xl flex flex-col justify-between overflow-hidden"
             >
-              {/* Mobile Navigation Links */}
-              <div className="flex flex-col gap-1 font-medium text-slate-300 text-sm sm:text-base">
-                <button
-                  onClick={() => handleNavClick('#/')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
-                >
-                  <span className="font-semibold">Home</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#about')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
-                >
-                  <span className="font-semibold">About Us</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
-                </button>
-
-                {/* Mobile Services Accordion */}
-                <div className="border-b border-slate-800/40 rounded-xl overflow-hidden">
-                  <button
-                    onClick={() => setMobileServicesExpanded(!mobileServicesExpanded)}
-                    className="w-full flex items-center justify-between py-3 px-3 hover:bg-slate-900 text-cyan-300 min-h-[46px] text-left cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-cyan-400" />
-                      <span className="font-bold">Services &amp; Disciplines</span>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesExpanded ? 'rotate-180 text-cyan-400' : 'text-slate-500'}`} />
-                  </button>
-
-                  {mobileServicesExpanded && (
-                    <div className="px-2 pb-2.5 pt-1 space-y-1 bg-slate-900/60 rounded-xl">
-                      {navServices.map((item) => (
-                        <button
-                          key={item.id}
-                          onClick={() => {
-                            setMobileMenuOpen(false);
-                            navigateToService(item.id);
-                          }}
-                          className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-slate-800/80 text-left text-xs font-semibold text-slate-200 hover:text-cyan-300 transition-colors cursor-pointer"
-                        >
-                          <span>{item.tabLabel}</span>
-                          <span className="text-[10px] text-cyan-400 font-mono font-normal">Details &rarr;</span>
-                        </button>
-                      ))}
-                      <button
-                        onClick={() => handleNavClick('#/services')}
-                        className="w-full py-2.5 px-3 mt-1.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-center text-xs font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2"
-                      >
-                        <Layers className="w-3.5 h-3.5 text-slate-950" />
-                        <span>Know More &bull; All Services</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
-                      </button>
-                    </div>
-                  )}
+              {/* Drawer Header */}
+              <div className="p-4 sm:p-5 border-b border-slate-800/80 flex items-center justify-between gap-3 bg-slate-950/80">
+                <div className="flex items-center gap-2.5">
+                  <Logo variant="light-badge" size="sm" />
+                  <span className="text-base sm:text-lg font-black tracking-tight">
+                    <span className="text-white italic">MARKETIN</span>
+                    <span className="text-blue-500 not-italic">GLU</span>
+                  </span>
                 </div>
 
                 <button
-                  onClick={() => handleNavClick('#cases')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer min-h-[40px] min-w-[40px]"
+                  aria-label="Close menu"
                 >
-                  <span className="font-semibold">Portfolio</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#packages')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
-                >
-                  <span className="font-semibold">Packages</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#growth')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
-                >
-                  <span className="font-semibold">Performance</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#/blogs')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
-                >
-                  <span className="font-semibold">Blogs &amp; Insights</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
-                </button>
-
-                <button
-                  onClick={() => handleNavClick('#faq')}
-                  className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-900 hover:text-cyan-400 border-b border-slate-800/40 active:bg-cyan-950/30 transition-colors min-h-[46px] text-left cursor-pointer"
-                >
-                  <span className="font-semibold">FAQs</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
+                  <X className="w-5 h-5 text-cyan-400" />
                 </button>
               </div>
 
-              {/* Contact and Quote CTA */}
-              <div className="pt-2 border-t border-slate-800 flex flex-col gap-3">
-                <a 
-                  href={`tel:${config.phone.replace(/\s+/g, '')}`}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-sm text-cyan-300 font-semibold min-h-[48px]"
-                >
-                  <div className="w-9 h-9 rounded-full bg-cyan-950 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <div className="flex flex-col text-left">
-                    <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Direct Hotline</span>
-                    <span className="font-bold text-slate-100">{config.phone}</span>
-                  </div>
-                </a>
+              {/* Scrollable Navigation List */}
+              <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
+                
+                {/* Agency Badge */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-[10px] font-mono font-bold tracking-wider text-cyan-300 uppercase">
+                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>ISO 9001:2015 &bull; NEW DELHI</span>
+                </div>
 
+                {/* Primary Nav Links */}
+                <div className="space-y-1 font-medium text-slate-300 text-sm">
+                  {/* Home */}
+                  <button
+                    onClick={() => handleNavClick('#/')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#/')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Home className="w-4 h-4 text-cyan-400" />
+                      <span>Home</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* About Us */}
+                  <button
+                    onClick={() => handleNavClick('#about')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#about')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Building2 className="w-4 h-4 text-cyan-400" />
+                      <span>About Us</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* Services Accordion */}
+                  <div className="border border-slate-800/80 rounded-2xl overflow-hidden bg-slate-950/40">
+                    <button
+                      onClick={() => setMobileServicesExpanded(!mobileServicesExpanded)}
+                      className="w-full flex items-center justify-between p-3 hover:bg-slate-900 text-cyan-300 min-h-[46px] text-left cursor-pointer transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Layers className="w-4 h-4 text-cyan-400" />
+                        <span className="font-bold">Services &amp; Disciplines</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-500/30">
+                          6 Disciplines
+                        </span>
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileServicesExpanded ? 'rotate-180 text-cyan-400' : 'text-slate-500'}`} />
+                      </div>
+                    </button>
+
+                    {mobileServicesExpanded && (
+                      <div className="px-2 pb-2.5 pt-1 space-y-1 bg-slate-900/40 border-t border-slate-800/60">
+                        {navServices.map((item) => {
+                          const Icon = getExpertiseIcon(item);
+                          const isActive = currentRoute.type === 'service-detail' && currentRoute.serviceId === item.id;
+                          return (
+                            <button
+                              key={item.id}
+                              onClick={() => {
+                                setMobileMenuOpen(false);
+                                navigateToService(item.id);
+                              }}
+                              className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs font-semibold transition-colors cursor-pointer ${
+                                isActive 
+                                  ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-500/40' 
+                                  : 'hover:bg-slate-800/70 text-slate-200 hover:text-white'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5 truncate">
+                                <Icon className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                                <span className="truncate">{item.tabLabel}</span>
+                              </div>
+                              <span className="text-[10px] text-cyan-400 font-mono font-normal shrink-0">Explore &rarr;</span>
+                            </button>
+                          );
+                        })}
+
+                        <button
+                          onClick={() => handleNavClick('#/services')}
+                          className="w-full py-2 px-3 mt-1.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-center text-xs font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2"
+                        >
+                          <Layers className="w-3.5 h-3.5 text-slate-950" />
+                          <span>View All 6 Core Disciplines</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Portfolio */}
+                  <button
+                    onClick={() => handleNavClick('#cases')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#cases')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Briefcase className="w-4 h-4 text-cyan-400" />
+                      <span>Portfolio &amp; Case Studies</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* Packages */}
+                  <button
+                    onClick={() => handleNavClick('#packages')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#packages')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Package className="w-4 h-4 text-cyan-400" />
+                      <span>Service Packages</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* Performance */}
+                  <button
+                    onClick={() => handleNavClick('#growth')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#growth')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <TrendingUp className="w-4 h-4 text-cyan-400" />
+                      <span>Performance In Numbers</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* Blogs */}
+                  <button
+                    onClick={() => handleNavClick('#/blogs')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail'
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <BookOpen className="w-4 h-4 text-cyan-400" />
+                      <span>Blogs &amp; Insights</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+
+                  {/* FAQs */}
+                  <button
+                    onClick={() => handleNavClick('#faq')}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer text-left min-h-[46px] ${
+                      isHashActive('#faq')
+                        ? 'bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-bold shadow-sm'
+                        : 'hover:bg-slate-900/80 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <HelpCircle className="w-4 h-4 text-cyan-400" />
+                      <span>Frequently Asked Questions</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-500" />
+                  </button>
+                </div>
+
+              </div>
+
+              {/* Bottom Quick Contact & Consultation Triggers (with pb-28 for mobile bottom bar clearance) */}
+              <div className="p-4 sm:p-5 border-t border-slate-800 bg-[#060a14] space-y-2.5 pb-28 sm:pb-6">
+                <div className="grid grid-cols-2 gap-2">
+                  {/* Phone hotline */}
+                  <a 
+                    href={`tel:${rawPhone}`}
+                    className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/40 text-xs text-slate-200 font-bold min-h-[44px]"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>Call Hotline</span>
+                  </a>
+
+                  {/* WhatsApp chat */}
+                  <a 
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi MarketingGlu, I would like to inquire about your digital services.')}`}
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-xs text-emerald-300 font-bold min-h-[44px]"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+
+                {/* Free Custom Quote */}
                 <motion.button
                   {...buttonHoverMotion}
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenConsultation();
                   }}
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 text-sm font-extrabold text-center shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all min-h-[48px] flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 text-xs sm:text-sm font-extrabold text-center shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all min-h-[46px] flex items-center justify-center gap-2 cursor-pointer"
                 >
+                  <Sparkles className="w-4 h-4 text-slate-950" />
                   <span>Get Free Custom Quote</span>
                   <ArrowRight className="w-4 h-4 text-slate-950" />
                 </motion.button>
               </div>
+
             </motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
     </header>
