@@ -378,12 +378,18 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: { user, pass },
-    });
+    const isGmail = host.toLowerCase().includes('gmail') || process.env.SMTP_SERVICE === 'gmail';
+    const transporter = isGmail
+      ? nodemailer.createTransport({
+          service: 'gmail',
+          auth: { user, pass },
+        })
+      : nodemailer.createTransport({
+          host,
+          port,
+          secure,
+          auth: { user, pass },
+        });
 
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #ffffff;">
