@@ -219,7 +219,7 @@ export default function FAQ() {
 
           {/* Modular Category Chips & Expand Toggle */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
               {categoryFilters.map((cat) => {
                 const Icon = cat.icon;
                 const isActive = activeCategory === cat.id;
@@ -230,16 +230,24 @@ export default function FAQ() {
                     key={cat.id}
                     type="button"
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[36px] ${
+                    className={`group relative inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[34px] uppercase tracking-wide ${
                       isActive
-                        ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                        : 'bg-[#090e1c] border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                        ? 'bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 text-white shadow-sm shadow-cyan-400/30'
+                        : 'bg-transparent text-slate-400 hover:text-white hover:bg-slate-800/40'
                     }`}
                   >
-                    <Icon className="w-3.5 h-3.5" />
-                    <span>{cat.label}</span>
-                    <span className={`text-[11px] px-1.5 py-0.2 rounded-md ${
-                      isActive ? 'bg-slate-950/20 text-slate-950 font-black' : 'bg-slate-800 text-slate-300'
+                    <div
+                      className={`w-4 h-4 rounded flex items-center justify-center shrink-0 ${
+                        isActive
+                          ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black'
+                          : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
+                      }`}
+                    >
+                      <Icon className="w-2.5 h-2.5" />
+                    </div>
+                    <span className="text-[11px] font-bold">{cat.label}</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded ${
+                      isActive ? 'bg-cyan-400/30 text-cyan-200 font-bold' : 'bg-slate-800 text-slate-400'
                     }`}>
                       {count}
                     </span>
@@ -315,38 +323,38 @@ export default function FAQ() {
           </div>
         </div>
 
-        {/* Bottom Compact Requirement Inquiry Box */}
-        <div className="faq-inquiry mt-5 sm:mt-6 p-3 sm:py-3.5 sm:px-5 rounded-xl bg-[#090f20]/90 border border-slate-800/90 max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 shadow-lg">
-          <div className="flex items-center gap-2.5 text-left w-full md:w-auto">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center shrink-0 text-cyan-400">
-              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        {/* Bottom Ultra-Compact Requirement Inquiry Box */}
+        <div className="faq-inquiry mt-3.5 sm:mt-4 py-1.5 px-3 sm:py-2 sm:px-4 rounded-xl bg-[#090f20]/80 border border-cyan-500/25 max-w-xl lg:max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 shadow-md">
+          <div className="flex items-center gap-2 text-left w-full sm:w-auto min-w-0">
+            <div className="w-5 h-5 rounded-md bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center shrink-0 text-cyan-400">
+              <Sparkles className="w-3 h-3" />
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-xs sm:text-sm font-bold text-white leading-tight">
-                Have a specific question about your brand's growth roadmap?
+              <h3 className="text-xs font-bold text-white block truncate sm:inline sm:mr-1.5">
+                Have a specific growth question?
               </h3>
-              <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5 leading-snug">
-                Speak directly with our senior growth architects in New Delhi.
+              <p className="text-[11px] text-slate-400 block sm:inline truncate">
+                Speak directly with our senior growth architects.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full md:w-auto shrink-0 justify-end mt-0.5 md:mt-0">
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
             <a
               href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi MarketinGlu, I have a specific question regarding your digital marketing services.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 md:flex-none px-3 py-1.5 sm:py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors min-h-[34px] sm:min-h-[36px]"
+              className="flex-1 sm:flex-none px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 transition-colors min-h-[28px]"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>WhatsApp Us</span>
+              <MessageCircle className="w-3 h-3 text-emerald-400 shrink-0" />
+              <span>WhatsApp</span>
             </a>
 
             <a
               href="#/services"
-              className="flex-1 md:flex-none px-3.5 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 min-h-[34px] sm:min-h-[36px] whitespace-nowrap"
+              className="flex-1 sm:flex-none px-3 py-1 rounded-lg bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-[11px] sm:text-xs flex items-center justify-center gap-1 transition-all shadow-sm hover:brightness-110 min-h-[28px] whitespace-nowrap"
             >
-              <span>Explore Services &rarr;</span>
+              <span>Services &rarr;</span>
             </a>
           </div>
         </div>
