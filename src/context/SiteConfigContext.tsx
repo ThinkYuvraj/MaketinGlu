@@ -51,7 +51,7 @@ export const defaultAboutChecklist: string[] = [
 export const defaultSiteConfig: SiteConfig = {
   brandName: 'MaketinGlu',
   phone: '+91 96545 96149',
-  email: 'thinkyuvraj@gmail.com',
+  email: 'hello@marketinglu.com',
   address: 'C5C/11-B Janak Puri, New Delhi, India - 110058',
   locationBadge: 'BASED IN NEW DELHI, INDIA',
 
