@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Logo from './Logo';
-import { Sparkles, ShieldCheck, Zap } from 'lucide-react';
+import { ShieldCheck, Cpu, Sparkles, Terminal } from 'lucide-react';
 
 interface PreloaderProps {
   onComplete?: () => void;
@@ -9,14 +9,14 @@ interface PreloaderProps {
 }
 
 const STAGES = [
-  { at: 0, text: 'Initializing Neural Architecture...', code: 'SYS_BOOT' },
-  { at: 28, text: 'Compiling High-Conversion Brand Assets...', code: 'ASSET_LOAD' },
-  { at: 62, text: 'Calibrating 144Hz Smooth Engine & GPU Shaders...', code: 'GPU_ACCEL' },
-  { at: 88, text: 'Verifying Security & Core Web Vitals...', code: 'AUDIT_OK' },
-  { at: 99, text: 'MarketinGlu Systems Ready.', code: 'ONLINE' },
+  { at: 0, title: 'SYSTEM BOOT', desc: 'Initializing Cloud Neural Architecture...', status: '0x01_BOOT' },
+  { at: 25, title: 'ASSETS LOAD', desc: 'Compiling High-Conversion Brand Assets...', status: '0x02_ASSETS' },
+  { at: 55, title: 'GPU SHADERS', desc: 'Calibrating 144Hz Hardware Acceleration...', status: '0x03_RENDER' },
+  { at: 82, title: 'SECURITY AUDIT', desc: 'Verifying Core Web Vitals & SLA Metrics...', status: '0x04_VERIFY' },
+  { at: 98, title: 'SYSTEMS ONLINE', desc: 'MarketinGlu Platform Ready.', status: '0x05_READY' },
 ];
 
-export default function Preloader({ onComplete, minDurationMs = 1250 }: PreloaderProps) {
+export default function Preloader({ onComplete, minDurationMs = 1350 }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [stageIndex, setStageIndex] = useState(0);
@@ -40,7 +40,7 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
         setTimeout(() => {
           setIsLoading(false);
           onComplete?.();
-        }, 220);
+        }, 250);
       }
     };
 
@@ -51,77 +51,87 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
   const currentStage = STAGES[stageIndex] || STAGES[0];
 
   return (
-    <AnimatePresence>
+    <AnimatePresence font-sans>
       {isLoading && (
         <motion.div
-          key="global-luxury-preloader"
+          key="global-hud-preloader"
           initial={{ opacity: 1 }}
           exit={{ 
             opacity: 0,
-            scale: 1.02,
-            filter: 'blur(10px)',
-            transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] } 
+            scale: 1.03,
+            filter: 'blur(12px)',
+            transition: { duration: 0.65, ease: [0.76, 0, 0.24, 1] } 
           }}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#040711] select-none pointer-events-auto overflow-hidden"
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#02050e] select-none pointer-events-auto overflow-hidden font-sans"
         >
-          {/* Subtle Grid Background */}
+          {/* Subtle Ambient Radial Lighting */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 blur-[160px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-blue-600/12 blur-[120px] rounded-full pointer-events-none" />
+
+          {/* Futuristic Cyberpunk HUD Grid Pattern */}
           <div 
-            className="absolute inset-0 opacity-[0.04] pointer-events-none"
+            className="absolute inset-0 opacity-[0.035] pointer-events-none"
             style={{
-              backgroundImage: 'radial-gradient(rgba(6,182,212,0.8) 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
+              backgroundImage: `linear-gradient(to right, #0ea5e9 1px, transparent 1px), linear-gradient(to bottom, #0ea5e9 1px, transparent 1px)`,
+              backgroundSize: '40px 40px',
             }}
           />
 
-          {/* Multi-layered Ambient Glows */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-sky-600/12 blur-[100px] rounded-full pointer-events-none" />
-
-          {/* Central Showcase Pod */}
-          <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-md w-full">
+          {/* Central HUD Card with Corner Brackets */}
+          <div className="relative z-10 flex flex-col items-center text-center p-6 sm:p-8 max-w-md w-full mx-4 rounded-3xl bg-[#060b18]/80 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_0_60px_rgba(6,182,212,0.15)]">
             
-            {/* Dual Orbital Rings with Glowing Logo */}
-            <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center mb-6">
+            {/* Top HUD Status Bar */}
+            <div className="w-full flex items-center justify-between pb-4 mb-6 border-b border-slate-800/80 text-[10px] font-mono text-slate-400">
+              <span className="flex items-center gap-1.5 text-cyan-400 font-bold tracking-wider">
+                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                <span>MARKETIN-GLU // ENGINE v4.2</span>
+              </span>
+              <span className="text-cyan-300 font-bold bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 rounded">
+                {currentStage.status}
+              </span>
+            </div>
+
+            {/* Kinetic Spinning Orbit & Brand Badge */}
+            <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center mb-5">
               
-              {/* Outer Counter-Clockwise Dash Orbit */}
+              {/* Outer Counter-Clockwise Dash Ring */}
               <motion.div
                 animate={{ rotate: -360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0 rounded-full border border-dashed border-cyan-500/25"
+                transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
+                className="absolute inset-0 rounded-full border border-dashed border-cyan-400/40"
               />
 
-              {/* Inner Clockwise Glowing Gradient Orbit */}
+              {/* Inner Glowing Gradient Ring */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-2 rounded-full border-t-2 border-r-2 border-transparent border-t-cyan-400 border-r-sky-300 shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'linear' }}
+                className="absolute inset-2 rounded-full border-2 border-transparent border-t-cyan-400 border-r-sky-300 shadow-[0_0_24px_rgba(6,182,212,0.5)]"
               />
 
               {/* Satellite Pulse Dot */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
                 className="absolute inset-0"
               >
-                <div className="w-2 h-2 rounded-full bg-cyan-300 shadow-[0_0_10px_#22d3ee] absolute -top-1 left-1/2 -translate-x-1/2" />
+                <div className="w-2.5 h-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_#22d3ee] absolute -top-1 left-1/2 -translate-x-1/2" />
               </motion.div>
 
               {/* Logo Core Card */}
               <motion.div
-                animate={{ scale: [1, 1.04, 1] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative z-10 p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#0c152a] to-[#070c18] border border-cyan-400/50 shadow-2xl shadow-cyan-500/30 backdrop-blur-xl"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative z-10 p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#0c162c] to-[#060a15] border border-cyan-400/60 shadow-2xl shadow-cyan-500/40 backdrop-blur-xl"
               >
                 <Logo variant="light-badge" size="lg" />
               </motion.div>
             </div>
 
-            {/* Brand Title with High-Prestige Neon Shimmer */}
+            {/* Brand Title */}
             <motion.div 
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="mb-1.5 flex items-center justify-center gap-1.5"
+              className="mb-1 flex items-center justify-center gap-1.5"
             >
               <span className="text-2xl sm:text-3xl font-black text-white tracking-tight italic">
                 MARKETIN
@@ -131,68 +141,66 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
               </span>
             </motion.div>
 
-            {/* Sub-tagline badge */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-[10px] font-mono uppercase tracking-widest text-cyan-300 font-bold mb-7"
-            >
-              <Zap className="w-3 h-3 text-cyan-400 fill-cyan-400/30" />
-              <span>Software &amp; Digital Growth Engine</span>
-            </motion.div>
+            {/* Subtitle Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-mono uppercase tracking-widest text-cyan-300 font-bold mb-6">
+              <Sparkles className="w-3 h-3 text-cyan-400" />
+              <span>Software &amp; Digital Engineering</span>
+            </div>
 
-            {/* Precision Futuristic Progress Track */}
-            <div className="w-full max-w-[280px] sm:max-w-[320px] relative">
+            {/* Large Digital Counter & Progress Segment Track */}
+            <div className="w-full relative space-y-3">
               
-              {/* Outer Track */}
-              <div className="h-2 w-full bg-[#080e1e] rounded-full overflow-hidden border border-slate-800/90 p-[1.5px] relative shadow-inner">
-                {/* Active Gradient Fill */}
-                <motion.div
-                  className="h-full bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 rounded-full shadow-[0_0_14px_rgba(6,182,212,0.9)] relative overflow-hidden"
-                  style={{ width: `${progress}%` }}
-                >
-                  {/* Internal Scanning Beam */}
-                  <motion.div
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
-                    className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12"
-                  />
-                </motion.div>
+              {/* Dynamic Stage Title & Large Digital Percentage */}
+              <div className="flex items-baseline justify-between text-left px-1">
+                <div>
+                  <div className="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-widest">
+                    {currentStage.title}
+                  </div>
+                  <div className="text-xs text-slate-300 font-medium truncate max-w-[200px] sm:max-w-[240px] mt-0.5">
+                    {currentStage.desc}
+                  </div>
+                </div>
+
+                <div className="text-3xl sm:text-4xl font-black font-mono tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-cyan-400 shadow-cyan-500/20">
+                  {progress < 10 ? `0${progress}` : progress}<span className="text-sm font-sans text-cyan-400 ml-0.5">%</span>
+                </div>
               </div>
 
-              {/* Dynamic Status HUD & Percentage Counter */}
-              <div className="flex items-center justify-between mt-2.5 text-xs font-mono">
-                <div className="flex items-center gap-1.5 min-w-0 pr-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shrink-0 shadow-[0_0_6px_#22d3ee]" />
-                  <span className="text-[11px] text-slate-300 truncate font-sans text-left">
-                    {currentStage.text}
-                  </span>
-                </div>
-                
-                <div className="flex items-center gap-1 shrink-0">
-                  <span className="text-[10px] text-cyan-400/70 font-mono">[{currentStage.code}]</span>
-                  <span className="font-extrabold text-cyan-300 text-xs font-mono min-w-[38px] text-right">
-                    {progress}%
-                  </span>
-                </div>
+              {/* Multi-Segment LED Progress Track */}
+              <div className="flex items-center gap-1 w-full p-1 rounded-xl bg-[#030712] border border-slate-800">
+                {Array.from({ length: 12 }).map((_, segmentIdx) => {
+                  const segmentThreshold = Math.floor(((segmentIdx + 1) / 12) * 100);
+                  const isFilled = progress >= segmentThreshold;
+
+                  return (
+                    <motion.div
+                      key={segmentIdx}
+                      className={`h-2 flex-1 rounded-sm transition-all duration-200 ${
+                        isFilled
+                          ? 'bg-gradient-to-r from-cyan-500 to-sky-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]'
+                          : 'bg-slate-900/90'
+                      }`}
+                    />
+                  );
+                })}
               </div>
 
             </div>
 
+            {/* Bottom HUD Metadata Footer */}
+            <div className="w-full flex items-center justify-between pt-4 mt-6 border-t border-slate-800/80 text-[10px] text-slate-400 font-mono">
+              <span className="flex items-center gap-1 text-cyan-400 font-medium">
+                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                <span>ISO 9001:2015</span>
+              </span>
+              <span className="flex items-center gap-1 text-slate-300">
+                <Cpu className="w-3 h-3 text-cyan-400" />
+                <span>144Hz SLA</span>
+              </span>
+            </div>
+
           </div>
 
-          {/* Bottom Enterprise Badge Verification */}
-          <div className="absolute bottom-6 flex items-center gap-2.5 text-[10px] sm:text-[11px] text-slate-400 font-mono tracking-wider">
-            <span className="flex items-center gap-1 text-cyan-400/90 font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              <span>ISO 9001:2015</span>
-            </span>
-            <span className="text-slate-600">&bull;</span>
-            <span>ENTERPRISE GRADE</span>
-            <span className="text-slate-600">&bull;</span>
-            <span>NEW DELHI</span>
-          </div>
         </motion.div>
       )}
     </AnimatePresence>
