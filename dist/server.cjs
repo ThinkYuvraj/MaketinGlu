@@ -319,9 +319,9 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 });
 // ==========================================
 // Customer Inquiries & Leads Handler
-// Receiver Email: marketing2glue@gmail.com
+// Receiver Email: thinkyuvraj@gmail.com
 // ==========================================
-const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'marketing2glue@gmail.com');
+const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'thinkyuvraj@gmail.com');
 const receivedInquiries = [];
 app.post(['/api/inquiry', '/api/contact', '/api/consultation'], (req, res) => {
     const { name, email, phone, service, notes, message } = req.body || {};
