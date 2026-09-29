@@ -14,7 +14,11 @@ export default defineConfig(() => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    esbuild: {
+      target: 'es2022',
+    },
     build: {
+      target: 'es2022',
       chunkSizeWarningLimit: 2500,
       rollupOptions: {
         output: {
