@@ -340,9 +340,9 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 
 // ==========================================
 // Customer Inquiries & Leads Handler
-// Receiver Email: hello@marketinglu.com
+// Receiver Email: thinkyuvraj@gmail.com
 // ==========================================
-const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'hello@marketinglu.com');
+const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'thinkyuvraj@gmail.com');
 
 interface InquiryRecord {
   id: string;
