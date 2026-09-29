@@ -168,8 +168,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#070b14] to-transparent z-20 pointer-events-none" />
           <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#070b14] to-transparent z-20 pointer-events-none" />
 
-          <div className="flex items-center justify-start sm:justify-center overflow-x-auto py-2 px-3 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+          <div className="w-full max-w-full overflow-x-auto py-2 px-2 sm:px-4 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden flex">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] shrink-0 mx-auto">
               {packagesData.map((pkg, tabIdx) => {
                 const isSelected = tabIdx === safeCurrentIndex;
                 const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');

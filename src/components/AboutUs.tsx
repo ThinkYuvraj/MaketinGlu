@@ -295,9 +295,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
           {/* Right Column: 3D CARET CAROUSEL FOR 4 CORE PILLARS (7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             
-            {/* Quick-Selector Floating Dock for 4 Pillars (Curved Rectangle) */}
-            <div className="flex items-center justify-start sm:justify-center overflow-x-auto py-1 px-1 mb-4 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              <div className="inline-flex items-center gap-1.5 p-1.5 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
+            {/* Quick-Selector Floating Dock for 4 Pillars (Responsive Grid) */}
+            <div className="w-full max-w-full mb-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1.5 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
                 {pillars.map((pillar, tabIdx) => {
                   const isSelected = tabIdx === safeIndex;
                   const TabIcon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
@@ -307,7 +307,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       key={pillar.id || tabIdx}
                       type="button"
                       onClick={() => handleSelectPillar(tabIdx)}
-                      className={`group relative shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[36px] select-none ${
+                      className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[38px] select-none text-center ${
                         isSelected
                           ? 'text-white'
                           : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -323,7 +323,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       )}
 
                       <div
-                        className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center transition-all ${
+                        className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-all ${
                           isSelected
                             ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
                             : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
@@ -331,7 +331,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       >
                         <TabIcon className="w-3 h-3" />
                       </div>
-                      <span className="relative z-10 tracking-tight font-semibold">{pillar.tag}</span>
+                      <span className="relative z-10 tracking-tight font-semibold truncate text-[11px] sm:text-xs">
+                        {pillar.tag}
+                      </span>
                     </button>
                   );
                 })}
