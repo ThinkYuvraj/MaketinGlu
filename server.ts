@@ -391,6 +391,14 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
           auth: { user, pass },
         });
 
+    const fromHeader = inquiry.name 
+      ? `"${inquiry.name} (Marketing LU Lead)" <${user}>`
+      : `"Marketing LU Service Enquiry" <${user}>`;
+
+    const replyToHeader = inquiry.email 
+      ? `"${inquiry.name}" <${inquiry.email}>` 
+      : undefined;
+
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #ffffff;">
         <div style="background-color: #0c1424; padding: 15px 20px; border-radius: 8px 8px 0 0; color: #ffffff;">
@@ -398,18 +406,18 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
           <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">Marketing LU Lead Notification</p>
         </div>
         <div style="padding: 20px;">
-          <p style="font-size: 14px; color: #334155;">A new visitor inquiry has been received on <strong>Marketing LU</strong>:</p>
+          <p style="font-size: 14px; color: #334155;">A new visitor has submitted a service inquiry on <strong>Marketing LU</strong>:</p>
           <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px;">
             <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; width: 140px; border-bottom: 1px solid #e2e8f0;">Full Name:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${inquiry.name}</td>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; width: 140px; border-bottom: 1px solid #e2e8f0;">Sender / Lead Name:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #0f172a;">${inquiry.name}</td>
             </tr>
             <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Email Address:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${inquiry.email}">${inquiry.email || 'N/A'}</a></td>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Sender Email:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${inquiry.email}" style="color: #0284c7; font-weight: bold;">${inquiry.email || 'N/A'}</a></td>
             </tr>
             <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Phone Number:</td>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Phone / WhatsApp:</td>
               <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="tel:${inquiry.phone}">${inquiry.phone || 'N/A'}</a></td>
             </tr>
             <tr>
@@ -417,7 +425,7 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
               <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #0284c7; font-weight: bold;">${inquiry.service}</td>
             </tr>
             <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Notes / Goals:</td>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Message / Notes:</td>
               <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${inquiry.notes || 'None provided'}</td>
             </tr>
             <tr>
@@ -425,22 +433,30 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
               <td style="padding: 10px;">${inquiry.receivedAt}</td>
             </tr>
           </table>
+
+          ${inquiry.email ? `
+          <div style="margin-top: 20px; text-align: center;">
+            <a href="mailto:${inquiry.email}?subject=Re:%20${encodeURIComponent(inquiry.service || 'Your Enquiry')}" style="display: inline-block; padding: 12px 24px; background-color: #0284c7; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              ✉️ Reply Directly to ${inquiry.name} (${inquiry.email})
+            </a>
+          </div>
+          ` : ''}
         </div>
         <div style="background-color: #f1f5f9; padding: 12px 20px; border-radius: 0 0 8px 8px; font-size: 12px; color: #64748b; text-align: center;">
-          Recipient: <strong>${INQUIRY_RECEIVER_EMAIL}</strong> | Marketing LU Lead Dispatcher
+          Destination Receiver: <strong>${INQUIRY_RECEIVER_EMAIL}</strong> | Marketing LU Automated Lead Service
         </div>
       </div>
     `;
 
     await transporter.sendMail({
-      from: `"Marketing LU Leads" <${user}>`,
+      from: fromHeader,
       to: INQUIRY_RECEIVER_EMAIL,
-      replyTo: inquiry.email || undefined,
-      subject: `🔥 New Lead: ${inquiry.name} (${inquiry.service || 'Service Enquiry'})`,
+      replyTo: replyToHeader,
+      subject: `🔥 New Lead: ${inquiry.name} - ${inquiry.service || 'Service Enquiry'}`,
       html: htmlContent,
     });
 
-    console.log(`[EMAIL DISPATCH SUCCESS] Lead email sent to ${INQUIRY_RECEIVER_EMAIL}`);
+    console.log(`[EMAIL DISPATCH SUCCESS] Lead email from ${inquiry.name} (${inquiry.email}) sent to ${INQUIRY_RECEIVER_EMAIL}`);
     return true;
   } catch (error) {
     console.error(`[EMAIL DISPATCH ERROR] Failed sending to ${INQUIRY_RECEIVER_EMAIL}:`, error);
