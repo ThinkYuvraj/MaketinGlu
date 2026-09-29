@@ -3,6 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import fs from 'fs';
+import nodemailer from 'nodemailer';
 
 dotenv.config();
 
@@ -356,6 +357,91 @@ interface InquiryRecord {
 
 const receivedInquiries: InquiryRecord[] = [];
 
+async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
+  const host = process.env.SMTP_HOST || '';
+  const user = process.env.SMTP_USER || '';
+  const pass = process.env.SMTP_PASS || '';
+  const port = parseInt(process.env.SMTP_PORT || '587', 10);
+  const secure = process.env.SMTP_SECURE === 'true';
+
+  console.log(`[EMAIL DISPATCHER] Preparing lead email for ${INQUIRY_RECEIVER_EMAIL}:`, {
+    leadName: inquiry.name,
+    leadEmail: inquiry.email,
+    leadPhone: inquiry.phone,
+    service: inquiry.service,
+  });
+
+  if (!host || !user || !pass) {
+    console.log(`[EMAIL NOTICE] Real SMTP credentials (SMTP_HOST/SMTP_USER/SMTP_PASS) not set in .env.`);
+    console.log(`[EMAIL NOTICE] Inquiry from ${inquiry.name} is captured & routed to Admin Studio dashboard for ${INQUIRY_RECEIVER_EMAIL}.`);
+    return false;
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: { user, pass },
+    });
+
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #ffffff;">
+        <div style="background-color: #0c1424; padding: 15px 20px; border-radius: 8px 8px 0 0; color: #ffffff;">
+          <h2 style="margin: 0; font-size: 20px; color: #38bdf8;">NEW SERVICE ENQUIRY</h2>
+          <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">Marketing LU Lead Notification</p>
+        </div>
+        <div style="padding: 20px;">
+          <p style="font-size: 14px; color: #334155;">A new visitor inquiry has been received on <strong>Marketing LU</strong>:</p>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px;">
+            <tr>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; width: 140px; border-bottom: 1px solid #e2e8f0;">Full Name:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${inquiry.name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Email Address:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${inquiry.email}">${inquiry.email || 'N/A'}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Phone Number:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="tel:${inquiry.phone}">${inquiry.phone || 'N/A'}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Requested Service:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #0284c7; font-weight: bold;">${inquiry.service}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Notes / Goals:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${inquiry.notes || 'None provided'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; background: #f8fafc; font-weight: bold;">Submitted At:</td>
+              <td style="padding: 10px;">${inquiry.receivedAt}</td>
+            </tr>
+          </table>
+        </div>
+        <div style="background-color: #f1f5f9; padding: 12px 20px; border-radius: 0 0 8px 8px; font-size: 12px; color: #64748b; text-align: center;">
+          Recipient: <strong>${INQUIRY_RECEIVER_EMAIL}</strong> | Marketing LU Lead Dispatcher
+        </div>
+      </div>
+    `;
+
+    await transporter.sendMail({
+      from: `"Marketing LU Leads" <${user}>`,
+      to: INQUIRY_RECEIVER_EMAIL,
+      replyTo: inquiry.email || undefined,
+      subject: `🔥 New Lead: ${inquiry.name} (${inquiry.service || 'Service Enquiry'})`,
+      html: htmlContent,
+    });
+
+    console.log(`[EMAIL DISPATCH SUCCESS] Lead email sent to ${INQUIRY_RECEIVER_EMAIL}`);
+    return true;
+  } catch (error) {
+    console.error(`[EMAIL DISPATCH ERROR] Failed sending to ${INQUIRY_RECEIVER_EMAIL}:`, error);
+    return false;
+  }
+}
+
 app.post(['/api/inquiry', '/api/contact', '/api/consultation'], (req, res) => {
   const { name, email, phone, service, notes, message } = req.body || {};
 
@@ -388,6 +474,11 @@ app.post(['/api/inquiry', '/api/contact', '/api/consultation'], (req, res) => {
     phone: inquiry.phone,
     service: inquiry.service,
     date: inquiry.receivedAt,
+  });
+
+  // Trigger email sending asynchronously
+  sendInquiryEmail(inquiry).catch(err => {
+    console.error('[ASYNC EMAIL ERROR]', err);
   });
 
   return res.json({
