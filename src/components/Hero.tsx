@@ -22,7 +22,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section 
       id="hero-section"
-      className="relative pt-24 sm:pt-28 md:pt-32 pb-4 sm:pb-6 min-h-[auto] sm:min-h-[76vh] flex flex-col justify-center overflow-hidden"
+      className="relative pt-32 sm:pt-32 md:pt-36 pb-4 sm:pb-6 min-h-[auto] sm:min-h-[76vh] flex flex-col justify-center overflow-hidden"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] sm:w-[700px] h-[220px] sm:h-[340px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
@@ -38,7 +38,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
             {/* Location / Capability Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/40 text-xs font-bold tracking-wider text-cyan-400 uppercase mb-4 sm:mb-5 shadow-sm shadow-cyan-950/50">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/40 text-xs font-bold tracking-wider text-cyan-400 uppercase mt-2 sm:mt-0 mb-4 sm:mb-5 shadow-sm shadow-cyan-950/50">
               <TrendingUp className="w-4 h-4 text-cyan-400 shrink-0" />
               <span>{config.locationBadge}</span>
             </div>
