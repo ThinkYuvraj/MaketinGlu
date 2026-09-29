@@ -175,9 +175,9 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </p>
         </div>
 
-        {/* INTERACTIVE TOP SERVICES CURVED RECTANGLE DOCK */}
-        <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-row lg:items-center lg:justify-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+        {/* INTERACTIVE TOP SERVICES FULL BAR DOCK (Full 6-Column Bar on Desktop, 2/3 Columns on Mobile/Tablet) */}
+        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-2 sm:mt-4 mb-6 sm:mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 xl:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const TabIcon = getExpertiseIcon(srv);
@@ -187,7 +187,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   key={srv.id}
                   type="button"
                   onClick={() => handleSelectService(tabIdx)}
-                  className={`group relative flex items-center justify-center lg:justify-start gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer min-h-[42px] select-none text-center lg:text-left ${
+                  className={`group relative flex items-center justify-center gap-1.5 xl:gap-2 px-2 sm:px-3 xl:px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-xs xl:text-sm font-bold transition-all cursor-pointer min-h-[42px] select-none text-center w-full ${
                     isSelected
                       ? 'text-white'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -204,7 +204,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
                   {/* Icon Badge */}
                   <div
-                    className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center shrink-0 transition-all ${
+                    className={`relative z-10 w-5 h-5 sm:w-6 sm:h-6 xl:w-7 xl:h-7 rounded-lg flex items-center justify-center shrink-0 transition-all ${
                       isSelected
                         ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-md shadow-cyan-400/40'
                         : 'bg-slate-800/90 text-slate-400 group-hover:text-slate-200 group-hover:bg-slate-700/80'
@@ -214,13 +214,13 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   </div>
 
                   {/* Tab Label */}
-                  <span className="relative z-10 tracking-tight font-semibold truncate text-[11px] sm:text-xs md:text-sm">
+                  <span className="relative z-10 tracking-tight font-semibold truncate text-[11px] sm:text-xs xl:text-sm">
                     {srv.tabLabel}
                   </span>
 
                   {/* Active Timer Pulse Dot */}
                   {isSelected && (
-                    <span className="relative z-10 w-1.5 h-1.5 rounded-sm bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse inline-block ml-0.5 shrink-0" />
+                    <span className="relative z-10 w-1.5 h-1.5 rounded-sm bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse inline-block shrink-0" />
                   )}
                 </button>
               );
