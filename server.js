@@ -342,6 +342,65 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 });
 
 // ==========================================
+// Customer Inquiries & Leads Handler
+// Receiver Email: marketing2glue@gmail.com
+// ==========================================
+const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'marketing2glue@gmail.com');
+
+const receivedInquiries = [];
+
+app.post(['/api/inquiry', '/api/contact', '/api/consultation'], (req, res) => {
+  const { name, email, phone, service, notes, message } = req.body || {};
+
+  if (!name || (!email && !phone)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name and either email or phone are required to submit an inquiry.',
+    });
+  }
+
+  const inquiry = {
+    id: crypto.randomBytes(8).toString('hex'),
+    name: String(name).trim(),
+    email: String(email || '').trim(),
+    phone: String(phone || '').trim(),
+    service: String(service || 'General Inquiry').trim(),
+    notes: String(notes || message || '').trim(),
+    receivedAt: new Date().toISOString(),
+    receiverEmail: INQUIRY_RECEIVER_EMAIL,
+  };
+
+  receivedInquiries.unshift(inquiry);
+  if (receivedInquiries.length > 200) {
+    receivedInquiries.pop();
+  }
+
+  console.log(`[INQUIRY RECEIVED] Forwarding to ${INQUIRY_RECEIVER_EMAIL}:`, {
+    from: `${inquiry.name} <${inquiry.email}>`,
+    phone: inquiry.phone,
+    service: inquiry.service,
+    date: inquiry.receivedAt,
+  });
+
+  return res.json({
+    success: true,
+    message: `Inquiry successfully received and routed to ${INQUIRY_RECEIVER_EMAIL}. Our team will contact you shortly!`,
+    inquiryId: inquiry.id,
+    receiverEmail: INQUIRY_RECEIVER_EMAIL,
+  });
+});
+
+// Admin endpoint to view received inquiries
+app.get('/api/admin/inquiries', requireAdminAuth, (_req, res) => {
+  res.json({
+    success: true,
+    count: receivedInquiries.length,
+    receiverEmail: INQUIRY_RECEIVER_EMAIL,
+    inquiries: receivedInquiries,
+  });
+});
+
+// ==========================================
 // Vite Middleware / Static serving
 // ==========================================
 
