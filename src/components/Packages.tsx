@@ -163,70 +163,64 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         </div>
 
         {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
-        <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8">
-          {/* Subtle Mobile Edge Fade Gradients */}
-          <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#070b14] to-transparent z-20 pointer-events-none" />
-          <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#070b14] to-transparent z-20 pointer-events-none" />
+        <div className="relative max-w-full sm:max-w-3xl lg:max-w-4xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8 flex justify-center">
+          <div className="grid grid-cols-3 lg:inline-flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full lg:w-auto">
+            {packagesData.map((pkg, tabIdx) => {
+              const isSelected = tabIdx === safeCurrentIndex;
+              const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');
+              const isAdvance = pkg.id === 'advance' || pkg.popular;
+              const TabIcon = isAdvance ? Crown : isPro ? Sparkles : Zap;
 
-          <div className="w-full max-w-full overflow-x-auto py-2 px-2 sm:px-4 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden flex">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] shrink-0 mx-auto">
-              {packagesData.map((pkg, tabIdx) => {
-                const isSelected = tabIdx === safeCurrentIndex;
-                const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');
-                const isAdvance = pkg.id === 'advance' || pkg.popular;
-                const TabIcon = isAdvance ? Crown : isPro ? Sparkles : Zap;
+              return (
+                <button
+                  key={pkg.id}
+                  type="button"
+                  onClick={() => handleSelectPackage(tabIdx)}
+                  className={`group relative flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer min-h-[42px] select-none text-center ${
+                    isSelected
+                      ? 'text-white'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                  }`}
+                >
+                  {/* Animated Active Background Curved Rectangle */}
+                  {isSelected && (
+                    <motion.div
+                      layoutId="activePackageTabCapsule"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_24px_rgba(6,182,212,0.4)]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
 
-                return (
-                  <button
-                    key={pkg.id}
-                    type="button"
-                    onClick={() => handleSelectPackage(tabIdx)}
-                    className={`group relative shrink-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer min-h-[42px] select-none ${
+                  {/* Icon Badge */}
+                  <div
+                    className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center shrink-0 transition-all ${
                       isSelected
-                        ? 'text-white'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                        ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-md shadow-cyan-400/40'
+                        : 'bg-slate-800/90 text-slate-400 group-hover:text-slate-200 group-hover:bg-slate-700/80'
                     }`}
                   >
-                    {/* Animated Active Background Curved Rectangle */}
-                    {isSelected && (
-                      <motion.div
-                        layoutId="activePackageTabCapsule"
-                        className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_24px_rgba(6,182,212,0.4)]"
-                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                      />
-                    )}
+                    <TabIcon className="w-3.5 h-3.5" />
+                  </div>
 
-                    {/* Icon Badge */}
-                    <div
-                      className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center transition-all ${
-                        isSelected
-                          ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-md shadow-cyan-400/40'
-                          : 'bg-slate-800/90 text-slate-400 group-hover:text-slate-200 group-hover:bg-slate-700/80'
-                      }`}
-                    >
-                      <TabIcon className="w-3.5 h-3.5" />
-                    </div>
+                  {/* Tab Label */}
+                  <span className="relative z-10 tracking-tight font-semibold truncate text-[11px] sm:text-xs md:text-sm">
+                    {pkg.name}
+                  </span>
 
-                    {/* Tab Label */}
-                    <span className="relative z-10 tracking-tight font-semibold">
-                      {pkg.name}
+                  {/* Popular Badge */}
+                  {pkg.popular && (
+                    <span className="hidden sm:inline-block relative z-10 text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/40 shrink-0">
+                      Popular
                     </span>
+                  )}
 
-                    {/* Popular Badge */}
-                    {pkg.popular && (
-                      <span className="relative z-10 text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/40">
-                        Popular
-                      </span>
-                    )}
-
-                    {/* Active Pulse Dot */}
-                    {isSelected && (
-                      <span className="relative z-10 w-1.5 h-1.5 rounded-sm bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse inline-block ml-0.5" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                  {/* Active Pulse Dot */}
+                  {isSelected && (
+                    <span className="relative z-10 w-1.5 h-1.5 rounded-sm bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse inline-block ml-0.5 shrink-0" />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 

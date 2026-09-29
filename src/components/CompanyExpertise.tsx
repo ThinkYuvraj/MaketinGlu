@@ -177,60 +177,54 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
         {/* INTERACTIVE TOP SERVICES CURVED RECTANGLE DOCK */}
         <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8">
-          {/* Subtle Mobile Edge Fade Gradients */}
-          <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#070b14] to-transparent z-20 pointer-events-none" />
-          <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#070b14] to-transparent z-20 pointer-events-none" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-row lg:items-center lg:justify-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+            {services.map((srv, tabIdx) => {
+              const isSelected = tabIdx === safeCurrentIndex;
+              const TabIcon = getExpertiseIcon(srv);
 
-          <div className="w-full max-w-full overflow-x-auto py-2 px-2 sm:px-4 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden flex">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] shrink-0 mx-auto">
-              {services.map((srv, tabIdx) => {
-                const isSelected = tabIdx === safeCurrentIndex;
-                const TabIcon = getExpertiseIcon(srv);
+              return (
+                <button
+                  key={srv.id}
+                  type="button"
+                  onClick={() => handleSelectService(tabIdx)}
+                  className={`group relative flex items-center justify-center lg:justify-start gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer min-h-[42px] select-none text-center lg:text-left ${
+                    isSelected
+                      ? 'text-white'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                  }`}
+                >
+                  {/* Animated Active Background Curved Rectangle */}
+                  {isSelected && (
+                    <motion.div
+                      layoutId="activeServiceTabCapsule"
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_24px_rgba(6,182,212,0.4)]"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
 
-                return (
-                  <button
-                    key={srv.id}
-                    type="button"
-                    onClick={() => handleSelectService(tabIdx)}
-                    className={`group relative shrink-0 flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer min-h-[42px] select-none ${
+                  {/* Icon Badge */}
+                  <div
+                    className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center shrink-0 transition-all ${
                       isSelected
-                        ? 'text-white'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                        ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-md shadow-cyan-400/40'
+                        : 'bg-slate-800/90 text-slate-400 group-hover:text-slate-200 group-hover:bg-slate-700/80'
                     }`}
                   >
-                    {/* Animated Active Background Curved Rectangle */}
-                    {isSelected && (
-                      <motion.div
-                        layoutId="activeServiceTabCapsule"
-                        className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_24px_rgba(6,182,212,0.4)]"
-                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                      />
-                    )}
+                    <TabIcon className="w-3.5 h-3.5" />
+                  </div>
 
-                    {/* Icon Badge */}
-                    <div
-                      className={`relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center transition-all ${
-                        isSelected
-                          ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-md shadow-cyan-400/40'
-                          : 'bg-slate-800/90 text-slate-400 group-hover:text-slate-200 group-hover:bg-slate-700/80'
-                      }`}
-                    >
-                      <TabIcon className="w-3.5 h-3.5" />
-                    </div>
+                  {/* Tab Label */}
+                  <span className="relative z-10 tracking-tight font-semibold truncate text-[11px] sm:text-xs md:text-sm">
+                    {srv.tabLabel}
+                  </span>
 
-                    {/* Tab Label */}
-                    <span className="relative z-10 tracking-tight font-semibold">
-                      {srv.tabLabel}
-                    </span>
-
-                    {/* Active Timer Pulse Dot */}
-                    {isSelected && (
-                      <span className="relative z-10 w-1.5 h-1.5 rounded-sm bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse inline-block ml-0.5" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                  {/* Active Timer Pulse Dot */}
+                  {isSelected && (
+                    <span className="relative z-10 w-1.5 h-1.5 rounded-sm bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse inline-block ml-0.5 shrink-0" />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 
