@@ -195,7 +195,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   return (
     <section
       id="about"
-      className="scroll-mt-20 lg:scroll-mt-24 relative py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative py-8 sm:py-10 lg:py-12 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Anchor targets for smooth navigation without duplicate ID collisions */}
       <span id="about-us" className="absolute -top-28 sm:-top-32 pointer-events-none" />
@@ -208,7 +208,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
 
       <Container className="relative z-10 max-w-7xl mx-auto">
         {/* Centered Single-Frame Header Row */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 pb-5 border-b border-slate-800/60 flex flex-col items-center justify-center">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 pb-3.5 border-b border-slate-800/60 flex flex-col items-center justify-center">
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{badgeText}</span>

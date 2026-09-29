@@ -88,7 +88,7 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative py-10 sm:py-12 lg:py-14 bg-[#070b14] border-t border-slate-900/80 overflow-hidden"
+      className="relative py-8 sm:py-10 lg:py-12 bg-[#070b14] border-t border-slate-900/80 overflow-hidden"
     >
       {/* Subtle ambient light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[220px] bg-cyan-500/[0.04] blur-[120px] rounded-full pointer-events-none" />

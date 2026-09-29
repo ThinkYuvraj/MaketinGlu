@@ -151,15 +151,15 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white">
+    <section id="faq" className="relative flex flex-col justify-center py-8 sm:py-10 lg:py-12 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-cyan-500/5 blur-[140px] rounded-full pointer-events-none" />
 
       <Container className="relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-wider uppercase mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-5 sm:mb-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-wider uppercase mb-2">
             <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.faqSectionBadge || 'Knowledge Base'}</span>
           </div>
@@ -171,22 +171,22 @@ export default function FAQ() {
             </span>
           </h2>
 
-          <p className="mt-3 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl mx-auto">
+          <p className="mt-2 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl mx-auto">
             {config.faqSectionDescription || 'Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.'}
           </p>
 
           {/* Trust badges */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300">
-              <ShieldCheck className="w-4 h-4 text-cyan-400" />
+          <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2.5 text-xs">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300 text-[11px] sm:text-xs">
+              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
               100% Asset Ownership
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300">
-              <Calendar className="w-4 h-4 text-cyan-400" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300 text-[11px] sm:text-xs">
+              <Calendar className="w-3.5 h-3.5 text-cyan-400" />
               Month-to-Month Retainers
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300 text-[11px] sm:text-xs">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               Zero Media Markups
             </span>
           </div>

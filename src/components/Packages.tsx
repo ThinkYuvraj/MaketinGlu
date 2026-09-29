@@ -136,7 +136,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white"
+      className="relative flex flex-col justify-center py-8 sm:py-10 lg:py-12 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-cyan-500/10 blur-[160px] rounded-full pointer-events-none" />
@@ -144,8 +144,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
       <Container className="relative z-10">
            {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-3.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.packagesSectionBadge || 'TRANSPARENT SERVICE TIERS'}</span>
           </div>
@@ -157,13 +157,13 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </span>
           </h2>
 
-          <p className="mt-3 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-2.5 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
             {config.packagesSectionDescription || 'Engineered packages calibrated for distinct growth stages. Compare full inclusions, dedicated team allocations, and turnkey execution scopes below.'}
           </p>
         </div>
 
         {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
-        <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-4 sm:mt-6 mb-10 sm:mb-12">
+        <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8">
           {/* Subtle Mobile Edge Fade Gradients */}
           <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#070b14] to-transparent z-20 pointer-events-none" />
           <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#070b14] to-transparent z-20 pointer-events-none" />

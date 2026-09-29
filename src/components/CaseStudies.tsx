@@ -77,14 +77,14 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   };
 
   return (
-    <section id="cases" className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#060a13] border-t border-slate-800/80">
+    <section id="cases" className="relative flex flex-col justify-center py-8 sm:py-10 lg:py-12 bg-[#060a13] border-t border-slate-800/80">
       {/* Top Subtle Glow Separation */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
       <Container>
         {/* Centered Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-widest uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
           </div>
@@ -96,7 +96,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
             </span>
           </h2>
 
-          <p className="mt-2.5 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto">
+          <p className="mt-2 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto">
             {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands across D2C, SaaS, and retail.'}
           </p>
         </div>

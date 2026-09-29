@@ -138,7 +138,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   return (
     <section 
       id="expertise" 
-      className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-900/80 selection:bg-cyan-500 selection:text-white"
+      className="relative flex flex-col justify-center py-8 sm:py-10 lg:py-12 bg-[#070b14] border-t border-slate-900/80 selection:bg-cyan-500 selection:text-white"
     >
       {/* Invisible anchor targets so external and legacy links resolve smoothly */}
       <span id="services" className="absolute -top-28 sm:-top-32" />
@@ -157,8 +157,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-3.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR {services.length} CORE DISCIPLINES</span>
           </div>
@@ -170,13 +170,13 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </span>
           </h2>
 
-          <p className="mt-3.5 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-2.5 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
             Eliminate fragmented vendors. Every discipline operates under one roof with dedicated senior architects in New Delhi, battle-tested playbooks, and transparent deliverables.
           </p>
         </div>
 
         {/* INTERACTIVE TOP SERVICES CURVED RECTANGLE DOCK */}
-        <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-4 sm:mt-6 mb-10 sm:mb-12">
+        <div className="relative max-w-full sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8">
           {/* Subtle Mobile Edge Fade Gradients */}
           <div className="sm:hidden absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#070b14] to-transparent z-20 pointer-events-none" />
           <div className="sm:hidden absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#070b14] to-transparent z-20 pointer-events-none" />

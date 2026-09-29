@@ -27,6 +27,7 @@ import { expertiseData } from './data/expertiseData';
 import CustomSectionRenderer from './components/CustomSectionRenderer';
 import { SectionPosition } from './types';
 import { pageTransitionVariants } from './lib/animations';
+import Preloader from './components/Preloader';
 import { useSmoothScroll } from './lib/useSmoothScroll';
 import { useBarbaTransitions } from './lib/useBarbaTransitions';
 
@@ -36,6 +37,7 @@ function AppContent() {
   const { currentRoute, navigateTo } = useNavigation();
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [consultationService, setConsultationService] = useState<string>('Digital Marketing Audit');
+  const [showPreloader, setShowPreloader] = useState(true);
 
   const handleOpenConsultation = (serviceName?: string) => {
     if (serviceName) {
@@ -113,6 +115,10 @@ function AppContent() {
       data-barba="wrapper"
       className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative pb-16 lg:pb-0"
     >
+      {/* Sleek Website Initial Loading Screen */}
+      {showPreloader && (
+        <Preloader onComplete={() => setShowPreloader(false)} minDurationMs={1000} />
+      )}
       
       {/* Top Fixed Navigation with Services dropdown */}
       <Navbar
