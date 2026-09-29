@@ -459,14 +459,14 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         </div>
 
         {/* Bottom Customized Requirement Inquiry Box */}
-        <div className="package-inquiry mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-[#0a1122] border border-slate-800/90 max-w-4xl xl:max-w-5xl 2xl:max-w-[1180px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl">
-          <div className="flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-2xl bg-cyan-950 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
-              <HelpCircle className="w-6 h-6" />
+        <div className="package-inquiry mt-6 sm:mt-8 p-3.5 sm:p-5 rounded-2xl bg-[#0a1122] border border-slate-800/90 max-w-4xl xl:max-w-5xl 2xl:max-w-[1180px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 shadow-xl">
+          <div className="flex items-center gap-2.5 sm:gap-3 text-left w-full md:w-auto">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-cyan-950 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+              <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-bold text-white">Need a Bespoke Retainer or Multi-Location Enterprise Scope?</h3>
-              <p className="package-inquiry-copy text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-xs sm:text-sm md:text-base font-bold text-white leading-tight">Need a Bespoke Retainer or Multi-Location Enterprise Scope?</h3>
+              <p className="package-inquiry-copy text-[11px] sm:text-xs md:text-sm text-slate-400 mt-0.5 leading-snug">
                 We design custom omnichannel architectures tailored to unique international expansions, app launches, and high-volume media spends.
               </p>
             </div>
@@ -475,7 +475,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <motion.button
             {...buttonHoverMotion}
             onClick={() => onSelectPackage('Custom Enterprise Solution')}
-            className="w-full sm:w-auto whitespace-nowrap min-h-[48px] px-6 py-3 rounded-xl border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 font-bold text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center shadow-md shrink-0"
+            className="w-full md:w-auto whitespace-nowrap min-h-[38px] sm:min-h-[42px] px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 font-bold text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-center shadow-md shrink-0"
           >
             Get Custom Quote &rarr;
           </motion.button>
