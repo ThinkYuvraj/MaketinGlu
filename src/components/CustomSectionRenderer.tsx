@@ -136,7 +136,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
   return (
     <section 
       id={section.id} 
-      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-28 bg-[#070b14] border-t border-slate-800/80"
+      className="relative flex flex-col justify-center py-10 sm:py-14 lg:py-20 bg-[#070b14] border-t border-slate-800/80"
     >
       {/* Sleek separation glow divider line */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 via-slate-700/60 to-transparent pointer-events-none" />
@@ -146,9 +146,9 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
 
       <Container>
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           {section.badge && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-3 shadow-sm shadow-cyan-500/10">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               <span>{section.badge}</span>
             </div>
@@ -164,7 +164,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
           </h2>
 
           {section.description && (
-            <p className="mt-3.5 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-xs sm:text-sm md:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
               {section.description}
             </p>
           )}
@@ -189,18 +189,9 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
               ))}
             </div>
 
-            {/* Mobile & Tablet (<1024px) Caret Carousel */}
+            {/* Mobile & Tablet (<1024px) Swipe Carousel */}
             <div className="block lg:hidden relative max-w-lg mx-auto">
-              <div className="flex items-center justify-between mb-3 px-2">
-                <span className="text-[11px] font-medium text-slate-400">
-                  Feature {currentCardIndex + 1} of {totalItems}
-                </span>
-                <span className="text-[11px] text-cyan-400 font-mono">
-                  Swipe or use carets &rarr;
-                </span>
-              </div>
-
-              <div className="relative overflow-hidden px-1 min-h-[360px]">
+              <div className="relative overflow-hidden px-1">
                 <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                   <motion.div
                     key={items[currentCardIndex]?.id || currentCardIndex}
@@ -222,43 +213,28 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                 </AnimatePresence>
               </div>
 
-              {/* Caret Controls */}
-              <div className="flex items-center justify-between mt-5 px-2">
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 transition-all cursor-pointer shadow-md"
-                  aria-label="Previous card"
-                >
-                  <ChevronLeft className="w-4 h-4 text-cyan-400" />
-                  <span className="hidden sm:inline">Prev</span>
-                </button>
+              {/* Mobile & Tablet Slide Tracker Indicator */}
+              <div className="flex items-center justify-between mt-4 px-2">
+                <span className="text-[11px] text-slate-400 font-mono">
+                  Feature <span className="text-cyan-400 font-bold">{currentCardIndex + 1}</span> of {totalItems}
+                </span>
 
+                {/* Step Indicator Bars */}
                 <div className="flex items-center gap-1.5">
                   {items.map((_, dotIdx) => (
                     <button
                       key={dotIdx}
                       type="button"
                       onClick={() => setCurrentCardIndex(dotIdx)}
-                      className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                      className={`h-1.5 rounded-sm transition-all cursor-pointer ${
                         dotIdx === currentCardIndex
-                          ? 'w-7 bg-cyan-400 shadow-md shadow-cyan-400/40'
-                          : 'w-2 bg-slate-700 hover:bg-slate-500'
+                          ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
+                          : 'w-2 bg-slate-800 hover:bg-slate-600'
                       }`}
                       aria-label={`Go to card ${dotIdx + 1}`}
                     />
                   ))}
                 </div>
-
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 transition-all cursor-pointer shadow-md"
-                  aria-label="Next card"
-                >
-                  <span className="hidden sm:inline">Next</span>
-                  <ChevronRight className="w-4 h-4 text-cyan-400" />
-                </button>
               </div>
             </div>
           </>

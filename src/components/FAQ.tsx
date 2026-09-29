@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   HelpCircle, 
@@ -14,8 +14,7 @@ import {
   X, 
   Plus, 
   Minus,
-  List,
-  LayoutGrid
+  CheckCircle2
 } from 'lucide-react';
 import { standardEase } from '../lib/animations';
 import Container from './common/Container';
@@ -35,11 +34,9 @@ export default function FAQ() {
   const { config } = useSiteConfig();
   const faqs = config.faqs && config.faqs.length > 0 ? config.faqs : defaultFaqs;
 
-  const [openIds, setOpenIds] = useState<(number | string)[]>([faqs[0]?.id || 1]); // First item open for preview
+  const [openIds, setOpenIds] = useState<(number | string)[]>([faqs[0]?.id || 1]);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [layoutMode, setLayoutMode] = useState<'list' | 'cards'>('list');
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const toggle = (id: number | string) => {
     if (openIds.includes(id)) {
@@ -82,110 +79,38 @@ export default function FAQ() {
     });
   }, [activeCategory, searchQuery, faqs]);
 
-  // Unified List Layout Item (Flexbox Row format)
-  const renderListItem = (faq: FAQItem) => {
+  const renderFaqAccordionItem = (faq: FAQItem) => {
     const isOpen = openIds.includes(faq.id);
 
     return (
       <div
         key={faq.id}
-        className={`transition-colors duration-200 ${
-          isOpen ? 'bg-[#0a1226]/90' : 'hover:bg-slate-900/40'
-        }`}
-        id={`faq-list-item-${faq.id}`}
-      >
-        <button
-          type="button"
-          onClick={() => toggle(faq.id)}
-          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 flex items-center justify-between gap-2.5 text-left transition-colors cursor-pointer"
-          aria-expanded={isOpen}
-        >
-          {/* Flexbox container for Category Tag + Question title */}
-          <div className="flex items-center gap-2 sm:gap-2.5 flex-1 min-w-0 flex-wrap sm:flex-nowrap">
-            <span className="shrink-0 text-[8px] sm:text-[8.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/25 px-1.5 py-0.5 rounded">
-              {faq.categoryLabel}
-            </span>
-            <h3 className="text-[11.5px] sm:text-xs font-bold text-white tracking-tight leading-snug">
-              {faq.question}
-            </h3>
-          </div>
-
-          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded flex items-center justify-center shrink-0 transition-colors duration-200 ${
-            isOpen ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400 hover:text-white'
-          }`}>
-            {isOpen ? <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> : <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />}
-          </div>
-        </button>
-
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.18, ease: standardEase }}
-              className="overflow-hidden bg-[#080e1c]/80 border-t border-slate-800/60"
-            >
-              <div className="px-3 pb-3 pt-2 sm:px-3.5 sm:pb-3.5 space-y-2">
-                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed">
-                  {faq.answer}
-                </p>
-
-                {/* Feature Highlights */}
-                {faq.highlights && faq.highlights.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-1 pt-0.5">
-                    {faq.highlights.map((item, hIdx) => (
-                      <span
-                        key={hIdx}
-                        className="inline-flex items-center gap-1 text-[9px] sm:text-[9.5px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded"
-                      >
-                        <Sparkles className="w-2 h-2 text-cyan-400 shrink-0" />
-                        <span>{item}</span>
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  };
-
-  // Card Format Item (Flexbox Row Header)
-  const renderCard = (faq: FAQItem) => {
-    const isOpen = openIds.includes(faq.id);
-
-    return (
-      <div
-        key={faq.id}
-        className={`rounded-lg border transition-all duration-200 overflow-hidden shrink-0 ${
+        className={`w-full shrink-0 rounded-2xl border transition-all duration-200 overflow-hidden ${
           isOpen
-            ? 'bg-[#0a1226] border-cyan-500/40 shadow-sm shadow-cyan-500/5 ring-1 ring-cyan-500/20'
-            : 'bg-[#090e1c]/90 border-slate-800/90 hover:border-slate-700 hover:bg-[#0a1022]'
+            ? 'bg-[#0b1429] border-cyan-400/80 shadow-lg shadow-cyan-500/10'
+            : 'bg-[#090f20]/90 border-slate-800 hover:border-cyan-500/40 hover:bg-[#0c1630]'
         }`}
-        id={`faq-card-${faq.id}`}
+        id={`faq-item-${faq.id}`}
       >
         <button
           type="button"
           onClick={() => toggle(faq.id)}
-          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 flex items-center justify-between gap-2.5 text-left transition-colors cursor-pointer"
+          className="w-full min-h-[54px] sm:min-h-[58px] px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 text-left transition-colors cursor-pointer"
           aria-expanded={isOpen}
         >
-          <div className="flex items-center gap-2 sm:gap-2.5 flex-1 min-w-0 flex-wrap sm:flex-nowrap">
-            <span className="shrink-0 text-[8px] sm:text-[8.5px] font-mono font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 flex-1 min-w-0">
+            <span className="shrink-0 inline-flex items-center w-fit text-xs font-mono font-bold uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-md">
               {faq.categoryLabel}
             </span>
-            <h3 className="text-[11.5px] sm:text-xs font-bold text-white tracking-tight leading-snug">
+            <h3 className="text-xs sm:text-sm md:text-base font-bold text-white tracking-tight leading-snug">
               {faq.question}
             </h3>
           </div>
 
-          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded flex items-center justify-center shrink-0 transition-colors duration-200 ${
-            isOpen ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400 hover:text-white'
+          <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ml-2 ${
+            isOpen ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800 text-slate-400 hover:text-white'
           }`}>
-            {isOpen ? <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> : <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />}
+            {isOpen ? <Minus className="w-4 h-4 stroke-[2.5]" /> : <Plus className="w-4 h-4 stroke-[2.5]" />}
           </div>
         </button>
 
@@ -195,23 +120,23 @@ export default function FAQ() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.18, ease: standardEase }}
-              className="overflow-hidden"
+              transition={{ duration: 0.22, ease: standardEase }}
+              className="overflow-hidden border-t border-slate-800/80 bg-[#060a16]"
             >
-              <div className="px-3 pb-3 pt-1 sm:px-3.5 sm:pb-3.5 border-t border-slate-800/60 space-y-2 bg-[#080d1a]/60">
-                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed pt-1">
+              <div className="p-4 sm:p-5 space-y-3">
+                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
                   {faq.answer}
                 </p>
 
                 {/* Feature Highlights */}
                 {faq.highlights && faq.highlights.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800/60">
                     {faq.highlights.map((item, hIdx) => (
                       <span
                         key={hIdx}
-                        className="inline-flex items-center gap-1 text-[9px] sm:text-[9.5px] font-medium text-cyan-300 bg-cyan-950/50 border border-cyan-500/20 px-1.5 py-0.5 rounded"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 px-2.5 py-1 rounded-lg shadow-sm"
                       >
-                        <Sparkles className="w-2 h-2 text-cyan-400 shrink-0" />
+                        <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                         <span>{item}</span>
                       </span>
                     ))}
@@ -228,13 +153,13 @@ export default function FAQ() {
   return (
     <section id="faq" className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-900/90 selection:bg-cyan-500 selection:text-white">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[220px] bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-cyan-500/5 blur-[140px] rounded-full pointer-events-none" />
 
       <Container className="relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-[11px] font-bold tracking-wide uppercase mb-2.5">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-bold tracking-wider uppercase mb-3">
             <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.faqSectionBadge || 'Knowledge Base'}</span>
           </div>
@@ -246,226 +171,182 @@ export default function FAQ() {
             </span>
           </h2>
 
-          <p className="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
+          <p className="mt-3 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl mx-auto">
             {config.faqSectionDescription || 'Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.'}
           </p>
 
           {/* Trust badges */}
-          <div className="mt-4 sm:mt-5 flex flex-row items-center justify-start sm:justify-center gap-2.5 sm:gap-3 text-[10.5px] sm:text-[11px] overflow-x-auto hide-scrollbar w-[calc(100%+32px)] sm:w-full -mx-4 sm:mx-0 px-4 sm:px-0 pb-2 sm:pb-0">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300 shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300">
+              <ShieldCheck className="w-4 h-4 text-cyan-400" />
               100% Asset Ownership
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300 shrink-0">
-              <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300">
+              <Calendar className="w-4 h-4 text-cyan-400" />
               Month-to-Month Retainers
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-slate-300 shrink-0">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#090e1c] border border-slate-800 text-slate-300">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
               Zero Media Markups
             </span>
           </div>
         </div>
 
-        {/* Controls Toolbar: Search + Category Chips + Layout & Expansion */}
-        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto mb-3 space-y-2">
-          {/* Compact Search Bar */}
+        {/* Controls Toolbar: Search + Category Chips + Expand/Collapse */}
+        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-[1180px] mx-auto mb-6 space-y-3">
+          {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-slate-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search questions (e.g., 'rankings', 'ownership', 'spend', 'ROI')..."
-              className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-[#090e1c] border border-slate-800 text-white text-[11px] placeholder-slate-500 focus:outline-none focus:border-cyan-400/80 transition-colors shadow-inner"
+              placeholder="Search questions (e.g. 'rankings', 'ownership', 'pricing', 'ROI')..."
+              className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-[#090e1c] border border-slate-800 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors shadow-inner"
               aria-label="Search FAQs"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 hover:text-white p-0.5 rounded hover:bg-slate-800"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800"
                 aria-label="Clear search"
               >
-                <X className="w-3 h-3" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          {/* Modular Category Chips */}
-          <div className="flex items-center gap-1 overflow-x-auto pb-0.5 scrollbar-none">
-            {categoryFilters.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = activeCategory === cat.id;
-              const count = categoryCounts[cat.id] || 0;
+          {/* Modular Category Chips & Expand Toggle */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+              {categoryFilters.map((cat) => {
+                const Icon = cat.icon;
+                const isActive = activeCategory === cat.id;
+                const count = categoryCounts[cat.id] || 0;
 
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold whitespace-nowrap transition-all cursor-pointer ${
-                    isActive
-                      ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-xs shadow-cyan-500/20'
-                      : 'bg-[#090e1c] border border-slate-800/90 text-slate-400 hover:text-white hover:border-slate-700'
-                  }`}
-                >
-                  <Icon className="w-2.5 h-2.5" />
-                  <span>{cat.label}</span>
-                  <span className={`text-[9px] px-1 rounded ${
-                    isActive ? 'bg-slate-950/20 text-slate-900 font-extrabold' : 'bg-slate-800/80 text-slate-400'
-                  }`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* View Toolbar: Layout Mode Switcher & Quick Actions */}
-          <div className="flex items-center justify-between gap-2 pt-0.5 px-0.5">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-slate-400 font-medium">
-                Showing <strong className="text-cyan-400 font-semibold">{filteredFaqs.length}</strong> questions
-              </span>
-              <span className="inline-flex items-center gap-1 text-[9px] font-medium px-1.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-cyan-300">
-                <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse" />
-                Scrollable Box
-              </span>
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[36px] ${
+                      isActive
+                        ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                        : 'bg-[#090e1c] border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{cat.label}</span>
+                    <span className={`text-[11px] px-1.5 py-0.2 rounded-md ${
+                      isActive ? 'bg-slate-950/20 text-slate-950 font-black' : 'bg-slate-800 text-slate-300'
+                    }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="flex items-center gap-1.5">
-              {/* Layout Switcher */}
-              <div className="flex items-center p-0.5 rounded-md bg-[#090e1c] border border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setLayoutMode('list')}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
-                    layoutMode === 'list'
-                      ? 'bg-cyan-500 text-slate-950 shadow-xs'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                  title="List Layout Format"
-                >
-                  <List className="w-2.5 h-2.5" />
-                  <span>List</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLayoutMode('cards')}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
-                    layoutMode === 'cards'
-                      ? 'bg-cyan-500 text-slate-950 shadow-xs'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                  title="Card Grid Format"
-                >
-                  <LayoutGrid className="w-2.5 h-2.5" />
-                  <span>Cards</span>
-                </button>
-              </div>
+            <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+              <span className="text-xs text-slate-400">
+                Showing <strong className="text-cyan-400">{filteredFaqs.length}</strong> questions
+              </span>
 
-              {/* Expand / Collapse All */}
               <button
                 type="button"
                 onClick={openIds.length === filteredFaqs.length ? collapseAll : expandAll}
-                className="text-[10px] font-semibold text-cyan-400 hover:text-cyan-300 px-1.5 py-0.5 rounded hover:bg-cyan-950/40 transition-colors cursor-pointer"
+                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 px-3 py-1.5 rounded-xl bg-cyan-950/40 hover:bg-cyan-950/70 border border-cyan-500/30 transition-colors cursor-pointer min-h-[36px] flex items-center gap-1"
               >
-                {openIds.length === filteredFaqs.length ? 'Collapse All' : 'Expand All'}
+                <span>{openIds.length === filteredFaqs.length ? 'Collapse All' : 'Expand All'}</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* FAQ SCROLLABLE BOX CONTAINER (Compact Sizing) */}
-        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto w-full">
-          {filteredFaqs.length === 0 ? (
-            <div className="text-center py-8 px-4 rounded-xl border border-slate-800/80 bg-[#090e1c]/80">
-              <HelpCircle className="w-5 h-5 text-slate-500 mx-auto mb-1.5" />
-              <p className="text-xs font-bold text-white">No questions match your filter</p>
-              <p className="text-[10.5px] text-slate-400 mt-0.5">
-                Try a different keyword or reset filters.
-              </p>
-              <button
-                type="button"
-                onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
-                className="mt-2.5 px-2.5 py-1 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-[11px] font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
-              >
-                Reset Search
-              </button>
+        {/* SCROLLABLE FLEXBOX LIST OF QUESTIONS (Exact match to Packages Card size) */}
+        <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="w-full min-h-[560px] lg:min-h-[500px] rounded-3xl sm:rounded-[32px] overflow-hidden p-5 sm:p-7 lg:p-8 shadow-2xl backdrop-blur-2xl bg-gradient-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
+            
+            {/* Scroll Guidance Header Bar */}
+            <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-800/80 text-xs font-mono text-slate-400">
+              <span className="flex items-center gap-2 text-cyan-300 font-bold">
+                <HelpCircle className="w-4 h-4 text-cyan-400" />
+                <span>FAQ Knowledge Directory ({filteredFaqs.length} Questions)</span>
+              </span>
+              <span className="text-slate-400 hidden sm:inline font-sans">
+                Scroll inside box to browse all questions &darr;
+              </span>
             </div>
-          ) : (
-            <div className="relative rounded-xl border border-slate-800/90 bg-[#060a16]/90 p-1.5 sm:p-2 shadow-xl backdrop-blur-sm">
-              {/* Scrollable Questions Viewport (Smaller Height) */}
-              <div 
-                ref={scrollContainerRef}
-                className="max-h-[250px] sm:max-h-[285px] overflow-y-auto custom-scrollbar scroll-smooth pr-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-cyan-500/50 rounded-lg"
-                tabIndex={0}
-                aria-label="Frequently asked questions scrollable viewport"
-              >
-                {layoutMode === 'list' ? (
-                  /* LIST LAYOUT FORMAT inside Scrollable Box */
-                  <div 
-                    className="flex flex-col divide-y divide-slate-800/80 rounded-lg border border-slate-800/80 bg-[#090e1c]/90 overflow-hidden"
-                  >
-                    {filteredFaqs.map(renderListItem)}
-                  </div>
-                ) : (
-                  /* CARD FORMAT inside Scrollable Box */
-                  <div 
-                    className="flex flex-col gap-1.5 w-full"
-                  >
-                    {filteredFaqs.map(renderCard)}
-                  </div>
-                )}
-              </div>
 
-              {/* Compact Scroll Footer Indicator */}
-              <div className="mt-1.5 pt-1.5 border-t border-slate-800/70 flex items-center justify-between px-1.5 text-[9.5px] sm:text-[10px] text-slate-400">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                  <span>Scroll inside box to browse all {filteredFaqs.length} questions</span>
+            {/* Scrollable Flexbox Container with flex-1 and smooth scrolling */}
+            <div className="flex-1 w-full flex flex-col space-y-3 max-h-[460px] lg:max-h-[440px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
+              {filteredFaqs.length === 0 ? (
+                <div className="text-center py-12 px-4 rounded-2xl border border-slate-800 bg-[#090e1c] my-auto">
+                  <HelpCircle className="w-8 h-8 text-slate-500 mx-auto mb-2" />
+                  <p className="text-sm font-bold text-white">No questions match your search</p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Try a different keyword or reset active filters.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
+                    className="mt-4 px-4 py-2 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
+                  >
+                    Reset Filter
+                  </button>
                 </div>
-                <div className="flex items-center gap-2 font-mono text-[9.5px] text-slate-500">
-                  <span>{openIds.length} expanded</span>
-                </div>
-              </div>
+              ) : (
+                filteredFaqs.map(renderFaqAccordionItem)
+              )}
             </div>
-          )}
+
+            {/* Bottom Footer Strip */}
+            <div className="pt-3.5 mt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+              <span className="flex items-center gap-1.5 text-cyan-300 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span>Verified technical &amp; commercial campaign guidelines</span>
+              </span>
+              <span className="font-mono text-slate-400 text-xs">
+                100% Transparency
+              </span>
+            </div>
+
+          </div>
         </div>
 
-        {/* Compact Inquiry Strip */}
-        <div className="faq-inquiry mt-5 p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-[#0b1222] via-[#0d172e] to-[#0a1020] border border-slate-800 max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 shadow-md">
-          <div className="flex items-center gap-2.5 text-center sm:text-left">
-            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 hidden sm:flex text-cyan-400">
-              <Sparkles className="w-3.5 h-3.5" />
+        {/* Customized Requirement Inquiry Box */}
+        <div className="faq-inquiry mt-10 sm:mt-12 p-5 sm:p-6 rounded-2xl bg-[#0a1122] border border-slate-800 max-w-4xl xl:max-w-5xl 2xl:max-w-[1180px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+          <div className="flex items-center gap-3 text-center sm:text-left">
+            <div className="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-500/30 flex items-center justify-center shrink-0 hidden sm:flex text-cyan-400">
+              <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-xs sm:text-[13px] font-bold text-white">
-                Have a specific question about your brand's growth?
-              </h4>
-              <p className="text-[10.5px] sm:text-[11px] text-slate-400 mt-0.5">
-                Speak directly with our senior digital marketing strategists.
+              <h3 className="text-sm sm:text-base font-bold text-white">
+                Have a specific question about your brand's growth roadmap?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+                Speak directly with our senior growth architects in New Delhi.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
+          <div className="flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end">
             <a
               href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi MarketinGlu, I have a specific question regarding your digital marketing services.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors min-h-[44px]"
             >
-              <MessageCircle className="w-3 h-3 text-emerald-400" />
-              <span>WhatsApp Strategy</span>
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <span>WhatsApp Us</span>
             </a>
 
             <a
-              href="#banner-bottom"
-              className="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs shadow-cyan-500/20 hover:brightness-110"
+              href="#/services"
+              className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 min-h-[44px]"
             >
-              <span>Schedule Audit</span>
+              <span>Explore Services &rarr;</span>
             </a>
           </div>
         </div>
@@ -474,3 +355,4 @@ export default function FAQ() {
     </section>
   );
 }
+

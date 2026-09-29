@@ -77,7 +77,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   };
 
   return (
-    <section id="cases" className="relative flex flex-col justify-center py-14 sm:py-18 lg:py-24 bg-[#060a13] border-t border-slate-800/80">
+    <section id="cases" className="relative flex flex-col justify-center py-12 sm:py-16 lg:py-20 bg-[#060a13] border-t border-slate-800/80">
       {/* Top Subtle Glow Separation */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
@@ -155,31 +155,32 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-md bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-                            <ShoppingBag className="w-3.5 h-3.5" />
+                          <div className="w-7 h-7 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
+                            <ShoppingBag className="w-4 h-4" />
                           </div>
-                          <span className="text-xs font-semibold text-slate-200 tracking-wide">
+                          <span className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
                             {item.client || 'Nexa Store India'}
                           </span>
                           <span className="text-slate-600">&bull;</span>
-                          <span className="text-[11px] text-slate-400">D2C Fashion</span>
+                          <span className="text-xs text-slate-400">D2C Fashion</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-medium">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-xs font-mono text-emerald-300 font-semibold">
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                           <span>LIVE AUDIT</span>
                         </div>
                       </div>
 
-                      <div className="my-auto py-1">
+                      <div className="my-auto py-2">
                         <div className="flex items-center justify-between mb-2 text-xs">
                           <div className="flex items-center gap-2">
                             <Gauge className="w-4 h-4 text-cyan-400" />
                             <span className="text-slate-300 font-medium">Mobile Checkout Latency:</span>
-                            <span className="line-through text-slate-500 font-mono text-[11px]">4.8s</span>
+                            <span className="line-through text-slate-500 font-mono text-xs">4.8s</span>
+                            <span className="text-cyan-400 font-bold">&rarr;</span>
                             <span className="text-emerald-400 font-mono font-bold text-xs sm:text-sm">0.4s</span>
                           </div>
-                          <span className="text-[11px] font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/30">
+                          <span className="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded-md border border-cyan-500/30">
                             +95% Speed
                           </span>
                         </div>
@@ -207,8 +208,8 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/60">
-                        <span className="text-slate-400">Headless Architecture &amp; Core Web Vitals (99/100)</span>
+                      <div className="flex items-center justify-between text-xs text-slate-400 pt-2.5 pb-0.5 border-t border-slate-800/80">
+                        <span className="text-slate-300">Headless Architecture &amp; Core Web Vitals (99/100)</span>
                         <span className="text-cyan-300 font-mono font-bold">₹2.3M GMV Attributed</span>
                       </div>
                     </div>
@@ -216,31 +217,32 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-md bg-blue-950 border border-blue-500/40 flex items-center justify-center text-blue-400">
-                            <Radio className="w-3.5 h-3.5" />
+                          <div className="w-7 h-7 rounded-lg bg-blue-950 border border-blue-500/40 flex items-center justify-center text-blue-400">
+                            <Radio className="w-4 h-4" />
                           </div>
-                          <span className="text-xs font-semibold text-slate-200 tracking-wide">
+                          <span className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
                             {item.client || 'TechDuniya Media'}
                           </span>
                           <span className="text-slate-600">&bull;</span>
-                          <span className="text-[11px] text-slate-400">Tech &amp; Gadgets</span>
+                          <span className="text-xs text-slate-400">Tech &amp; Gadgets</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400 font-medium">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-950/80 border border-cyan-500/40 text-xs font-mono text-cyan-300 font-semibold">
+                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                           <span>VIRAL MOMENTUM</span>
                         </div>
                       </div>
 
-                      <div className="my-auto py-1">
+                      <div className="my-auto py-2">
                         <div className="flex items-center justify-between mb-2 text-xs">
                           <div className="flex items-center gap-2">
                             <BarChart2 className="w-4 h-4 text-sky-400" />
                             <span className="text-slate-300 font-medium">Monthly Social Reach:</span>
-                            <span className="line-through text-slate-500 font-mono text-[11px]">65K</span>
+                            <span className="line-through text-slate-500 font-mono text-xs">65K</span>
+                            <span className="text-cyan-400 font-bold">&rarr;</span>
                             <span className="text-cyan-300 font-mono font-bold text-xs sm:text-sm">320K</span>
                           </div>
-                          <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">
+                          <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-md border border-emerald-500/30">
                             +180% Inbound
                           </span>
                         </div>
@@ -268,17 +270,17 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/60">
-                        <span className="text-slate-400">Algorithmic Content Hooks &amp; Creator Syndication</span>
+                      <div className="flex items-center justify-between text-xs text-slate-400 pt-2.5 pb-0.5 border-t border-slate-800/80">
+                        <span className="text-slate-300">Algorithmic Content Hooks &amp; Creator Syndication</span>
                         <span className="text-sky-300 font-mono font-bold">8.4% Engagement CTR</span>
                       </div>
                     </div>
                   ) : (
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-slate-200">{item.client || item.title}</span>
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-[10px] font-mono text-cyan-400">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                        <span className="text-xs sm:text-sm font-bold text-slate-200">{item.client || item.title}</span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-xs font-mono text-cyan-300">
+                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                           DEPLOYED
                         </span>
                       </div>
@@ -288,9 +290,9 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         </div>
                         <p className="text-xs text-slate-400 mt-1">{item.category}</p>
                       </div>
-                      <div className="text-[11px] text-slate-500 pt-1 border-t border-slate-800/60 flex items-center justify-between">
-                        <span>Marketing LU Performance Framework</span>
-                        <span className="text-cyan-400 font-mono">VERIFIED</span>
+                      <div className="text-xs text-slate-400 pt-2 border-t border-slate-800/80 flex items-center justify-between">
+                        <span>MarketingGlu Framework</span>
+                        <span className="text-cyan-400 font-mono font-bold">VERIFIED</span>
                       </div>
                     </div>
                   )}
@@ -299,9 +301,9 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 {/* 2. CARD EDITORIAL BODY */}
                 <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-cyan-400 mb-2">
+                    <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider text-cyan-400 mb-2">
                       <span>{item.category}</span>
-                      <span className="text-slate-500">{item.year || '2025-2026'}</span>
+                      <span className="text-slate-400">{item.year || '2025-2026'}</span>
                     </div>
 
                     <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug mb-2">
@@ -317,7 +319,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         {item.tags.map((tag, tIdx) => (
                           <span 
                             key={tIdx} 
-                            className="px-2 py-0.5 rounded-md bg-slate-900/80 border border-slate-800 text-[10px] sm:text-[11px] text-slate-400"
+                            className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300"
                           >
                             {tag}
                           </span>
@@ -334,7 +336,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                           <div className="text-base sm:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-300 font-mono leading-tight">
                             {stat.value}
                           </div>
-                          <div className="text-[10px] sm:text-[11px] text-slate-400 font-medium truncate mt-0.5">
+                          <div className="text-xs text-slate-400 font-medium truncate mt-0.5">
                             {stat.label}
                           </div>
                         </div>
@@ -345,10 +347,10 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <button
                       type="button"
                       onClick={() => setActiveCase(item)}
-                      className="w-full mt-3 py-2.5 px-4 rounded-xl bg-slate-900/90 hover:bg-slate-850 border border-slate-800 hover:border-cyan-500/50 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white flex items-center justify-center gap-2 transition-all cursor-pointer group/btn min-h-[44px]"
+                      className="w-full mt-3 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[44px]"
                     >
                       <span>Explore Full Impact Analysis</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover/btn:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 stroke-[3]" />
                     </button>
                   </div>
                 </div>
@@ -399,19 +401,8 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                   })}
                 </div>
 
-                {/* Caret guidance and slide tracker */}
-                <div className="flex items-center justify-between mb-3 px-2">
-                  <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block"></span>
-                    <span className="font-semibold text-slate-300">Case Study {currentIndex + 1} of {totalCases}</span>
-                  </span>
-                  <span className="text-[11px] text-cyan-400 font-mono font-medium">
-                    Swipe or use carets &rarr;
-                  </span>
-                </div>
-
                 {/* Swipable Card Container */}
-                <div className="relative overflow-hidden px-1 min-h-[510px] sm:min-h-[540px]">
+                <div className="relative overflow-hidden px-1">
                   <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                     <motion.div
                       key={casesList[currentIndex].id}
@@ -444,44 +435,28 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                   </AnimatePresence>
                 </div>
 
-                {/* Mobile/Tablet pagination controls with Carets Prev / Next */}
-                <div className="flex items-center justify-between mt-5 px-2">
-                  <button
-                    type="button"
-                    onClick={handlePrev}
-                    className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
-                    aria-label="Previous case study"
-                  >
-                    <ChevronLeft className="w-4 h-4 text-cyan-400" />
-                    <span className="hidden sm:inline">Prev</span>
-                  </button>
+                {/* Mobile/Tablet Slide Tracker Indicator */}
+                <div className="flex items-center justify-between mt-4 px-2">
+                  <span className="text-[11px] text-slate-400 font-mono">
+                    Case Study <span className="text-cyan-400 font-bold">{currentIndex + 1}</span> of {totalCases}
+                  </span>
 
-                  {/* Pagination Dots */}
-                  <div className="flex items-center gap-1.5 sm:gap-2">
+                  {/* Step Indicator Bars */}
+                  <div className="flex items-center gap-1.5">
                     {casesList.map((_, dotIdx) => (
                       <button
                         key={dotIdx}
                         type="button"
                         onClick={() => handleSelectTab(dotIdx)}
-                        className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                        className={`h-1.5 rounded-sm transition-all cursor-pointer ${
                           dotIdx === currentIndex
-                            ? 'w-7 sm:w-8 bg-cyan-400 shadow-md shadow-cyan-400/40'
-                            : 'w-2 sm:w-2.5 bg-slate-700 hover:bg-slate-500'
+                            ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
+                            : 'w-2 bg-slate-800 hover:bg-slate-600'
                         }`}
                         aria-label={`Go to case study ${dotIdx + 1}`}
                       />
                     ))}
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
-                    aria-label="Next case study"
-                  >
-                    <span className="hidden sm:inline">Next</span>
-                    <ChevronRight className="w-4 h-4 text-cyan-400" />
-                  </button>
                 </div>
               </div>
             </>

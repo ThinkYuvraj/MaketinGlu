@@ -30,6 +30,7 @@ interface SectionsTabProps {
 const positionLabels: Record<SectionPosition, string> = {
   'after-hero': 'Position: Directly After Hero Section',
   'after-stats': 'Position: After Performance Stats',
+  'after-about': 'Position: After About Us & Agency Mission',
   'after-expertise': 'Position: After Services & Expertise',
   'after-packages': 'Position: After Service Packages',
   'after-cases': 'Position: After Case Studies & Work',

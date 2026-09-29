@@ -155,15 +155,15 @@ export default function PerformanceStats() {
                 <CardIcon className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <div className="text-[11px] font-bold text-white uppercase tracking-wide truncate">
+                <div className="text-xs font-bold text-white uppercase tracking-wide truncate">
                   {item.badge}
                 </div>
-                <div className="text-[10px] font-mono text-slate-400 uppercase tracking-tight truncate">
+                <div className="text-xs font-mono text-slate-400 tracking-tight truncate">
                   {item.category}
                 </div>
               </div>
             </div>
-            <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-[9px] font-mono text-cyan-300 font-semibold">
+            <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono text-cyan-300 font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
               VERIFIED
             </span>
@@ -209,7 +209,7 @@ export default function PerformanceStats() {
                 <span className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-none">
                   {item.percentage}%
                 </span>
-                <span className="text-[9px] font-bold text-cyan-400 uppercase tracking-widest mt-1">
+                <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest mt-1">
                   Delivery
                 </span>
               </div>
@@ -222,14 +222,14 @@ export default function PerformanceStats() {
           </h3>
 
           {/* Description Info */}
-          <p className="text-xs text-slate-400 text-center leading-relaxed mb-4">
+          <p className="text-xs sm:text-sm text-slate-400 text-center leading-relaxed mb-4">
             {item.description}
           </p>
 
           {/* Bullet Highlights */}
           <div className="space-y-2 py-3 border-t border-slate-800/80">
             {item.highlights.map((point, hIdx) => (
-              <div key={hIdx} className="flex items-start gap-2 text-[11px] text-slate-300">
+              <div key={hIdx} className="flex items-start gap-2 text-xs text-slate-300">
                 <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
                 <span className="leading-snug">{point}</span>
               </div>
@@ -239,9 +239,9 @@ export default function PerformanceStats() {
 
         {/* Bottom Impact KPI Badge */}
         <div className="mt-4 p-2.5 sm:p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 group-hover:border-cyan-500/30 transition-all shadow-sm">
-          <div className="flex items-center justify-between text-[10px] font-mono uppercase font-bold text-slate-400 tracking-wider mb-1">
+          <div className="flex items-center justify-between text-xs font-mono uppercase font-bold text-slate-400 tracking-wider mb-1">
             <span>{item.metricLabel}</span>
-            <span className="text-[9px] text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-1.5 py-0.5 rounded flex items-center gap-1 font-semibold">
+            <span className="text-xs text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-1.5 py-0.5 rounded flex items-center gap-1 font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               SLA
             </span>
@@ -268,7 +268,7 @@ export default function PerformanceStats() {
         
         {/* Consistent Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-bold tracking-widest uppercase mb-2">
             <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
             <span>VERIFIED CAPABILITY METRICS</span>
           </div>
@@ -302,22 +302,11 @@ export default function PerformanceStats() {
           ))}
         </motion.div>
 
-        {/* MOBILE & TABLET (<1024px): Caret Carousel with Navigation, Dots & Swipe */}
+        {/* MOBILE & TABLET (<1024px): Swipe Carousel with Centered Indicators */}
         <div className="block lg:hidden relative max-w-lg mx-auto">
           
-          {/* Caret guidance and slide tracker */}
-          <div className="flex items-center justify-between mb-3 px-2">
-            <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block"></span>
-              <span className="font-semibold text-slate-300">Capability {currentIndex + 1} of {totalStats}</span>
-            </span>
-            <span className="text-[11px] text-cyan-400 font-mono font-medium">
-              Swipe or use carets &rarr;
-            </span>
-          </div>
-
           {/* Swipable Card Container with popLayout */}
-          <div className="relative overflow-hidden px-1 min-h-[440px] sm:min-h-[480px]">
+          <div className="relative overflow-hidden px-1">
             <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
               <motion.div
                 key={stats[currentIndex].id}
@@ -350,44 +339,28 @@ export default function PerformanceStats() {
             </AnimatePresence>
           </div>
 
-          {/* Mobile/Tablet pagination controls with Carets Prev / Next */}
-          <div className="flex items-center justify-between mt-5 px-2">
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
-              aria-label="Previous capability metric"
-            >
-              <ChevronLeft className="w-4 h-4 text-cyan-400" />
-              <span className="hidden sm:inline">Prev</span>
-            </button>
+          {/* Mobile & Tablet Slide Tracker Indicator */}
+          <div className="flex items-center justify-between mt-4 px-2">
+            <span className="text-[11px] text-slate-400 font-mono">
+              Capability <span className="text-cyan-400 font-bold">{currentIndex + 1}</span> of {totalStats}
+            </span>
 
-            {/* Pagination Dots */}
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Step Indicator Bars */}
+            <div className="flex items-center gap-1.5">
               {stats.map((stat, dotIdx) => (
                 <button
                   key={stat.id}
                   type="button"
                   onClick={() => handleSelectStat(dotIdx)}
-                  className={`h-2 rounded-md transition-all cursor-pointer ${
+                  className={`h-1.5 rounded-sm transition-all cursor-pointer ${
                     dotIdx === currentIndex
-                      ? 'w-7 sm:w-8 bg-cyan-400 shadow-md shadow-cyan-400/40'
-                      : 'w-2 sm:w-2.5 bg-slate-700 hover:bg-slate-500'
+                      ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
+                      : 'w-2 bg-slate-800 hover:bg-slate-600'
                   }`}
                   aria-label={`Go to metric ${dotIdx + 1}: ${stat.label}`}
                 />
               ))}
             </div>
-
-            <button
-              type="button"
-              onClick={handleNext}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 hover:text-white hover:border-cyan-500/40 active:scale-95 transition-all cursor-pointer shadow-md"
-              aria-label="Next capability metric"
-            >
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="w-4 h-4 text-cyan-400" />
-            </button>
           </div>
 
         </div>

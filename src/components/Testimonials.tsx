@@ -97,7 +97,7 @@ export default function Testimonials() {
 
         {/* Centered Compact Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>VERIFIED CLIENT FEEDBACK</span>
           </div>
@@ -121,7 +121,7 @@ export default function Testimonials() {
               {totalReviews} Verified Reviews
             </span>
 
-            <div className="flex items-center gap-1 pl-2 border-l border-slate-800">
+            <div className="hidden lg:flex items-center gap-1 pl-2 border-l border-slate-800">
               <motion.button
                 {...buttonHoverMotion}
                 onClick={handlePrev}
@@ -158,11 +158,23 @@ export default function Testimonials() {
             <AnimatePresence mode="wait">
               <motion.div 
                 key={currentItem.id}
-                initial={{ opacity: 0, x: slideDirection === 'right' ? 18 : -18 }}
+                initial={{ opacity: 0, x: slideDirection === 'right' ? 24 : -24 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: slideDirection === 'right' ? -18 : 18 }}
+                exit={{ opacity: 0, x: slideDirection === 'right' ? -24 : 24 }}
                 transition={{ duration: 0.25, ease: standardEase }}
-                className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+                onDragEnd={(_, info) => {
+                  const swipeThreshold = 35;
+                  const velocityThreshold = 180;
+                  if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+                    handleNext();
+                  } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+                    handlePrev();
+                  }
+                }}
+                className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center cursor-grab active:cursor-grabbing touch-pan-y"
               >
                 {/* Left / Top: Reviewer Profile */}
                 <div className="lg:col-span-4 flex items-center lg:flex-col lg:items-start gap-3.5 border-b lg:border-b-0 lg:border-r border-slate-800/80 pb-4 lg:pb-0 lg:pr-6">
@@ -194,7 +206,7 @@ export default function Testimonials() {
                     </div>
 
                     {currentItem.highlight && (
-                      <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full truncate">
+                      <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-md truncate">
                         {currentItem.highlight}
                       </span>
                     )}
@@ -215,17 +227,17 @@ export default function Testimonials() {
               Review <span className="text-cyan-400 font-bold">{currentIndex + 1}</span> of {totalReviews}
             </span>
 
-            {/* Step Indicator Dots */}
+            {/* Step Indicator Bars */}
             <div className="flex items-center gap-1.5">
               {carouselTestimonials.map((_, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => handleSelectReview(idx)}
-                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                  className={`h-1.5 rounded-sm transition-all cursor-pointer ${
                     idx === currentIndex
                       ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                      : 'w-1.5 bg-slate-800 hover:bg-slate-600'
+                      : 'w-2 bg-slate-800 hover:bg-slate-600'
                   }`}
                   aria-label={`Go to review ${idx + 1}`}
                 />

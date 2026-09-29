@@ -1,11 +1,25 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight, Sparkles, CheckCircle2, ArrowLeft, Zap, MessageCircle } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2, Zap, MessageCircle } from 'lucide-react';
 import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import { useNavigation } from '../context/NavigationContext';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from '../components/common/Container';
 import { buttonHoverMotion } from '../lib/animations';
+
+import websiteDesignImg from '../assets/website-design.png';
+import ecommerceImg from '../assets/ecommerce-design.png';
+import graphicDesignImg from '../assets/graphic-design.png';
+import seoImg from '../assets/seo-optimization.png';
+import ppcImg from '../assets/ppc-campaigns.png';
+import smoImg from '../assets/smo-optimization.png';
+
+const DEFAULT_SERVICE_IMAGES: Record<string, string> = {
+  'web-design': websiteDesignImg,
+  'ecommerce': ecommerceImg,
+  'graphic-design': graphicDesignImg,
+  'seo': seoImg,
+  'ppc': ppcImg,
+  'smo': smoImg,
+};
 
 interface ServicesIndexPageProps {
   onOpenConsultation: (serviceName?: string) => void;
@@ -16,7 +30,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
   const { config } = useSiteConfig();
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-24 sm:pt-28 pb-20">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-32 sm:pt-36 lg:pt-40 pb-20">
       
       {/* Ambient background glows */}
       <div className="fixed top-20 -left-40 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
@@ -24,21 +38,10 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
 
       <Container className="relative z-10">
         
-        {/* Top Breadcrumb & Header */}
-        <div className="mb-6 sm:mb-8 flex items-center gap-2 text-xs sm:text-sm text-slate-400">
-          <button
-            onClick={() => navigateTo('#/')}
-            className="hover:text-cyan-400 transition-colors flex items-center gap-1 cursor-pointer font-medium"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Home</span>
-          </button>
-          <span className="text-slate-600">/</span>
-          <span className="text-cyan-400 font-semibold">Services</span>
-        </div>
+
 
         {/* Page Title & Mission */}
-        <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
+        <div className="mt-4 sm:mt-6 lg:mt-8 text-center max-w-4xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-[11px] font-bold tracking-widest text-cyan-400 uppercase mb-4 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR CORE EXPERTISE &amp; DISCIPLINE PAGES</span>
@@ -85,9 +88,20 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                   {/* Service Image Preview */}
                   <div className="relative rounded-xl overflow-hidden mb-4 border border-slate-800/80 aspect-video bg-[#070b14]">
                     <img
-                      src={config.sectionImages?.[service.id] || service.image}
+                      src={
+                        (config.sectionImages?.[service.id] && (config.sectionImages[service.id].startsWith('data:image/') || config.sectionImages[service.id].startsWith('http')))
+                          ? config.sectionImages[service.id]
+                          : DEFAULT_SERVICE_IMAGES[service.id] || service.image || websiteDesignImg
+                      }
                       alt={service.title}
                       className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                      loading="lazy"
+                      onError={(e) => {
+                        const fallback = DEFAULT_SERVICE_IMAGES[service.id] || websiteDesignImg;
+                        if (e.currentTarget.src !== fallback) {
+                          e.currentTarget.src = fallback;
+                        }
+                      }}
                     />
                     <div className="absolute bottom-2 left-2 right-2 bg-[#070b14]/90 backdrop-blur-xs border border-slate-700/60 rounded-lg px-2 py-1 text-[10px] font-bold text-cyan-300 truncate">
                       {service.metricBadge}

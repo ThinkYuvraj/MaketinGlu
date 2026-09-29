@@ -338,6 +338,77 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 });
 
 // ==========================================
+// Customer Inquiries & Leads Handler
+// Receiver Email: marketing2glue@gmail.com
+// ==========================================
+const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'marketing2glue@gmail.com');
+
+interface InquiryRecord {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  service?: string;
+  notes?: string;
+  receivedAt: string;
+  receiverEmail: string;
+}
+
+const receivedInquiries: InquiryRecord[] = [];
+
+app.post(['/api/inquiry', '/api/contact', '/api/consultation'], (req, res) => {
+  const { name, email, phone, service, notes, message } = req.body || {};
+
+  if (!name || (!email && !phone)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name and either email or phone are required to submit an inquiry.',
+    });
+  }
+
+  const inquiry: InquiryRecord = {
+    id: crypto.randomBytes(8).toString('hex'),
+    name: String(name).trim(),
+    email: String(email || '').trim(),
+    phone: String(phone || '').trim(),
+    service: String(service || 'General Inquiry').trim(),
+    notes: String(notes || message || '').trim(),
+    receivedAt: new Date().toISOString(),
+    receiverEmail: INQUIRY_RECEIVER_EMAIL,
+  };
+
+  receivedInquiries.unshift(inquiry);
+  // Keep last 200 in memory
+  if (receivedInquiries.length > 200) {
+    receivedInquiries.pop();
+  }
+
+  console.log(`[INQUIRY RECEIVED] Forwarding to ${INQUIRY_RECEIVER_EMAIL}:`, {
+    from: `${inquiry.name} <${inquiry.email}>`,
+    phone: inquiry.phone,
+    service: inquiry.service,
+    date: inquiry.receivedAt,
+  });
+
+  return res.json({
+    success: true,
+    message: `Inquiry successfully received and routed to ${INQUIRY_RECEIVER_EMAIL}. Our team will contact you shortly!`,
+    inquiryId: inquiry.id,
+    receiverEmail: INQUIRY_RECEIVER_EMAIL,
+  });
+});
+
+// Admin endpoint to view received inquiries
+app.get('/api/admin/inquiries', requireAdminAuth, (_req, res) => {
+  res.json({
+    success: true,
+    count: receivedInquiries.length,
+    receiverEmail: INQUIRY_RECEIVER_EMAIL,
+    inquiries: receivedInquiries,
+  });
+});
+
+// ==========================================
 // Vite Middleware / Static serving
 // ==========================================
 
@@ -425,9 +496,43 @@ async function startServer() {
     }
   });
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`MarketingGlu server running on http://0.0.0.0:${PORT}`);
-  });
+  // ==========================================
+  // Resilient Port Listening with Collision Handling
+  // ==========================================
+  const startPort = PORT;
+  const maxAttempts = 10;
+
+  function tryListen(portToTry: number, attempt = 1) {
+    const serverInstance = app.listen(portToTry, '0.0.0.0');
+
+    serverInstance.on('listening', () => {
+      console.log('\n======================================================');
+      console.log(`🚀 MarketingGlu Server is Online & Ready!`);
+      console.log(`➜  Local:    http://localhost:${portToTry}/`);
+      console.log(`➜  Network:  http://127.0.0.1:${portToTry}/`);
+      console.log(`➜  Admin:    http://localhost:${portToTry}/#/admin`);
+      console.log(`➜  Inquiries: Receiver -> ${INQUIRY_RECEIVER_EMAIL}`);
+      console.log(`➜  Mode:     ${isDev ? 'Development (Vite Middleware)' : 'Production'}`);
+      console.log('======================================================\n');
+    });
+
+    serverInstance.on('error', (err: any) => {
+      if (err.code === 'EADDRINUSE') {
+        console.warn(`[PORT WARNING] Port ${portToTry} is currently in use.`);
+        if (attempt < maxAttempts) {
+          const nextPort = portToTry + 1;
+          console.log(`[PORT RETRY] Attempting to bind on fallback port ${nextPort}...`);
+          tryListen(nextPort, attempt + 1);
+        } else {
+          console.error(`[PORT ERROR] Unable to bind to any port from ${startPort} to ${portToTry}. Please free up the port.`);
+        }
+      } else {
+        console.error('[SERVER LISTEN ERROR]', err);
+      }
+    });
+  }
+
+  tryListen(startPort);
 }
 
 // Wrap top-level call so async boot failures are logged

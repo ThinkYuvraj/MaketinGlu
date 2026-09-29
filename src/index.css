@@ -97,3 +97,31 @@ html.lenis, html.lenis body {
   scrollbar-width: thin;
   scrollbar-color: rgba(6, 182, 212, 0.45) rgba(15, 23, 42, 0.4);
 }
+
+/* Barba.js Ultra-Smooth Page Transitions */
+[data-barba="wrapper"] {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+[data-barba="container"] {
+  position: relative;
+  width: 100%;
+  will-change: opacity, transform;
+}
+
+.barba-page-entering [data-barba="container"] {
+  animation: barbaFadeInUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes barbaFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}

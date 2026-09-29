@@ -144,7 +144,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
           <ol key={idx} className="space-y-2.5 my-4 pl-1">
             {items.map((item, itemIdx) => (
               <li key={itemIdx} className="flex items-start gap-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-                <span className="w-6 h-6 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold flex items-center justify-center shrink-0 mt-0.5">
+                <span className="w-6 h-6 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold flex items-center justify-center shrink-0 mt-0.5">
                   {itemIdx + 1}
                 </span>
                 <span>{item}</span>
@@ -163,7 +163,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-24 sm:pt-28 pb-20">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-32 sm:pt-36 lg:pt-40 pb-20">
       {/* Ambient background glows */}
       <div className="fixed top-20 -left-40 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
       <div className="fixed top-1/2 -right-40 w-[550px] h-[550px] bg-sky-600/10 blur-[180px] rounded-full pointer-events-none" />
@@ -246,10 +246,10 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
                 <img
                   src={blog.author.avatar}
                   alt={blog.author.name}
-                  className="w-11 h-11 rounded-full object-cover border border-cyan-500/40"
+                  className="w-11 h-11 rounded-xl object-cover border border-cyan-500/40"
                 />
               ) : (
-                <div className="w-11 h-11 rounded-full bg-cyan-900/60 text-cyan-300 flex items-center justify-center font-bold text-sm">
+                <div className="w-11 h-11 rounded-xl bg-cyan-900/60 text-cyan-300 flex items-center justify-center font-bold text-sm">
                   {blog.author.name.charAt(0)}
                 </div>
               )}
@@ -334,10 +334,10 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
               <img
                 src={blog.author.avatar}
                 alt={blog.author.name}
-                className="w-14 h-14 rounded-full object-cover border-2 border-cyan-400 shrink-0"
+                className="w-14 h-14 rounded-2xl object-cover border-2 border-cyan-400 shrink-0"
               />
             ) : (
-              <div className="w-14 h-14 rounded-full bg-cyan-950 text-cyan-300 flex items-center justify-center font-bold text-lg shrink-0">
+              <div className="w-14 h-14 rounded-2xl bg-cyan-950 text-cyan-300 flex items-center justify-center font-bold text-lg shrink-0">
                 {blog.author.name.charAt(0)}
               </div>
             )}

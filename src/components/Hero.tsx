@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, CheckCircle2, ChevronDown, Zap } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2, ChevronDown, Zap, TrendingUp } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import { buttonHoverMotion, standardEase } from '../lib/animations';
@@ -37,15 +37,10 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             transition={{ duration: 0.6, ease: standardEase }}
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
-            {/* Location Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#0a1122]/90 via-[#0c162d]/90 to-[#0b162b]/90 border border-cyan-500/30 text-[10px] sm:text-xs font-bold tracking-[0.15em] text-cyan-300 mb-6 sm:mb-8 shadow-xl shadow-cyan-950/40 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
-              </span>
-              <span className="uppercase">{config.locationBadge}</span>
-              <span className="text-cyan-600">&bull;</span>
-              <span className="text-slate-300 font-medium">FULL-STACK GROWTH</span>
+            {/* Location / Capability Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-950/40 border border-cyan-500/40 text-xs font-bold tracking-wider text-cyan-400 uppercase mb-6 sm:mb-8 shadow-sm shadow-cyan-950/50">
+              <TrendingUp className="w-4 h-4 text-cyan-400 shrink-0" />
+              <span>{config.locationBadge}</span>
             </div>
 
             {/* Main Headline */}

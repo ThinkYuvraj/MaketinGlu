@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, type Variants } from 'motion/react';
 import {
   Sparkles,
   ShieldCheck,
@@ -11,7 +12,10 @@ import {
   Compass,
   Users2,
   TrendingUp,
-  HeartHandshake
+  HeartHandshake,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight
 } from 'lucide-react';
 import Container from './common/Container';
 import { useSiteConfig, defaultAboutPillars, defaultAboutChecklist } from '../context/SiteConfigContext';
@@ -35,39 +39,47 @@ const PILLAR_ICONS: { [key: string]: React.ElementType } = {
   HeartHandshake,
 };
 
-// Strict: Zero purple gradients (following design rules)
 const PILLAR_ACCENTS: {
-  [key: string]: { border: string; text: string; bg: string };
+  [key: string]: { border: string; text: string; bg: string; badgeBg: string };
 } = {
   cyan: {
-    border: 'border-cyan-500/30 hover:border-cyan-400/60',
+    border: 'border-cyan-500/40',
     text: 'text-cyan-400',
-    bg: 'bg-cyan-950/40',
+    bg: 'bg-cyan-950/60',
+    badgeBg: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/40',
   },
   emerald: {
-    border: 'border-emerald-500/30 hover:border-emerald-400/60',
+    border: 'border-emerald-500/40',
     text: 'text-emerald-400',
-    bg: 'bg-emerald-950/40',
+    bg: 'bg-emerald-950/60',
+    badgeBg: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40',
   },
   sky: {
-    border: 'border-sky-500/30 hover:border-sky-400/60',
+    border: 'border-sky-500/40',
     text: 'text-sky-400',
-    bg: 'bg-sky-950/40',
+    bg: 'bg-sky-950/60',
+    badgeBg: 'bg-sky-950/80 text-sky-300 border-sky-500/40',
   },
   amber: {
-    border: 'border-amber-500/30 hover:border-amber-400/60',
+    border: 'border-amber-500/40',
     text: 'text-amber-400',
-    bg: 'bg-amber-950/40',
+    bg: 'bg-amber-950/60',
+    badgeBg: 'bg-amber-950/80 text-amber-300 border-amber-500/40',
   },
   blue: {
-    border: 'border-blue-500/30 hover:border-blue-400/60',
+    border: 'border-blue-500/40',
     text: 'text-blue-400',
-    bg: 'bg-blue-950/40',
+    bg: 'bg-blue-950/60',
+    badgeBg: 'bg-blue-950/80 text-blue-300 border-blue-500/40',
   },
 };
 
 export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   const { config } = useSiteConfig();
+
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   if (config.aboutEnabled === false) {
     return null;
@@ -109,9 +121,72 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
     },
   ];
 
-  const pillars: AboutPillar[] = config.aboutPillars && config.aboutPillars.length > 0
-    ? config.aboutPillars.slice(0, 4)
-    : defaultAboutPillars.slice(0, 4);
+  const pillars: AboutPillar[] = Array.from({ length: 4 }).map((_, idx) => {
+    if (config.aboutPillars && config.aboutPillars[idx]) {
+      return config.aboutPillars[idx];
+    }
+    return defaultAboutPillars[idx] || defaultAboutPillars[0];
+  });
+
+  const totalPillars = pillars.length;
+  const safeIndex = totalPillars > 0 ? currentIndex % totalPillars : 0;
+  const activePillar = pillars[safeIndex] || pillars[0];
+  const ActiveIcon = PILLAR_ICONS[activePillar.iconName || 'Zap'] || Zap;
+  const activeAccent = PILLAR_ACCENTS[activePillar.accent || 'cyan'] || PILLAR_ACCENTS.cyan;
+
+  const handleNext = () => {
+    setSlideDirection('right');
+    setCurrentIndex((prev) => (prev + 1) % totalPillars);
+  };
+
+  const handlePrev = () => {
+    setSlideDirection('left');
+    setCurrentIndex((prev) => (prev - 1 + totalPillars) % totalPillars);
+  };
+
+  const handleSelectPillar = (idx: number) => {
+    setSlideDirection(idx > safeIndex ? 'right' : 'left');
+    setCurrentIndex(idx);
+  };
+
+  // 4-Second Auto-Swipe Timer
+  useEffect(() => {
+    if (isPaused || totalPillars <= 1) return;
+    const timer = setInterval(() => {
+      setSlideDirection('right');
+      setCurrentIndex((prev) => (prev + 1) % totalPillars);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [currentIndex, isPaused, totalPillars]);
+
+  // 3D Depth Card Variants
+  const card3DVariants: Variants = {
+    enter: (direction: 'left' | 'right') => ({
+      x: direction === 'right' ? 60 : -60,
+      rotateY: direction === 'right' ? 12 : -12,
+      opacity: 0,
+      scale: 0.95,
+    }),
+    center: {
+      x: 0,
+      rotateY: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        x: { type: "spring" as const, stiffness: 280, damping: 28, mass: 0.7 },
+        rotateY: { duration: 0.35, ease: "easeOut" },
+        opacity: { duration: 0.3 },
+        scale: { duration: 0.3 },
+      },
+    },
+    exit: (direction: 'left' | 'right') => ({
+      x: direction === 'right' ? -60 : 60,
+      rotateY: direction === 'right' ? -12 : 12,
+      opacity: 0,
+      scale: 0.95,
+      transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+    }),
+  };
 
   const checklist: string[] = config.aboutChecklist && config.aboutChecklist.length > 0
     ? config.aboutChecklist
@@ -120,12 +195,12 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   return (
     <section
       id="about"
-      className="scroll-mt-20 lg:scroll-mt-24 relative py-10 sm:py-12 lg:py-14 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative py-12 sm:py-16 lg:py-20 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Anchor targets for smooth navigation without duplicate ID collisions */}
-      <span id="about-us" className="absolute -top-24 pointer-events-none" />
-      <span id="agency" className="absolute -top-24 pointer-events-none" />
-      <span id="company" className="absolute -top-24 pointer-events-none" />
+      <span id="about-us" className="absolute -top-28 sm:-top-32 pointer-events-none" />
+      <span id="agency" className="absolute -top-28 sm:-top-32 pointer-events-none" />
+      <span id="company" className="absolute -top-28 sm:-top-32 pointer-events-none" />
 
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/3 -right-24 w-80 h-80 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
@@ -133,57 +208,57 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
 
       <Container className="relative z-10 max-w-7xl mx-auto">
         {/* Centered Single-Frame Header Row */}
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 pb-5 border-b border-slate-800/60 flex flex-col items-center justify-center">
-          <div className="inline-flex items-center justify-center gap-2 px-2.5 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-[10px] font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2">
-            <Sparkles className="w-3 h-3 text-cyan-400" />
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 pb-5 border-b border-slate-800/60 flex flex-col items-center justify-center">
+          <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{badgeText}</span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-center">
             {title1}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
               {title2}
             </span>
           </h2>
 
-          <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-2.5 text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {description}
           </p>
         </div>
 
-        {/* Compact Single-Frame Grid: Left Agency Profile & Right 4 Pillar Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+        {/* 2-Column Grid: Left Agency Profile & Right 3D Caret Carousel Pillars */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
-          {/* Left Column: Agency Story, Mission & 4 Metric Badges (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
+          {/* Left Column: Agency Story, Mission & Metric Badges (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-44 h-44 bg-cyan-500/5 blur-2xl rounded-full pointer-events-none" />
 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
-                  <Compass className="w-3.5 h-3.5" />
+                <div className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
+                  <Compass className="w-4 h-4" />
                 </div>
-                <h3 className="text-sm font-bold text-white tracking-tight">
+                <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
                   Strategic DNA &amp; Core Mission
                 </h3>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {story}
               </p>
 
               {/* Mission statement card */}
-              <div className="p-3 rounded-xl bg-[#040813] border border-slate-800 text-xs text-slate-200 italic font-medium leading-relaxed">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 not-italic block mb-1">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[#040813] border border-slate-800 text-xs sm:text-sm text-slate-200 italic font-medium leading-relaxed">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 not-italic block mb-1">
                   MISSION STATEMENT
                 </span>
                 "{mission}"
               </div>
 
-              {/* Compact Value checklist */}
+              {/* Value checklist */}
               <div className="grid grid-cols-1 gap-1.5 pt-1">
                 {checklist.slice(0, 3).map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-[11px] text-slate-300">
+                  <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
                     <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                     <span className="truncate">{item}</span>
                   </div>
@@ -198,7 +273,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 return (
                   <div
                     key={idx}
-                    className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex items-center gap-2.5"
+                    className="p-2.5 sm:p-3 rounded-xl bg-slate-900/80 border border-slate-800/90 flex items-center gap-2.5 hover:border-cyan-500/40 transition-colors"
                   >
                     <div className="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
                       <Icon className="w-3.5 h-3.5" />
@@ -207,7 +282,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       <div className="text-xs sm:text-sm font-black text-white font-mono leading-none truncate">
                         {cred.value}
                       </div>
-                      <div className="text-[10px] text-slate-400 truncate mt-0.5 font-medium">
+                      <div className="text-[11px] text-slate-400 truncate mt-0.5 font-medium">
                         {cred.label}
                       </div>
                     </div>
@@ -217,48 +292,189 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             </div>
           </div>
 
-          {/* Right Column: 4 Core Pillars in Clean 2x2 Layout (7 cols) */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 h-full">
-            {pillars.map((pillar) => {
-              const Icon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
-              const accent = PILLAR_ACCENTS[pillar.accent || 'cyan'] || PILLAR_ACCENTS.cyan;
+          {/* Right Column: 3D CARET CAROUSEL FOR 4 CORE PILLARS (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
+            
+            {/* Quick-Selector Floating Dock for 4 Pillars (Curved Rectangle) */}
+            <div className="flex items-center justify-start sm:justify-center overflow-x-auto py-1 px-1 mb-4 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <div className="inline-flex items-center gap-1.5 p-1.5 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
+                {pillars.map((pillar, tabIdx) => {
+                  const isSelected = tabIdx === safeIndex;
+                  const TabIcon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
 
-              return (
-                <div
-                  key={pillar.id}
-                  className={`p-4 sm:p-5 rounded-2xl bg-[#090e1c] border ${accent.border} flex flex-col justify-between shadow-lg transition-all hover:bg-[#0b1224] relative overflow-hidden group h-full`}
-                >
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-500/5 to-transparent rounded-full pointer-events-none" />
+                  return (
+                    <button
+                      key={pillar.id || tabIdx}
+                      type="button"
+                      onClick={() => handleSelectPillar(tabIdx)}
+                      className={`group relative shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[36px] select-none ${
+                        isSelected
+                          ? 'text-white'
+                          : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                      }`}
+                    >
+                      {/* Animated Active Background Curved Rectangle */}
+                      {isSelected && (
+                        <motion.div
+                          layoutId="activeAboutPillarCapsule"
+                          className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
+                          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                        />
+                      )}
 
-                  <div>
-                    <div className="flex items-center justify-between mb-2.5">
-                      <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-2 py-0.5 rounded-md">
-                        {pillar.tag}
-                      </span>
-                      <div className={`w-7 h-7 rounded-lg ${accent.bg} border border-slate-800 flex items-center justify-center ${accent.text} group-hover:scale-105 transition-transform`}>
-                        <Icon className="w-3.5 h-3.5" />
+                      <div
+                        className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center transition-all ${
+                          isSelected
+                            ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
+                            : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
+                        }`}
+                      >
+                        <TabIcon className="w-3 h-3" />
                       </div>
+                      <span className="relative z-10 tracking-tight font-semibold">{pillar.tag}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 3D Caret Carousel Wrapper */}
+            <div 
+              className="relative flex-1 w-full"
+              style={{ perspective: 1200 }}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              {/* Left Floating Desktop Only Next/Prev Button */}
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="hidden lg:flex absolute -left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-2xl bg-[#080d1a]/95 hover:bg-gradient-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                aria-label="Previous strategic pillar"
+                title="Previous Pillar"
+              >
+                <ChevronLeft className="w-5 h-5 group-hover/caret:-translate-x-0.5 transition-transform" />
+              </button>
+
+              {/* Right Floating Desktop Only Next/Prev Button */}
+              <button
+                type="button"
+                onClick={handleNext}
+                className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-2xl bg-[#080d1a]/95 hover:bg-gradient-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                aria-label="Next strategic pillar"
+                title="Next Pillar"
+              >
+                <ChevronRight className="w-5 h-5 group-hover/caret:translate-x-0.5 transition-transform" />
+              </button>
+
+              {/* 3D Animated Spotlight Pillar Card */}
+              <AnimatePresence mode="wait" custom={slideDirection}>
+                <motion.div
+                  key={activePillar.id || safeIndex}
+                  custom={slideDirection}
+                  variants={card3DVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.15}
+                  onDragEnd={(_, info) => {
+                    const swipeThreshold = 35;
+                    const velocityThreshold = 180;
+                    if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+                      handleNext();
+                    } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+                      handlePrev();
+                    }
+                  }}
+                  className="w-full h-full min-h-[360px] sm:min-h-[380px] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+                >
+                  {/* Active Progress Indicator Line */}
+                  <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden">
+                    <motion.div
+                      key={`${activePillar.id}-${isPaused}`}
+                      initial={{ width: "0%" }}
+                      animate={{ width: isPaused ? "100%" : "100%" }}
+                      transition={{
+                        duration: isPaused ? 0 : 4,
+                        ease: "linear",
+                      }}
+                      className="h-full bg-gradient-to-r from-sky-400 via-cyan-400 to-teal-300 shadow-sm shadow-cyan-400/50"
+                    />
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* Pillar Badge & Icon */}
+                    <div className="flex items-center justify-between">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold uppercase tracking-wider">
+                        <ActiveIcon className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>{activePillar.tag}</span>
+                      </div>
+
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-md">
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span>Standard Guarantee</span>
+                      </span>
                     </div>
 
-                    <h4 className="text-xs sm:text-sm font-bold text-white mb-1.5 leading-snug group-hover:text-cyan-200 transition-colors">
-                      {pillar.title}
-                    </h4>
+                    {/* Headline */}
+                    <div>
+                      <h4 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-snug">
+                        {activePillar.title}
+                      </h4>
+                    </div>
 
-                    <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed line-clamp-3">
-                      {pillar.description}
+                    {/* Description Narrative */}
+                    <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed">
+                      {activePillar.description}
                     </p>
                   </div>
 
-                  <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-400">
-                    <span className="flex items-center gap-1 text-cyan-300/90 font-medium">
-                      <CheckCircle2 className="w-3 h-3 text-cyan-400" />
-                      Standard Guarantee
-                    </span>
-                    <span className="font-mono text-slate-500">100% Verified</span>
+                  {/* Bottom Assurance & Verification */}
+                  <div className="pt-4 mt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2 text-cyan-300 font-medium">
+                      <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <span>100% Commercial IP &amp; Code Sovereignty</span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => onOpenConsultation?.(activePillar.title)}
+                      className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-white font-bold cursor-pointer transition-colors"
+                    >
+                      <span>Inquire About {activePillar.tag}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
                   </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Mobile & Tablet Slide Tracker Indicator */}
+              <div className="flex lg:hidden items-center justify-between mt-4 px-2">
+                <span className="text-[11px] text-slate-400 font-mono">
+                  Pillar <span className="text-cyan-400 font-bold">{safeIndex + 1}</span> of {totalPillars}
+                </span>
+
+                {/* Step Indicator Bars */}
+                <div className="flex items-center gap-1.5">
+                  {pillars.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      onClick={() => handleSelectPillar(dotIdx)}
+                      className={`h-1.5 rounded-sm transition-all cursor-pointer ${
+                        dotIdx === safeIndex
+                          ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
+                          : 'w-2 bg-slate-800 hover:bg-slate-600'
+                      }`}
+                      aria-label={`Go to pillar ${dotIdx + 1}`}
+                    />
+                  ))}
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
           </div>
 
         </div>

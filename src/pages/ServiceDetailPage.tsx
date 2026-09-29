@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { 
   ArrowRight, 
-  ArrowLeft,
   CheckCircle2, 
   MessageCircle, 
   Zap, 
@@ -19,6 +18,22 @@ import { useNavigation } from '../context/NavigationContext';
 import { useSiteConfig } from '../context/SiteConfigContext';
 import Container from '../components/common/Container';
 import { buttonHoverMotion, standardEase } from '../lib/animations';
+
+import websiteDesignImg from '../assets/website-design.png';
+import ecommerceImg from '../assets/ecommerce-design.png';
+import graphicDesignImg from '../assets/graphic-design.png';
+import seoImg from '../assets/seo-optimization.png';
+import ppcImg from '../assets/ppc-campaigns.png';
+import smoImg from '../assets/smo-optimization.png';
+
+const DEFAULT_SERVICE_IMAGES: Record<string, string> = {
+  'web-design': websiteDesignImg,
+  'ecommerce': ecommerceImg,
+  'graphic-design': graphicDesignImg,
+  'seo': seoImg,
+  'ppc': ppcImg,
+  'smo': smoImg,
+};
 
 interface ServiceDetailPageProps {
   service: ExpertiseItem;
@@ -40,7 +55,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
   const ActiveIcon = getExpertiseIcon(currentService);
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-24 sm:pt-28 pb-20">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-32 sm:pt-36 lg:pt-40 pb-20">
       
       {/* Ambient background glows */}
       <div className="fixed top-24 -left-40 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
@@ -48,41 +63,10 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
 
       <Container className="relative z-10">
         
-        {/* Top Breadcrumb & Navigation Bar */}
-        <div className="mb-6 sm:mb-8 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
-          <div className="flex items-center gap-2 text-slate-400">
-            <button
-              onClick={() => navigateTo('#/')}
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1 cursor-pointer font-medium"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Home</span>
-            </button>
-            <span className="text-slate-600">/</span>
-            <button
-              onClick={() => navigateTo('#/services')}
-              className="hover:text-cyan-400 transition-colors cursor-pointer font-medium"
-            >
-              Services
-            </button>
-            <span className="text-slate-600">/</span>
-            <span className="text-cyan-400 font-semibold truncate max-w-[200px] sm:max-w-none">
-              {service.tabLabel}
-            </span>
-          </div>
 
-          {/* Quick Switch to other services dropdown or button */}
-          <button
-            onClick={() => navigateTo('#/services')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition-colors cursor-pointer"
-          >
-            <Layers className="w-3.5 h-3.5 text-cyan-400" />
-            <span>All {allServices.length} Disciplines</span>
-          </button>
-        </div>
 
         {/* Hero Section: Deep Dive & Visual */}
-        <div className="rounded-3xl bg-gradient-to-b from-[#0b1328] via-[#090f1f] to-[#070b14] border border-cyan-500/30 p-6 sm:p-10 lg:p-14 shadow-2xl relative overflow-hidden mb-16">
+        <div className="mt-4 sm:mt-6 lg:mt-8 rounded-3xl bg-gradient-to-b from-[#0b1328] via-[#090f1f] to-[#070b14] border border-cyan-500/30 p-6 sm:p-10 lg:p-14 shadow-2xl relative overflow-hidden mb-16">
           <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
@@ -179,9 +163,20 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
                 
                 <div className="relative rounded-2xl bg-[#0b1324] border border-cyan-500/30 overflow-hidden shadow-2xl p-3 sm:p-4">
                   <img 
-                    src={config.sectionImages?.[service.id] || service.image} 
+                    src={
+                      (config.sectionImages?.[service.id] && (config.sectionImages[service.id].startsWith('data:image/') || config.sectionImages[service.id].startsWith('http')))
+                        ? config.sectionImages[service.id]
+                        : DEFAULT_SERVICE_IMAGES[service.id] || service.image || websiteDesignImg
+                    }
                     alt={`${service.title} Showcase`} 
                     className="w-full h-56 sm:h-72 lg:h-80 rounded-xl object-cover transform transition duration-500 group-hover:scale-[1.02]" 
+                    loading="eager"
+                    onError={(e) => {
+                      const fallback = DEFAULT_SERVICE_IMAGES[service.id] || websiteDesignImg;
+                      if (e.currentTarget.src !== fallback) {
+                        e.currentTarget.src = fallback;
+                      }
+                    }}
                   />
                   
                   {/* Floating Metric Card Overlay */}

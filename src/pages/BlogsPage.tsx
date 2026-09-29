@@ -72,7 +72,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-24 sm:pt-28 pb-20">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 overflow-x-hidden pt-32 sm:pt-36 lg:pt-40 pb-20">
       {/* Ambient background glows */}
       <div className="fixed top-20 -left-40 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
       <div className="fixed top-1/2 -right-40 w-[550px] h-[550px] bg-sky-600/10 blur-[180px] rounded-full pointer-events-none" />
@@ -198,7 +198,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
                 {/* Left: Content */}
                 <div className="lg:col-span-7 space-y-4">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-3 py-0.5 rounded-full">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-3 py-0.5 rounded-md">
                       {featuredPost.category}
                     </span>
                     <span className="text-xs text-slate-400 flex items-center gap-1">
@@ -221,10 +221,10 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
                       <img
                         src={featuredPost.author.avatar}
                         alt={featuredPost.author.name}
-                        className="w-10 h-10 rounded-full object-cover border border-cyan-500/40"
+                        className="w-10 h-10 rounded-xl object-cover border border-cyan-500/40"
                       />
                     ) : (
-                      <div className="w-10 h-10 rounded-full bg-cyan-900/60 text-cyan-300 flex items-center justify-center font-bold text-sm">
+                      <div className="w-10 h-10 rounded-xl bg-cyan-900/60 text-cyan-300 flex items-center justify-center font-bold text-sm">
                         {featuredPost.author.name.charAt(0)}
                       </div>
                     )}
@@ -348,10 +348,10 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
                           <img
                             src={post.author.avatar}
                             alt={post.author.name}
-                            className="w-7 h-7 rounded-full object-cover border border-slate-700 shrink-0"
+                            className="w-7 h-7 rounded-lg object-cover border border-slate-700 shrink-0"
                           />
                         ) : (
-                          <div className="w-7 h-7 rounded-full bg-cyan-900/60 text-cyan-300 flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-7 h-7 rounded-lg bg-cyan-900/60 text-cyan-300 flex items-center justify-center font-bold text-xs shrink-0">
                             {post.author.name.charAt(0)}
                           </div>
                         )}

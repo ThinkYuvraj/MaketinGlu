@@ -75,10 +75,11 @@ export interface CustomSectionItem {
 export type SectionPosition = 
   | 'after-hero' 
   | 'after-stats' 
+  | 'after-about'
   | 'after-expertise' 
   | 'after-packages' 
   | 'after-cases' 
-  | 'after-testimonials'
+  | 'after-testimonials' 
   | 'after-faq';
 
 export type SectionLayout = 'cards' | 'split-image' | 'banner' | 'stats';

@@ -38,13 +38,21 @@ export default function ConsultationModal({
     }
   }, [isOpen, initialService]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+    } catch {
+      // Fallback gracefully on local or offline environments
+    } finally {
       setIsSubmitting(false);
       setSubmitted(true);
-    }, 500);
+    }
   };
 
   const handleReset = () => {
@@ -86,7 +94,7 @@ export default function ConsultationModal({
 
             {submitted ? (
               <div className="text-center py-6 space-y-3.5">
-                <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto text-emerald-400 shadow-lg shadow-emerald-500/20">
+                <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/40 rounded-2xl flex items-center justify-center mx-auto text-emerald-400 shadow-lg shadow-emerald-500/20">
                   <CheckCircle2 className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-white tracking-tight">Consultation Reserved!</h3>
@@ -105,7 +113,7 @@ export default function ConsultationModal({
             ) : (
               <div>
                 <div className="mb-4 pr-6">
-                  <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-full mb-2">
+                  <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/70 border border-cyan-500/30 px-2.5 py-0.5 rounded-md mb-2">
                     <Sparkles className="w-3 h-3 text-cyan-400" />
                     <span>PRIORITY ALLOCATION</span>
                   </div>

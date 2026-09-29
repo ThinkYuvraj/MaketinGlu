@@ -31,6 +31,14 @@ export const defaultAboutPillars: AboutPillar[] = [
     iconName: 'Compass',
     accent: 'sky',
   },
+  {
+    id: 'pillar-4',
+    title: 'High-Velocity Growth Funnels',
+    description: 'Data-driven Google PPC, high-converting Meta Ads, and automated customer acquisition pipelines calibrated to maximize measurable ROAS and compounding revenue.',
+    tag: 'PERFORMANCE',
+    iconName: 'TrendingUp',
+    accent: 'blue',
+  },
 ];
 
 export const defaultAboutChecklist: string[] = [
@@ -53,8 +61,8 @@ export const defaultSiteConfig: SiteConfig = {
     ctaText: 'Claim Free Audit',
   },
 
-  heroTitleLine1: 'DIGITAL MARKETING',
-  heroTitleLine2: 'SOLUTIONS',
+  heroTitleLine1: 'Digital Marketing',
+  heroTitleLine2: 'Solutions',
   heroDescription:
     'As a digital marketing agency, we are dedicated to helping businesses achieve their online marketing goals. Our team of experts is highly skilled in creating and executing effective digital marketing strategies that drive measurable results.',
   heroPrimaryCta: 'Book Free Consultation',
@@ -345,19 +353,39 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v9';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v10';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
-  return raw.map((s) => ({
-    ...s,
-    icon: (s.iconName && SERVICE_ICON_MAP[s.iconName]) ? SERVICE_ICON_MAP[s.iconName] : (typeof s.icon === 'function' ? s.icon : Globe),
-  }));
+  return raw.map((s) => {
+    const defaultService = expertiseData.find((d) => d.id === s.id);
+    // Only use saved image if it is an explicit base64 data-URL or live https URL; otherwise always use bundled asset
+    const isCustomUpload = s.image && (s.image.startsWith('data:image/') || s.image.startsWith('http://') || s.image.startsWith('https://'));
+    const resolvedImage = isCustomUpload ? s.image : (defaultService?.image || s.image || '');
+
+    return {
+      ...defaultService,
+      ...s,
+      image: resolvedImage,
+      icon: (s.iconName && SERVICE_ICON_MAP[s.iconName]) ? SERVICE_ICON_MAP[s.iconName] : (typeof s.icon === 'function' ? s.icon : (defaultService?.icon || Globe)),
+    };
+  });
+};
+
+const hydrateSectionImages = (rawImages?: Record<string, string>): Record<string, string> => {
+  if (!rawImages) return {};
+  const cleaned: Record<string, string> = {};
+  for (const [key, val] of Object.entries(rawImages)) {
+    if (val && (val.startsWith('data:image/') || val.startsWith('http://') || val.startsWith('https://'))) {
+      cleaned[key] = val;
+    }
+  }
+  return cleaned;
 };
 
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('marketinglu_cms_site_config_v8');
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('marketinglu_cms_site_config_v9');
       if (saved) {
         const parsed = JSON.parse(saved);
         const packagesDesc = parsed.packagesSectionDescription && (parsed.packagesSectionDescription.includes('rotate automatically') || parsed.packagesSectionDescription.includes('swipe freely'))
@@ -375,7 +403,7 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           testimonials: parsed.testimonials || defaultSiteConfig.testimonials,
           blogs: parsed.blogs || defaultSiteConfig.blogs,
           customSections: parsed.customSections || defaultSiteConfig.customSections,
-          sectionImages: parsed.sectionImages || defaultSiteConfig.sectionImages,
+          sectionImages: hydrateSectionImages(parsed.sectionImages),
           pageScale: parsed.pageScale || '100%',
         };
       }

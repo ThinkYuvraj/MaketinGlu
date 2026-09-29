@@ -14,7 +14,7 @@ export default function TermsConditionsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 py-12 lg:py-20">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 pt-28 sm:pt-32 pb-16 lg:pb-24">
       <Container className="max-w-4xl mx-auto">
         <button
           onClick={() => navigateTo('#/')}

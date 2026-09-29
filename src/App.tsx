@@ -18,6 +18,9 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesIndexPage from './pages/ServicesIndexPage';
 import BlogsPage from './pages/BlogsPage';
 import BlogDetailPage from './pages/BlogDetailPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsConditionsPage from './pages/TermsConditionsPage';
+import AboutUs from './components/AboutUs';
 import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { expertiseData } from './data/expertiseData';
@@ -25,6 +28,7 @@ import CustomSectionRenderer from './components/CustomSectionRenderer';
 import { SectionPosition } from './types';
 import { pageTransitionVariants } from './lib/animations';
 import { useSmoothScroll } from './lib/useSmoothScroll';
+import { useBarbaTransitions } from './lib/useBarbaTransitions';
 
 function AppContent() {
   useSmoothScroll();
@@ -66,21 +70,35 @@ function AppContent() {
       ));
   };
 
+  // Determine unique transition key for each page route
+  const routeKey = currentRoute.type === 'service-detail'
+    ? `service-${currentRoute.serviceId || 'unknown'}`
+    : currentRoute.type === 'blog-detail'
+    ? `blog-${currentRoute.blogSlug || 'unknown'}`
+    : currentRoute.type;
+
+  // Initialize Barba.js transition hooks
+  useBarbaTransitions(routeKey);
+
   // If viewing admin portal, render dedicated AdminApp interface with smooth transition
   if (currentRoute.type === 'admin') {
     return (
-      <AnimatePresence mode="wait">
-        <motion.div
-          key="admin-portal"
-          variants={pageTransitionVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="min-h-screen"
-        >
-          <AdminApp onBackToSite={() => navigateTo('#/')} />
-        </motion.div>
-      </AnimatePresence>
+      <div data-barba="wrapper">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key="admin-portal"
+            data-barba="container"
+            data-barba-namespace="admin"
+            variants={pageTransitionVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="min-h-screen"
+          >
+            <AdminApp onBackToSite={() => navigateTo('#/')} />
+          </motion.div>
+        </AnimatePresence>
+      </div>
     );
   }
 
@@ -90,26 +108,24 @@ function AppContent() {
     ? availableServices.find(item => item.id === currentRoute.serviceId)
     : null;
 
-  // Determine unique transition key for each page route
-  const routeKey = currentRoute.type === 'service-detail'
-    ? `service-${currentRoute.serviceId || 'unknown'}`
-    : currentRoute.type === 'blog-detail'
-    ? `blog-${currentRoute.blogSlug || 'unknown'}`
-    : currentRoute.type;
-
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative pb-16 lg:pb-0">
+    <div 
+      data-barba="wrapper"
+      className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative pb-16 lg:pb-0"
+    >
       
       {/* Top Fixed Navigation with Services dropdown */}
       <Navbar
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Main Content Area based on Active Route with Subtle Framer Motion Fade-In Transition */}
+      {/* Main Content Area based on Active Route with Barba.js container transition */}
       <main className="flex-1">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={routeKey}
+            data-barba="container"
+            data-barba-namespace={routeKey}
             variants={pageTransitionVariants}
             initial="initial"
             animate="animate"
@@ -138,6 +154,12 @@ function AppContent() {
                 slug={currentRoute.blogSlug} 
                 onOpenConsultation={handleOpenConsultation} 
               />
+            ) : currentRoute.type === 'privacy' ? (
+              /* Dedicated Legal: Privacy Policy (#/privacy) */
+              <PrivacyPolicyPage />
+            ) : currentRoute.type === 'terms' ? (
+              /* Dedicated Legal: Terms & Conditions (#/terms) */
+              <TermsConditionsPage />
             ) : (
               /* Default Main Homepage Flow with subtle animated sections */
               <>
@@ -156,7 +178,13 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-stats')}
 
-                {/* Section 3: Unified Company Expertise & Growth Disciplines */}
+                {/* Section 3: About Us & Agency Mission */}
+                <AnimatedSection id="about" delayMs={60} className="relative">
+                  <AboutUs onOpenConsultation={handleOpenConsultation} />
+                </AnimatedSection>
+                {renderCustomSections('after-about')}
+
+                {/* Section 4: Unified Company Expertise & Growth Disciplines */}
                 <AnimatedSection id="expertise" delayMs={60} className="relative">
                   <CompanyExpertise
                     onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
@@ -164,7 +192,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-expertise')}
 
-                {/* Section 4: Tailored Marketing Packages */}
+                {/* Section 5: Tailored Marketing Packages */}
                 <AnimatedSection id="packages" delayMs={60} className="relative">
                   <Packages
                     onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
@@ -172,7 +200,7 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-packages')}
 
-                {/* Section 5: Case Studies & Proven Results (Portfolio) */}
+                {/* Section 6: Case Studies & Proven Results (Portfolio) */}
                 <AnimatedSection id="cases" delayMs={60} className="relative">
                   <CaseStudies
                     onOpenConsultation={() => handleOpenConsultation()}
@@ -180,13 +208,13 @@ function AppContent() {
                 </AnimatedSection>
                 {renderCustomSections('after-cases')}
 
-                {/* Section 6: Client Testimonials & Verified Reviews */}
+                {/* Section 7: Client Testimonials & Verified Reviews */}
                 <AnimatedSection id="testimonials" delayMs={60} className="relative">
                   <Testimonials />
                 </AnimatedSection>
                 {renderCustomSections('after-testimonials')}
 
-                {/* Section 7: Frequently Asked Questions (FAQ) */}
+                {/* Section 8: Frequently Asked Questions (FAQ) */}
                 <AnimatedSection id="faq" delayMs={60} className="relative">
                   <FAQ />
                 </AnimatedSection>
