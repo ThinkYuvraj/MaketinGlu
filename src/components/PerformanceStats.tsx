@@ -302,9 +302,54 @@ export default function PerformanceStats() {
           ))}
         </motion.div>
 
-        {/* MOBILE & TABLET (<1024px): Swipe Carousel with Centered Indicators */}
+        {/* MOBILE & TABLET (<1024px): Quick-Selector Floating Dock & Swipe Carousel */}
         <div className="block lg:hidden relative max-w-lg mx-auto">
           
+          {/* Quick-Selector Floating Dock for 4 Stats (Responsive Grid) */}
+          <div className="w-full max-w-full mb-3 px-1">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1.5 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
+              {stats.map((stat, tabIdx) => {
+                const isSelected = tabIdx === currentIndex;
+                const TabIcon = stat.icon;
+
+                return (
+                  <button
+                    key={stat.id}
+                    type="button"
+                    onClick={() => handleSelectStat(tabIdx)}
+                    className={`group relative flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[38px] select-none text-center uppercase tracking-wide ${
+                      isSelected
+                        ? 'text-white'
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                    }`}
+                  >
+                    {/* Animated Active Background Curved Rectangle */}
+                    {isSelected && (
+                      <motion.div
+                        layoutId="activePerformanceStatCapsule"
+                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
+                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                      />
+                    )}
+
+                    <div
+                      className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-all ${
+                        isSelected
+                          ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
+                          : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
+                      }`}
+                    >
+                      <TabIcon className="w-3 h-3" />
+                    </div>
+                    <span className="relative z-10 tracking-tight font-bold truncate text-[10px] sm:text-xs uppercase">
+                      {stat.badge.split(' ')[0]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Swipable Card Container with popLayout */}
           <div className="relative overflow-hidden px-1">
             <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
