@@ -400,50 +400,64 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
       : undefined;
 
     const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #ffffff;">
-        <div style="background-color: #0c1424; padding: 15px 20px; border-radius: 8px 8px 0 0; color: #ffffff;">
-          <h2 style="margin: 0; font-size: 20px; color: #38bdf8;">NEW SERVICE ENQUIRY</h2>
-          <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">Marketing LU Lead Notification</p>
+      <div style="font-family: Arial, Helvetica, sans-serif; max-width: 540px; margin: 0 auto; background-color: #0c1424; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden; color: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <!-- Header -->
+        <div style="padding: 24px; text-align: center; border-bottom: 1px solid #1e293b; background: linear-gradient(180deg, #0f172a 0%, #0c1424 100%);">
+          <div style="font-size: 20px; font-weight: 900; letter-spacing: 2px; color: #ffffff; margin-bottom: 4px;">
+            MARKETING<span style="color: #38bdf8;">LU</span>
+          </div>
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #38bdf8; text-transform: uppercase;">
+            NEW SERVICE ENQUIRY
+          </div>
         </div>
-        <div style="padding: 20px;">
-          <p style="font-size: 14px; color: #334155;">A new visitor has submitted a service inquiry on <strong>Marketing LU</strong>:</p>
-          <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px;">
-            <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; width: 140px; border-bottom: 1px solid #e2e8f0;">Sender / Lead Name:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #0f172a;">${inquiry.name}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Sender Email:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${inquiry.email}" style="color: #0284c7; font-weight: bold;">${inquiry.email || 'N/A'}</a></td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Phone / WhatsApp:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><a href="tel:${inquiry.phone}">${inquiry.phone || 'N/A'}</a></td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Requested Service:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #0284c7; font-weight: bold;">${inquiry.service}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold; border-bottom: 1px solid #e2e8f0;">Message / Notes:</td>
-              <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${inquiry.notes || 'None provided'}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; background: #f8fafc; font-weight: bold;">Submitted At:</td>
-              <td style="padding: 10px;">${inquiry.receivedAt}</td>
-            </tr>
-          </table>
 
-          ${inquiry.email ? `
-          <div style="margin-top: 20px; text-align: center;">
-            <a href="mailto:${inquiry.email}?subject=Re:%20${encodeURIComponent(inquiry.service || 'Your Enquiry')}" style="display: inline-block; padding: 12px 24px; background-color: #0284c7; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; shadow: 0 4px 6px rgba(0,0,0,0.1);">
-              ✉️ Reply Directly to ${inquiry.name} (${inquiry.email})
+        <!-- Body Content -->
+        <div style="padding: 24px;">
+          <!-- Customer -->
+          <div style="margin-bottom: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Customer</div>
+            <div style="font-size: 15px; font-weight: 700; color: #ffffff;">${inquiry.name}</div>
+          </div>
+
+          <!-- Email -->
+          <div style="margin-bottom: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Email</div>
+            <div style="font-size: 14px; font-weight: 600;">
+              <a href="mailto:${inquiry.email}" style="color: #38bdf8; text-decoration: none;">${inquiry.email || 'N/A'}</a>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div style="margin-bottom: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Phone</div>
+            <div style="font-size: 14px; font-weight: 600;">
+              <a href="tel:${inquiry.phone}" style="color: #38bdf8; text-decoration: none;">${inquiry.phone || 'N/A'}</a>
+            </div>
+          </div>
+
+          <!-- Service -->
+          <div style="margin-bottom: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Service</div>
+            <div style="font-size: 13px; font-weight: 700; color: #38bdf8; background-color: #0f2b45; padding: 6px 12px; border-radius: 6px; display: inline-block;">${inquiry.service}</div>
+          </div>
+
+          <!-- Requirements / Notes -->
+          <div style="margin-bottom: 24px;">
+            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Requirements</div>
+            <div style="font-size: 13px; color: #cbd5e1; background-color: #080d1a; padding: 12px; border-radius: 8px; border: 1px solid #1e293b; line-height: 1.5;">${inquiry.notes || 'None provided'}</div>
+          </div>
+
+          <!-- Action Button -->
+          <div style="text-align: center; margin-top: 24px;">
+            <a href="mailto:${inquiry.email}?subject=Re:%20${encodeURIComponent(inquiry.service || 'Service Enquiry')}" style="display: block; width: 100%; padding: 14px 0; background: linear-gradient(90deg, #38bdf8, #0284c7); color: #0c1424; text-decoration: none; border-radius: 10px; font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; text-align: center; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);">
+              [ VIEW ENQUIRY ]
             </a>
           </div>
-          ` : ''}
         </div>
-        <div style="background-color: #f1f5f9; padding: 12px 20px; border-radius: 0 0 8px 8px; font-size: 12px; color: #64748b; text-align: center;">
-          Destination Receiver: <strong>${INQUIRY_RECEIVER_EMAIL}</strong> | Marketing LU Automated Lead Service
+
+        <!-- Footer -->
+        <div style="padding: 14px; text-align: center; background-color: #080d1a; border-top: 1px solid #1e293b; font-size: 11px; color: #64748b;">
+          Delivered directly to <strong>${INQUIRY_RECEIVER_EMAIL}</strong>
         </div>
       </div>
     `;
@@ -464,7 +478,7 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<boolean> {
   }
 }
 
-app.post(['/api/inquiry', '/api/contact', '/api/consultation'], (req, res) => {
+app.post(['/api/inquiry', '/api/enquiry', '/api/contact', '/api/consultation'], (req, res) => {
   const { name, email, phone, service, notes, message } = req.body || {};
 
   if (!name || (!email && !phone)) {
