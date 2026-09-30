@@ -304,7 +304,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
     { id: 'services', label: 'Services Provided', icon: Briefcase, count: config.services?.length },
     { id: 'blogs', label: 'Blogs & Resources', icon: BookOpen, count: config.blogs?.length },
     { id: 'packages', label: 'Service Packages', icon: Package, count: config.packages?.length },
-    { id: 'sections', label: 'Add / Edit Sections', icon: Layers, count: config.customSections?.length },
+    { id: 'sections', label: 'Page Components', icon: Layers, count: (config.customSections?.length || 0) + 8 },
     { id: 'images', label: 'Change Images', icon: ImageIcon },
     { id: 'cases', label: 'Case Studies', icon: Sparkles, count: config.caseStudies?.length },
     { id: 'faq', label: 'FAQ Knowledge', icon: HelpCircle, count: config.faqs?.length },
@@ -496,6 +496,9 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
                   onUpdateSection={updateCustomSection}
                   onDeleteSection={deleteCustomSection}
                   onToggleSection={toggleCustomSection}
+                  config={config}
+                  onUpdateConfig={updateConfig}
+                  onNavigateTab={(tab) => handleSelectTab(tab as TabType)}
                 />
               )}
 

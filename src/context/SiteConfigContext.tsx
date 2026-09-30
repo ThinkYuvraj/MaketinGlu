@@ -299,6 +299,17 @@ export const defaultSiteConfig: SiteConfig = {
   // Services Provided
   services: expertiseData,
 
+  // Core Homepage Components Visibility & Status
+  heroEnabled: true,
+  statsEnabled: true,
+  aboutEnabled: true,
+  servicesEnabled: true,
+  packagesEnabled: true,
+  casesEnabled: true,
+  testimonialsEnabled: true,
+  faqEnabled: true,
+  blogsEnabled: true,
+
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: {},
 };

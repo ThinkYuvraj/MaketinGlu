@@ -186,60 +186,76 @@ function AppContent() {
                 /* Default Main Homepage Flow with subtle animated sections */
                 <>
                   {/* Section 1: Hero Section */}
-                  <AnimatedSection id="home" delayMs={0} className="relative">
-                    <Hero
-                      onOpenConsultation={() => handleOpenConsultation()}
-                      onExplorePortfolio={handleExplorePortfolio}
-                    />
-                  </AnimatedSection>
+                  {config.heroEnabled !== false && (
+                    <AnimatedSection id="home" delayMs={0} className="relative">
+                      <Hero
+                        onOpenConsultation={() => handleOpenConsultation()}
+                        onExplorePortfolio={handleExplorePortfolio}
+                      />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-hero')}
 
                   {/* Section 2: Our Performance In Numbers */}
-                  <AnimatedSection id="growth" delayMs={60} className="relative">
-                    <PerformanceStats />
-                  </AnimatedSection>
+                  {config.statsEnabled !== false && (
+                    <AnimatedSection id="growth" delayMs={60} className="relative">
+                      <PerformanceStats />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-stats')}
 
                   {/* Section 3: About Us & Agency Mission */}
-                  <AnimatedSection id="about" delayMs={60} className="relative">
-                    <AboutUs onOpenConsultation={handleOpenConsultation} />
-                  </AnimatedSection>
+                  {config.aboutEnabled !== false && (
+                    <AnimatedSection id="about" delayMs={60} className="relative">
+                      <AboutUs onOpenConsultation={handleOpenConsultation} />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-about')}
 
                   {/* Section 4: Unified Company Expertise & Growth Disciplines */}
-                  <AnimatedSection id="expertise" delayMs={60} className="relative">
-                    <CompanyExpertise
-                      onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
-                    />
-                  </AnimatedSection>
+                  {config.servicesEnabled !== false && (
+                    <AnimatedSection id="expertise" delayMs={60} className="relative">
+                      <CompanyExpertise
+                        onOpenConsultation={(serviceTitle) => handleOpenConsultation(serviceTitle)}
+                      />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-expertise')}
 
                   {/* Section 5: Tailored Marketing Packages */}
-                  <AnimatedSection id="packages" delayMs={60} className="relative">
-                    <Packages
-                      onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
-                    />
-                  </AnimatedSection>
+                  {config.packagesEnabled !== false && (
+                    <AnimatedSection id="packages" delayMs={60} className="relative">
+                      <Packages
+                        onSelectPackage={(pkgName) => handleOpenConsultation(pkgName)}
+                      />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-packages')}
 
                   {/* Section 6: Case Studies & Proven Results (Portfolio) */}
-                  <AnimatedSection id="cases" delayMs={60} className="relative">
-                    <CaseStudies
-                      onOpenConsultation={() => handleOpenConsultation()}
-                    />
-                  </AnimatedSection>
+                  {config.casesEnabled !== false && (
+                    <AnimatedSection id="cases" delayMs={60} className="relative">
+                      <CaseStudies
+                        onOpenConsultation={() => handleOpenConsultation()}
+                      />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-cases')}
 
                   {/* Section 7: Client Testimonials & Verified Reviews */}
-                  <AnimatedSection id="testimonials" delayMs={60} className="relative">
-                    <Testimonials />
-                  </AnimatedSection>
+                  {config.testimonialsEnabled !== false && (
+                    <AnimatedSection id="testimonials" delayMs={60} className="relative">
+                      <Testimonials />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-testimonials')}
 
                   {/* Section 8: Frequently Asked Questions (FAQ) */}
-                  <AnimatedSection id="faq" delayMs={60} className="relative">
-                    <FAQ />
-                  </AnimatedSection>
+                  {config.faqEnabled !== false && (
+                    <AnimatedSection id="faq" delayMs={60} className="relative">
+                      <FAQ />
+                    </AnimatedSection>
+                  )}
                   {renderCustomSections('after-faq')}
                 </>
               )}

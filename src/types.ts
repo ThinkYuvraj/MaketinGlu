@@ -202,8 +202,18 @@ export interface SiteConfig {
   // Section Images (Expertise services, case studies, hero/brand visuals)
   sectionImages: Record<string, string>;
 
-  // About Us Section
+  // Core Homepage Components Visibility & Status
+  heroEnabled?: boolean;
+  statsEnabled?: boolean;
   aboutEnabled?: boolean;
+  servicesEnabled?: boolean;
+  packagesEnabled?: boolean;
+  casesEnabled?: boolean;
+  testimonialsEnabled?: boolean;
+  faqEnabled?: boolean;
+  blogsEnabled?: boolean;
+
+  // About Us Section
   aboutBadge?: string;
   aboutTitle1?: string;
   aboutTitle2?: string;

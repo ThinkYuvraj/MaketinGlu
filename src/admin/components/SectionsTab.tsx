@@ -15,9 +15,22 @@ import {
   ArrowRight,
   HelpCircle,
   CheckCircle2,
-  X
+  X,
+  Copy,
+  Layout,
+  BarChart3,
+  Info,
+  Zap,
+  Package,
+  Briefcase,
+  Star,
+  BookOpen,
+  ArrowUpRight,
+  ToggleLeft,
+  ToggleRight,
+  Sliders
 } from 'lucide-react';
-import { CustomSection, CustomSectionItem, SectionPosition, SectionLayout } from '../../types';
+import { CustomSection, CustomSectionItem, SectionPosition, SectionLayout, SiteConfig } from '../../types';
 
 interface SectionsTabProps {
   sections: CustomSection[];
@@ -25,6 +38,9 @@ interface SectionsTabProps {
   onUpdateSection: (section: CustomSection) => void;
   onDeleteSection: (id: string) => void;
   onToggleSection: (id: string) => void;
+  config?: SiteConfig;
+  onUpdateConfig?: (newConfig: Partial<SiteConfig>) => void;
+  onNavigateTab?: (tabId: string) => void;
 }
 
 const positionLabels: Record<SectionPosition, string> = {
@@ -45,12 +61,97 @@ const layoutLabels: Record<SectionLayout, string> = {
   'stats': 'Metrics Grid (Large Numbers + Labels)',
 };
 
+const CORE_COMPONENTS: Array<{
+  id: string;
+  name: string;
+  configKey: keyof SiteConfig;
+  tabId: string;
+  description: string;
+  icon: any;
+}> = [
+  {
+    id: 'hero',
+    name: 'Hero & Value Proposition',
+    configKey: 'heroEnabled',
+    tabId: 'titles',
+    description: 'Main homepage banner, primary headline, badges, and consultation CTA.',
+    icon: Sparkles,
+  },
+  {
+    id: 'stats',
+    name: 'Performance Metrics Grid',
+    configKey: 'statsEnabled',
+    tabId: 'design',
+    description: 'Live performance metrics, agency statistics, and credibility numbers.',
+    icon: BarChart3,
+  },
+  {
+    id: 'about',
+    name: 'About Us & Core Mission',
+    configKey: 'aboutEnabled',
+    tabId: 'about',
+    description: 'Agency narrative, 3 strategic pillars, and guaranteed deliverables checklist.',
+    icon: Info,
+  },
+  {
+    id: 'services',
+    name: 'Services & Capabilities',
+    configKey: 'servicesEnabled',
+    tabId: 'services',
+    description: 'Interactive capabilities cards with custom tags, inclusions, and pricing.',
+    icon: Zap,
+  },
+  {
+    id: 'packages',
+    name: 'Service Packages & Retainers',
+    configKey: 'packagesEnabled',
+    tabId: 'packages',
+    description: 'Tiered monthly growth packages with inclusions, discounts, and plan CTAs.',
+    icon: Package,
+  },
+  {
+    id: 'cases',
+    name: 'Case Studies & Proof',
+    configKey: 'casesEnabled',
+    tabId: 'cases',
+    description: 'Client success stories with verified metrics, challenges, and ROI solutions.',
+    icon: Briefcase,
+  },
+  {
+    id: 'testimonials',
+    name: 'Client Testimonials & Reviews',
+    configKey: 'testimonialsEnabled',
+    tabId: 'testimonials',
+    description: '5-star client testimonials, verified reviewer cards, and company logos.',
+    icon: Star,
+  },
+  {
+    id: 'faq',
+    name: 'Frequently Asked Questions',
+    configKey: 'faqEnabled',
+    tabId: 'faq',
+    description: 'Interactive accordion FAQs covering deliverables, timelines, and guarantees.',
+    icon: HelpCircle,
+  },
+  {
+    id: 'blogs',
+    name: 'Blog & Thought Leadership',
+    configKey: 'blogsEnabled',
+    tabId: 'blogs',
+    description: 'SEO articles and marketing insights published to establish authority.',
+    icon: BookOpen,
+  },
+];
+
 export default function SectionsTab({
   sections = [],
   onAddSection,
   onUpdateSection,
   onDeleteSection,
   onToggleSection,
+  config,
+  onUpdateConfig,
+  onNavigateTab,
 }: SectionsTabProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingSection, setEditingSection] = useState<CustomSection | null>(null);
@@ -103,6 +204,41 @@ export default function SectionsTab({
       }
     ]
   });
+
+  const handleToggleCoreSection = (key: keyof SiteConfig) => {
+    if (!onUpdateConfig || !config) return;
+    const isCurrentlyEnabled = config[key] !== false; // defaults to true
+    onUpdateConfig({ [key]: !isCurrentlyEnabled });
+  };
+
+  const handleMoveUp = (index: number) => {
+    if (index <= 0 || !onUpdateConfig) return;
+    const newSections = [...sections];
+    const temp = newSections[index];
+    newSections[index] = newSections[index - 1];
+    newSections[index - 1] = temp;
+    onUpdateConfig({ customSections: newSections });
+  };
+
+  const handleMoveDown = (index: number) => {
+    if (index >= sections.length - 1 || !onUpdateConfig) return;
+    const newSections = [...sections];
+    const temp = newSections[index];
+    newSections[index] = newSections[index + 1];
+    newSections[index + 1] = temp;
+    onUpdateConfig({ customSections: newSections });
+  };
+
+  const handleDuplicateSection = (sec: CustomSection) => {
+    const cloned: CustomSection = {
+      ...JSON.parse(JSON.stringify(sec)),
+      id: `section-${Date.now()}`,
+      title: `${sec.title} (Copy)`,
+      enabled: true,
+      order: sections.length + 1
+    };
+    onAddSection(cloned);
+  };
 
   const handleOpenAddModal = () => {
     const newId = `section-${Date.now()}`;
@@ -330,128 +466,283 @@ export default function SectionsTab({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Top Header & Add Section CTA */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800">
-        <div>
-          <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-xl font-bold text-white">Dynamic Page Sections</h2>
+    <div className="space-y-10">
+      {/* ========================================================================= */}
+      {/* 1. MASTER CORE HOMEPAGE COMPONENTS SWITCHBOARD                            */}
+      {/* ========================================================================= */}
+      <div className="space-y-4">
+        <div className="pb-4 border-b border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+              <Sliders className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                <span>Core Homepage Components</span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-950/80 text-cyan-400 border border-cyan-500/30 font-semibold">
+                  {CORE_COMPONENTS.filter(c => !config || config[c.configKey] !== false).length} Active
+                </span>
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Enable, disable, or jump into customizing any of the 9 core sections displayed on the homepage.
+              </p>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Add new custom marketing sections to any position on your website (cards, split showcase, CTA banners, stats).
-          </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleOpenAddModal}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-md shadow-cyan-500/15 cursor-pointer transition-all active:scale-95"
-          id="add-section-btn"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Section</span>
-        </button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {CORE_COMPONENTS.map((comp) => {
+            const IconComponent = comp.icon;
+            const isEnabled = !config || config[comp.configKey] !== false;
+
+            return (
+              <div
+                key={comp.id}
+                className={`relative p-4 rounded-2xl border transition-all duration-200 flex flex-col justify-between ${
+                  isEnabled
+                    ? 'bg-[#0b1222] border-slate-800/90 hover:border-cyan-500/40 shadow-sm'
+                    : 'bg-slate-950/40 border-slate-900 opacity-60'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-2.5">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className={`p-2 rounded-xl border shrink-0 ${
+                        isEnabled 
+                          ? 'bg-cyan-950/40 border-cyan-500/30 text-cyan-400' 
+                          : 'bg-slate-900 border-slate-800 text-slate-500'
+                      }`}>
+                        <IconComponent className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <h4 className="text-sm font-bold text-white truncate">
+                          {comp.name}
+                        </h4>
+                        <span className={`text-[10px] font-mono uppercase font-semibold ${
+                          isEnabled ? 'text-emerald-400' : 'text-slate-500'
+                        }`}>
+                          {isEnabled ? '● Active on Homepage' : '○ Hidden from Site'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Quick Toggle Button */}
+                    <button
+                      type="button"
+                      onClick={() => handleToggleCoreSection(comp.configKey)}
+                      className={`p-1.5 rounded-lg border transition-colors cursor-pointer shrink-0 ${
+                        isEnabled
+                          ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-400 hover:bg-emerald-900/60'
+                          : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-white'
+                      }`}
+                      title={isEnabled ? 'Disable / Hide from Homepage' : 'Enable / Show on Homepage'}
+                    >
+                      {isEnabled ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+
+                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                    {comp.description}
+                  </p>
+                </div>
+
+                {/* Footer Action: Edit & Fix Component */}
+                <div className="pt-3 border-t border-slate-800/70 flex items-center justify-between gap-2">
+                  <span className="text-[11px] text-slate-500 font-mono">
+                    Tab: {comp.tabId}
+                  </span>
+
+                  {onNavigateTab && (
+                    <button
+                      type="button"
+                      onClick={() => onNavigateTab(comp.tabId)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-xs font-semibold text-cyan-300 hover:text-white cursor-pointer transition-all active:scale-95"
+                    >
+                      <span>Edit & Fix</span>
+                      <ArrowUpRight className="w-3 h-3 text-cyan-400" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Sections List */}
-      {sections.length === 0 ? (
-        <div className="p-10 rounded-2xl bg-slate-900/50 border border-dashed border-slate-800 text-center">
-          <Layers className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-          <h3 className="text-sm font-bold text-white">No Custom Sections Added Yet</h3>
-          <p className="text-xs text-slate-400 max-w-md mx-auto mt-1 mb-4">
-            Create custom feature grids, story showcases, or call-to-action blocks to expand your homepage.
-          </p>
+      {/* ========================================================================= */}
+      {/* 2. CUSTOM DYNAMIC SECTIONS (CREATE, UPDATE, DELETE, REORDER, DUPLICATE)   */}
+      {/* ========================================================================= */}
+      <div className="space-y-4 pt-6 border-t border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400">
+                <Layers className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                  <span>Custom Dynamic Sections</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-950/80 text-purple-400 border border-purple-500/30 font-semibold">
+                    {sections.length} Configured
+                  </span>
+                </h2>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Create, reorder, clone, or delete custom feature blocks, story splits, banners, or metric grids.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-md shadow-cyan-500/15 cursor-pointer transition-all active:scale-95 shrink-0"
+            id="add-section-btn"
           >
-            Create Your First Section
+            <Plus className="w-4 h-4" />
+            <span>Create New Section</span>
           </button>
         </div>
-      ) : (
-        <div className="space-y-3.5">
-          {sections.map((sec, idx) => (
-            <div
-              key={sec.id}
-              className={`p-4 sm:p-5 rounded-2xl border transition-all ${
-                sec.enabled 
-                  ? 'bg-[#0b1222] border-slate-800 hover:border-cyan-500/40' 
-                  : 'bg-slate-950/60 border-slate-900 opacity-60'
-              }`}
+
+        {/* Sections List */}
+        {sections.length === 0 ? (
+          <div className="p-10 rounded-2xl bg-slate-900/50 border border-dashed border-slate-800 text-center">
+            <Layers className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+            <h3 className="text-sm font-bold text-white">No Custom Sections Created Yet</h3>
+            <p className="text-xs text-slate-400 max-w-md mx-auto mt-1 mb-4">
+              Add custom feature grids, story showcases, or call-to-action blocks to expand your homepage.
+            </p>
+            <button
+              type="button"
+              onClick={handleOpenAddModal}
+              className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs cursor-pointer hover:bg-cyan-400 transition-colors"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-400">
-                      {positionLabels[sec.position] || sec.position}
-                    </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">
-                      Layout: {sec.layout}
-                    </span>
-                    {sec.badge && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
-                        {sec.badge}
+              Create Your First Custom Section
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3.5">
+            {sections.map((sec, idx) => (
+              <div
+                key={sec.id}
+                className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                  sec.enabled 
+                    ? 'bg-[#0b1222] border-slate-800 hover:border-cyan-500/40 shadow-sm' 
+                    : 'bg-slate-950/60 border-slate-900 opacity-60'
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-400">
+                        {positionLabels[sec.position] || sec.position}
                       </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">
+                        Layout: {sec.layout}
+                      </span>
+                      {sec.badge && (
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
+                          {sec.badge}
+                        </span>
+                      )}
+                      <span className="text-[10px] text-slate-500 font-mono">
+                        ({(sec.items || []).length} items)
+                      </span>
+                    </div>
+
+                    <h3 className="text-base font-bold text-white truncate">
+                      {sec.title} <span className="text-cyan-400">{sec.titleHighlight}</span>
+                    </h3>
+                    {sec.description && (
+                      <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">
+                        {sec.description}
+                      </p>
                     )}
                   </div>
 
-                  <h3 className="text-base font-bold text-white truncate">
-                    {sec.title} <span className="text-cyan-400">{sec.titleHighlight}</span>
-                  </h3>
-                  {sec.description && (
-                    <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">
-                      {sec.description}
-                    </p>
-                  )}
-                </div>
+                  {/* Section Action Controls: Reorder, Clone, Toggle, Edit, Delete */}
+                  <div className="flex items-center gap-1.5 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+                    {/* Move Up */}
+                    <button
+                      type="button"
+                      disabled={idx === 0}
+                      onClick={() => handleMoveUp(idx)}
+                      className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed border border-slate-800 text-slate-300 hover:text-white cursor-pointer transition-colors"
+                      title="Move Section Up"
+                    >
+                      <MoveUp className="w-3.5 h-3.5" />
+                    </button>
 
-                {/* Section Action Controls */}
-                <div className="flex items-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
-                  <button
-                    type="button"
-                    onClick={() => onToggleSection(sec.id)}
-                    title={sec.enabled ? 'Disable Section' : 'Enable Section'}
-                    className={`p-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
-                      sec.enabled
-                        ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/60'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    {sec.enabled ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-                    <span>{sec.enabled ? 'Active' : 'Disabled'}</span>
-                  </button>
+                    {/* Move Down */}
+                    <button
+                      type="button"
+                      disabled={idx === sections.length - 1}
+                      onClick={() => handleMoveDown(idx)}
+                      className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed border border-slate-800 text-slate-300 hover:text-white cursor-pointer transition-colors"
+                      title="Move Section Down"
+                    >
+                      <MoveDown className="w-3.5 h-3.5" />
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => handleOpenEditModal(sec)}
-                    className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white cursor-pointer transition-colors"
-                    title="Edit Section Content"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" />
-                  </button>
+                    {/* Duplicate */}
+                    <button
+                      type="button"
+                      onClick={() => handleDuplicateSection(sec)}
+                      className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 cursor-pointer transition-colors"
+                      title="Duplicate / Clone Section"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (confirm(`Are you sure you want to delete section "${sec.title}"?`)) {
-                        onDeleteSection(sec.id);
-                      }
-                    }}
-                    className="p-2 rounded-xl bg-red-950/30 hover:bg-red-900/50 border border-red-500/30 text-red-400 hover:text-red-300 cursor-pointer transition-colors"
-                    title="Delete Section"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+                    {/* Visibility Toggle */}
+                    <button
+                      type="button"
+                      onClick={() => onToggleSection(sec.id)}
+                      title={sec.enabled ? 'Disable Section' : 'Enable Section'}
+                      className={`p-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
+                        sec.enabled
+                          ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/60'
+                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      {sec.enabled ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                      <span className="hidden sm:inline">{sec.enabled ? 'Active' : 'Disabled'}</span>
+                    </button>
+
+                    {/* Edit */}
+                    <button
+                      type="button"
+                      onClick={() => handleOpenEditModal(sec)}
+                      className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white cursor-pointer transition-colors"
+                      title="Edit Section Content & Items"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                    </button>
+
+                    {/* Delete */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete section "${sec.title}"?`)) {
+                          onDeleteSection(sec.id);
+                        }
+                      }}
+                      className="p-2 rounded-xl bg-red-950/30 hover:bg-red-900/50 border border-red-500/30 text-red-400 hover:text-red-300 cursor-pointer transition-colors"
+                      title="Delete Section"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* MODAL: ADD / EDIT SECTION */}
+      {/* ========================================================================= */}
+      {/* 3. MODAL: CREATE / EDIT CUSTOM SECTION                                   */}
+      {/* ========================================================================= */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
           <div className="relative w-full max-w-3xl rounded-3xl bg-[#090e1c] border border-slate-800 shadow-2xl my-8 p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
@@ -526,9 +817,11 @@ export default function SectionsTab({
                   >
                     <option value="after-hero">Directly After Hero</option>
                     <option value="after-stats">After Performance Numbers</option>
+                    <option value="after-about">After About Us & Mission</option>
                     <option value="after-expertise">After Services / Expertise</option>
                     <option value="after-packages">After Service Packages</option>
                     <option value="after-cases">After Case Studies & Work</option>
+                    <option value="after-testimonials">After Client Testimonials</option>
                     <option value="after-faq">After FAQ Section</option>
                   </select>
                 </div>
@@ -765,7 +1058,7 @@ export default function SectionsTab({
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-semibold"
+                  className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>
