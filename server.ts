@@ -69,7 +69,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 // Server-side admin credentials state (configured via env or local dev fallbacks)
 const adminCredentials = {
-  email: readCredentialEnv('ADMIN_EMAIL', 'yuvrajsingh9639677118@gmail.com').toLowerCase(),
+  email: readCredentialEnv('ADMIN_EMAIL', 'marketing2glue@gmail.com').toLowerCase(),
   password: readCredentialEnv('ADMIN_PASSWORD', 'Admin@4321'),
 };
 
@@ -348,7 +348,7 @@ function getInquiryReceiverEmail(): string {
   if (process.env.SMTP_USER && process.env.SMTP_USER.trim()) {
     return process.env.SMTP_USER.trim();
   }
-  return 'yuvrajsingh9639677118@gmail.com';
+  return 'marketing2glue@gmail.com';
 }
 
 interface InquiryRecord {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Key, Mail, Lock, CheckCircle2, AlertCircle, RefreshCw, Server } from 'lucide-react';
 
 export default function SecurityTab() {
-  const [currentEmail, setCurrentEmail] = useState<string>('yuvrajsingh9639677118@gmail.com');
+  const [currentEmail, setCurrentEmail] = useState<string>('marketing2glue@gmail.com');
   const [currentPassword, setCurrentPassword] = useState<string>('');
   const [newEmail, setNewEmail] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
@@ -252,7 +252,7 @@ export default function SecurityTab() {
           Set these exact variables in Hostinger's Node.js app environment, then restart the app:
         </p>
         <div className="font-mono bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-[11px] text-cyan-300 select-all">
-          ADMIN_EMAIL=yuvrajsingh9639677118@gmail.com<br />
+          ADMIN_EMAIL=marketing2glue@gmail.com<br />
           ADMIN_PASSWORD=your_secure_password
         </div>
         <p>

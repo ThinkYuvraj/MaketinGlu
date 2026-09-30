@@ -96,7 +96,7 @@ app.use((err, req, res, next) => {
 });
 // Server-side admin credentials state (configured via env or local dev fallbacks)
 const adminCredentials = {
-    email: readCredentialEnv('ADMIN_EMAIL', 'yuvrajsingh9639677118@gmail.com').toLowerCase(),
+    email: readCredentialEnv('ADMIN_EMAIL', 'marketing2glue@gmail.com').toLowerCase(),
     password: readCredentialEnv('ADMIN_PASSWORD', 'Admin@4321'),
 };
 function hasConfiguredAdminCredentials() {
@@ -328,7 +328,7 @@ function getInquiryReceiverEmail() {
     if (process.env.SMTP_USER && process.env.SMTP_USER.trim()) {
         return process.env.SMTP_USER.trim();
     }
-    return 'yuvrajsingh9639677118@gmail.com';
+    return 'marketing2glue@gmail.com';
 }
 const receivedInquiries = [];
 async function sendInquiryEmail(inquiry) {
