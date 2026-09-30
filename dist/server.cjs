@@ -96,8 +96,8 @@ app.use((err, req, res, next) => {
 });
 // Server-side admin credentials state (configured via env or local dev fallbacks)
 const adminCredentials = {
-    email: readCredentialEnv('ADMIN_EMAIL', 'admin@marketinglu.com').toLowerCase(),
-    password: readCredentialEnv('ADMIN_PASSWORD', 'admin123'),
+    email: readCredentialEnv('ADMIN_EMAIL', 'yuvrajsingh9639677118@gmail.com').toLowerCase(),
+    password: readCredentialEnv('ADMIN_PASSWORD', 'Admin@4321'),
 };
 function hasConfiguredAdminCredentials() {
     return Boolean(adminCredentials.email && adminCredentials.password);

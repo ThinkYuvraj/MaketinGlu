@@ -126,7 +126,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@marketinglu.com"
+                placeholder="yuvrajsingh9639677118@gmail.com"
                 className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#070c17] border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors"
               />
             </div>
