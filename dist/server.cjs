@@ -612,11 +612,17 @@ async function startServer() {
         });
     }
     else {
-        // Production: serve built static files from dist or build
+        // Production: serve built static files from dist, build, public_html, or directory of this script
         const candidates = [
             path_1.default.resolve(process.cwd(), 'dist'),
             path_1.default.resolve(process.cwd(), 'build'),
             path_1.default.resolve(process.cwd(), 'public_html'),
+            path_1.default.resolve(process.cwd()),
+            path_1.default.resolve(__dirname),
+            path_1.default.resolve(__dirname, 'dist'),
+            path_1.default.resolve(__dirname, '..'),
+            path_1.default.resolve(__dirname, '..', 'dist'),
+            path_1.default.resolve(__dirname, '..', 'public_html'),
         ];
         const staticDir = candidates.find((dir) => fs_1.default.existsSync(dir) && fs_1.default.existsSync(path_1.default.join(dir, 'index.html')));
         if (staticDir) {
@@ -630,25 +636,15 @@ async function startServer() {
             });
         }
         else {
-            console.warn('No production build directory found. Falling back to Vite dev server.');
-            const { createServer: createViteServer } = await Promise.resolve().then(() => __importStar(require('vite')));
-            const vite = await createViteServer({
-                server: { middlewareMode: true, hmr: false },
-                appType: 'spa',
-            });
-            app.use(vite.middlewares);
-            app.use('*', async (req, res, next) => {
-                const url = req.originalUrl;
-                try {
-                    const indexPath = path_1.default.resolve(process.cwd(), 'index.html');
-                    let template = fs_1.default.readFileSync(indexPath, 'utf-8');
-                    template = await vite.transformIndexHtml(url, template);
-                    res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
-                }
-                catch (e) {
-                    vite.ssrFixStacktrace(e);
-                    next(e);
-                }
+            console.warn('[SERVER NOTICE] No static index.html found in candidate paths. API routes remain active.');
+            app.get('/', (_req, res) => {
+                res.status(200).json({
+                    status: 'ok',
+                    service: 'MarketingGlu Production Server',
+                    inquiryEndpoint: '/api/inquiry',
+                    testEmailEndpoint: '/api/test-email',
+                    time: new Date().toISOString(),
+                });
             });
         }
     }
@@ -666,9 +662,12 @@ async function startServer() {
         }
     });
     // ==========================================
-    // Resilient Port Listening with Collision Handling
+    // Resilient Port Listening with Collision Handling & Passenger Support
     // ==========================================
-    const startPort = PORT;
+    const rawPort = process.env.PORT;
+    const isPassenger = typeof global.PhusionPassenger !== 'undefined' || rawPort === 'passenger';
+    const isSocketOrPipe = typeof rawPort === 'string' && (isNaN(Number(rawPort)) || rawPort.startsWith('/') || rawPort.startsWith('\\\\'));
+    const startPort = !isSocketOrPipe && rawPort && !isNaN(Number(rawPort)) ? parseInt(rawPort, 10) : 3000;
     const maxAttempts = 10;
     function tryListen(portToTry, attempt = 1) {
         const serverInstance = app.listen(portToTry, '0.0.0.0');
@@ -691,7 +690,7 @@ async function startServer() {
                     tryListen(nextPort, attempt + 1);
                 }
                 else {
-                    console.error(`[PORT ERROR] Unable to bind to any port from ${startPort} to ${portToTry}. Please free up the port.`);
+                    console.error(`[PORT ERROR] Unable to bind to any port from ${startPort} to ${portToTry}.`);
                 }
             }
             else {
@@ -699,7 +698,19 @@ async function startServer() {
             }
         });
     }
-    tryListen(startPort);
+    if (isPassenger) {
+        app.listen('passenger', () => {
+            console.log('🚀 MarketingGlu Server is Online & Ready (Phusion Passenger mode)!');
+        });
+    }
+    else if (isSocketOrPipe && rawPort) {
+        app.listen(rawPort, () => {
+            console.log(`🚀 MarketingGlu Server is Online & Ready on socket: ${rawPort}`);
+        });
+    }
+    else {
+        tryListen(startPort);
+    }
 }
 // Wrap top-level call so async boot failures are logged
 // rather than causing an unhandled rejection that kills the process.

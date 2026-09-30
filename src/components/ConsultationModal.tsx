@@ -38,11 +38,28 @@ export default function ConsultationModal({
     }
   }, [isOpen, initialService]);
 
+  const fetchWithRetry = async (url: string, options: RequestInit, retries = 2, backoff = 1000): Promise<Response> => {
+    try {
+      const response = await fetch(url, options);
+      if (response.status === 503 && retries > 0) {
+        await new Promise((resolve) => setTimeout(resolve, backoff));
+        return fetchWithRetry(url, options, retries - 1, backoff * 2);
+      }
+      return response;
+    } catch (err) {
+      if (retries > 0) {
+        await new Promise((resolve) => setTimeout(resolve, backoff));
+        return fetchWithRetry(url, options, retries - 1, backoff * 2);
+      }
+      throw err;
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await fetch('/api/inquiry', {
+      await fetchWithRetry('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
