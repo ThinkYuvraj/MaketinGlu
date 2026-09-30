@@ -22,7 +22,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section 
       id="hero-section"
-      className="relative pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-12 sm:pb-16 lg:pb-20 flex flex-col justify-center overflow-hidden"
+      className="relative w-full min-h-screen pt-24 sm:pt-28 pb-6 flex flex-col justify-between items-center overflow-hidden"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] sm:w-[700px] h-[220px] sm:h-[340px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
@@ -44,19 +44,19 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             </div>
 
             {/* Main Headline */}
-            <h1 className="tracking-tight leading-[1.02] mb-4 sm:mb-6">
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6rem] 2xl:text-[7rem] font-black mb-3 sm:mb-4 drop-shadow-2xl">
+            <h1 className="tracking-tight leading-[1.02] mb-3.5 sm:mb-5">
+              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6.25rem] 2xl:text-[7.25rem] font-black mb-2.5 sm:mb-3.5 drop-shadow-2xl">
                 <span className="text-white italic tracking-tighter">MARKETIN</span>
                 <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
-              <span className="block text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-slate-100 tracking-tight leading-tight sm:leading-snug drop-shadow-lg">
+              <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight sm:leading-snug drop-shadow-lg">
                 <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span>{' '}
                 <span className="text-cyan-300 font-extrabold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
               </span>
             </h1>
 
             {/* Description */}
-            <p className="max-w-2xl lg:max-w-4xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl text-slate-300 font-normal leading-relaxed mb-8 sm:mb-10 px-4">
+            <p className="max-w-2xl lg:max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-4">
               {config.heroDescription}
             </p>
 
