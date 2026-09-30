@@ -5,7 +5,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "tsx server.ts",
+    "dev": "tsx watch --include .env server.ts",
     "build": "vite build && node scripts/build-server.mjs",
     "start": "tsx server.ts",
     "lint": "tsc --noEmit",

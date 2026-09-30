@@ -320,26 +320,43 @@ app.get('/api/admin/info', requireAdminAuth, (req, res) => {
 });
 // ==========================================
 // Customer Inquiries & Leads Handler
-// Receiver Email: yuvrajsingh9639677118@gmail.com
 // ==========================================
-const INQUIRY_RECEIVER_EMAIL = readCredentialEnv('INQUIRY_EMAIL', 'yuvrajsingh9639677118@gmail.com');
+function getInquiryReceiverEmail() {
+    if (process.env.INQUIRY_EMAIL && process.env.INQUIRY_EMAIL.trim()) {
+        return process.env.INQUIRY_EMAIL.trim();
+    }
+    if (process.env.SMTP_USER && process.env.SMTP_USER.trim()) {
+        return process.env.SMTP_USER.trim();
+    }
+    return 'yuvrajsingh9639677118@gmail.com';
+}
 const receivedInquiries = [];
 async function sendInquiryEmail(inquiry) {
-    const host = process.env.SMTP_HOST || '';
-    const user = process.env.SMTP_USER || '';
-    const pass = process.env.SMTP_PASS || '';
-    const port = parseInt(process.env.SMTP_PORT || '587', 10);
-    const secure = process.env.SMTP_SECURE === 'true';
-    console.log(`[EMAIL DISPATCHER] Preparing lead email for ${INQUIRY_RECEIVER_EMAIL}:`, {
+    // Always refresh .env dynamically so live edits to credentials take effect immediately without process restart
+    try {
+        dotenv_1.default.config({ override: true });
+    }
+    catch (e) {
+        // ignore
+    }
+    const host = (process.env.SMTP_HOST || 'smtp.gmail.com').trim();
+    const user = (process.env.SMTP_USER || '').trim();
+    const pass = (process.env.SMTP_PASS || '').trim();
+    const port = parseInt(process.env.SMTP_PORT || '465', 10);
+    const secure = process.env.SMTP_SECURE !== 'false';
+    const targetReceiver = getInquiryReceiverEmail();
+    console.log(`[EMAIL DISPATCHER] Preparing lead email for ${targetReceiver}:`, {
         leadName: inquiry.name,
         leadEmail: inquiry.email,
         leadPhone: inquiry.phone,
         service: inquiry.service,
+        smtpUser: user,
+        smtpHost: host,
     });
-    if (!host || !user || !pass) {
-        console.log(`[EMAIL NOTICE] Real SMTP credentials (SMTP_HOST/SMTP_USER/SMTP_PASS) not set in .env.`);
-        console.log(`[EMAIL NOTICE] Inquiry from ${inquiry.name} is captured & routed to Admin Studio dashboard for ${INQUIRY_RECEIVER_EMAIL}.`);
-        return false;
+    if (!user || !pass) {
+        const errorMsg = `SMTP credentials (SMTP_USER/SMTP_PASS) not configured in .env.`;
+        console.warn(`[EMAIL NOTICE] ${errorMsg}`);
+        return { success: false, error: errorMsg };
     }
     try {
         const isGmail = host.toLowerCase().includes('gmail') || process.env.SMTP_SERVICE === 'gmail';
@@ -418,23 +435,24 @@ async function sendInquiryEmail(inquiry) {
 
         <!-- Footer -->
         <div style="padding: 14px; text-align: center; background-color: #080d1a; border-top: 1px solid #1e293b; font-size: 11px; color: #64748b;">
-          Delivered directly to <strong>${INQUIRY_RECEIVER_EMAIL}</strong>
+          Delivered directly to <strong>${targetReceiver}</strong>
         </div>
       </div>
     `;
-        await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: fromHeader,
-            to: INQUIRY_RECEIVER_EMAIL,
+            to: targetReceiver,
             replyTo: replyToHeader,
             subject: `🔥 New Lead: ${inquiry.name} - ${inquiry.service || 'Service Enquiry'}`,
             html: htmlContent,
         });
-        console.log(`[EMAIL DISPATCH SUCCESS] Lead email from ${inquiry.name} (${inquiry.email}) sent to ${INQUIRY_RECEIVER_EMAIL}`);
-        return true;
+        console.log(`[EMAIL DISPATCH SUCCESS] Lead email sent to ${targetReceiver}, Message ID: ${info.messageId}`);
+        return { success: true, messageId: info.messageId };
     }
     catch (error) {
-        console.error(`[EMAIL DISPATCH ERROR] Failed sending to ${INQUIRY_RECEIVER_EMAIL}:`, error);
-        return false;
+        const errorMsg = error?.message || String(error);
+        console.error(`[EMAIL DISPATCH ERROR] Failed sending to ${targetReceiver}:`, errorMsg);
+        return { success: false, error: errorMsg };
     }
 }
 app.post(['/api/inquiry', '/api/enquiry', '/api/contact', '/api/consultation'], (req, res) => {
@@ -445,6 +463,7 @@ app.post(['/api/inquiry', '/api/enquiry', '/api/contact', '/api/consultation'], 
             message: 'Name and either email or phone are required to submit an inquiry.',
         });
     }
+    const targetReceiver = getInquiryReceiverEmail();
     const inquiry = {
         id: crypto_1.default.randomBytes(8).toString('hex'),
         name: String(name).trim(),
@@ -453,14 +472,14 @@ app.post(['/api/inquiry', '/api/enquiry', '/api/contact', '/api/consultation'], 
         service: String(service || 'General Inquiry').trim(),
         notes: String(notes || message || '').trim(),
         receivedAt: new Date().toISOString(),
-        receiverEmail: INQUIRY_RECEIVER_EMAIL,
+        receiverEmail: targetReceiver,
     };
     receivedInquiries.unshift(inquiry);
     // Keep last 200 in memory
     if (receivedInquiries.length > 200) {
         receivedInquiries.pop();
     }
-    console.log(`[INQUIRY RECEIVED] Forwarding to ${INQUIRY_RECEIVER_EMAIL}:`, {
+    console.log(`[INQUIRY RECEIVED] Forwarding to ${targetReceiver}:`, {
         from: `${inquiry.name} <${inquiry.email}>`,
         phone: inquiry.phone,
         service: inquiry.service,
@@ -472,9 +491,32 @@ app.post(['/api/inquiry', '/api/enquiry', '/api/contact', '/api/consultation'], 
     });
     return res.json({
         success: true,
-        message: `Inquiry successfully received and routed to ${INQUIRY_RECEIVER_EMAIL}. Our team will contact you shortly!`,
+        message: `Inquiry successfully received and routed to ${targetReceiver}. Our team will contact you shortly!`,
         inquiryId: inquiry.id,
-        receiverEmail: INQUIRY_RECEIVER_EMAIL,
+        receiverEmail: targetReceiver,
+    });
+});
+// Diagnostic route to test lead email delivery directly
+app.all(['/api/inquiry/test-send', '/api/test-email'], async (req, res) => {
+    const targetReceiver = getInquiryReceiverEmail();
+    const testInquiry = {
+        id: 'test-' + crypto_1.default.randomBytes(4).toString('hex'),
+        name: req.query.name || req.body?.name || 'Test Diagnostic Client',
+        email: req.query.email || req.body?.email || targetReceiver,
+        phone: '+91 96545 96149',
+        service: 'Diagnostic Email Test',
+        notes: 'Testing real-time Gmail SMTP dispatch from MarketinGlu server.',
+        receivedAt: new Date().toISOString(),
+        receiverEmail: targetReceiver,
+    };
+    const result = await sendInquiryEmail(testInquiry);
+    return res.json({
+        diagnostic: true,
+        result,
+        sentTo: targetReceiver,
+        smtpUser: process.env.SMTP_USER,
+        smtpHost: process.env.SMTP_HOST,
+        timestamp: new Date().toISOString(),
     });
 });
 // Admin endpoint to view received inquiries
@@ -482,7 +524,7 @@ app.get('/api/admin/inquiries', requireAdminAuth, (_req, res) => {
     res.json({
         success: true,
         count: receivedInquiries.length,
-        receiverEmail: INQUIRY_RECEIVER_EMAIL,
+        receiverEmail: getInquiryReceiverEmail(),
         inquiries: receivedInquiries,
     });
 });
