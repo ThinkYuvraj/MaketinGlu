@@ -19,13 +19,19 @@ export default defineConfig(() => {
     },
     build: {
       target: 'es2022',
-      chunkSizeWarningLimit: 2500,
+      cssMinify: true,
+      minify: 'esbuild',
+      modulePreload: { polyfill: false },
+      chunkSizeWarningLimit: 1500,
       rollupOptions: {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom') || id.includes('motion')) {
-                return 'vendor-core';
+              if (id.includes('react-dom') || id.includes('react/') || id.endsWith('/react')) {
+                return 'vendor-react';
+              }
+              if (id.includes('motion') || id.includes('framer-motion')) {
+                return 'vendor-motion';
               }
               if (id.includes('lucide-react')) {
                 return 'vendor-icons';
@@ -33,7 +39,7 @@ export default defineConfig(() => {
               if (id.includes('lenis')) {
                 return 'vendor-lenis';
               }
-              return 'vendor';
+              return 'vendor-misc';
             }
           },
         },

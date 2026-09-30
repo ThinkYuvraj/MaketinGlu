@@ -20,12 +20,12 @@ import {
   Video
 } from 'lucide-react';
 
-import websiteDesignImg from '../assets/website-design.png';
-import ecommerceImg from '../assets/ecommerce-design.png';
-import graphicDesignImg from '../assets/graphic-design.png';
-import seoImg from '../assets/seo-optimization.png';
-import ppcImg from '../assets/ppc-campaigns.png';
-import smoImg from '../assets/smo-optimization.png';
+import websiteDesignImg from '../assets/website-design.webp';
+import ecommerceImg from '../assets/ecommerce-design.webp';
+import graphicDesignImg from '../assets/graphic-design.webp';
+import seoImg from '../assets/seo-optimization.webp';
+import ppcImg from '../assets/ppc-campaigns.webp';
+import smoImg from '../assets/smo-optimization.webp';
 
 export const SERVICE_ICON_MAP: Record<string, any> = {
   Globe,

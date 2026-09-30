@@ -16,7 +16,7 @@ export default function Logo({
     lg: 'h-12 sm:h-14 md:h-16',
   };
 
-  const logoSrc = '/images/marketingglu_icon.png';
+  const logoSrc = '/images/marketingglu_icon.webp';
 
   // Light badge mode (used in Navbar, Footer, Admin Login, Admin Dashboard)
   if (variant === 'light-badge' || variant === 'auto') {
