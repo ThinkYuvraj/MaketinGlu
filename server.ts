@@ -682,7 +682,7 @@ async function startServer() {
       console.log(`➜  Local:    http://localhost:${portToTry}/`);
       console.log(`➜  Network:  http://127.0.0.1:${portToTry}/`);
       console.log(`➜  Admin:    http://localhost:${portToTry}/#/admin`);
-      console.log(`➜  Inquiries: Receiver -> ${INQUIRY_RECEIVER_EMAIL}`);
+      console.log(`➜  Inquiries: Receiver -> ${getInquiryReceiverEmail()}`);
       console.log(`➜  Mode:     ${isDev ? 'Development (Vite Middleware)' : 'Production'}`);
       console.log('======================================================\n');
     });
