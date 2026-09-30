@@ -3,11 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "server.js",
+  "main": "server.cjs",
   "scripts": {
     "dev": "tsx watch --include .env server.ts",
     "build": "vite build && node scripts/build-server.mjs",
-    "start": "tsx server.ts",
+    "start": "node dist/server.cjs",
+    "start:dev": "tsx server.ts",
     "lint": "tsc --noEmit",
     "preview": "vite preview"
   },

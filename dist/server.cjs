@@ -332,19 +332,31 @@ function getInquiryReceiverEmail() {
 }
 const receivedInquiries = [];
 async function sendInquiryEmail(inquiry) {
-    // Always refresh .env dynamically so live edits to credentials take effect immediately without process restart
+    // Always refresh .env dynamically across multiple potential directories (Hostinger/cPanel support)
     try {
-        dotenv_1.default.config({ override: true });
+        const candidates = [
+            path_1.default.resolve(process.cwd(), '.env'),
+            path_1.default.resolve(__dirname, '.env'),
+            path_1.default.resolve(__dirname, '..', '.env'),
+        ];
+        for (const cand of candidates) {
+            if (fs_1.default.existsSync(cand)) {
+                dotenv_1.default.config({ path: cand, override: false });
+            }
+        }
     }
     catch (e) {
         // ignore
     }
-    const host = (process.env.SMTP_HOST || 'smtp.gmail.com').trim();
-    const user = (process.env.SMTP_USER || '').trim();
-    const pass = (process.env.SMTP_PASS || '').trim();
-    const port = parseInt(process.env.SMTP_PORT || '465', 10);
-    const secure = process.env.SMTP_SECURE !== 'false';
+    const rawHost = (process.env.SMTP_HOST || 'smtp.gmail.com').trim();
+    const rawUser = (process.env.SMTP_USER || '').trim();
+    const rawPass = (process.env.SMTP_PASS || '').trim();
+    const rawPort = parseInt(process.env.SMTP_PORT || '465', 10);
     const targetReceiver = getInquiryReceiverEmail();
+    // Sanitize credentials: strip leading/trailing quotes and internal spaces from app passwords
+    const user = rawUser.replace(/^["']|["']$/g, '').trim();
+    const pass = rawPass.replace(/^["']|["']$/g, '').replace(/\s+/g, '');
+    const host = rawHost.replace(/^["']|["']$/g, '').trim();
     console.log(`[EMAIL DISPATCHER] Preparing lead email for ${targetReceiver}:`, {
         leadName: inquiry.name,
         leadEmail: inquiry.email,
@@ -352,108 +364,149 @@ async function sendInquiryEmail(inquiry) {
         service: inquiry.service,
         smtpUser: user,
         smtpHost: host,
+        hasPassword: Boolean(pass),
+        passLength: pass.length,
     });
     if (!user || !pass) {
-        const errorMsg = `SMTP credentials (SMTP_USER/SMTP_PASS) not configured in .env.`;
+        const errorMsg = `SMTP credentials (SMTP_USER/SMTP_PASS) not configured in .env or environment variables.`;
         console.warn(`[EMAIL NOTICE] ${errorMsg}`);
         return { success: false, error: errorMsg };
     }
-    try {
-        const isGmail = host.toLowerCase().includes('gmail') || process.env.SMTP_SERVICE === 'gmail';
-        const transporter = isGmail
-            ? nodemailer_1.default.createTransport({
-                service: 'gmail',
-                auth: { user, pass },
-            })
-            : nodemailer_1.default.createTransport({
-                host,
-                port,
-                secure,
-                auth: { user, pass },
-            });
-        const fromHeader = inquiry.name
-            ? `"${inquiry.name} (Marketing LU Lead)" <${user}>`
-            : `"Marketing LU Service Enquiry" <${user}>`;
-        const replyToHeader = inquiry.email
-            ? `"${inquiry.name}" <${inquiry.email}>`
-            : undefined;
-        const htmlContent = `
-      <div style="font-family: Arial, Helvetica, sans-serif; max-width: 540px; margin: 0 auto; background-color: #0c1424; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden; color: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-        <!-- Header -->
-        <div style="padding: 24px; text-align: center; border-bottom: 1px solid #1e293b; background: linear-gradient(180deg, #0f172a 0%, #0c1424 100%);">
-          <div style="font-size: 20px; font-weight: 900; letter-spacing: 2px; color: #ffffff; margin-bottom: 4px;">
-            MARKETING<span style="color: #38bdf8;">LU</span>
-          </div>
-          <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #38bdf8; text-transform: uppercase;">
-            NEW SERVICE ENQUIRY
-          </div>
+    const fromHeader = inquiry.name
+        ? `"${inquiry.name} (Marketing LU Lead)" <${user}>`
+        : `"Marketing LU Service Enquiry" <${user}>`;
+    const replyToHeader = inquiry.email
+        ? `"${inquiry.name}" <${inquiry.email}>`
+        : undefined;
+    const htmlContent = `
+    <div style="font-family: Arial, Helvetica, sans-serif; max-width: 540px; margin: 0 auto; background-color: #0c1424; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden; color: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+      <!-- Header -->
+      <div style="padding: 24px; text-align: center; border-bottom: 1px solid #1e293b; background: linear-gradient(180deg, #0f172a 0%, #0c1424 100%);">
+        <div style="font-size: 20px; font-weight: 900; letter-spacing: 2px; color: #ffffff; margin-bottom: 4px;">
+          MARKETING<span style="color: #38bdf8;">LU</span>
         </div>
-
-        <!-- Body Content -->
-        <div style="padding: 24px;">
-          <!-- Customer -->
-          <div style="margin-bottom: 18px;">
-            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Customer</div>
-            <div style="font-size: 15px; font-weight: 700; color: #ffffff;">${inquiry.name}</div>
-          </div>
-
-          <!-- Email -->
-          <div style="margin-bottom: 18px;">
-            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Email</div>
-            <div style="font-size: 14px; font-weight: 600;">
-              <a href="mailto:${inquiry.email}" style="color: #38bdf8; text-decoration: none;">${inquiry.email || 'N/A'}</a>
-            </div>
-          </div>
-
-          <!-- Phone -->
-          <div style="margin-bottom: 18px;">
-            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Phone</div>
-            <div style="font-size: 14px; font-weight: 600;">
-              <a href="tel:${inquiry.phone}" style="color: #38bdf8; text-decoration: none;">${inquiry.phone || 'N/A'}</a>
-            </div>
-          </div>
-
-          <!-- Service -->
-          <div style="margin-bottom: 18px;">
-            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Service</div>
-            <div style="font-size: 13px; font-weight: 700; color: #38bdf8; background-color: #0f2b45; padding: 6px 12px; border-radius: 6px; display: inline-block;">${inquiry.service}</div>
-          </div>
-
-          <!-- Requirements / Notes -->
-          <div style="margin-bottom: 24px;">
-            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Requirements</div>
-            <div style="font-size: 13px; color: #cbd5e1; background-color: #080d1a; padding: 12px; border-radius: 8px; border: 1px solid #1e293b; line-height: 1.5;">${inquiry.notes || 'None provided'}</div>
-          </div>
-
-          <!-- Action Button -->
-          <div style="text-align: center; margin-top: 24px;">
-            <a href="mailto:${inquiry.email}?subject=Re:%20${encodeURIComponent(inquiry.service || 'Service Enquiry')}" style="display: block; width: 100%; padding: 14px 0; background: linear-gradient(90deg, #38bdf8, #0284c7); color: #0c1424; text-decoration: none; border-radius: 10px; font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; text-align: center; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);">
-              [ VIEW ENQUIRY ]
-            </a>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="padding: 14px; text-align: center; background-color: #080d1a; border-top: 1px solid #1e293b; font-size: 11px; color: #64748b;">
-          Delivered directly to <strong>${targetReceiver}</strong>
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #38bdf8; text-transform: uppercase;">
+          NEW SERVICE ENQUIRY
         </div>
       </div>
-    `;
-        const info = await transporter.sendMail({
-            from: fromHeader,
-            to: targetReceiver,
-            replyTo: replyToHeader,
-            subject: `🔥 New Lead: ${inquiry.name} - ${inquiry.service || 'Service Enquiry'}`,
-            html: htmlContent,
-        });
-        console.log(`[EMAIL DISPATCH SUCCESS] Lead email sent to ${targetReceiver}, Message ID: ${info.messageId}`);
-        return { success: true, messageId: info.messageId };
+
+      <!-- Body Content -->
+      <div style="padding: 24px;">
+        <!-- Customer -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Customer</div>
+          <div style="font-size: 15px; font-weight: 700; color: #ffffff;">${inquiry.name}</div>
+        </div>
+
+        <!-- Email -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Email</div>
+          <div style="font-size: 14px; font-weight: 600;">
+            <a href="mailto:${inquiry.email}" style="color: #38bdf8; text-decoration: none;">${inquiry.email || 'N/A'}</a>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Phone</div>
+          <div style="font-size: 14px; font-weight: 600;">
+            <a href="tel:${inquiry.phone}" style="color: #38bdf8; text-decoration: none;">${inquiry.phone || 'N/A'}</a>
+          </div>
+        </div>
+
+        <!-- Service -->
+        <div style="margin-bottom: 18px;">
+          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Service</div>
+          <div style="font-size: 13px; font-weight: 700; color: #38bdf8; background-color: #0f2b45; padding: 6px 12px; border-radius: 6px; display: inline-block;">${inquiry.service}</div>
+        </div>
+
+        <!-- Requirements / Notes -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Requirements</div>
+          <div style="font-size: 13px; color: #cbd5e1; background-color: #080d1a; padding: 12px; border-radius: 8px; border: 1px solid #1e293b; line-height: 1.5;">${inquiry.notes || 'None provided'}</div>
+        </div>
+
+        <!-- Action Button -->
+        <div style="text-align: center; margin-top: 24px;">
+          <a href="mailto:${inquiry.email}?subject=Re:%20${encodeURIComponent(inquiry.service || 'Service Enquiry')}" style="display: block; width: 100%; padding: 14px 0; background: linear-gradient(90deg, #38bdf8, #0284c7); color: #0c1424; text-decoration: none; border-radius: 10px; font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; text-align: center; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);">
+            [ VIEW ENQUIRY ]
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding: 14px; text-align: center; background-color: #080d1a; border-top: 1px solid #1e293b; font-size: 11px; color: #64748b;">
+        Delivered directly to <strong>${targetReceiver}</strong>
+      </div>
+    </div>
+  `;
+    const mailOptions = {
+        from: fromHeader,
+        to: targetReceiver,
+        replyTo: replyToHeader,
+        subject: `🔥 New Lead: ${inquiry.name} - ${inquiry.service || 'Service Enquiry'}`,
+        html: htmlContent,
+    };
+    // Hostinger-compatible multi-strategy dispatch:
+    // Strategy 1: Direct SSL on port 465 (Forced IPv4)
+    // Strategy 2: STARTTLS on port 587 (Forced IPv4)
+    // Strategy 3: Standard Gmail service transporter
+    const strategies = [
+        {
+            name: 'Direct SSL Port 465 (IPv4)',
+            createTransporter: () => nodemailer_1.default.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
+                auth: { user, pass },
+                family: 4, // Prevents Hostinger IPv6 connection timeout
+                connectionTimeout: 10000,
+                greetingTimeout: 10000,
+                socketTimeout: 15000,
+                tls: { rejectUnauthorized: false },
+            }),
+        },
+        {
+            name: 'STARTTLS Port 587 (IPv4)',
+            createTransporter: () => nodemailer_1.default.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false,
+                auth: { user, pass },
+                family: 4,
+                connectionTimeout: 10000,
+                greetingTimeout: 10000,
+                socketTimeout: 15000,
+                tls: { rejectUnauthorized: false },
+            }),
+        },
+        {
+            name: 'Nodemailer Gmail Service',
+            createTransporter: () => nodemailer_1.default.createTransport({
+                service: 'gmail',
+                auth: { user, pass },
+                connectionTimeout: 10000,
+            }),
+        },
+    ];
+    let lastError = null;
+    for (const strategy of strategies) {
+        try {
+            console.log(`[EMAIL DISPATCHER] Attempting dispatch via ${strategy.name}...`);
+            const transporter = strategy.createTransporter();
+            const info = await transporter.sendMail(mailOptions);
+            console.log(`[EMAIL DISPATCH SUCCESS] Lead email sent to ${targetReceiver} via ${strategy.name}, Message ID: ${info.messageId}`);
+            return { success: true, messageId: info.messageId };
+        }
+        catch (err) {
+            lastError = err;
+            const msg = err?.message || String(err);
+            console.warn(`[EMAIL DISPATCH WARNING] Strategy '${strategy.name}' failed: ${msg}. Trying next strategy...`);
+        }
     }
-    catch (error) {
-        const errorMsg = error?.message || String(error);
-        console.error(`[EMAIL DISPATCH ERROR] Failed sending to ${targetReceiver}:`, errorMsg);
-        return { success: false, error: errorMsg };
-    }
+    const finalErrMsg = lastError?.message || String(lastError);
+    console.error(`[EMAIL DISPATCH ERROR] All dispatch strategies failed for ${targetReceiver}:`, finalErrMsg);
+    return { success: false, error: finalErrMsg };
 }
 app.post(['/api/inquiry', '/api/enquiry', '/api/contact', '/api/consultation'], (req, res) => {
     const { name, email, phone, service, notes, message } = req.body || {};
