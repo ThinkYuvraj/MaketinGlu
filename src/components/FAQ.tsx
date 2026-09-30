@@ -326,36 +326,36 @@ export default function FAQ() {
           </div>
         </div>
 
-        {/* Bottom Ultra-Compact Requirement Inquiry Box */}
-        <div className="faq-inquiry mt-3.5 sm:mt-4 py-1.5 px-3 sm:py-2 sm:px-4 rounded-xl bg-[#090f20]/80 border border-cyan-500/25 max-w-xl lg:max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 shadow-md">
-          <div className="flex items-center gap-2 text-left w-full sm:w-auto min-w-0">
-            <div className="w-5 h-5 rounded-md bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center shrink-0 text-cyan-400">
-              <Sparkles className="w-3 h-3" />
+        {/* Bottom Requirement Inquiry Box */}
+        <div className="faq-inquiry mt-6 sm:mt-8 py-3.5 px-4 sm:px-6 rounded-2xl bg-[#090f20]/90 border border-cyan-500/30 max-w-3xl lg:max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 shadow-lg shadow-cyan-950/20">
+          <div className="flex items-center gap-3 text-left w-full sm:w-auto min-w-0">
+            <div className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center shrink-0 text-cyan-400 shadow-sm">
+              <Sparkles className="w-4 h-4" />
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-xs font-bold text-white block truncate sm:inline sm:mr-1.5">
+              <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight">
                 Have a specific growth question?
               </h3>
-              <p className="text-[11px] text-slate-400 block sm:inline truncate">
+              <p className="text-xs text-slate-400 font-normal leading-normal">
                 Speak directly with our senior growth architects.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
+          <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0 justify-end">
             <a
               href={`https://wa.me/+919654596149?text=${encodeURIComponent('Hi MarketinGlu, I have a specific question regarding your digital marketing services.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-none px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 transition-colors min-h-[28px]"
+              className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all min-h-[36px]"
             >
-              <MessageCircle className="w-3 h-3 text-emerald-400 shrink-0" />
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>WhatsApp</span>
             </a>
 
             <a
               href="#/services"
-              className="flex-1 sm:flex-none px-3 py-1 rounded-lg bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-[11px] sm:text-xs flex items-center justify-center gap-1 transition-all shadow-sm hover:brightness-110 min-h-[28px] whitespace-nowrap"
+              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 hover:brightness-110 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md min-h-[36px] whitespace-nowrap"
             >
               <span>Services &rarr;</span>
             </a>
