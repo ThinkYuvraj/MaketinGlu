@@ -8,7 +8,7 @@ interface AppointmentBannerProps {
 
 export default function AppointmentBanner({ onOpenConsultation }: AppointmentBannerProps) {
   return (
-    <section className="relative py-3 sm:py-4 overflow-hidden">
+    <section className="relative py-10 sm:py-14 bg-[#070b14] border-t border-slate-800/80 overflow-hidden">
       {/* Subtle background glow */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
         <div className="w-[420px] h-20 bg-cyan-500/10 blur-[60px] rounded-full" />

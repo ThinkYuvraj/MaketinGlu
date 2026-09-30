@@ -138,8 +138,11 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   return (
     <section 
       id="expertise" 
-      className="relative flex flex-col justify-center py-8 sm:py-10 lg:py-12 bg-[#070b14] border-t border-slate-900/80 selection:bg-cyan-500 selection:text-white"
+      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white"
     >
+      {/* Top subtle glow line */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
+
       {/* Invisible anchor targets so external and legacy links resolve smoothly */}
       <span id="services" className="absolute -top-28 sm:-top-32" />
       <span id="capabilities" className="absolute -top-28 sm:-top-32" />
@@ -157,7 +160,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR {services.length} CORE DISCIPLINES</span>
