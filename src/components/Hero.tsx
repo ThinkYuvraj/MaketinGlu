@@ -38,51 +38,51 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
             {/* Location / Capability Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/40 text-xs font-bold tracking-wider text-cyan-400 uppercase mt-2 sm:mt-0 mb-4 sm:mb-5 shadow-sm shadow-cyan-950/50">
-              <TrendingUp className="w-4 h-4 text-cyan-400 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/40 text-[10px] sm:text-xs font-bold tracking-wider text-cyan-400 uppercase mt-1 sm:mt-0 mb-3 sm:mb-5 shadow-sm shadow-cyan-950/50">
+              <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
               <span>{config.locationBadge}</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="tracking-tight leading-[1.02] mb-3.5 sm:mb-5">
-              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6.25rem] 2xl:text-[7.25rem] font-black mb-2.5 sm:mb-3.5 drop-shadow-2xl">
+            <h1 className="tracking-tight leading-[1.02] mb-3 sm:mb-5">
+              <span className="block text-[3.6rem] xs:text-[4.25rem] sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6.25rem] 2xl:text-[7.25rem] font-black mb-2 sm:mb-3.5 drop-shadow-2xl leading-[0.92] sm:leading-[1.02]">
                 <span className="text-white italic tracking-tighter">MARKETIN</span>
                 <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
-              <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight sm:leading-snug drop-shadow-lg">
+              <span className="block text-xs xs:text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-200 tracking-wider sm:tracking-tight uppercase sm:normal-case leading-tight sm:leading-snug drop-shadow-lg opacity-90 sm:opacity-100 mt-1 sm:mt-0">
                 <span>{config.heroTitleLine1 || 'DIGITAL MARKETING'}</span>{' '}
                 <span className="text-cyan-300 font-extrabold">{config.heroTitleLine2 || 'SOLUTIONS'}</span>
               </span>
             </h1>
 
             {/* Description */}
-            <p className="max-w-2xl lg:max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-4">
+            <p className="max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto text-xs xs:text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-5 sm:mb-8 px-4 opacity-90 sm:opacity-100">
               {config.heroDescription}
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 max-w-xs xs:max-w-sm sm:max-w-none mx-auto mb-5 sm:mb-8">
               {/* Primary CTA */}
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation()}
-                className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] px-7 sm:px-9 py-3 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 hover:brightness-110 text-slate-950 font-black text-xs sm:text-sm md:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 cursor-pointer transition-all border border-cyan-300/30"
+                className="w-full sm:w-auto min-h-[42px] sm:min-h-[52px] px-6 sm:px-9 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 hover:brightness-110 text-slate-950 font-black text-xs sm:text-sm md:text-base shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 sm:gap-2.5 cursor-pointer transition-all border border-cyan-300/30"
                 id="hero-btn-consultation"
               >
-                <Sparkles className="w-4 h-4 text-slate-950" />
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-950" />
                 <span>{config.heroPrimaryCta}</span>
-                <ArrowRight className="w-4 h-4 stroke-[3] text-slate-950" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[3] text-slate-950" />
               </motion.button>
 
               {/* Secondary CTA */}
               <motion.button
                 {...buttonHoverMotion}
                 onClick={onExplorePortfolio}
-                className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] px-7 sm:px-9 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/50 text-slate-200 font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2.5 cursor-pointer transition-all shadow-md"
+                className="w-full sm:w-auto min-h-[42px] sm:min-h-[52px] px-6 sm:px-9 py-2.5 sm:py-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/50 text-slate-200 font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 sm:gap-2.5 cursor-pointer transition-all shadow-md"
                 id="hero-btn-portfolio"
               >
                 <span>{config.heroSecondaryCta}</span>
-                <ChevronDown className="w-4 h-4 text-cyan-400" />
+                <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
               </motion.button>
             </div>
           </motion.div>

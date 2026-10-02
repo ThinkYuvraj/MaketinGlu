@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Logo from './Logo';
-import { Sparkles, ShieldCheck, Zap } from 'lucide-react';
+import { ShieldCheck, Zap } from 'lucide-react';
 
 interface PreloaderProps {
   onComplete?: () => void;
@@ -74,43 +74,25 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
           />
 
           {/* Multi-layered Ambient Glows */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-sky-600/12 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-sky-600/12 blur-[90px] rounded-full pointer-events-none" />
 
           {/* Central Showcase Pod */}
           <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-md w-full">
             
-            {/* Dual Orbital Rings with Glowing Logo */}
-            <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center mb-6">
-              
-              {/* Outer Counter-Clockwise Dash Orbit */}
+            {/* Clean Logo Core Card (No circles behind logo) */}
+            <div className="relative flex items-center justify-center mb-6">
               <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0 rounded-full border border-dashed border-cyan-500/25"
-              />
-
-              {/* Inner Clockwise Glowing Gradient Orbit */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-2 rounded-full border-t-2 border-r-2 border-transparent border-t-cyan-400 border-r-sky-300 shadow-[0_0_20px_rgba(6,182,212,0.4)]"
-              />
-
-              {/* Satellite Pulse Dot */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0"
-              >
-                <div className="w-2 h-2 rounded-full bg-cyan-300 shadow-[0_0_10px_#22d3ee] absolute -top-1 left-1/2 -translate-x-1/2" />
-              </motion.div>
-
-              {/* Logo Core Card */}
-              <motion.div
-                animate={{ scale: [1, 1.04, 1] }}
+                animate={{ 
+                  scale: [1, 1.04, 1],
+                  boxShadow: [
+                    '0 10px 30px -5px rgba(6, 182, 212, 0.25)',
+                    '0 15px 40px -2px rgba(6, 182, 212, 0.45)',
+                    '0 10px 30px -5px rgba(6, 182, 212, 0.25)'
+                  ]
+                }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative z-10 p-3 sm:p-3.5 rounded-2xl bg-gradient-to-b from-[#0c152a] to-[#070c18] border border-cyan-400/50 shadow-2xl shadow-cyan-500/30 backdrop-blur-xl"
+                className="relative z-10 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-[#0c152a] to-[#070c18] border border-cyan-400/40 backdrop-blur-xl"
               >
                 <Logo variant="light-badge" size="lg" />
               </motion.div>

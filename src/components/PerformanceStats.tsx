@@ -11,7 +11,7 @@ export default function PerformanceStats() {
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
   const [isPaused, setIsPaused] = useState(false);
 
-  const radius = 40;
+  const radius = 40.5;
   const circumference = 2 * Math.PI * radius;
 
   const stats = [
