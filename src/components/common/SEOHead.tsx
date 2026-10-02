@@ -105,7 +105,8 @@ export default function SEOHead() {
         keywords = `${blog.tags?.join(', ') || blog.category}, ${siteName} blog, digital growth guide`;
         canonicalUrl = `${baseUrl}/blogs/${blog.slug}`;
         ogType = 'article';
-        ogImage = blog.coverImage.startsWith('http') ? blog.coverImage : `${baseUrl}${blog.coverImage}`;
+        const coverImg = blog.coverImage || '/images/marketingglu_icon.png';
+        ogImage = coverImg.startsWith('http') ? coverImg : `${baseUrl}${coverImg}`;
         breadcrumbs.push(
           { name: 'Articles & Resources', item: `${baseUrl}/blogs` },
           { name: blog.title, item: canonicalUrl }
