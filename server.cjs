@@ -36484,7 +36484,7 @@ app.all(["/api/inquiry/test-send", "/api/test-email"], async (req, res) => {
     email: req.query.email || req.body?.email || targetReceiver,
     phone: "+91 96545 96149",
     service: "Diagnostic Email Test",
-    notes: "Testing real-time Gmail SMTP dispatch from MarketinGlu server.",
+    notes: "Testing real-time Gmail SMTP dispatch from MarketingGlu server.",
     receivedAt: (/* @__PURE__ */ new Date()).toISOString(),
     receiverEmail: targetReceiver
   };

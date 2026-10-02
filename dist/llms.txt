@@ -1,6 +1,6 @@
 # Marketing LU - Premier Software Solutions & Digital Engineering Agency
 
-> Marketing LU (also known as MarketinGlu, MarketingGlu, Marketing Glue) is a premier digital engineering and software solutions agency based in New Delhi, India. We deliver enterprise-grade custom software development, high-performance web architecture, search engine optimization (SEO), answer engine optimization (AEO), generative engine optimization (GEO), performance marketing (PPC), social media optimization (SMO), and e-commerce growth solutions.
+> Marketing LU (also known as MarketingGlu, Marketing Glue) is a premier digital engineering and software solutions agency based in New Delhi, India. We deliver enterprise-grade custom software development, high-performance web architecture, search engine optimization (SEO), answer engine optimization (AEO), generative engine optimization (GEO), performance marketing (PPC), social media optimization (SMO), and e-commerce growth solutions.
 
 ## Core Capabilities & Services
 
@@ -15,7 +15,7 @@
 
 ## Key Company Details
 
-- **Official Name**: Marketing LU (MarketinGlu / Software Solutions)
+- **Official Name**: MarketingGlu (Software Solutions)
 - **Domain**: https://marketinglu.com
 - **Primary Contact Email**: hello@marketinglu.com
 - **Direct Phone / WhatsApp**: +91 96545 96149
