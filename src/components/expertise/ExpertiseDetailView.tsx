@@ -144,7 +144,7 @@ export default function ExpertiseDetailView({
 
                 <motion.a
                   {...buttonHoverMotion}
-                  href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketinGlu, I would like to inquire about your ${activeExpertise.title} services.`)}`}
+                  href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketingGlu, I would like to inquire about your ${activeExpertise.title} services.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 min-h-[46px]"

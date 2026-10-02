@@ -8,6 +8,7 @@ import MobileBottomBar from './components/mobile/MobileBottomBar';
 import BackToTopButton from './components/common/BackToTopButton';
 import { SiteConfigProvider, useSiteConfig } from './context/SiteConfigContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
+import SEOHead from './components/common/SEOHead';
 import { expertiseData } from './data/expertiseData';
 import CustomSectionRenderer from './components/CustomSectionRenderer';
 import { SectionPosition } from './types';
@@ -130,6 +131,9 @@ function AppContent() {
       data-barba="wrapper"
       className="min-h-screen bg-[#070b14] text-slate-100 selection:bg-cyan-500 selection:text-white flex flex-col font-sans overflow-x-hidden w-full max-w-full relative pb-16 lg:pb-0"
     >
+      {/* Dynamic Meta & Schema Head Manager */}
+      <SEOHead />
+
       {/* Sleek Website Initial Loading Screen */}
       {showPreloader && (
         <Preloader onComplete={() => setShowPreloader(false)} minDurationMs={1000} />

@@ -90,7 +90,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   const title2 = config.aboutTitle2 || 'High-Impact Digital Growth';
   const description =
     config.aboutDescription ||
-    'MarketinGlu is an ISO 9001:2015 certified software architecture and digital growth firm headquartered in New Delhi. We eliminate fragmented agencies by uniting custom software, enterprise SEO, and performance funnels under one roof.';
+    'MarketingGlu is an ISO 9001:2015 certified software architecture and digital growth firm headquartered in New Delhi. We eliminate fragmented agencies by uniting custom software, enterprise SEO, and performance funnels under one roof.';
   const story =
     config.aboutStory ||
     'Founded to replace empty agency buzzwords with engineering precision, we deliver sub-second platforms, verifiable search dominance, and predictable customer acquisition with 100% client code and IP sovereignty.';

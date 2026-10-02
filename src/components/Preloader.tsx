@@ -13,7 +13,7 @@ const STAGES = [
   { at: 28, text: 'Compiling High-Conversion Brand Assets...', code: 'ASSET_LOAD' },
   { at: 62, text: 'Calibrating 144Hz Smooth Engine & GPU Shaders...', code: 'GPU_ACCEL' },
   { at: 88, text: 'Verifying Security & Core Web Vitals...', code: 'AUDIT_OK' },
-  { at: 99, text: 'MarketinGlu Systems Ready.', code: 'ONLINE' },
+  { at: 99, text: 'MarketingGlu Systems Ready.', code: 'ONLINE' },
 ];
 
 export default function Preloader({ onComplete, minDurationMs = 1250 }: PreloaderProps) {

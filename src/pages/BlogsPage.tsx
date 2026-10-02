@@ -461,7 +461,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
             Ready to Implement These Growth Frameworks?
           </h2>
           <p className="mt-3 text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
-            Stop guessing with generic agency playbooks. Speak directly with MaketinGlu strategists in New Delhi for custom digital marketing solutions.
+            Stop guessing with generic agency playbooks. Speak directly with MarketingGlu strategists in New Delhi for custom digital marketing solutions.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <button

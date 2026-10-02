@@ -1,4 +1,5 @@
 import { ArrowRight, Sparkles, CheckCircle2, Zap, MessageCircle } from 'lucide-react';
+import { motion } from 'motion/react';
 import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import { useNavigation } from '../context/NavigationContext';
 import { useSiteConfig } from '../context/SiteConfigContext';

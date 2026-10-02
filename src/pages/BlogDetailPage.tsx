@@ -50,7 +50,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
 
   useEffect(() => {
     if (blog) {
-      document.title = `${blog.title} | MaketinGlu`;
+      document.title = `${blog.title} | MarketingGlu`;
     }
   }, [blog]);
 
@@ -345,7 +345,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
               <h4 className="text-base font-bold text-white">{blog.author.name}</h4>
               <p className="text-xs text-cyan-400">{blog.author.role}</p>
               <p className="text-xs text-slate-400 mt-1 max-w-md">
-                Senior strategist at MaketinGlu delivering full-funnel digital architecture and measurable revenue growth for enterprise clients.
+                Senior strategist at MarketingGlu delivering full-funnel digital architecture and measurable revenue growth for enterprise clients.
               </p>
             </div>
           </div>
@@ -376,7 +376,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
               Book Free Strategy Session
             </button>
             <a
-              href={`https://wa.me/${config.phone.replace(/[^0-9]/g, '')}?text=Hi%20MarketinGlu,%20I%20just%20read%20"${encodeURIComponent(blog.title)}"%20and%20want%20to%20apply%20it`}
+              href={`https://wa.me/${config.phone.replace(/[^0-9]/g, '')}?text=Hi%20MarketingGlu,%20I%20just%20read%20"${encodeURIComponent(blog.title)}"%20and%20want%20to%20apply%20it`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-500/40 text-slate-200 text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer"

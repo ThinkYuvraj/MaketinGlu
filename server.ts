@@ -494,7 +494,7 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<{ success: bool
   // Strategy 3: Standard Gmail service transporter
   const strategies: Array<{
     name: string;
-    createTransporter: () => nodemailer.Transporter;
+    createTransporter: () => ReturnType<typeof nodemailer.createTransport>;
   }> = [
     {
       name: 'Direct SSL Port 465 (IPv4)',
@@ -509,7 +509,7 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<{ success: bool
           greetingTimeout: 10000,
           socketTimeout: 15000,
           tls: { rejectUnauthorized: false },
-        }),
+        } as any),
     },
     {
       name: 'STARTTLS Port 587 (IPv4)',
@@ -524,7 +524,7 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<{ success: bool
           greetingTimeout: 10000,
           socketTimeout: 15000,
           tls: { rejectUnauthorized: false },
-        }),
+        } as any),
     },
     {
       name: 'Nodemailer Gmail Service',
@@ -615,7 +615,7 @@ app.all(['/api/inquiry/test-send', '/api/test-email'], async (req, res) => {
     email: (req.query.email as string) || (req.body?.email as string) || targetReceiver,
     phone: '+91 96545 96149',
     service: 'Diagnostic Email Test',
-    notes: 'Testing real-time Gmail SMTP dispatch from MarketinGlu server.',
+    notes: 'Testing real-time Gmail SMTP dispatch from MarketingGlu server.',
     receivedAt: new Date().toISOString(),
     receiverEmail: targetReceiver,
   };

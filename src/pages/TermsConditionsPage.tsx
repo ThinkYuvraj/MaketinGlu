@@ -10,7 +10,7 @@ export default function TermsConditionsPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Terms & Conditions | MarketinGlu";
+    document.title = "Terms & Conditions | MarketingGlu";
   }, []);
 
   return (
@@ -34,7 +34,7 @@ export default function TermsConditionsPage() {
               Terms &amp; Conditions
             </h1>
             <p className="text-sm text-slate-400 mt-2">
-              Last updated: January 2026. Standard service agreement terms for MarketinGlu.
+              Last updated: January 2026. Standard service agreement terms for MarketingGlu.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ export default function TermsConditionsPage() {
                 <span>1. Agreement to Terms</span>
               </h2>
               <p>
-                By commissioning work, retaining software development, SEO, advertising, or web services from MarketinGlu, you agree to be bound by these Terms and Conditions. Individual statements of work (SOW) may supplement these provisions with project-specific scopes and milestones.
+                By commissioning work, retaining software development, SEO, advertising, or web services from MarketingGlu, you agree to be bound by these Terms and Conditions. Individual statements of work (SOW) may supplement these provisions with project-specific scopes and milestones.
               </p>
             </section>
 
@@ -55,7 +55,7 @@ export default function TermsConditionsPage() {
                 <span>2. Service Delivery &amp; Quality Standards</span>
               </h2>
               <p>
-                MarketinGlu operates under ISO 9001:2015 certified quality workflows. We engineer high-performance digital systems, modern web platforms, and organic search campaigns following documented best practices, rigorous testing, and sub-second Core Web Vitals targets.
+                MarketingGlu operates under ISO 9001:2015 certified quality workflows. We engineer high-performance digital systems, modern web platforms, and organic search campaigns following documented best practices, rigorous testing, and sub-second Core Web Vitals targets.
               </p>
             </section>
 
@@ -65,7 +65,7 @@ export default function TermsConditionsPage() {
                 <span>3. Code Ownership &amp; IP Rights</span>
               </h2>
               <p>
-                Upon settlement of project invoices according to agreed milestones, the client receives 100% full intellectual property ownership of customized software source code, digital assets, graphic templates, and advertising account setups. MarketinGlu imposes no proprietary software lock-ins.
+                Upon settlement of project invoices according to agreed milestones, the client receives 100% full intellectual property ownership of customized software source code, digital assets, graphic templates, and advertising account setups. MarketingGlu imposes no proprietary software lock-ins.
               </p>
             </section>
 

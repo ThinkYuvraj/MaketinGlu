@@ -168,10 +168,10 @@ export default function BlogsTab({
         title: formData.title.trim(),
         slug: generatedSlug,
         category: formData.category,
-        excerpt: formData.excerpt.trim() || 'Comprehensive industry guide and actionable growth insights from MaketinGlu.',
+        excerpt: formData.excerpt.trim() || 'Comprehensive industry guide and actionable growth insights from MarketingGlu.',
         content: formData.content.trim() || 'Content coming soon.',
         author: {
-          name: formData.authorName.trim() || 'MaketinGlu Team',
+          name: formData.authorName.trim() || 'MarketingGlu Team',
           role: formData.authorRole.trim() || 'Marketing Strategist',
           avatar: formData.authorAvatar.trim() || undefined,
         },

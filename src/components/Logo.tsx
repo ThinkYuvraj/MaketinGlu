@@ -27,7 +27,7 @@ export default function Logo({
       >
         <img 
           src={logoSrc} 
-          alt="MarketinGlu" 
+          alt="MarketingGlu" 
           referrerPolicy="no-referrer"
           className={`${imgHeights[size]} w-auto object-contain block`}
         />
@@ -44,7 +44,7 @@ export default function Logo({
       >
         <img 
           src={logoSrc} 
-          alt="MarketinGlu" 
+          alt="MarketingGlu" 
           referrerPolicy="no-referrer"
           className={`${imgHeights[size]} w-auto object-contain block`}
         />
@@ -57,7 +57,7 @@ export default function Logo({
     <div className={`inline-flex items-center ${className}`}>
       <img 
         src={logoSrc} 
-        alt="MarketinGlu" 
+        alt="MarketingGlu" 
         referrerPolicy="no-referrer"
         className={`${imgHeights[size]} w-auto object-contain block`}
       />
