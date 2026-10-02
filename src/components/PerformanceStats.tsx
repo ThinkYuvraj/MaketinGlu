@@ -11,7 +11,7 @@ export default function PerformanceStats() {
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
   const [isPaused, setIsPaused] = useState(false);
 
-  const radius = 40.5;
+  const radius = 41;
   const circumference = 2 * Math.PI * radius;
 
   const stats = [
@@ -171,7 +171,7 @@ export default function PerformanceStats() {
 
           {/* Circular Gauge Centerpiece */}
           <div className="flex justify-center my-3">
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center shrink-0">
+            <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center shrink-0">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                 <defs>
                   <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -186,7 +186,7 @@ export default function PerformanceStats() {
                   cy="50"
                   r={radius}
                   stroke="#1e293b"
-                  strokeWidth="7"
+                  strokeWidth="6.5"
                   fill="transparent"
                 />
                 {/* Glowing active arc */}
@@ -195,7 +195,7 @@ export default function PerformanceStats() {
                   cy="50"
                   r={radius}
                   stroke={`url(#${gradientId})`}
-                  strokeWidth="7"
+                  strokeWidth="6.5"
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   strokeLinecap="round"
@@ -205,11 +205,11 @@ export default function PerformanceStats() {
               </svg>
 
               {/* Percentage and sub-label in center */}
-              <div className="absolute inset-0 flex items-center justify-center flex-col">
-                <span className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-none">
+              <div className="absolute inset-0 flex items-center justify-center flex-col px-1 text-center pointer-events-none">
+                <span className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-none">
                   {item.percentage}%
                 </span>
-                <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest mt-1">
+                <span className="text-[10px] sm:text-[11px] font-extrabold text-cyan-400 uppercase tracking-wider mt-1">
                   Delivery
                 </span>
               </div>
