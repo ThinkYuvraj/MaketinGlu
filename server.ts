@@ -4,6 +4,20 @@ import crypto from 'crypto';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import nodemailer from 'nodemailer';
+import { fileURLToPath } from 'url';
+
+const getScriptDir = (): string => {
+  if (typeof __dirname !== 'undefined' && __dirname) {
+    return __dirname;
+  }
+  try {
+    return path.dirname(fileURLToPath(import.meta.url));
+  } catch (e) {
+    return process.cwd();
+  }
+};
+
+const scriptDir = getScriptDir();
 
 dotenv.config();
 
@@ -369,8 +383,8 @@ async function sendInquiryEmail(inquiry: InquiryRecord): Promise<{ success: bool
   try {
     const candidates = [
       path.resolve(process.cwd(), '.env'),
-      path.resolve(__dirname, '.env'),
-      path.resolve(__dirname, '..', '.env'),
+      path.resolve(scriptDir, '.env'),
+      path.resolve(scriptDir, '..', '.env'),
     ];
     for (const cand of candidates) {
       if (fs.existsSync(cand)) {
@@ -679,11 +693,11 @@ async function startServer() {
       path.resolve(process.cwd(), 'build'),
       path.resolve(process.cwd(), 'public_html'),
       path.resolve(process.cwd()),
-      path.resolve(__dirname),
-      path.resolve(__dirname, 'dist'),
-      path.resolve(__dirname, '..'),
-      path.resolve(__dirname, '..', 'dist'),
-      path.resolve(__dirname, '..', 'public_html'),
+      path.resolve(scriptDir),
+      path.resolve(scriptDir, 'dist'),
+      path.resolve(scriptDir, '..'),
+      path.resolve(scriptDir, '..', 'dist'),
+      path.resolve(scriptDir, '..', 'public_html'),
     ];
 
     const staticDir = candidates.find(

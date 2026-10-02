@@ -36028,6 +36028,19 @@ var nodemailer = {
 var nodemailer_default = nodemailer;
 
 // server.ts
+var import_url = require("url");
+var import_meta = {};
+var getScriptDir = () => {
+  if (typeof __dirname !== "undefined" && __dirname) {
+    return __dirname;
+  }
+  try {
+    return import_path.default.dirname((0, import_url.fileURLToPath)(import_meta.url));
+  } catch (e) {
+    return process.cwd();
+  }
+};
+var scriptDir = getScriptDir();
 import_dotenv.default.config();
 process.on("uncaughtException", (err) => {
   console.error("[UNCAUGHT EXCEPTION] Server will NOT exit:", err);
@@ -36276,8 +36289,8 @@ async function sendInquiryEmail(inquiry) {
   try {
     const candidates = [
       import_path.default.resolve(process.cwd(), ".env"),
-      import_path.default.resolve(__dirname, ".env"),
-      import_path.default.resolve(__dirname, "..", ".env")
+      import_path.default.resolve(scriptDir, ".env"),
+      import_path.default.resolve(scriptDir, "..", ".env")
     ];
     for (const cand of candidates) {
       if (import_fs.default.existsSync(cand)) {
@@ -36537,11 +36550,11 @@ async function startServer() {
       import_path.default.resolve(process.cwd(), "build"),
       import_path.default.resolve(process.cwd(), "public_html"),
       import_path.default.resolve(process.cwd()),
-      import_path.default.resolve(__dirname),
-      import_path.default.resolve(__dirname, "dist"),
-      import_path.default.resolve(__dirname, ".."),
-      import_path.default.resolve(__dirname, "..", "dist"),
-      import_path.default.resolve(__dirname, "..", "public_html")
+      import_path.default.resolve(scriptDir),
+      import_path.default.resolve(scriptDir, "dist"),
+      import_path.default.resolve(scriptDir, ".."),
+      import_path.default.resolve(scriptDir, "..", "dist"),
+      import_path.default.resolve(scriptDir, "..", "public_html")
     ];
     const staticDir = candidates.find(
       (dir) => import_fs.default.existsSync(dir) && import_fs.default.existsSync(import_path.default.join(dir, "index.html"))
