@@ -340,6 +340,20 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                       <p className="text-xs text-slate-300 mt-1.5 leading-relaxed line-clamp-3 lg:text-justify">
                         {currentPkg.tagline}
                       </p>
+                      <div className="mt-2.5">
+                        <motion.button
+                          {...buttonHoverMotion}
+                          type="button"
+                          onClick={() => {
+                            if (isDraggingRef.current) return;
+                            navigateToPackageDetail(currentPkg.id);
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer group/knowmore"
+                        >
+                          <span>Know More</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover/knowmore:translate-x-1 transition-transform stroke-[2.5]" />
+                        </motion.button>
+                      </div>
                     </div>
                   </div>
                 </div>
