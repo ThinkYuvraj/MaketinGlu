@@ -253,7 +253,7 @@ export default function PerformanceStats() {
   return (
     <section 
       id="growth" 
-      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-brand-bg border-t border-slate-800/80"
+      className="relative w-full min-h-screen pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 flex flex-col justify-between items-center bg-brand-bg border-t border-slate-800/80 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}

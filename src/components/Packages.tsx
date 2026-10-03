@@ -136,7 +136,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white"
+      className="relative w-full min-h-screen pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-16 flex flex-col justify-between items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
