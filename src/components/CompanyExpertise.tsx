@@ -178,110 +178,210 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </p>
         </div>
 
-        {/* MOBILE VIEW (lg:hidden): Dedicated Cards for all Company Services with "Know More" Redirect Button */}
-        <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mt-3 sm:mt-4 w-full">
-          {services.map((srv) => {
-            const SrvIcon = getExpertiseIcon(srv);
+        {/* MOBILE & TABLET VIEW (lg:hidden): Interactive Caret Carousel Showcase for Services */}
+        <div className="block lg:hidden relative max-w-xl mx-auto w-full mt-3">
+          {/* Top Quick Category Pill Buttons */}
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-2 mb-2.5 w-full">
+            {services.map((srv, tabIdx) => {
+              const isSelected = tabIdx === safeCurrentIndex;
+              const TabIcon = getExpertiseIcon(srv);
 
-            return (
-              <div
-                key={srv.id}
-                className="rounded-2xl bg-linear-to-b from-[#0e1628]/95 via-[#0a101e]/95 to-[#060a14]/95 border border-cyan-500/35 p-4 sm:p-5 shadow-xl shadow-cyan-500/10 flex flex-col justify-between space-y-4 relative overflow-hidden"
-              >
-                {/* Top Glow Accent */}
-                <div className="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-cyan-500/50 via-sky-400/50 to-blue-500/50" />
+              return (
+                <button
+                  key={srv.id}
+                  type="button"
+                  onClick={() => handleSelectService(tabIdx)}
+                  className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer uppercase ${
+                    isSelected
+                      ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-md shadow-cyan-500/25'
+                      : 'bg-[#091020]/90 text-slate-400 border border-slate-800 hover:text-slate-200'
+                  }`}
+                >
+                  <TabIcon className="w-3.5 h-3.5" />
+                  <span>{srv.tabLabel}</span>
+                </button>
+              );
+            })}
+          </div>
 
-                <div>
-                  {/* Category Badge & Metric */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 flex items-center justify-center font-black shadow-sm shrink-0">
-                        <SrvIcon className="w-4 h-4" />
-                      </div>
-                      <span className="text-[10px] sm:text-xs font-mono font-bold uppercase text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-md truncate max-w-[140px]">
-                        {srv.category || 'Discipline'}
-                      </span>
-                    </div>
-                    {srv.metricBadge && (
-                      <span className="text-[10px] sm:text-xs font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/35 px-2.5 py-0.5 rounded-full flex items-center gap-1 shrink-0">
-                        <TrendingUp className="w-3 h-3 text-emerald-400" />
-                        <span>{srv.metricBadge}</span>
-                      </span>
-                    )}
+          {/* Touch Swipable Card Container */}
+          <AnimatePresence mode="wait" custom={slideDirection}>
+            <motion.div
+              key={activeService.id}
+              custom={slideDirection}
+              variants={card3DVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.18}
+              onDragEnd={(_, info) => {
+                const swipeThreshold = 35;
+                const velocityThreshold = 180;
+                if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+                  handleNext();
+                } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+                  handlePrev();
+                }
+              }}
+              className="w-full rounded-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-4 sm:p-5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+            >
+              {/* Top Accent Gradient Line */}
+              <div className="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500" />
+
+              {/* Service Visual Header Image */}
+              <div className="relative w-full h-44 sm:h-52 rounded-xl sm:rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#090e1c] group mb-3.5">
+                <img
+                  src={
+                    (config.sectionImages?.[activeService.id] && (config.sectionImages[activeService.id].startsWith('data:image/') || config.sectionImages[activeService.id].startsWith('http')))
+                      ? config.sectionImages[activeService.id]
+                      : DEFAULT_SERVICE_IMAGES[activeService.id] || activeService.image || websiteDesignImg
+                  }
+                  alt={activeService.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="eager"
+                  onError={(e) => {
+                    const fallback = DEFAULT_SERVICE_IMAGES[activeService.id] || websiteDesignImg;
+                    if (e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-[#060a14]/95 via-[#060a14]/35 to-transparent pointer-events-none" />
+
+                {/* Floating Category & Metric Badges */}
+                <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/90 border border-cyan-500/40 text-cyan-300 text-[10px] sm:text-xs font-mono font-bold uppercase backdrop-blur-md">
+                    <ActiveIcon className="w-3.5 h-3.5" />
+                    <span>{activeService.category || 'Discipline'}</span>
                   </div>
 
-                  {/* Service Title & Subtitle */}
-                  <h3 className="text-lg sm:text-xl font-black text-white tracking-tight leading-snug">
-                    {srv.title}
-                  </h3>
-                  <p className="text-xs font-bold text-cyan-400 mt-0.5">
-                    {srv.subtitle}
-                  </p>
-
-                  {/* Summary */}
-                  <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                    {srv.summary}
-                  </p>
-
-                  {/* Key Deliverables Checklist Preview */}
-                  {srv.deliverables && srv.deliverables.length > 0 && (
-                    <div className="mt-3.5 pt-3 border-t border-slate-800/80 space-y-1.5">
-                      <div className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider mb-1">
-                        Key Inclusions
-                      </div>
-                      <div className="grid grid-cols-1 gap-1.5">
-                        {srv.deliverables.slice(0, 3).map((deliv, dIdx) => (
-                          <div key={dIdx} className="flex items-center gap-2 text-xs text-slate-200">
-                            <div className="w-3.5 h-3.5 rounded bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 text-cyan-400">
-                              <Check className="w-2.5 h-2.5 stroke-[3]" />
-                            </div>
-                            <span className="truncate">{deliv}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Timeline & Price SLA */}
-                  {(srv.timelineEstimate || srv.priceEstimate) && (
-                    <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-                      {srv.timelineEstimate && (
-                        <span className="text-slate-400 font-mono">
-                          SLA: <strong className="text-cyan-300">{srv.timelineEstimate}</strong>
-                        </span>
-                      )}
-                      {srv.priceEstimate && (
-                        <span className="text-emerald-400 font-bold">
-                          {srv.priceEstimate}
-                        </span>
-                      )}
+                  {activeService.metricBadge && (
+                    <div className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-emerald-300 bg-emerald-950/90 border border-emerald-500/40 px-2.5 py-1 rounded-full font-bold backdrop-blur-md">
+                      <TrendingUp className="w-3 h-3 text-emerald-400" />
+                      <span>{activeService.metricBadge}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Know More Action Button */}
-                <div className="pt-3 border-t border-slate-800/80 flex items-center gap-2">
-                  <motion.button
-                    {...buttonHoverMotion}
-                    onClick={() => navigateToService(srv.id)}
-                    className="flex-1 min-h-[42px] py-2.5 px-4 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer hover:brightness-110 active:scale-98 transition-all"
-                    id={`mobile-btn-know-more-${srv.id}`}
-                  >
-                    <span>Know More</span>
-                    <ArrowRight className="w-4 h-4 stroke-[3]" />
-                  </motion.button>
-
-                  <button
-                    type="button"
-                    onClick={() => onOpenConsultation?.(srv.title)}
-                    className="min-h-[42px] py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white font-bold text-xs flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    Audit
-                  </button>
+                <div className="absolute bottom-2.5 left-3 z-10">
+                  <span className="text-xs font-bold text-cyan-400 uppercase tracking-wide font-mono">
+                    {activeService.subtitle}
+                  </span>
                 </div>
               </div>
-            );
-          })}
+
+              {/* Title & Summary */}
+              <h3 className="text-lg sm:text-xl font-black text-white tracking-tight leading-snug">
+                {activeService.title}
+              </h3>
+
+              <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                {activeService.summary}
+              </p>
+
+              {/* Inclusions / Deliverables Preview */}
+              {activeService.deliverables && activeService.deliverables.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-slate-800/80 space-y-1.5">
+                  <div className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider mb-1">
+                    Key Inclusions ({activeService.deliverables.length})
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    {activeService.deliverables.slice(0, 4).map((deliv, dIdx) => (
+                      <div key={dIdx} className="flex items-center gap-2 text-xs text-slate-200">
+                        <div className="w-3.5 h-3.5 rounded bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 text-cyan-400">
+                          <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        </div>
+                        <span className="truncate">{deliv}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Timeline SLA & Investment */}
+              {(activeService.timelineEstimate || activeService.priceEstimate) && (
+                <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+                  {activeService.timelineEstimate && (
+                    <span className="text-slate-400 font-mono">
+                      SLA: <strong className="text-cyan-300">{activeService.timelineEstimate}</strong>
+                    </span>
+                  )}
+                  {activeService.priceEstimate && (
+                    <span className="text-emerald-400 font-bold">
+                      {activeService.priceEstimate}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Know More Redirect Button */}
+              <div className="pt-3.5 mt-1 border-t border-slate-800/80 flex items-center gap-2">
+                <motion.button
+                  {...buttonHoverMotion}
+                  onClick={() => navigateToService(activeService.id)}
+                  className="flex-1 min-h-[42px] py-2.5 px-4 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer hover:brightness-110 active:scale-98 transition-all"
+                  id={`mobile-btn-know-more-${activeService.id}`}
+                >
+                  <span>Know More</span>
+                  <ArrowRight className="w-4 h-4 stroke-[3]" />
+                </motion.button>
+
+                <button
+                  type="button"
+                  onClick={() => onOpenConsultation?.(activeService.title)}
+                  className="min-h-[42px] py-2.5 px-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                >
+                  Audit
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Caret Navigation Controls & Progress Tracker */}
+          <div className="flex items-center justify-between mt-3.5 px-1">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="w-8 h-8 rounded-xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10"
+                aria-label="Previous service"
+                title="Previous Service"
+              >
+                <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-8 h-8 rounded-xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10"
+                aria-label="Next service"
+                title="Next Service"
+              >
+                <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+              </button>
+              <span className="text-[11px] font-mono text-slate-300 ml-1">
+                Discipline <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {totalServices}
+              </span>
+            </div>
+
+            {/* Step Indicator Dots */}
+            <div className="flex items-center gap-1.5">
+              {services.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => handleSelectService(dotIdx)}
+                  className={`h-1.5 rounded-sm transition-all cursor-pointer ${
+                    dotIdx === safeCurrentIndex
+                      ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
+                      : 'w-2 bg-slate-800 hover:bg-slate-600'
+                  }`}
+                  aria-label={`Go to service ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* DESKTOP VIEW (hidden lg:block): Interactive Dock Bar + 3D Showcase Carousel */}
