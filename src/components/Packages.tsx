@@ -456,30 +456,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </div>
         </div>
 
-        {/* Bottom Ultra-Compact Inquiry Ribbon */}
-        <div className="package-inquiry mt-3.5 sm:mt-4 py-1.5 px-3 sm:py-2 sm:px-4 rounded-xl bg-[#090f20]/80 border border-cyan-500/25 max-w-xl lg:max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 shadow-md">
-          <div className="flex items-center gap-2 text-left w-full sm:w-auto min-w-0">
-            <div className="w-5 h-5 rounded-md bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
-              <HelpCircle className="w-3 h-3" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="text-xs font-bold text-white block truncate sm:inline sm:mr-1.5">
-                Need a Custom Retainer or Enterprise Scope?
-              </span>
-              <span className="text-[11px] text-slate-400 block sm:inline truncate">
-                Tailored for multi-location &amp; large media spends.
-              </span>
-            </div>
-          </div>
 
-          <motion.button
-            {...buttonHoverMotion}
-            onClick={() => onSelectPackage('Custom Enterprise Solution')}
-            className="w-full sm:w-auto whitespace-nowrap py-1 px-3 rounded-lg border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 font-bold text-[11px] sm:text-xs transition-all cursor-pointer flex items-center justify-center shadow-sm shrink-0 min-h-[28px]"
-          >
-            Get Custom Quote &rarr;
-          </motion.button>
-        </div>
 
       </Container>
     </section>
