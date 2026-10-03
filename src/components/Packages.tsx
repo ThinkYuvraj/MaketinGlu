@@ -282,7 +282,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   handlePrev();
                 }
               }}
-              className={`w-full min-h-0 sm:min-h-0 lg:min-h-[350px] rounded-2xl sm:rounded-3xl lg:rounded-[24px] overflow-hidden p-3.5 sm:p-4 lg:p-5 shadow-2xl backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch relative cursor-grab active:cursor-grabbing touch-pan-y ${
+              className={`w-full min-h-0 sm:min-h-0 lg:h-[370px] lg:min-h-[370px] rounded-2xl sm:rounded-3xl lg:rounded-[24px] overflow-hidden p-3.5 sm:p-4 lg:p-5 shadow-2xl backdrop-blur-2xl flex flex-col justify-between relative cursor-grab active:cursor-grabbing touch-pan-y ${
                 isPopular
                   ? 'bg-linear-to-b from-[#0f1b36]/98 via-[#0b1325]/98 to-[#070c18]/98 border-2 border-cyan-400/90 shadow-cyan-500/20'
                   : 'bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-slate-800/90 shadow-cyan-500/10'
@@ -303,12 +303,12 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               </div>
 
               {/* Top Section: Left Metadata & Right Deliverables */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-start w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch w-full flex-1 min-h-0">
                 {/* LEFT COLUMN: Tier Metadata & Title */}
-                <div className="lg:col-span-5 flex flex-col justify-between space-y-2">
-                  <div>
+                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-2">
+                  <div className="flex flex-col justify-between h-full">
                     {/* Top Badges */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <div className="flex items-center justify-between gap-2 h-7 mb-1.5 shrink-0">
                       <span
                         className={`text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
                           isPopular
@@ -330,14 +330,14 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     </div>
 
                     {/* Title & Highlight */}
-                    <div className="min-h-0">
+                    <div className="flex-1 flex flex-col justify-center min-h-0 py-1">
                       <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
                         {currentPkg.name}
                       </h3>
                       <p className="text-xs font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300 mt-0.5">
                         {currentPkg.highlight}
                       </p>
-                      <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2 lg:text-justify">
+                      <p className="text-xs text-slate-300 mt-1.5 leading-relaxed line-clamp-3 lg:text-justify">
                         {currentPkg.tagline}
                       </p>
                     </div>
@@ -345,9 +345,9 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                 </div>
 
                 {/* RIGHT COLUMN: Turnkey Deliverables & Inclusions Grid */}
-                <div className="lg:col-span-7 flex flex-col justify-between space-y-2 pt-2 lg:pt-0 lg:border-l lg:border-slate-800/80 lg:pl-5">
-                  <div>
-                    <div className="flex items-center justify-between text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-2 pt-2 lg:pt-0 lg:border-l lg:border-slate-800/80 lg:pl-5">
+                  <div className="flex flex-col justify-between h-full">
+                    <div className="flex items-center justify-between text-xs font-bold text-slate-300 uppercase tracking-wider h-7 mb-2 shrink-0">
                       <span className="flex items-center gap-1.5">
                         <ShieldCheck className="w-4 h-4 text-cyan-400" />
                         <span>Included Turnkey Deliverables ({totalFeatures})</span>
@@ -359,7 +359,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                           if (isDraggingRef.current) return;
                           navigateToPackageDetail(currentPkg.id);
                         }}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 hover:text-white text-[11px] font-mono font-bold tracking-tight transition-all shadow-sm hover:shadow-cyan-500/20 cursor-pointer group/btn"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 hover:text-white text-[11px] font-mono font-bold tracking-tight transition-all shadow-sm hover:shadow-cyan-500/20 cursor-pointer group/btn shrink-0"
                         title="View all N facilities and full scope breakdown"
                       >
                         <span>Full Scope Unlocked</span>
@@ -368,11 +368,11 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     </div>
 
                     {/* Turnkey Deliverables: Clean Bullet Points on Mobile, 2-Column Cards Grid on Desktop/Tablet */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 content-start">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 content-start flex-1">
                       {currentPkg.features?.slice(0, 8).map((feat, fIdx) => (
                         <div
                           key={fIdx}
-                          className="flex items-start gap-2 py-1 px-1 sm:p-2 sm:rounded-lg sm:bg-slate-900/50 sm:hover:bg-slate-900/80 sm:border sm:border-slate-800/70 sm:hover:border-cyan-500/30 transition-colors text-xs text-slate-200 sm:min-h-[36px]"
+                          className="flex items-center gap-2 py-1 px-1.5 sm:p-2 sm:rounded-lg sm:bg-slate-900/50 sm:hover:bg-slate-900/80 sm:border sm:border-slate-800/70 sm:hover:border-cyan-500/30 transition-colors text-xs text-slate-200 h-[38px] min-h-[38px] overflow-hidden"
                         >
                           {/* Mobile Only: Glowing Cyan Bullet Point */}
                           <div className="flex sm:hidden items-center justify-center shrink-0 w-3.5 h-3.5 mt-0.5">
@@ -380,11 +380,11 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                           </div>
 
                           {/* Tablet & Desktop Only: Check Icon Badge */}
-                          <div className="hidden sm:flex w-4 h-4 rounded-md bg-cyan-500/15 border border-cyan-500/30 items-center justify-center shrink-0 mt-0.5 text-cyan-300">
+                          <div className="hidden sm:flex w-4 h-4 rounded-md bg-cyan-500/15 border border-cyan-500/30 items-center justify-center shrink-0 text-cyan-300">
                             <Check className="w-3 h-3 stroke-[3]" />
                           </div>
 
-                          <span className="leading-tight text-slate-200 sm:text-slate-300 text-[11px] sm:text-xs font-normal">
+                          <span className="leading-tight text-slate-200 sm:text-slate-300 text-[11px] sm:text-xs font-normal line-clamp-2">
                             {feat.name}
                           </span>
                         </div>
@@ -395,7 +395,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               </div>
 
               {/* FULL WIDTH BOTTOM CTA BUTTON (At the bottom of the card) */}
-              <div className="w-full pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-800/80">
+              <div className="w-full pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-800/80 shrink-0">
                 <motion.button
                   {...buttonHoverMotion}
                   onClick={() => {
