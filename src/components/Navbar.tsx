@@ -300,7 +300,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 onMouseLeave={() => setServicesDropdownOpen(false)}
               >
                 <button
-                  onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                  onClick={() => {
+                    setServicesDropdownOpen((prev) => !prev);
+                    handleNavClick('#expertise');
+                  }}
                   onMouseEnter={() => setHoveredTab('services')}
                   className={`relative flex items-center gap-1 px-2.5 lg:px-3 xl:px-3.5 py-1.5 rounded-xl text-[11px] lg:text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none whitespace-nowrap ${
                     highlightedTab === 'services'
@@ -328,23 +331,24 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 <AnimatePresence>
                   {servicesDropdownOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                      initial={{ opacity: 0, y: 4, scale: 0.98 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                      exit={{ opacity: 0, y: 4, scale: 0.98 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 w-80 sm:w-88 mt-2 bg-[#090f20]/95 backdrop-blur-2xl border border-cyan-500/40 rounded-2xl p-3 shadow-[0_16px_50px_rgba(0,0,0,0.7)] z-50"
+                      className="absolute top-full left-0 pt-1.5 w-80 sm:w-88 z-50"
                     >
-                      <div className="px-3 py-2 border-b border-slate-800/80 mb-2 flex items-center justify-between">
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
-                          CORE CAPABILITIES
-                        </span>
-                        <button
-                          onClick={() => handleNavClick('#/services')}
-                          className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer transition-colors"
-                        >
-                          All Services &rarr;
-                        </button>
-                      </div>
+                      <div className="bg-[#090f20]/98 backdrop-blur-2xl border border-cyan-500/40 rounded-2xl p-3 shadow-[0_16px_50px_rgba(0,0,0,0.8)]">
+                        <div className="px-3 py-2 border-b border-slate-800/80 mb-2 flex items-center justify-between">
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
+                            CORE CAPABILITIES
+                          </span>
+                          <button
+                            onClick={() => handleNavClick('#expertise')}
+                            className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer transition-colors"
+                          >
+                            All Services &rarr;
+                          </button>
+                        </div>
 
                       <div className="space-y-1">
                         {navServices.map((item) => {
@@ -386,7 +390,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
                       <div className="mt-2.5 pt-2.5 border-t border-slate-800/80">
                         <button
-                          onClick={() => handleNavClick('#/services')}
+                          onClick={() => handleNavClick('#expertise')}
                           className="w-full py-2.5 px-3 rounded-xl bg-linear-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[40px]"
                           id="nav-dropdown-know-more"
                         >
@@ -395,7 +399,8 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                           <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
                         </button>
                       </div>
-                    </motion.div>
+                    </div>
+                  </motion.div>
                   )}
                 </AnimatePresence>
               </div>

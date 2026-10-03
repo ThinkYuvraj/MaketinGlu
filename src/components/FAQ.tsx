@@ -196,7 +196,7 @@ export default function FAQ() {
         </div>
 
         {/* Controls Toolbar: Search + Category Chips + Expand/Collapse */}
-        <div className="max-w-4xl xl:max-w-5xl 2xl:max-w-[1180px] mx-auto mb-6 space-y-3">
+        <div className="max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1440px] mx-auto mb-4 space-y-3">
           {/* Search Bar */}
           <div className="relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -275,12 +275,12 @@ export default function FAQ() {
           </div>
         </div>
 
-        {/* SCROLLABLE FLEXBOX LIST OF QUESTIONS (Exact match to Packages Card size) */}
-        <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="w-full min-h-[340px] sm:min-h-[360px] rounded-3xl sm:rounded-[32px] overflow-hidden p-4 sm:p-6 lg:p-7 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
+        {/* SCROLLABLE FLEXBOX LIST OF QUESTIONS */}
+        <div className="relative max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1440px] w-full mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="w-full min-h-[250px] sm:min-h-[270px] rounded-3xl sm:rounded-[32px] overflow-hidden p-3.5 sm:p-5 lg:p-6 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
             
             {/* Scroll Guidance Header Bar */}
-            <div className="flex items-center justify-between pb-3 mb-2.5 border-b border-slate-800/80 text-xs font-mono text-slate-400">
+            <div className="flex items-center justify-between pb-2.5 mb-2 border-b border-slate-800/80 text-xs font-mono text-slate-400">
               <span className="flex items-center gap-2 text-cyan-300 font-bold">
                 <HelpCircle className="w-4 h-4 text-cyan-400" />
                 <span>FAQ Knowledge Directory ({filteredFaqs.length} Questions)</span>
@@ -291,10 +291,10 @@ export default function FAQ() {
             </div>
 
             {/* Scrollable Flexbox Container with flex-1 and smooth scrolling */}
-            <div className="flex-1 w-full flex flex-col space-y-2.5 max-h-[320px] sm:max-h-[340px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
+            <div className="flex-1 w-full flex flex-col space-y-2 max-h-[220px] sm:max-h-[240px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
               {filteredFaqs.length === 0 ? (
-                <div className="text-center py-8 px-4 rounded-2xl border border-slate-800 bg-[#090e1c] my-auto">
-                  <HelpCircle className="w-8 h-8 text-slate-500 mx-auto mb-2" />
+                <div className="text-center py-6 px-4 rounded-2xl border border-slate-800 bg-[#090e1c] my-auto">
+                  <HelpCircle className="w-7 h-7 text-slate-500 mx-auto mb-2" />
                   <p className="text-sm font-bold text-white">No questions match your search</p>
                   <p className="text-xs text-slate-400 mt-1">
                     Try a different keyword or reset active filters.
@@ -302,7 +302,7 @@ export default function FAQ() {
                   <button
                     type="button"
                     onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
-                    className="mt-4 px-4 py-2 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
+                    className="mt-3 px-4 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-bold hover:bg-cyan-500/30 transition-colors cursor-pointer"
                   >
                     Reset Filter
                   </button>
@@ -313,7 +313,7 @@ export default function FAQ() {
             </div>
 
             {/* Bottom Footer Strip */}
-            <div className="pt-3 mt-2.5 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <div className="pt-2.5 mt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
               <span className="flex items-center gap-1.5 text-cyan-300 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span>Verified technical &amp; commercial campaign guidelines</span>
@@ -324,7 +324,7 @@ export default function FAQ() {
         </div>
 
         {/* Bottom Requirement Inquiry Box */}
-        <div className="faq-inquiry mt-6 sm:mt-8 py-3.5 px-4 sm:px-6 rounded-2xl bg-[#090f20]/90 border border-cyan-500/30 max-w-3xl lg:max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 shadow-lg shadow-cyan-950/20">
+        <div className="faq-inquiry mt-5 sm:mt-6 py-3 px-4 sm:px-6 rounded-2xl bg-[#090f20]/90 border border-cyan-500/30 max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 shadow-lg shadow-cyan-950/20">
           <div className="flex items-center gap-3 text-left w-full sm:w-auto min-w-0">
             <div className="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center shrink-0 text-cyan-400 shadow-sm">
               <Sparkles className="w-4 h-4" />
