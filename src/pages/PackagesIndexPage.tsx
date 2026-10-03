@@ -279,7 +279,7 @@ export default function PackagesIndexPage({ onOpenConsultation }: PackagesIndexP
                 packagesData={packagesData} 
               />
             ) : (
-              <PackageFullMatrix packagesData={packagesData} />
+              <PackageFullMatrix packagesData={packagesData} categories={packageCategories} />
             )}
           </div>
 
