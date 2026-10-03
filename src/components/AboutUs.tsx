@@ -151,6 +151,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
     setCurrentIndex(idx);
   };
 
+  const isDraggingRef = useRef<boolean>(false);
   const aboutDockRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -405,7 +406,10 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                   dragConstraints={{ left: 0, right: 0 }}
                   dragSnapToOrigin={true}
                   dragElastic={0.15}
-                  onDragStart={() => setIsInteracting(true)}
+                  onDragStart={() => {
+                    isDraggingRef.current = true;
+                    setIsInteracting(true);
+                  }}
                   onTouchStart={() => setIsInteracting(true)}
                   onTouchEnd={() => setIsInteracting(false)}
                   onTouchCancel={() => setIsInteracting(false)}
@@ -414,6 +418,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                   onPointerCancel={() => setIsInteracting(false)}
                   onDragEnd={(_, info) => {
                     setIsInteracting(false);
+                    setTimeout(() => {
+                      isDraggingRef.current = false;
+                    }, 120);
                     const swipeThreshold = 35;
                     const velocityThreshold = 180;
                     if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

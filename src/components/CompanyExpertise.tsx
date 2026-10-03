@@ -91,6 +91,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
     setCurrentIndex(index);
   };
 
+  const isDraggingRef = useRef<boolean>(false);
   const mobileDockRef = useRef<HTMLDivElement | null>(null);
   const desktopDockRef = useRef<HTMLDivElement | null>(null);
   const mobileTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -245,7 +246,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               dragConstraints={{ left: 0, right: 0 }}
               dragSnapToOrigin={true}
               dragElastic={0.18}
-              onDragStart={() => setIsInteracting(true)}
+              onDragStart={() => {
+                isDraggingRef.current = true;
+                setIsInteracting(true);
+              }}
               onTouchStart={() => setIsInteracting(true)}
               onTouchEnd={() => setIsInteracting(false)}
               onTouchCancel={() => setIsInteracting(false)}
@@ -254,6 +258,9 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               onPointerCancel={() => setIsInteracting(false)}
               onDragEnd={(_, info) => {
                 setIsInteracting(false);
+                setTimeout(() => {
+                  isDraggingRef.current = false;
+                }, 120);
                 const swipeThreshold = 35;
                 const velocityThreshold = 180;
                 if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
@@ -334,7 +341,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               <div className="pt-3.5 mt-1 border-t border-slate-800/80 flex items-center gap-2">
                 <motion.button
                   {...buttonHoverMotion}
-                  onClick={() => navigateToService(activeService.id)}
+                  onClick={() => {
+                    if (isDraggingRef.current) return;
+                    navigateToService(activeService.id);
+                  }}
                   className="flex-1 min-h-[42px] py-2.5 px-4 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer hover:brightness-110 active:scale-98 transition-all"
                   id={`mobile-btn-know-more-${activeService.id}`}
                 >
@@ -344,7 +354,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
                 <button
                   type="button"
-                  onClick={() => onOpenConsultation?.(activeService.title)}
+                  onClick={() => {
+                    if (isDraggingRef.current) return;
+                    onOpenConsultation?.(activeService.title);
+                  }}
                   className="min-h-[42px] py-2.5 px-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white font-bold text-xs flex items-center justify-center transition-colors cursor-pointer shrink-0"
                 >
                   Audit

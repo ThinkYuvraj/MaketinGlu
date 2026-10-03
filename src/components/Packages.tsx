@@ -109,6 +109,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
     }),
   };
 
+  const isDraggingRef = useRef<boolean>(false);
   const packageDockRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -256,7 +257,10 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               dragConstraints={{ left: 0, right: 0 }}
               dragSnapToOrigin={true}
               dragElastic={0.15}
-              onDragStart={() => setIsInteracting(true)}
+              onDragStart={() => {
+                isDraggingRef.current = true;
+                setIsInteracting(true);
+              }}
               onTouchStart={() => setIsInteracting(true)}
               onTouchEnd={() => setIsInteracting(false)}
               onTouchCancel={() => setIsInteracting(false)}
@@ -265,6 +269,9 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               onPointerCancel={() => setIsInteracting(false)}
               onDragEnd={(_, info) => {
                 setIsInteracting(false);
+                setTimeout(() => {
+                  isDraggingRef.current = false;
+                }, 120);
                 const swipeThreshold = 35;
                 const velocityThreshold = 180;
                 if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
@@ -379,7 +386,10 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               <div className="w-full pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-800/80">
                 <motion.button
                   {...buttonHoverMotion}
-                  onClick={() => onSelectPackage(currentPkg.name)}
+                  onClick={() => {
+                    if (isDraggingRef.current) return;
+                    onSelectPackage(currentPkg.name);
+                  }}
                   className={`w-full min-h-[44px] sm:min-h-[48px] py-2.5 sm:py-3 px-6 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xl ${
                     isPopular
                       ? 'bg-linear-to-r from-sky-400 via-cyan-400 to-blue-500 text-slate-950 shadow-cyan-500/35 hover:brightness-110'

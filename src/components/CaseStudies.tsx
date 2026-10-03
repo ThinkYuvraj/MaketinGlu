@@ -53,6 +53,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
     setCurrentIndex(idx);
   };
 
+  const isDraggingRef = useRef<boolean>(false);
   const caseDockRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -377,7 +378,10 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     {/* 4. ACTION BUTTON */}
                     <button
                       type="button"
-                      onClick={() => setActiveCase(item)}
+                      onClick={() => {
+                        if (isDraggingRef.current) return;
+                        setActiveCase(item);
+                      }}
                       className="w-full mt-2 py-2 px-3 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[36px]"
                     >
                       <span>Explore Full Impact Analysis</span>
@@ -458,7 +462,10 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       dragConstraints={{ left: 0, right: 0 }}
                       dragSnapToOrigin={true}
                       dragElastic={0.2}
-                      onDragStart={() => setIsInteracting(true)}
+                      onDragStart={() => {
+                        isDraggingRef.current = true;
+                        setIsInteracting(true);
+                      }}
                       onTouchStart={() => setIsInteracting(true)}
                       onTouchEnd={() => setIsInteracting(false)}
                       onTouchCancel={() => setIsInteracting(false)}
@@ -467,6 +474,9 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       onPointerCancel={() => setIsInteracting(false)}
                       onDragEnd={(_, info) => {
                         setIsInteracting(false);
+                        setTimeout(() => {
+                          isDraggingRef.current = false;
+                        }, 120);
                         const swipeThreshold = 35;
                         const velocityThreshold = 250;
                         if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

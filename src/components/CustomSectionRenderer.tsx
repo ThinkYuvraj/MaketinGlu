@@ -202,6 +202,8 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                     transition={{ type: 'spring', stiffness: 280, damping: 28 }}
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
+                    dragSnapToOrigin={true}
+                    dragElastic={0.15}
                     onDragEnd={(_, info) => {
                       if (info.offset.x < -35) handleNext();
                       else if (info.offset.x > 35) handlePrev();
