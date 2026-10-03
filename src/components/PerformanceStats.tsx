@@ -194,10 +194,6 @@ export default function PerformanceStats() {
                 </div>
               </div>
             </div>
-            <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono text-cyan-300 font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              VERIFIED
-            </span>
           </div>
 
           {/* Circular Gauge Centerpiece */}
