@@ -51,7 +51,7 @@ function AppContent() {
   const { currentRoute, navigateTo } = useNavigation();
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [consultationService, setConsultationService] = useState<string>('Digital Marketing Audit');
-  const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
 
   const handleOpenConsultation = (serviceName?: string) => {
     if (serviceName) {
