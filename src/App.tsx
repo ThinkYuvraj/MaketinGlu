@@ -146,9 +146,14 @@ function AppContent() {
         <Preloader 
           onComplete={() => {
             setShowPreloader(false);
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
             scrollToTop(true);
             requestAnimationFrame(() => {
-              scrollToTop(true);
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
               const heroEl = document.getElementById('hero-section') || document.getElementById('home');
               if (heroEl) {
                 const lenis = (window as any).__lenis;

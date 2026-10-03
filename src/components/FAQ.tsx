@@ -294,8 +294,13 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
               </span>
             </div>
 
-            {/* Scrollable Flexbox Container: More width, less height */}
-            <div className="flex-1 w-full flex flex-col space-y-1.5 max-h-[260px] sm:max-h-[300px] lg:max-h-[320px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
+            {/* Scrollable Flexbox Container: Enables native 2-finger trackpad & mouse wheel scroll on desktop */}
+            <div 
+              data-lenis-prevent="true"
+              onWheel={(e) => e.stopPropagation()}
+              tabIndex={0}
+              className="flex-1 w-full flex flex-col space-y-1.5 max-h-[280px] sm:max-h-[320px] lg:max-h-[360px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none"
+            >
               {filteredFaqs.length === 0 ? (
                 <div className="text-center py-6 px-4 rounded-xl border border-slate-800 bg-[#090e1c] my-auto">
                   <HelpCircle className="w-7 h-7 text-slate-500 mx-auto mb-2" />
