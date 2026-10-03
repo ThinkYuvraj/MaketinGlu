@@ -461,7 +461,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
             Ready to Implement These Growth Frameworks?
           </h2>
           <p className="mt-3 text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
-            Stop guessing with generic agency playbooks. Speak directly with MarketingGlu strategists in New Delhi for custom digital marketing solutions.
+            Stop guessing with generic agency playbooks. Speak directly with MarketinGlu strategists in New Delhi for custom digital marketing solutions.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <button
@@ -472,7 +472,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
               Book Free Strategy Session
             </button>
             <a
-              href={`https://wa.me/${config.phone.replace(/[^0-9]/g, '')}?text=Hi%20MarketingGlu,%20I%20read%20your%20resources%20and%20would%20like%20to%20discuss%20a%20project`}
+              href={`https://wa.me/${config.phone.replace(/[^0-9]/g, '')}?text=Hi%20MarketinGlu,%20I%20read%20your%20resources%20and%20would%20like%20to%20discuss%20a%20project`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-sm font-bold flex items-center gap-2 transition cursor-pointer"

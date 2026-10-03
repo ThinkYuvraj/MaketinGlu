@@ -143,7 +143,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
 
                 <motion.a
                   {...buttonHoverMotion}
-                  href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketingGlu, I would like to inquire about your ${service.title} services.`)}`}
+                  href={`https://wa.me/+919654596149?text=${encodeURIComponent(`Hi MarketinGlu, I would like to inquire about your ${service.title} services.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 min-h-[48px]"
@@ -294,10 +294,10 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
             </div>
           </div>
 
-          {/* Key Advantages / Why MarketingGlu (7 Cols) */}
+          {/* Key Advantages / Why MarketinGlu (7 Cols) */}
           <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-[#0a1122] border border-slate-800">
             <div className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2">
-              The MarketingGlu Advantage
+              The MarketinGlu Advantage
             </div>
             <h3 className="text-xl sm:text-2xl font-black text-white mb-6">
               Why Leaders Choose Us For {service.tabLabel}

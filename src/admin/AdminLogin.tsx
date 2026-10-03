@@ -100,7 +100,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
             <Logo variant="light-badge" />
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-            MarketingGlu CMS Admin
+            MarketinGlu CMS Admin
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
             Sign in to manage live UI/UX configurations, content fixes, retainers, and client reviews.
@@ -181,7 +181,7 @@ export default function AdminLogin({ onLoginSuccess, onBackToSite }: AdminLoginP
       </div>
 
       <div className="mt-6 text-center text-xs text-slate-500">
-        MarketingGlu Management CMS &bull; Secure Administrative Session
+        MarketinGlu Management CMS &bull; Secure Administrative Session
       </div>
     </div>
   );

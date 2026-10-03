@@ -230,7 +230,7 @@ export const expertiseData: ExpertiseItem[] = [
       client: "Apex Financial Advisory",
       result: "185% increase in qualified consultation bookings within 60 days of relaunch.",
       metric: "<0.6s FCP",
-      quote: "MarketingGlu completely transformed our digital identity. Inquiries increased dramatically within the very first month."
+      quote: "MarketinGlu completely transformed our digital identity. Inquiries increased dramatically within the very first month."
     },
     priceEstimate: "Starting from ₹35,000",
     timelineEstimate: "3 to 5 Weeks"
@@ -468,7 +468,7 @@ export const expertiseData: ExpertiseItem[] = [
       client: "Capital Legal Partners",
       result: "Achieved #1 positions for 18 commercial legal keywords, resulting in a 240% lift in organic consultation requests.",
       metric: "Top 3 SERP",
-      quote: "Our phone doesn't stop ringing. MarketingGlu took us from page 4 to dominating Google in Delhi NCR."
+      quote: "Our phone doesn't stop ringing. MarketinGlu took us from page 4 to dominating Google in Delhi NCR."
     },
     priceEstimate: "Starting from ₹20,000 / month",
     timelineEstimate: "Ongoing (3-Month Initial Cycle)"
@@ -706,7 +706,7 @@ export const expertiseData: ExpertiseItem[] = [
       client: "Zenith Diagnostic Healthcare",
       result: "Reduced Cost-Per-Lead (CPL) by 54% while generating 420+ qualified patient inquiries per month with a 5.2x ROAS.",
       metric: "5.2x ROAS",
-      quote: "MarketingGlu audited our chaotic Google Ads and cut our wasted spend by half while doubling our inbound patient calls."
+      quote: "MarketinGlu audited our chaotic Google Ads and cut our wasted spend by half while doubling our inbound patient calls."
     },
     priceEstimate: "Starting from ₹18,000 / month",
     timelineEstimate: "48-Hour Setup & Ongoing"
@@ -825,7 +825,7 @@ export const expertiseData: ExpertiseItem[] = [
       client: "TechDuniya",
       result: "Achieved 320,000+ audience reach and +180% organic inbound inquiries with an 8.4% engagement CTR in 90 days.",
       metric: "320K Reach",
-      quote: "MarketingGlu turned our dead social profiles into our number one referral engine for new tech buyer leads."
+      quote: "MarketinGlu turned our dead social profiles into our number one referral engine for new tech buyer leads."
     },
     priceEstimate: "Starting from ₹16,000 / month",
     timelineEstimate: "Monthly Ongoing Engagement"

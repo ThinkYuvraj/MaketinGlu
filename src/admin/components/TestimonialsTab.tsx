@@ -254,7 +254,7 @@ export default function TestimonialsTab({
                 <textarea
                   rows={4}
                   required
-                  placeholder="Describe how MarketingGlu helped your business scale..."
+                  placeholder="Describe how MarketinGlu helped your business scale..."
                   value={newReview.quote}
                   onChange={(e) => setNewReview({ ...newReview, quote: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs leading-relaxed focus:border-cyan-400 focus:outline-none resize-none"

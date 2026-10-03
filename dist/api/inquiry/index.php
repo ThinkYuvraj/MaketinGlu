@@ -1,6 +1,6 @@
 <?php
 // ==============================================================================
-// MarketingGlu - High-Reliability Native Hostinger Inquiry Processor
+// MarketinGlu - High-Reliability Native Hostinger Inquiry Processor
 // Supports both direct LiteSpeed/Apache execution and standalone dispatch
 // ==============================================================================
 header('Content-Type: application/json; charset=utf-8');
@@ -70,7 +70,7 @@ $notes = trim($data['notes'] ?? ($data['message'] ?? ($_GET['notes'] ?? '')));
 if (empty($name) && empty($email) && empty($phone)) {
     echo json_encode([
         'status' => 'ok',
-        'service' => 'MarketingGlu Native API Engine',
+        'service' => 'MarketinGlu Native API Engine',
         'receiver' => $receiverEmail,
         'time' => date('c'),
     ]);

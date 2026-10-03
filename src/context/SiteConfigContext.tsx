@@ -49,7 +49,7 @@ export const defaultAboutChecklist: string[] = [
 ];
 
 export const defaultSiteConfig: SiteConfig = {
-  brandName: 'MarketingGlu',
+  brandName: 'MarketinGlu',
   phone: '+91 96545 96149',
   email: 'marketing2glue@gmail.com',
   address: 'C5C/11-B Janak Puri, New Delhi, India - 110058',
@@ -57,7 +57,7 @@ export const defaultSiteConfig: SiteConfig = {
 
   announcement: {
     enabled: true,
-    text: '🚀 Accelerate your brand growth with MarketingGlu custom digital solutions',
+    text: '🚀 Accelerate your brand growth with MarketinGlu custom digital solutions',
     ctaText: 'Claim Free Audit',
   },
 
@@ -185,7 +185,7 @@ export const defaultSiteConfig: SiteConfig = {
       id: 'ajay-bhutkar',
       name: 'Ajay Bhutkar',
       rating: 5,
-      quote: "I can proudly say that MarketingGlu has done an outstanding job. Our online sales channels and Google Ad ROAS jumped by 3.8x within the first 90 days. Very professional team and transparent weekly reporting.",
+      quote: "I can proudly say that MarketinGlu has done an outstanding job. Our online sales channels and Google Ad ROAS jumped by 3.8x within the first 90 days. Very professional team and transparent weekly reporting.",
       role: 'Founder & CEO, Bhutkar Enterprises',
       source: 'Google Verified Review',
       initial: 'AB',
@@ -196,7 +196,7 @@ export const defaultSiteConfig: SiteConfig = {
       id: 'lalita-rani',
       name: 'Lalita Rani',
       rating: 5,
-      quote: "It’s been really rewarding working with MarketingGlu. Their team is exceptionally responsive, highly skilled in technical SEO, and transformed our patient inquiry pipeline with consistent organic rankings.",
+      quote: "It’s been really rewarding working with MarketinGlu. Their team is exceptionally responsive, highly skilled in technical SEO, and transformed our patient inquiry pipeline with consistent organic rankings.",
       role: 'Marketing Director, Radiant Healthcare',
       source: 'Verified Client Review',
       initial: 'LR',
@@ -218,7 +218,7 @@ export const defaultSiteConfig: SiteConfig = {
       id: 'pooja-verma',
       name: 'Pooja Verma',
       rating: 5,
-      quote: "MarketingGlu revamped our Shopify storefront architecture and executed full-funnel Meta & Google Ads. Our customer acquisition cost dropped by 34% while monthly order volume doubled.",
+      quote: "MarketinGlu revamped our Shopify storefront architecture and executed full-funnel Meta & Google Ads. Our customer acquisition cost dropped by 34% while monthly order volume doubled.",
       role: 'Co-Founder, Vanya D2C Apparel',
       source: 'Shopify Partner Review',
       initial: 'PV',
@@ -229,7 +229,7 @@ export const defaultSiteConfig: SiteConfig = {
       id: 'rohan-mehra',
       name: 'Rohan Mehra',
       rating: 5,
-      quote: "Finding qualified high-ticket real estate buyers used to be our biggest bottleneck. MarketingGlu’s local SEO and high-intent Google PPC campaigns delivered verified site visits every single week.",
+      quote: "Finding qualified high-ticket real estate buyers used to be our biggest bottleneck. MarketinGlu’s local SEO and high-intent Google PPC campaigns delivered verified site visits every single week.",
       role: 'Managing Partner, Mehra Realty Group',
       source: 'Direct Business Review',
       initial: 'RM',
@@ -406,7 +406,7 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         return { 
           ...defaultSiteConfig, 
           ...parsed,
-          brandName: (!parsed.brandName || parsed.brandName === 'MaketinGlu' || parsed.brandName === 'MarketinGlu') ? 'MarketingGlu' : parsed.brandName,
+          brandName: (!parsed.brandName || parsed.brandName === 'MaketinGlu' || parsed.brandName === 'MarketinGlu') ? 'MarketinGlu' : parsed.brandName,
           packagesSectionDescription: packagesDesc,
           services: parsed.services ? hydrateServices(parsed.services) : defaultSiteConfig.services,
           packages: parsed.packages || defaultSiteConfig.packages,

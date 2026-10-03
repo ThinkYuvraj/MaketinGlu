@@ -178,7 +178,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                 Book Custom Multi-Service Consultation
               </motion.button>
               <a
-                href="https://wa.me/+919654596149?text=Hi%20MarketingGlu,%20I%20would%20like%20to%20discuss%20a%20full%20digital%20marketing%20solution."
+                href="https://wa.me/+919654596149?text=Hi%20MarketinGlu,%20I%20would%20like%20to%20discuss%20a%20full%20digital%20marketing%20solution."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2"

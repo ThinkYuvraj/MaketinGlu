@@ -25,7 +25,7 @@ export const defaultBlogs: BlogPost[] = [
 
 For years, First Input Delay (FID) allowed websites to appear responsive while heavy JavaScript locked the main thread. INP measures the latency of every user interaction throughout the entire session. If your mobile site takes more than 200 milliseconds to respond to a menu tap, filter click, or checkout toggle, Google's PageSpeed algorithm demotes your page authority score.
 
-At MarketingGlu, our engineering team audits every DOM mutation:
+At MarketinGlu, our engineering team audits every DOM mutation:
 - **Code splitting and selective hydration**: Loading essential UI elements first and deferring non-critical scripts.
 - **Sub-50ms server response times (TTFB)**: Deploying edge computing and asset caches in New Delhi and regional hubs.
 - **Zero layout shift (CLS < 0.01)**: Explicit image bounding boxes and pre-rendered font metric overrides.
@@ -114,7 +114,7 @@ A typical off-the-shelf CMS installation relies on 25 to 45 third-party plugins 
 
 ### Custom React & Modern Stack Advantages
 
-At MarketingGlu, we build bespoke web platforms tailored strictly to our clients' business goals:
+At MarketinGlu, we build bespoke web platforms tailored strictly to our clients' business goals:
 - **Zero redundant code**: Only the exact features, components, and styling required are shipped to the browser.
 - **Instant 60fps transitions**: Smooth fluid animations and responsive touch targets that feel like native apps.
 - **Granular conversion tracking**: Custom event dispatchers that track click depth, scroll milestones, and form drop-offs without third-party trackers.

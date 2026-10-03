@@ -42,11 +42,11 @@ export default function SEOHead() {
 
   useEffect(() => {
     const baseUrl = 'https://marketinglu.com';
-    const siteName = config.brandName || 'MarketingGlu';
+    const siteName = config.brandName || 'MarketinGlu';
 
     let pageTitle = `${siteName} - Software Solutions & Digital Engineering Company`;
-    let metaDescription = 'MarketingGlu is a premier software solutions and digital engineering company specializing in custom software development, enterprise web architecture, SEO, performance marketing, and scalable IT solutions.';
-    let keywords = 'MarketingGlu, software solutions company, software development company, custom software development, enterprise software solutions, IT software company, software engineering, SaaS development, full-stack development, digital marketing agency, web design company, SEO solutions, New Delhi software company, India software solutions';
+    let metaDescription = 'MarketinGlu is a premier software solutions and digital engineering company specializing in custom software development, enterprise web architecture, SEO, performance marketing, and scalable IT solutions.';
+    let keywords = 'MarketinGlu, software solutions company, software development company, custom software development, enterprise software solutions, IT software company, software engineering, SaaS development, full-stack development, digital marketing agency, web design company, SEO solutions, New Delhi software company, India software solutions';
     let canonicalUrl = `${baseUrl}/`;
     let ogImage = `${baseUrl}/images/marketingglu_icon.png`;
     let ogType = 'website';

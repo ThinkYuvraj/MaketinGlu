@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Privacy Policy | MarketingGlu";
+    document.title = "Privacy Policy | MarketinGlu";
   }, []);
 
   return (
@@ -34,7 +34,7 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-sm text-slate-400 mt-2">
-              Last updated: January 2026. Effective for MarketingGlu and associated digital services.
+              Last updated: January 2026. Effective for MarketinGlu and associated digital services.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
                 <span>1. Overview and Commitment</span>
               </h2>
               <p>
-                MarketingGlu ("we", "us", or "our"), located in Janak Puri, New Delhi, India, is committed to safeguarding client privacy and proprietary commercial data. This Privacy Policy details how we collect, store, process, and protect your information when engaging our software engineering, web development, SEO, and performance marketing services.
+                MarketinGlu ("we", "us", or "our"), located in Janak Puri, New Delhi, India, is committed to safeguarding client privacy and proprietary commercial data. This Privacy Policy details how we collect, store, process, and protect your information when engaging our software engineering, web development, SEO, and performance marketing services.
               </p>
             </section>
 
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
                 For questions regarding data protection, please contact:
               </p>
               <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-xs">
-                <div>MarketingGlu Legal &amp; Compliance</div>
+                <div>MarketinGlu Legal &amp; Compliance</div>
                 <div>Address: {config.address}</div>
                 <div>Email: {config.email}</div>
                 <div>Phone: {config.phone}</div>

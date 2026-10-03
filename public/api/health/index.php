@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 
 echo json_encode([
     'status' => 'ok',
-    'service' => 'MarketingGlu Native API Engine',
+    'service' => 'MarketinGlu Native API Engine',
     'environment' => 'production',
     'inquiryEndpoint' => '/api/inquiry',
     'testEmailEndpoint' => '/api/test-email',

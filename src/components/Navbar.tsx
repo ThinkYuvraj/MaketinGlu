@@ -37,9 +37,83 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesExpanded, setMobileServicesExpanded] = useState(true);
+  const [activeSection, setActiveSection] = useState<string>('home');
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const navServices = config.services && config.services.length > 0 ? config.services : expertiseData;
+
+  // Track active homepage section on scroll for smooth active tab pill indicator
+  useEffect(() => {
+    if (currentRoute.type !== 'home') return;
+
+    const sectionMap: Array<{ id: string; tab: string }> = [
+      { id: 'hero-section', tab: 'home' },
+      { id: 'home', tab: 'home' },
+      { id: 'growth', tab: 'performance' },
+      { id: 'about', tab: 'about' },
+      { id: 'expertise', tab: 'services' },
+      { id: 'packages', tab: 'packages' },
+      { id: 'cases', tab: 'portfolio' },
+      { id: 'testimonials', tab: 'reviews' },
+      { id: 'faq', tab: 'faq' },
+    ];
+
+    let ticking = false;
+
+    const handleScrollSection = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const windowHeight = window.innerHeight;
+
+          if (scrollY < 120) {
+            setActiveSection((prev) => (prev !== 'home' ? 'home' : prev));
+            ticking = false;
+            return;
+          }
+
+          let currentTab = 'home';
+          for (let i = 0; i < sectionMap.length; i++) {
+            const { id, tab } = sectionMap[i];
+            const el = document.getElementById(id);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= windowHeight * 0.45 && rect.bottom >= 120) {
+                currentTab = tab;
+              }
+            }
+          }
+          setActiveSection((prev) => (prev !== currentTab ? currentTab : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScrollSection();
+    window.addEventListener('scroll', handleScrollSection, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollSection);
+  }, [currentRoute.type]);
+
+  const getActiveTabKey = (): string => {
+    if (currentRoute.type === 'service-detail' || currentRoute.type === 'services-index') {
+      return 'services';
+    }
+    if (currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail') {
+      return 'blogs';
+    }
+    if (currentRoute.type === 'privacy' || currentRoute.type === 'terms') {
+      return '';
+    }
+    if (currentRoute.type === 'home') {
+      return activeSection || 'home';
+    }
+    return 'home';
+  };
+
+  const activeTabKey = getActiveTabKey();
+  const highlightedTab = hoveredTab || activeTabKey;
 
   // Smart Hide/Show on Scroll: Hides when scrolling down, shows when scrolling up or at top
   useEffect(() => {
@@ -131,6 +205,36 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
     }
   };
 
+  const renderNavTab = (tabKey: string, label: string, href: string) => {
+    const isHighlighted = highlightedTab === tabKey;
+    const showCapsule = isHighlighted && tabKey !== 'home';
+    return (
+      <button
+        key={tabKey}
+        onClick={() => handleNavClick(href)}
+        onMouseEnter={() => setHoveredTab(tabKey)}
+        className={`relative px-2.5 lg:px-3 xl:px-3.5 py-1.5 rounded-xl text-[11px] lg:text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none whitespace-nowrap shrink-0 ${
+          isHighlighted
+            ? 'text-white font-bold'
+            : 'text-slate-400 hover:text-slate-200'
+        }`}
+      >
+        {showCapsule && (
+          <motion.div
+            layoutId="activeNavTabCapsule"
+            className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)] pointer-events-none z-0 transform-gpu will-change-transform"
+            transition={
+              hoveredTab
+                ? { type: 'spring', stiffness: 450, damping: 32 }
+                : { type: 'spring', stiffness: 500, damping: 18, mass: 0.4 }
+            }
+          />
+        )}
+        <span className="relative z-10">{label}</span>
+      </button>
+    );
+  };
+
   return (
     <>
       <header 
@@ -159,12 +263,12 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           </div>
         )}
 
-        <div className="w-full max-w-7xl xl:max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-14 py-2.5 sm:py-3.5 flex items-center justify-between">
+        <div className="w-full max-w-7xl xl:max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-3 sm:px-6 lg:px-6 xl:px-10 2xl:px-14 py-2.5 sm:py-3.5 flex items-center justify-between gap-2">
           
           {/* Brand Logo with White Background Badge & Typography */}
           <button
             onClick={() => handleNavClick('#/')}
-            className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0"
+            className="flex items-center gap-2 sm:gap-2.5 group transition-transform active:scale-95 cursor-pointer bg-transparent border-0 p-0 shrink-0"
             id="nav-brand-logo"
             aria-label="Go to Home"
           >
@@ -175,66 +279,45 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             </span>
           </button>
 
-          {/* Desktop Nav Floating Curved Rectangle Dock */}
-          <nav className="hidden lg:flex items-center">
-            <div className="inline-flex items-center gap-1 xl:gap-1.5 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
-              <button
-                onClick={() => handleNavClick('#/')}
-                className={`relative px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold transition-all cursor-pointer select-none ${
-                  currentRoute.type === 'home' && !window.location.hash.includes('#')
-                    ? 'text-white'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-                }`}
-              >
-                {currentRoute.type === 'home' && !window.location.hash.includes('#') && (
-                  <motion.div
-                    layoutId="activeNavTabCapsule"
-                    className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">Home</span>
-              </button>
-
-              <button
-                onClick={() => handleNavClick('#about')}
-                className={`relative px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold transition-all cursor-pointer select-none ${
-                  window.location.hash === '#about' || window.location.hash === '#/about'
-                    ? 'text-white'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-                }`}
-              >
-                {(window.location.hash === '#about' || window.location.hash === '#/about') && (
-                  <motion.div
-                    layoutId="activeNavTabCapsule"
-                    className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">About Us</span>
-              </button>
+          {/* Desktop Nav Floating Curved Rectangle Dock with Smooth Magnetic Hover & Scroll Pill */}
+          <nav className="hidden lg:flex items-center shrink min-w-0 mx-2 xl:mx-4">
+            <div 
+              onMouseLeave={() => setHoveredTab(null)}
+              className="inline-flex items-center gap-0.5 lg:gap-1 xl:gap-1.5 p-1 xl:p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.5)] max-w-full overflow-x-auto hide-scrollbar"
+            >
+              {renderNavTab('home', 'Home', '#/')}
+              {renderNavTab('performance', 'Performance', '#growth')}
+              {renderNavTab('about', 'About Us', '#about')}
 
               {/* Services Dropdown */}
               <div 
-                className="relative"
+                className="relative shrink-0"
                 ref={dropdownRef}
-                onMouseEnter={() => setServicesDropdownOpen(true)}
+                onMouseEnter={() => {
+                  setHoveredTab('services');
+                  setServicesDropdownOpen(true);
+                }}
                 onMouseLeave={() => setServicesDropdownOpen(false)}
               >
                 <button
                   onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-                  className={`relative flex items-center gap-1.5 px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold transition-all cursor-pointer select-none ${
-                    currentRoute.type === 'service-detail' || currentRoute.type === 'services-index'
-                      ? 'text-white'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                  onMouseEnter={() => setHoveredTab('services')}
+                  className={`relative flex items-center gap-1 px-2.5 lg:px-3 xl:px-3.5 py-1.5 rounded-xl text-[11px] lg:text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none whitespace-nowrap ${
+                    highlightedTab === 'services'
+                      ? 'text-white font-bold'
+                      : 'text-slate-400 hover:text-slate-200'
                   }`}
                   aria-expanded={servicesDropdownOpen}
                 >
-                  {(currentRoute.type === 'service-detail' || currentRoute.type === 'services-index') && (
+                  {highlightedTab === 'services' && (
                     <motion.div
                       layoutId="activeNavTabCapsule"
-                      className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                      className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)] pointer-events-none z-0 transform-gpu will-change-transform"
+                      transition={
+                        hoveredTab
+                          ? { type: 'spring', stiffness: 450, damping: 32 }
+                          : { type: 'spring', stiffness: 500, damping: 18, mass: 0.4 }
+                      }
                     />
                   )}
                   <span className="relative z-10">Services</span>
@@ -317,75 +400,33 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </AnimatePresence>
               </div>
 
-              <button
-                onClick={() => handleNavClick('#growth')}
-                className="px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 transition-all cursor-pointer select-none"
-              >
-                Performance
-              </button>
-              <button
-                onClick={() => handleNavClick('#packages')}
-                className="px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 transition-all cursor-pointer select-none"
-              >
-                Packages
-              </button>
-              <button
-                onClick={() => handleNavClick('#cases')}
-                className="px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 transition-all cursor-pointer select-none"
-              >
-                Portfolio
-              </button>
-              <button
-                onClick={() => handleNavClick('#testimonials')}
-                className="px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 transition-all cursor-pointer select-none"
-              >
-                Reviews
-              </button>
-              <button
-                onClick={() => handleNavClick('#/blogs')}
-                className={`relative px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold transition-all cursor-pointer select-none ${
-                  currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail'
-                    ? 'text-white'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-                }`}
-              >
-                {(currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail') && (
-                  <motion.div
-                    layoutId="activeNavTabCapsule"
-                    className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">Blogs</span>
-              </button>
-              <button
-                onClick={() => handleNavClick('#faq')}
-                className="px-3 xl:px-3.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 transition-all cursor-pointer select-none"
-              >
-                FAQs
-              </button>
+              {renderNavTab('packages', 'Packages', '#packages')}
+              {renderNavTab('portfolio', 'Portfolio', '#cases')}
+              {renderNavTab('reviews', 'Reviews', '#testimonials')}
+              {renderNavTab('faq', 'FAQs', '#faq')}
+              {renderNavTab('blogs', 'Blogs', '#/blogs')}
             </div>
           </nav>
 
           {/* Right Desktop CTA Area (Phone & Quote CTA) */}
-          <div className="hidden sm:flex items-center gap-2.5 sm:gap-3 xl:gap-5">
+          <div className="hidden sm:flex items-center gap-2 xl:gap-4 shrink-0">
             {/* Phone number */}
             <a 
               href={`tel:${config.phone.replace(/\s+/g, '')}`}
-              className="flex items-center gap-2 text-xs md:text-sm font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1.5 px-2.5 rounded-lg hover:bg-slate-900/60"
-              title="Call MarketingGlu Support"
+              className="flex items-center gap-1.5 xl:gap-2 text-xs xl:text-sm font-semibold text-slate-200 hover:text-cyan-400 transition-colors py-1.5 px-2 xl:px-2.5 rounded-lg hover:bg-slate-900/60"
+              title="Call MarketinGlu Support"
             >
               <div className="w-7 h-7 xl:w-8 xl:h-8 rounded-lg bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
                 <Phone className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
               </div>
-              <span className="whitespace-nowrap font-bold">{config.phone}</span>
+              <span className="whitespace-nowrap font-bold hidden xl:inline">{config.phone}</span>
             </a>
 
             {/* Get Free Quote CTA */}
             <motion.button
               {...buttonHoverMotion}
               onClick={onOpenConsultation}
-              className="px-4 xl:px-6 py-2 xl:py-2.5 rounded-xl border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs md:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[42px] flex items-center justify-center"
+              className="px-3 xl:px-5 py-2 xl:py-2.5 rounded-xl border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-slate-950 text-xs xl:text-sm font-bold tracking-tight transition-all duration-200 cursor-pointer shadow-sm whitespace-nowrap min-h-[38px] xl:min-h-[42px] flex items-center justify-center"
               id="btn-get-free-quote"
             >
               Get Free Quote
@@ -399,7 +440,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               href={`tel:${config.phone.replace(/\s+/g, '')}`}
               className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-cyan-400 rounded-xl border border-slate-800 bg-slate-900/90 active:bg-slate-800 transition-colors shadow-sm"
               aria-label="Call Direct Line"
-              title="Call MarketingGlu"
+              title="Call MarketinGlu"
             >
               <Phone className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
             </a>
@@ -479,6 +520,19 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </button>
 
                 <button
+                  onClick={() => handleNavClick('#growth')}
+                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
+                      <TrendingUp className="w-4 h-4" />
+                    </div>
+                    <span>Performance Metrics</span>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-slate-600" />
+                </button>
+
+                <button
                   onClick={() => handleNavClick('#about')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
                 >
@@ -551,19 +605,6 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </div>
 
                 <button
-                  onClick={() => handleNavClick('#growth')}
-                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
-                      <TrendingUp className="w-4 h-4" />
-                    </div>
-                    <span>Performance Metrics</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-slate-600" />
-                </button>
-
-                <button
                   onClick={() => handleNavClick('#packages')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
                 >
@@ -603,19 +644,6 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </button>
 
                 <button
-                  onClick={() => handleNavClick('#/blogs')}
-                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
-                      <BookOpen className="w-4 h-4" />
-                    </div>
-                    <span>Blogs &amp; Insights</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-slate-600" />
-                </button>
-
-                <button
                   onClick={() => handleNavClick('#faq')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
                 >
@@ -624,6 +652,19 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                       <HelpCircle className="w-4 h-4" />
                     </div>
                     <span>FAQs</span>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-slate-600" />
+                </button>
+
+                <button
+                  onClick={() => handleNavClick('#/blogs')}
+                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-900 text-slate-200 hover:text-cyan-400 text-sm font-semibold transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400">
+                      <BookOpen className="w-4 h-4" />
+                    </div>
+                    <span>Blogs &amp; Insights</span>
                   </div>
                   <ArrowRight className="w-4 h-4 text-slate-600" />
                 </button>

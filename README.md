@@ -1,4 +1,4 @@
-# MarketingGlu - Enterprise Digital Marketing & Engineering Solutions
+# MarketinGlu - Enterprise Digital Marketing & Engineering Solutions
 
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -6,7 +6,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-MarketingGlu is a premier digital marketing agency and web engineering studio based in New Delhi, India. The web application serves as the flagship client platform and showcases end-to-end digital solutions spanning custom web architecture, e-commerce engineering, data-driven SEO, high-ROI PPC campaigns, social media optimization, and bespoke brand design.
+MarketinGlu is a premier digital marketing agency and web engineering studio based in New Delhi, India. The web application serves as the flagship client platform and showcases end-to-end digital solutions spanning custom web architecture, e-commerce engineering, data-driven SEO, high-ROI PPC campaigns, social media optimization, and bespoke brand design.
 
 ---
 
@@ -189,7 +189,7 @@ This project can be deployed either as a **Static Site** (Frontend only) or as a
 
 ## 📞 Contact & Inquiries
 
-- **Agency**: MarketingGlu Digital Solutions
+- **Agency**: MarketinGlu Digital Solutions
 - **Location**: New Delhi, India
 - **Direct Phone / WhatsApp**: [+91 96545 96149](https://wa.me/+919654596149)
 - **Consultation Hours**: Monday – Saturday, 9:00 AM – 7:00 PM IST

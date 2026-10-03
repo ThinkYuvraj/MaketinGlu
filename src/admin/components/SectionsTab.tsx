@@ -307,7 +307,7 @@ export default function SectionsTab({
         badge: 'WHY PARTNER WITH US',
         title: 'Key Advantages of',
         titleHighlight: 'Our Growth Retainers',
-        description: 'See why high-growth brands trust MarketingGlu for predictable digital customer acquisition.',
+        description: 'See why high-growth brands trust MarketinGlu for predictable digital customer acquisition.',
         items: [
           {
             id: '1',

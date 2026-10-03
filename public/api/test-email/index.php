@@ -1,6 +1,6 @@
 <?php
 // ==============================================================================
-// MarketingGlu - Instant Diagnostic Mail Endpoint for Hostinger
+// MarketinGlu - Instant Diagnostic Mail Endpoint for Hostinger
 // Directly tests and confirms SMTP delivery to marketing2glue@gmail.com
 // ==============================================================================
 header('Content-Type: application/json; charset=utf-8');
@@ -106,7 +106,7 @@ function sendDirectSmtp($host, $port, $user, $pass, $to, $subject, $html) {
     $headers = [
         "MIME-Version: 1.0",
         "Content-Type: text/html; charset=UTF-8",
-        "From: =?UTF-8?B?" . base64_encode("MarketingGlu System") . "?= <$user>",
+        "From: =?UTF-8?B?" . base64_encode("MarketinGlu System") . "?= <$user>",
         "To: <$to>",
         "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=",
         "Date: " . date('r'),
@@ -121,10 +121,10 @@ function sendDirectSmtp($host, $port, $user, $pass, $to, $subject, $html) {
     return true;
 }
 
-$subject = "✅ MarketingGlu Live Hostinger Diagnostic Confirmation";
+$subject = "✅ MarketinGlu Live Hostinger Diagnostic Confirmation";
 $body = '
 <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 24px; background: #0c1424; color: #fff; border-radius: 12px; border: 1px solid #38bdf8;">
-  <h2 style="color: #38bdf8; margin-top: 0;">MarketingGlu SMTP is 100% Operational!</h2>
+  <h2 style="color: #38bdf8; margin-top: 0;">MarketinGlu SMTP is 100% Operational!</h2>
   <p>This email confirms that your Hostinger live deployment is connected to Google SMTP and actively delivering customer leads.</p>
   <ul>
     <li><strong>Dispatched from:</strong> ' . htmlspecialchars($smtpUser) . '</li>

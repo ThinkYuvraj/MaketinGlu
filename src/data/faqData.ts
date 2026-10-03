@@ -21,7 +21,7 @@ export const defaultFaqs: FAQItem[] = [
     category: 'seo',
     categoryLabel: 'SEO & Rankings',
     question: "Do you guarantee #1 rankings on Google for our search keywords?",
-    answer: "No reputable, ethical agency can guarantee a fixed #1 Google rank, and Google's official documentation explicitly warns against any agency making this claim. What MarketingGlu guarantees is a battle-tested, 100% white-hat technical and editorial framework: sub-second Core Web Vitals optimization, high-intent transactional keyword architecture, structured JSON-LD schema data, and authentic contextual backlink acquisition. Over 94% of our client target keywords rank within Google's top 5 positions within 3 to 6 months.",
+    answer: "No reputable, ethical agency can guarantee a fixed #1 Google rank, and Google's official documentation explicitly warns against any agency making this claim. What MarketinGlu guarantees is a battle-tested, 100% white-hat technical and editorial framework: sub-second Core Web Vitals optimization, high-intent transactional keyword architecture, structured JSON-LD schema data, and authentic contextual backlink acquisition. Over 94% of our client target keywords rank within Google's top 5 positions within 3 to 6 months.",
     highlights: ["100% White-Hat Only", "Google Guidelines Compliant", "94% In Top-5 Positions"]
   },
   {
@@ -37,7 +37,7 @@ export const defaultFaqs: FAQItem[] = [
     category: 'pricing',
     categoryLabel: 'Ad Spend & Pricing',
     question: "How is our advertising budget (ad spend) managed and billed?",
-    answer: "Your advertising media spend is billed directly by Google Ads, Meta (Instagram/Facebook), and LinkedIn to your company credit card or GST-registered billing profile. MarketingGlu never charges hidden commissions, markups, or cuts on your media spend. You pay MarketingGlu a transparent, flat or tiered monthly management retainer covering campaign architecture, conversion copywriting, daily bid optimization, negative keyword audits, and A/B ad creative production.",
+    answer: "Your advertising media spend is billed directly by Google Ads, Meta (Instagram/Facebook), and LinkedIn to your company credit card or GST-registered billing profile. MarketinGlu never charges hidden commissions, markups, or cuts on your media spend. You pay MarketinGlu a transparent, flat or tiered monthly management retainer covering campaign architecture, conversion copywriting, daily bid optimization, negative keyword audits, and A/B ad creative production.",
     highlights: ["Direct Platform Billing", "Zero Spend Markup", "Transparent Flat Retainer"]
   },
   {

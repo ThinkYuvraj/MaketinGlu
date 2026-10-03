@@ -108,7 +108,7 @@ export default function Testimonials() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             What Our Clients Say{' '}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300">
-              About MarketingGlu
+              About MarketinGlu
             </span>
           </h2>
 

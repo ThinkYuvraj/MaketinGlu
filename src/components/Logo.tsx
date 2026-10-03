@@ -23,11 +23,11 @@ export default function Logo({
     return (
       <div 
         className={`inline-flex items-center bg-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl shadow-xs border border-slate-200 hover:shadow-md transition-all ${className}`}
-        id="marketingglu-brand-logo"
+        id="MarketinGlu-brand-logo"
       >
         <img 
           src={logoSrc} 
-          alt="MarketingGlu" 
+          alt="MarketinGlu" 
           referrerPolicy="no-referrer"
           className={`${imgHeights[size]} w-auto object-contain block`}
         />
@@ -40,11 +40,11 @@ export default function Logo({
     return (
       <div 
         className={`inline-flex items-center bg-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border border-slate-200 shadow-md ${className}`}
-        id="marketingglu-brand-logo-dark"
+        id="MarketinGlu-brand-logo-dark"
       >
         <img 
           src={logoSrc} 
-          alt="MarketingGlu" 
+          alt="MarketinGlu" 
           referrerPolicy="no-referrer"
           className={`${imgHeights[size]} w-auto object-contain block`}
         />
@@ -57,7 +57,7 @@ export default function Logo({
     <div className={`inline-flex items-center ${className}`}>
       <img 
         src={logoSrc} 
-        alt="MarketingGlu" 
+        alt="MarketinGlu" 
         referrerPolicy="no-referrer"
         className={`${imgHeights[size]} w-auto object-contain block`}
       />
