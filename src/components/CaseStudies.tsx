@@ -98,7 +98,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   };
 
   return (
-    <section id="cases" className="relative w-full min-h-auto lg:min-h-[90vh] xl:min-h-screen py-10 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#060a13] border-t border-slate-800/80 overflow-hidden">
+    <section id="cases" className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-[#060a13] border-t border-slate-800/80 overflow-hidden">
       {/* Top Subtle Glow Separation */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
