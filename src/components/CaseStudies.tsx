@@ -98,7 +98,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   };
 
   return (
-    <section id="cases" className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#060a13] border-t border-slate-800/80 overflow-hidden">
+    <section id="cases" className="relative w-full min-h-auto lg:min-h-[90vh] xl:min-h-screen py-10 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#060a13] border-t border-slate-800/80 overflow-hidden">
       {/* Top Subtle Glow Separation */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
@@ -403,7 +403,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               {/* MOBILE & TABLET VIEW (<1024px): Caret Carousel with Swipe & Indicators */}
               <div className="block lg:hidden relative max-w-lg mx-auto">
                 {/* Case Study Quick Tabs */}
-                <div className="flex items-center justify-center gap-2 mb-3">
+                <div className="flex items-center justify-center gap-2 mb-3 overflow-x-auto px-2 scrollbar-none">
                   {casesList.map((cItem, tabIdx) => {
                     const isSelected = tabIdx === currentIndex;
                     return (

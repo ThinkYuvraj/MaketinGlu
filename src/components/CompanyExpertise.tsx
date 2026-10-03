@@ -138,7 +138,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   return (
     <section 
       id="expertise" 
-      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
+      className="relative w-full min-h-auto lg:min-h-[90vh] xl:min-h-screen py-10 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -160,8 +160,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-6 sm:mb-10 lg:mb-12">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR {services.length} CORE DISCIPLINES</span>
           </div>
@@ -173,14 +173,14 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </span>
           </h2>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             Eliminate fragmented vendors. Every discipline operates under one roof with dedicated senior architects in New Delhi, battle-tested playbooks, and transparent deliverables.
           </p>
         </div>
 
-        {/* INTERACTIVE TOP SERVICES FULL BAR DOCK (Full 6-Column Bar on Desktop, 2/3 Columns on Mobile/Tablet) */}
-        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-2 sm:mt-4 mb-6 sm:mb-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
+        {/* INTERACTIVE TOP SERVICES FULL BAR DOCK (Single-Row Flex Scroll on Mobile/Tablet, 6-Col Grid on Desktop) */}
+        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-4 mb-4 sm:mb-8">
+          <div className="flex overflow-x-auto lg:grid lg:grid-cols-6 scrollbar-none gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const TabIcon = getExpertiseIcon(srv);
@@ -190,7 +190,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   key={srv.id}
                   type="button"
                   onClick={() => handleSelectService(tabIdx)}
-                  className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[38px] select-none text-center w-full uppercase tracking-wide ${
+                  className={`group relative flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-\[44px\] select-none text-center w-full uppercase tracking-wide shrink-0 min-w-[115px] lg:min-w-0 ${
                     isSelected
                       ? 'text-white'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -237,7 +237,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           <button
             type="button"
             onClick={handlePrev}
-            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-12 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Previous service"
             title="Previous Service"
           >
@@ -249,7 +249,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           <button
             type="button"
             onClick={handleNext}
-            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-12 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Next service"
             title="Next Service"
           >
@@ -503,11 +503,29 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </motion.div>
           </AnimatePresence>
 
-          {/* Mobile & Tablet Slide Tracker Indicator */}
+          {/* Mobile & Tablet Slide Tracker Indicator & Controls */}
           <div className="flex lg:hidden items-center justify-between mt-4 px-2">
-            <span className="text-[11px] text-slate-400 font-mono">
-              Discipline <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {totalServices}
-            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
+                aria-label="Previous service"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
+                aria-label="Next service"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <span className="text-[11px] text-slate-400 font-mono ml-1">
+                Discipline <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {totalServices}
+              </span>
+            </div>
 
             {/* Step Indicator Bars (Curved Rectangles) */}
             <div className="flex items-center gap-1.5">

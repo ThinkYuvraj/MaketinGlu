@@ -88,7 +88,7 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="relative w-full min-h-\[auto\] lg:min-h-\[90vh\] xl:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />

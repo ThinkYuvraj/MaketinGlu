@@ -136,7 +136,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
+      className="relative w-full min-h-\[auto\] lg:min-h-\[90vh\] xl:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -179,7 +179,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   key={pkg.id}
                   type="button"
                   onClick={() => handleSelectPackage(tabIdx)}
-                  className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[38px] select-none text-center w-full uppercase tracking-wide ${
+                  className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-\[44px\] select-none text-center w-full uppercase tracking-wide ${
                     isSelected
                       ? 'text-white'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -233,7 +233,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <button
             type="button"
             onClick={handlePrev}
-            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-12 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Previous package"
             title="Previous Package"
           >
@@ -245,7 +245,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-12 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Next package"
             title="Next Package"
           >
@@ -438,11 +438,29 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Mobile & Tablet Slide Tracker Indicator */}
+          {/* Mobile & Tablet Slide Tracker Indicator & Controls */}
           <div className="flex lg:hidden items-center justify-between mt-4 sm:mt-5 px-2">
-            <span className="text-[11px] text-slate-400 font-mono">
-              Tier <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {packagesData.length}
-            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
+                aria-label="Previous package"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
+                aria-label="Next package"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <span className="text-[11px] text-slate-400 font-mono ml-1">
+                Tier <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {packagesData.length}
+              </span>
+            </div>
 
             {/* Step Indicator Bars (Curved Rectangles) */}
             <div className="flex items-center gap-1.5">

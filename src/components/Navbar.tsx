@@ -484,7 +484,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="relative z-50 w-full max-w-sm sm:max-w-md h-full bg-[#080d1a] border-l border-slate-800 shadow-2xl flex flex-col justify-between overflow-hidden"
+              className="relative z-50 w-full h-full bg-[#080d1a] border-l border-slate-800 shadow-2xl flex flex-col justify-between overflow-hidden"
             >
               {/* Drawer Top Header */}
               <div className="p-4 sm:p-5 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/80">

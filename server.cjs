@@ -18540,9 +18540,9 @@ var require_array_flatten = __commonJS({
   }
 });
 
-// node_modules/path-to-regexp/index.js
+// node_modules/express/node_modules/path-to-regexp/index.js
 var require_path_to_regexp = __commonJS({
-  "node_modules/path-to-regexp/index.js"(exports2, module2) {
+  "node_modules/express/node_modules/path-to-regexp/index.js"(exports2, module2) {
     module2.exports = pathToRegexp;
     var MATCHING_GROUP_REGEXP = /\\.|\((?:\?<(.*?)>)?(?!\?)/g;
     function pathToRegexp(path4, keys, options) {
@@ -24858,7 +24858,7 @@ var cookies_default = Cookies;
 
 // node_modules/nodemailer/dist/esm/package-info.js
 var name = "nodemailer";
-var version = "10.0.12";
+var version = "10.0.13";
 var homepage = "https://nodemailer.com/";
 
 // node_modules/nodemailer/dist/esm/fetch/index.js
@@ -28548,6 +28548,58 @@ function _recoverAddrSpec(data) {
   data.address = address;
   data.text = [data.text].concat(rest).filter((part) => part).join(" ");
 }
+function _stripAddressComments(address) {
+  const comments = [];
+  let result = "";
+  let comment = "";
+  let depth = 0;
+  let closer = "";
+  let lastChar = "";
+  for (let i = 0, len = address.length; i < len; i++) {
+    const chr = address.charAt(i);
+    if (depth) {
+      if (chr === "\\" && i < len - 1) {
+        comment += address.charAt(++i);
+      } else if (chr === "(") {
+        depth++;
+        comment += chr;
+      } else if (chr === ")" && !--depth) {
+        comments.push(comment.trim());
+        comment = "";
+        if (lastChar !== "@" && address.charAt(i + 1) !== "@") {
+          result += " ";
+          lastChar = " ";
+        }
+      } else {
+        comment += chr;
+      }
+      continue;
+    }
+    if (closer) {
+      if (chr === "\\" && closer === '"' && i < len - 1) {
+        result += chr + address.charAt(++i);
+        lastChar = address.charAt(i);
+        continue;
+      }
+      if (chr === closer) {
+        closer = "";
+      }
+    } else if (chr === '"') {
+      closer = '"';
+    } else if (chr === "[") {
+      closer = "]";
+    } else if (chr === "(") {
+      depth = 1;
+      continue;
+    }
+    result += chr;
+    lastChar = chr;
+  }
+  if (depth) {
+    comments.push(comment.trim());
+  }
+  return { address: result.trim(), comments: comments.filter((text) => text) };
+}
 function _handleAddress(tokens, depth) {
   let isGroup = false;
   let state = "text";
@@ -28635,6 +28687,22 @@ function _handleAddress(tokens, depth) {
       group: groupMembers
     });
   } else {
+    const addressComments = [];
+    const addressParts = [];
+    for (const part of data.address) {
+      if (part.indexOf("(") < 0) {
+        addressParts.push(part);
+        continue;
+      }
+      const stripped = _stripAddressComments(part);
+      for (const comment of stripped.comments) {
+        addressComments.push(comment);
+      }
+      if (stripped.address) {
+        addressParts.push(stripped.address);
+      }
+    }
+    data.address = addressParts;
     if (!data.address.length && data.text.length) {
       for (let i = data.text.length - 1; i >= 0; i--) {
         if (!data.textWasQuoted[i] && ADDR_SPEC.test(data.text[i])) {
@@ -28682,6 +28750,9 @@ function _handleAddress(tokens, depth) {
       data.text = "";
     }
     _recoverAddrSpec(data);
+    if (!data.text && addressComments.length) {
+      data.text = addressComments.join(" ");
+    }
     const address = {
       address: data.address || data.text || "",
       name: data.text || data.address || ""
@@ -33027,17 +33098,19 @@ var SMTPConnection = class extends import_node_events2.EventEmitter {
     if (/[ -]AUTH\b/i.test(str)) {
       this.allowsAuth = true;
     }
-    if (/[ -]AUTH(?:(\s+|=)[^\n]*\s+|\s+|=)PLAIN/i.test(str)) {
-      this._supportedAuth.push("PLAIN");
+    const authMechanisms = /* @__PURE__ */ new Set();
+    for (const line of this._ehloLines) {
+      const authMatch = /^AUTH[\s=](.*)/i.exec(line);
+      if (authMatch) {
+        for (const mechanism of authMatch[1].split(/[\s=]+/)) {
+          authMechanisms.add(mechanism.toUpperCase());
+        }
+      }
     }
-    if (/[ -]AUTH(?:(\s+|=)[^\n]*\s+|\s+|=)LOGIN/i.test(str)) {
-      this._supportedAuth.push("LOGIN");
-    }
-    if (/[ -]AUTH(?:(\s+|=)[^\n]*\s+|\s+|=)CRAM-MD5/i.test(str)) {
-      this._supportedAuth.push("CRAM-MD5");
-    }
-    if (/[ -]AUTH(?:(\s+|=)[^\n]*\s+|\s+|=)XOAUTH2/i.test(str)) {
-      this._supportedAuth.push("XOAUTH2");
+    for (const mechanism of ["PLAIN", "LOGIN", "CRAM-MD5", "XOAUTH2"]) {
+      if (authMechanisms.has(mechanism)) {
+        this._supportedAuth.push(mechanism);
+      }
     }
     if (match = str.match(/[ -]SIZE(?:[ \t]+(\d+))?/im)) {
       this._supportedExtensions.push("SIZE");

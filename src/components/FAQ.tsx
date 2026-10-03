@@ -155,7 +155,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
   return (
     <section 
       id="faq" 
-      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden scroll-mt-20 lg:scroll-mt-24"
+      className="relative w-full min-h-auto lg:min-h-[90vh] xl:min-h-screen py-10 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden scroll-mt-20 lg:scroll-mt-24"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -285,7 +285,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
             </div>
 
             {/* Scrollable Flexbox Container: More width, less height */}
-            <div className="flex-1 w-full flex flex-col space-y-2 max-h-[220px] sm:max-h-[240px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
+            <div className="flex-1 w-full flex flex-col space-y-2 max-h-[320px] sm:max-h-[360px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
               {filteredFaqs.length === 0 ? (
                 <div className="text-center py-6 px-4 rounded-xl border border-slate-800 bg-[#090e1c] my-auto">
                   <HelpCircle className="w-7 h-7 text-slate-500 mx-auto mb-2" />

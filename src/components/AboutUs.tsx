@@ -195,7 +195,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   return (
     <section
       id="about"
-      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-auto lg:min-h-[90vh] xl:min-h-screen py-10 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Top ambient line glow */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-sky-500/30 to-transparent pointer-events-none" />
@@ -310,7 +310,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       key={pillar.id || tabIdx}
                       type="button"
                       onClick={() => handleSelectPillar(tabIdx)}
-                      className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[38px] select-none text-center ${
+                      className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-\[44px\] select-none text-center ${
                         isSelected
                           ? 'text-white'
                           : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'

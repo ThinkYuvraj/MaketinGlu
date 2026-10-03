@@ -284,7 +284,7 @@ export default function PerformanceStats() {
   return (
     <section 
       id="growth" 
-      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-brand-bg border-t border-slate-800/80 overflow-hidden"
+      className="relative w-full min-h-\[auto\] lg:min-h-\[90vh\] xl:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-brand-bg border-t border-slate-800/80 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -344,7 +344,7 @@ export default function PerformanceStats() {
                     key={stat.id}
                     type="button"
                     onClick={() => handleSelectStat(tabIdx)}
-                    className={`group relative flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-9.5 select-none text-center uppercase tracking-wide ${
+                    className={`group relative flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-\[44px\] select-none text-center uppercase tracking-wide ${
                       isSelected
                         ? 'text-white'
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'

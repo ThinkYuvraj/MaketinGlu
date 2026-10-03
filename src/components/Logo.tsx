@@ -11,9 +11,9 @@ export default function Logo({
   size = 'md',
 }: LogoProps) {
   const imgHeights = {
-    sm: 'h-8 sm:h-9',
-    md: 'h-9 sm:h-10 md:h-11',
-    lg: 'h-12 sm:h-14 md:h-16',
+    sm: 'h-6 sm:h-7 md:h-8',
+    md: 'h-7 sm:h-8 md:h-9',
+    lg: 'h-10 sm:h-12 md:h-14',
   };
 
   const logoSrc = '/images/marketingglu_icon.webp';
@@ -22,7 +22,7 @@ export default function Logo({
   if (variant === 'light-badge' || variant === 'auto') {
     return (
       <div 
-        className={`inline-flex items-center bg-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl shadow-xs border border-slate-200 hover:shadow-md transition-all ${className}`}
+        className={`inline-flex items-center bg-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl shadow-xs border border-slate-200 hover:shadow-md transition-all ${className}`}
         id="MarketinGlu-brand-logo"
       >
         <img 
@@ -39,7 +39,7 @@ export default function Logo({
   if (variant === 'dark-badge') {
     return (
       <div 
-        className={`inline-flex items-center bg-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border border-slate-200 shadow-md ${className}`}
+        className={`inline-flex items-center bg-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl border border-slate-200 shadow-md ${className}`}
         id="MarketinGlu-brand-logo-dark"
       >
         <img 

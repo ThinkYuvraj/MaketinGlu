@@ -25,8 +25,8 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
       className="relative w-full min-h-[100dvh] lg:h-[100dvh] pt-24 sm:pt-32 lg:pt-36 pb-3 sm:pb-4 flex flex-col justify-between items-center bg-[#060a12] overflow-hidden select-none scroll-mt-28"
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-175 h-45 sm:h-85 bg-cyan-500/10 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 right-4 sm:right-10 w-50 sm:w-75 h-50 sm:h-75 bg-blue-600/5 blur-[90px] sm:blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-[22rem] h-36 sm:h-[14rem] bg-cyan-500/10 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-4 sm:right-10 w-40 sm:w-[18rem] h-40 sm:h-[18rem] bg-blue-600/5 blur-[90px] sm:blur-[120px] rounded-full pointer-events-none" />
 
       {/* Main Hero Body */}
       <div className="flex-1 flex flex-col justify-center items-center w-full relative z-10 px-3 sm:px-4 py-2 sm:py-4">
@@ -44,8 +44,8 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             </div>
 
             {/* Main Headline */}
-            <h1 className="tracking-tight leading-none mb-3 sm:mb-4 text-balance">
-              <span className="block text-[3rem] min-[380px]:text-[3.5rem] min-[440px]:text-[4rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] 2xl:text-[7.5rem] font-black mb-1 sm:mb-2 drop-shadow-2xl leading-[0.95]">
+            <h1 className="tracking-tight leading-none mb-3 sm:mb-4 text-balance w-full max-w-full">
+              <span className="block text-[2rem] min-[360px]:text-[2.35rem] min-[400px]:text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[5.25rem] xl:text-[6.25rem] 2xl:text-[7.25rem] font-black mb-1 sm:mb-2 drop-shadow-2xl leading-[0.95] tracking-tight">
                 <span className="text-white italic tracking-tighter">MARKETIN</span>
                 <span className="bg-linear-to-r from-sky-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent not-italic tracking-tight">GLU</span>
               </span>
