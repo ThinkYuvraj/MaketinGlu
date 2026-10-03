@@ -195,7 +195,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
   return (
     <section
       id="about"
-      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-0 pt-6 sm:pt-8 lg:pt-10 pb-10 sm:pb-12 lg:pb-14 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Top ambient line glow */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-sky-500/30 to-transparent pointer-events-none" />
