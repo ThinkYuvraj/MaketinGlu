@@ -268,15 +268,6 @@ export default function PerformanceStats() {
           </div>
         </div>
 
-        {/* Bottom Impact KPI Badge */}
-        <div className="mt-4 p-2.5 sm:p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 group-hover:border-cyan-500/30 transition-all shadow-sm">
-          <div className="flex items-center justify-between text-xs font-mono uppercase font-bold text-slate-400 tracking-wider mb-1">
-            <span>{item.metricLabel}</span>
-          </div>
-          <div className="text-xs sm:text-sm font-black text-cyan-300 font-mono tracking-tight">
-            {item.metricValue}
-          </div>
-        </div>
       </div>
     );
   };
