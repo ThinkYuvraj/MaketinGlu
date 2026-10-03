@@ -40,7 +40,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             {/* Location / Capability Badge */}
             <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/40 text-[10px] sm:text-xs font-bold tracking-wider text-cyan-400 uppercase mb-3 sm:mb-5 shadow-sm shadow-cyan-950/50">
               <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 shrink-0" />
-              <span className="truncate max-w-[260px] sm:max-w-none">{config.locationBadge}</span>
+              <span className="truncate max-w-65 sm:max-w-none">{config.locationBadge}</span>
             </div>
 
             {/* Main Headline with prominent MarketinGlu size and fluid mobile scaling */}
@@ -61,7 +61,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             </p>
 
             {/* Action Buttons with identical height, balanced padding, and touch-optimized size */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-[280px] sm:max-w-none mx-auto mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-70 sm:max-w-none mx-auto mb-6 sm:mb-8">
               {/* Primary CTA */}
               <motion.button
                 {...buttonHoverMotion}
