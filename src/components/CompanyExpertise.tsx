@@ -180,7 +180,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
         {/* MOBILE & TABLET VIEW (lg:hidden): Interactive Caret Carousel Showcase for Services */}
         <div className="block lg:hidden relative max-w-xl mx-auto w-full mt-3">
-          {/* Horizontal Scrollable Capsule/Pill Categorization Dock */}
+          {/* Horizontal Scrollable Curved Rectangle Categorization Dock */}
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2.5 mb-3 w-full px-1">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
@@ -191,7 +191,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   key={srv.id}
                   type="button"
                   onClick={() => handleSelectService(tabIdx)}
-                  className={`rounded-full px-4 py-2 text-xs font-bold tracking-wide transition-all shrink-0 flex items-center gap-2 cursor-pointer uppercase select-none ${
+                  className={`rounded-xl px-4 py-2 text-xs font-bold tracking-wide transition-all shrink-0 flex items-center gap-2 cursor-pointer uppercase select-none ${
                     isSelected
                       ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
                       : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
@@ -258,7 +258,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   </div>
 
                   {activeService.metricBadge && (
-                    <div className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-emerald-300 bg-emerald-950/90 border border-emerald-500/40 px-2.5 py-1 rounded-full font-bold backdrop-blur-md">
+                    <div className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-emerald-300 bg-emerald-950/90 border border-emerald-500/40 px-2.5 py-1 rounded-lg font-bold backdrop-blur-md">
                       <TrendingUp className="w-3 h-3 text-emerald-400" />
                       <span>{activeService.metricBadge}</span>
                     </div>
@@ -344,9 +344,9 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
         {/* DESKTOP VIEW (hidden lg:block): Interactive Dock Bar + 3D Showcase Carousel */}
         <div className="hidden lg:block w-full">
-          {/* INTERACTIVE TOP SERVICES FULL BAR DOCK (3-Col Grid on Mobile, 6-Col Grid on Tablet & Desktop) */}
-          <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-4">
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
+          {/* INTERACTIVE TOP SERVICES FULL BAR DOCK */}
+          <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
               {services.map((srv, tabIdx) => {
                 const isSelected = tabIdx === safeCurrentIndex;
                 const TabIcon = getExpertiseIcon(srv);
@@ -356,32 +356,14 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     key={srv.id}
                     type="button"
                     onClick={() => handleSelectService(tabIdx)}
-                    className={`group relative flex items-center justify-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[36px] sm:min-h-[40px] select-none text-center w-full uppercase tracking-wide ${isSelected
-                        ? 'text-white'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-                      }`}
+                    className={`group relative flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer min-h-[40px] select-none text-center w-full uppercase tracking-wide ${
+                      isSelected
+                        ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                        : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
+                    }`}
                   >
-                    {/* Animated Active Background Capsule */}
-                    {isSelected && (
-                      <motion.div
-                        layoutId="activeServiceTabCapsule"
-                        className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                      />
-                    )}
-
-                    {/* Icon Badge */}
-                    <div
-                      className={`relative z-10 w-4 h-4 sm:w-4.5 sm:h-4.5 rounded-md flex items-center justify-center shrink-0 transition-all ${isSelected
-                          ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
-                          : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
-                        }`}
-                    >
-                      <TabIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    </div>
-
-                    {/* Tab Label */}
-                    <span className="relative z-10 tracking-tight font-bold truncate text-[10px] sm:text-xs uppercase">
+                    <TabIcon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-slate-950 stroke-[2.5]' : 'text-cyan-400'}`} />
+                    <span className="tracking-tight font-bold truncate text-[10px] sm:text-xs uppercase whitespace-nowrap">
                       {srv.tabLabel}
                     </span>
                   </button>

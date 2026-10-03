@@ -165,9 +165,9 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </p>
         </div>
 
-        {/* INTERACTIVE PACKAGE CAPSULE FLOATING DOCK */}
+        {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
         <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-          <div className="flex sm:grid grid-cols-3 gap-2 p-1.5 rounded-full bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none">
+          <div className="flex sm:grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none">
             {packagesData.map((pkg, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');
@@ -179,7 +179,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   key={pkg.id}
                   type="button"
                   onClick={() => handleSelectPackage(tabIdx)}
-                  className={`group relative flex items-center justify-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer min-h-[40px] select-none text-center uppercase tracking-wide shrink-0 sm:shrink ${
+                  className={`group relative flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer min-h-[40px] select-none text-center uppercase tracking-wide shrink-0 sm:shrink ${
                     isSelected
                       ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
                       : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
@@ -190,7 +190,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     {pkg.name.replace(' Package', '')}
                   </span>
                   {pkg.popular && (
-                    <span className={`hidden sm:inline-block text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full shrink-0 ${
+                    <span className={`hidden sm:inline-block text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md shrink-0 ${
                       isSelected ? 'bg-slate-950/20 text-slate-950' : 'bg-amber-400/20 text-amber-300 border border-amber-400/40'
                     }`}>
                       Popular
