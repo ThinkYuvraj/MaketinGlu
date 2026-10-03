@@ -53,7 +53,7 @@ function AppContent() {
   const { currentRoute, navigateTo } = useNavigation();
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [consultationService, setConsultationService] = useState<string>('Digital Marketing Audit');
-  const [showPreloader, setShowPreloader] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(false);
 
   // Force strict scroll to top landing on initial mount
   useEffect(() => {

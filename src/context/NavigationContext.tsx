@@ -132,6 +132,9 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
 
   useEffect(() => {
     const handleLocationChange = () => {
+      if (!window.location.hash || window.location.hash === '#') {
+        window.history.replaceState(null, '', '#/');
+      }
       const parsed = parsePathAndHash();
       setCurrentRoute(parsed);
 
