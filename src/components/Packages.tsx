@@ -426,16 +426,6 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   </div>
                 </div>
 
-                {/* Bottom Assurance Badge */}
-                <div className="pt-2 border-t border-slate-800/80 mt-auto flex items-center justify-between text-xs text-slate-400">
-                  <span className="flex items-center gap-1.5 text-cyan-300 font-medium">
-                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                    <span>Turnkey sprint scope with zero vendor lock-in</span>
-                  </span>
-                  <span className="font-mono text-slate-400 text-xs">
-                    100% Milestone Audited
-                  </span>
-                </div>
               </div>
             </motion.div>
           </AnimatePresence>
