@@ -12,6 +12,7 @@ import {
   Crown
 } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
+import { useNavigation } from '../context/NavigationContext';
 import Container from './common/Container';
 import { buttonHoverMotion } from '../lib/animations';
 import { PackageItem } from '../types';
@@ -22,6 +23,7 @@ interface PackagesProps {
 
 export default function Packages({ onSelectPackage }: PackagesProps) {
   const { config } = useSiteConfig();
+  const { navigateToPackageDetail } = useNavigation();
   const packagesData = config.packages && config.packages.length > 0 ? config.packages : [];
   const totalPackages = packagesData.length;
 
@@ -350,9 +352,19 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                         <ShieldCheck className="w-4 h-4 text-cyan-400" />
                         <span>Included Turnkey Deliverables ({totalFeatures})</span>
                       </span>
-                      <span className="text-cyan-400 font-mono text-[11px]">
-                        Full Scope Unlocked
-                      </span>
+                      <motion.button
+                        {...buttonHoverMotion}
+                        type="button"
+                        onClick={() => {
+                          if (isDraggingRef.current) return;
+                          navigateToPackageDetail(currentPkg.id);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 hover:text-white text-[11px] font-mono font-bold tracking-tight transition-all shadow-sm hover:shadow-cyan-500/20 cursor-pointer group/btn"
+                        title="View all N facilities and full scope breakdown"
+                      >
+                        <span>Full Scope Unlocked</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover/btn:translate-x-0.5 transition-transform stroke-[2.5]" />
+                      </motion.button>
                     </div>
 
                     {/* Turnkey Deliverables: Clean Bullet Points on Mobile, 2-Column Cards Grid on Desktop/Tablet */}

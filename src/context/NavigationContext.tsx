@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { expertiseData } from '../data/expertiseData';
 
-export type RouteType = 'home' | 'services-index' | 'service-detail' | 'blogs' | 'blog-detail' | 'admin' | 'privacy' | 'terms';
+export type RouteType = 'home' | 'services-index' | 'service-detail' | 'packages-index' | 'package-detail' | 'blogs' | 'blog-detail' | 'admin' | 'privacy' | 'terms';
 
 export interface RouteState {
   type: RouteType;
   serviceId?: string;
+  packageId?: string;
   blogSlug?: string;
   anchor?: string;
   path: string;
@@ -15,6 +16,8 @@ interface NavigationContextType {
   currentRoute: RouteState;
   navigateTo: (path: string) => void;
   navigateToService: (serviceId: string) => void;
+  navigateToPackages: () => void;
+  navigateToPackageDetail: (packageId: string) => void;
   navigateToBlogs: () => void;
   navigateToBlogDetail: (slug: string) => void;
   navigateToHome: (anchor?: string) => void;
@@ -45,6 +48,12 @@ function parsePathAndHash(): RouteState {
     }
     if (rawHash === 'services' || rawHash === 'expertise') {
       return { type: 'services-index', path: '#/services' };
+    }
+    if (rawHash === 'packages' || rawHash === 'pricing' || rawHash === 'plans') {
+      return { type: 'packages-index', path: '#/packages' };
+    }
+    if (['basic', 'advance', 'pro'].includes(rawHash)) {
+      return { type: 'package-detail', packageId: rawHash, path: `#/packages/${rawHash}` };
     }
     if (rawHash === 'privacy' || rawHash === 'privacy-policy') {
       return { type: 'privacy', path: '#/privacy' };
@@ -80,6 +89,15 @@ function parsePathAndHash(): RouteState {
 
   if (routePath === '/services' || routePath === '/services/') {
     return { type: 'services-index', path: '#/services' };
+  }
+
+  if (routePath === '/packages' || routePath === '/packages/' || routePath === '/pricing' || routePath === '/pricing/') {
+    return { type: 'packages-index', path: '#/packages' };
+  }
+
+  const pkgMatch = routePath.match(/^\/(?:packages|pricing|plans)\/([a-zA-Z0-9_-]+)/);
+  if (pkgMatch) {
+    return { type: 'package-detail', packageId: pkgMatch[1].toLowerCase(), path: `#/packages/${pkgMatch[1]}` };
   }
 
   if (routePath === '/blogs' || routePath === '/blogs/' || routePath === '/resources' || routePath === '/resources/') {
@@ -125,6 +143,10 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         }
       } else if (parsed.type === 'services-index') {
         document.title = "Core Digital Marketing Services & Solutions | MarketinGlu";
+      } else if (parsed.type === 'packages-index') {
+        document.title = "Service Packages & Turnkey Facilities Scope | MarketinGlu";
+      } else if (parsed.type === 'package-detail' && parsed.packageId) {
+        document.title = `${parsed.packageId.toUpperCase()} Package Scope & Facilities | MarketinGlu`;
       } else if (parsed.type === 'blogs') {
         document.title = "Marketing Insights, Guides & Growth Resources | MarketinGlu";
       } else if (parsed.type === 'blog-detail') {
@@ -179,6 +201,14 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
     navigateTo(`/services/${serviceId}`);
   };
 
+  const navigateToPackages = () => {
+    navigateTo('/packages');
+  };
+
+  const navigateToPackageDetail = (packageId: string) => {
+    navigateTo(`/packages/${packageId}`);
+  };
+
   const navigateToBlogs = () => {
     navigateTo('/blogs');
   };
@@ -213,6 +243,8 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         currentRoute,
         navigateTo,
         navigateToService,
+        navigateToPackages,
+        navigateToPackageDetail,
         navigateToBlogs,
         navigateToBlogDetail,
         navigateToHome,

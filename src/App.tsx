@@ -31,6 +31,8 @@ const ConsultationModal = lazy(() => import('./components/ConsultationModal'));
 const AdminApp = lazy(() => import('./admin/AdminApp'));
 const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
 const ServicesIndexPage = lazy(() => import('./pages/ServicesIndexPage'));
+const PackagesIndexPage = lazy(() => import('./pages/PackagesIndexPage'));
+const PackageDetailPage = lazy(() => import('./pages/PackageDetailPage'));
 const BlogsPage = lazy(() => import('./pages/BlogsPage'));
 const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
@@ -190,6 +192,17 @@ function AppContent() {
               ) : currentRoute.type === 'services-index' ? (
                 /* Dedicated All 6 Services Directory (#/services) */
                 <ServicesIndexPage 
+                  onOpenConsultation={handleOpenConsultation} 
+                />
+              ) : currentRoute.type === 'packages-index' ? (
+                /* Dedicated All Packages Directory (#/packages) */
+                <PackagesIndexPage 
+                  onOpenConsultation={handleOpenConsultation} 
+                />
+              ) : currentRoute.type === 'package-detail' ? (
+                /* Dedicated Package Scope Detail Page (#/packages/:id) */
+                <PackageDetailPage 
+                  packageId={currentRoute.packageId}
                   onOpenConsultation={handleOpenConsultation} 
                 />
               ) : currentRoute.type === 'blogs' ? (
