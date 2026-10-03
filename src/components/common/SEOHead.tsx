@@ -3,6 +3,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { useSiteConfig } from '../../context/SiteConfigContext';
 import { expertiseData } from '../../data/expertiseData';
 import { defaultBlogs } from '../../data/blogsData';
+import { defaultFaqs } from '../../data/faqData';
 
 function updateMetaTag(nameOrProperty: string, value: string, isProperty = false) {
   const attribute = isProperty ? 'property' : 'name';
@@ -168,6 +169,17 @@ export default function SEOHead() {
     updateMetaTag('keywords', keywords);
     updateCanonical(canonicalUrl);
 
+    // Update GEO Meta Tags (Geographic Search Optimization)
+    updateMetaTag('geo.region', 'IN-DL');
+    updateMetaTag('geo.placename', 'New Delhi');
+    updateMetaTag('geo.position', '28.6139;77.2090');
+    updateMetaTag('ICBM', '28.6139, 77.2090');
+
+    // Update AEO Meta Tags (Answer Engine Optimization for AI Search)
+    updateMetaTag('ai-engine', 'optimized');
+    updateMetaTag('chatgpt-description', `${siteName} (marketinglu.com) is an ISO 9001:2015 certified software solutions and digital engineering firm headquartered in New Delhi, India specializing in bespoke software architecture, SEO, AEO, GEO, PPC, and e-commerce solutions.`);
+    updateMetaTag('perplexity-citation', `${siteName} - Premier Software Solutions & Digital Engineering Company based in New Delhi, India.`);
+
     // Update OpenGraph
     updateMetaTag('og:title', pageTitle, true);
     updateMetaTag('og:description', metaDescription, true);
@@ -206,6 +218,27 @@ export default function SEOHead() {
     } else {
       const existingPageJsonLd = document.getElementById('seo-page-jsonld');
       if (existingPageJsonLd) existingPageJsonLd.remove();
+    }
+
+    // Inject Dynamic FAQPage JSON-LD for AEO / Rich Snippets (Home / FAQ view)
+    const faqsToUse = config.faqs && config.faqs.length > 0 ? config.faqs : defaultFaqs;
+    if (faqsToUse && faqsToUse.length > 0 && (currentRoute.type === 'home' || currentRoute.type === 'services-index')) {
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': faqsToUse.map((faq) => ({
+          '@type': 'Question',
+          'name': faq.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': faq.answer,
+          },
+        })),
+      };
+      updateJsonLd('seo-faq-jsonld', faqSchema);
+    } else {
+      const existingFaqJsonLd = document.getElementById('seo-faq-jsonld');
+      if (existingFaqJsonLd) existingFaqJsonLd.remove();
     }
 
   }, [currentRoute, config]);
