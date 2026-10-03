@@ -224,29 +224,6 @@ export default function Testimonials() {
             </AnimatePresence>
           </div>
 
-          {/* Compact Slide Tracker Indicator */}
-          <div className="flex items-center justify-between mt-3 px-2">
-            <span className="text-[11px] text-slate-400 font-mono">
-              Review <span className="text-cyan-400 font-bold">{currentIndex + 1}</span> of {totalReviews}
-            </span>
-
-            {/* Step Indicator Bars */}
-            <div className="flex items-center gap-1.5">
-              {carouselTestimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => handleSelectReview(idx)}
-                  className={`h-1.5 rounded-sm transition-all cursor-pointer ${
-                    idx === currentIndex
-                      ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                      : 'w-2 bg-slate-800 hover:bg-slate-600'
-                  }`}
-                  aria-label={`Go to review ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
 
       </Container>

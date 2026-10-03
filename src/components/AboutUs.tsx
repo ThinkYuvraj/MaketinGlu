@@ -463,29 +463,6 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Mobile & Tablet Slide Tracker Indicator */}
-              <div className="flex lg:hidden items-center justify-between mt-3 px-1">
-                <span className="text-[10px] font-mono text-slate-400">
-                  Pillar <span className="text-cyan-400 font-bold">{safeIndex + 1}</span> of {totalPillars}
-                </span>
-
-                {/* Step Indicator Bars */}
-                <div className="flex items-center gap-1">
-                  {pillars.map((_, dotIdx) => (
-                    <button
-                      key={dotIdx}
-                      type="button"
-                      onClick={() => handleSelectPillar(dotIdx)}
-                      className={`h-1 rounded-xs transition-all cursor-pointer ${
-                        dotIdx === safeIndex
-                          ? 'w-5 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                          : 'w-1.5 bg-slate-800 hover:bg-slate-600'
-                      }`}
-                      aria-label={`Go to pillar ${dotIdx + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
 
           </div>

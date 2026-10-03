@@ -456,29 +456,6 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                   </AnimatePresence>
                 </div>
 
-                {/* Mobile/Tablet Slide Tracker Indicator */}
-                <div className="flex items-center justify-between mt-4 px-2">
-                  <span className="text-[11px] text-slate-400 font-mono">
-                    Case Study <span className="text-cyan-400 font-bold">{currentIndex + 1}</span> of {totalCases}
-                  </span>
-
-                  {/* Step Indicator Bars */}
-                  <div className="flex items-center gap-1.5">
-                    {casesList.map((_, dotIdx) => (
-                      <button
-                        key={dotIdx}
-                        type="button"
-                        onClick={() => handleSelectTab(dotIdx)}
-                        className={`h-1.5 rounded-sm transition-all cursor-pointer ${
-                          dotIdx === currentIndex
-                            ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                            : 'w-2 bg-slate-800 hover:bg-slate-600'
-                        }`}
-                        aria-label={`Go to case study ${dotIdx + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
               </div>
             </>
           );

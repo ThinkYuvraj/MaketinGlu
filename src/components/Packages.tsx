@@ -165,9 +165,9 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           </p>
         </div>
 
-        {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
+        {/* INTERACTIVE PACKAGE CAPSULE FLOATING DOCK */}
         <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-          <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
+          <div className="flex sm:grid grid-cols-3 gap-2 p-1.5 rounded-full bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none">
             {packagesData.map((pkg, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');
@@ -179,40 +179,20 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   key={pkg.id}
                   type="button"
                   onClick={() => handleSelectPackage(tabIdx)}
-                  className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-\[44px\] select-none text-center w-full uppercase tracking-wide ${
+                  className={`group relative flex items-center justify-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer min-h-[40px] select-none text-center uppercase tracking-wide shrink-0 sm:shrink ${
                     isSelected
-                      ? 'text-white'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                      ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                      : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                   }`}
                 >
-                  {/* Animated Active Background Curved Rectangle */}
-                  {isSelected && (
-                    <motion.div
-                      layoutId="activePackageTabCapsule"
-                      className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
-                  )}
-
-                  {/* Icon Badge */}
-                  <div
-                    className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-all ${
-                      isSelected
-                        ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
-                        : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
-                    }`}
-                  >
-                    <TabIcon className="w-3 h-3" />
-                  </div>
-
-                  {/* Tab Label */}
-                  <span className="relative z-10 tracking-tight font-bold truncate text-[11px] sm:text-xs uppercase">
+                  <TabIcon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-slate-950 font-black' : 'text-cyan-400'}`} />
+                  <span className="tracking-tight font-bold truncate text-[11px] sm:text-xs uppercase whitespace-nowrap">
                     {pkg.name.replace(' Package', '')}
                   </span>
-
-                  {/* Popular Badge */}
                   {pkg.popular && (
-                    <span className="hidden sm:inline-block relative z-10 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/40 shrink-0">
+                    <span className={`hidden sm:inline-block text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full shrink-0 ${
+                      isSelected ? 'bg-slate-950/20 text-slate-950' : 'bg-amber-400/20 text-amber-300 border border-amber-400/40'
+                    }`}>
                       Popular
                     </span>
                   )}
@@ -438,29 +418,6 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Mobile & Tablet Slide Tracker Indicator */}
-          <div className="flex lg:hidden items-center justify-between mt-4 sm:mt-5 px-2">
-            <span className="text-[11px] text-slate-400 font-mono">
-              Tier <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {packagesData.length}
-            </span>
-
-            {/* Step Indicator Bars (Curved Rectangles) */}
-            <div className="flex items-center gap-1.5">
-              {packagesData.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  type="button"
-                  onClick={() => handleSelectPackage(dotIdx)}
-                  className={`h-1.5 rounded-sm transition-all cursor-pointer ${
-                    dotIdx === safeCurrentIndex
-                      ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                      : 'w-2 bg-slate-800 hover:bg-slate-600'
-                  }`}
-                  aria-label={`Go to package ${dotIdx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
 
 

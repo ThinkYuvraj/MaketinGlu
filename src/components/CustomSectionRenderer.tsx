@@ -213,29 +213,6 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                 </AnimatePresence>
               </div>
 
-              {/* Mobile & Tablet Slide Tracker Indicator */}
-              <div className="flex items-center justify-between mt-4 px-2">
-                <span className="text-[11px] text-slate-400 font-mono">
-                  Feature <span className="text-cyan-400 font-bold">{currentCardIndex + 1}</span> of {totalItems}
-                </span>
-
-                {/* Step Indicator Bars */}
-                <div className="flex items-center gap-1.5">
-                  {items.map((_, dotIdx) => (
-                    <button
-                      key={dotIdx}
-                      type="button"
-                      onClick={() => setCurrentCardIndex(dotIdx)}
-                      className={`h-1.5 rounded-sm transition-all cursor-pointer ${
-                        dotIdx === currentCardIndex
-                          ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                          : 'w-2 bg-slate-800 hover:bg-slate-600'
-                      }`}
-                      aria-label={`Go to card ${dotIdx + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
           </>
         )}

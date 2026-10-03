@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
-import { 
-  Sparkles, 
-  ArrowRight, 
-  Clock, 
-  TrendingUp, 
-  Check, 
-  ShieldCheck, 
-  ChevronLeft, 
-  ChevronRight, 
+import {
+  Sparkles,
+  ArrowRight,
+  Clock,
+  TrendingUp,
+  Check,
+  ShieldCheck,
+  ChevronLeft,
+  ChevronRight,
   ChevronDown,
   ChevronUp,
-  Layers, 
-  Cpu, 
+  Layers,
+  Cpu,
   Award,
   BarChart3,
   CheckCircle2,
@@ -131,13 +131,13 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   };
 
   const totalDeliverables = activeService.deliverables?.length || 0;
-  const displayedDeliverables = isDeliverablesExpanded 
-    ? activeService.deliverables 
+  const displayedDeliverables = isDeliverablesExpanded
+    ? activeService.deliverables
     : activeService.deliverables?.slice(0, 6);
 
   return (
-    <section 
-      id="expertise" 
+    <section
+      id="expertise"
       className="relative w-full min-h-0 pt-6 sm:pt-8 lg:pt-10 pb-10 sm:pb-12 lg:pb-14 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
     >
       {/* Top subtle glow line */}
@@ -158,7 +158,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <div className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] bg-sky-600/10 blur-[160px] rounded-full pointer-events-none" />
 
       <Container className="relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5">
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
@@ -180,8 +180,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
         {/* MOBILE & TABLET VIEW (lg:hidden): Interactive Caret Carousel Showcase for Services */}
         <div className="block lg:hidden relative max-w-xl mx-auto w-full mt-3">
-          {/* Top Quick Category Pill Buttons */}
-          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-2 mb-2.5 w-full">
+          {/* Horizontal Scrollable Capsule/Pill Categorization Dock */}
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2.5 mb-3 w-full px-1">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const TabIcon = getExpertiseIcon(srv);
@@ -191,14 +191,14 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   key={srv.id}
                   type="button"
                   onClick={() => handleSelectService(tabIdx)}
-                  className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer uppercase ${
+                  className={`rounded-full px-4 py-2 text-xs font-bold tracking-wide transition-all shrink-0 flex items-center gap-2 cursor-pointer uppercase select-none ${
                     isSelected
-                      ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-md shadow-cyan-500/25'
-                      : 'bg-[#091020]/90 text-slate-400 border border-slate-800 hover:text-slate-200'
+                      ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                      : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                   }`}
                 >
-                  <TabIcon className="w-3.5 h-3.5" />
-                  <span>{srv.tabLabel}</span>
+                  <TabIcon className="w-4 h-4 shrink-0" />
+                  <span className="whitespace-nowrap">{srv.tabLabel}</span>
                 </button>
               );
             })}
@@ -339,49 +339,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </motion.div>
           </AnimatePresence>
 
-          {/* Caret Navigation Controls & Progress Tracker */}
-          <div className="flex items-center justify-between mt-3.5 px-1">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="w-8 h-8 rounded-xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10"
-                aria-label="Previous service"
-                title="Previous Service"
-              >
-                <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="w-8 h-8 rounded-xl bg-slate-900/90 border border-cyan-500/40 text-cyan-300 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10"
-                aria-label="Next service"
-                title="Next Service"
-              >
-                <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-              </button>
-              <span className="text-[11px] font-mono text-slate-300 ml-1">
-                Discipline <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {totalServices}
-              </span>
-            </div>
 
-            {/* Step Indicator Dots */}
-            <div className="flex items-center gap-1.5">
-              {services.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  type="button"
-                  onClick={() => handleSelectService(dotIdx)}
-                  className={`h-1.5 rounded-sm transition-all cursor-pointer ${
-                    dotIdx === safeCurrentIndex
-                      ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                      : 'w-2 bg-slate-800 hover:bg-slate-600'
-                  }`}
-                  aria-label={`Go to service ${dotIdx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* DESKTOP VIEW (hidden lg:block): Interactive Dock Bar + 3D Showcase Carousel */}
@@ -398,11 +356,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     key={srv.id}
                     type="button"
                     onClick={() => handleSelectService(tabIdx)}
-                    className={`group relative flex items-center justify-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[36px] sm:min-h-[40px] select-none text-center w-full uppercase tracking-wide ${
-                      isSelected
+                    className={`group relative flex items-center justify-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[36px] sm:min-h-[40px] select-none text-center w-full uppercase tracking-wide ${isSelected
                         ? 'text-white'
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-                    }`}
+                      }`}
                   >
                     {/* Animated Active Background Capsule */}
                     {isSelected && (
@@ -415,11 +372,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
                     {/* Icon Badge */}
                     <div
-                      className={`relative z-10 w-4 h-4 sm:w-4.5 sm:h-4.5 rounded-md flex items-center justify-center shrink-0 transition-all ${
-                        isSelected
+                      className={`relative z-10 w-4 h-4 sm:w-4.5 sm:h-4.5 rounded-md flex items-center justify-center shrink-0 transition-all ${isSelected
                           ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
                           : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
-                      }`}
+                        }`}
                     >
                       <TabIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </div>
@@ -435,7 +391,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           </div>
 
           {/* MAIN 3D INTERACTIVE SERVICE SPOTLIGHT SHOWCASE (Widescreen Landscape Rounded Rectangle Card) */}
-          <div 
+          <div
             className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8 mt-2 sm:mt-4"
             style={{ perspective: 1200 }}
             onMouseEnter={() => setIsPaused(true)}
@@ -526,11 +482,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                       <button
                         type="button"
                         onClick={() => setCardTab('deliverables')}
-                        className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${
-                          cardTab === 'deliverables' 
-                            ? 'bg-cyan-500 text-slate-950 shadow-sm' 
+                        className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${cardTab === 'deliverables'
+                            ? 'bg-cyan-500 text-slate-950 shadow-sm'
                             : 'text-slate-400 hover:text-white'
-                        }`}
+                          }`}
                       >
                         <ShieldCheck className="w-3.5 h-3.5" />
                         <span>Deliverables ({totalDeliverables})</span>
@@ -539,11 +494,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                       <button
                         type="button"
                         onClick={() => setCardTab('pillars')}
-                        className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${
-                          cardTab === 'pillars' 
-                            ? 'bg-cyan-500 text-slate-950 shadow-sm' 
+                        className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${cardTab === 'pillars'
+                            ? 'bg-cyan-500 text-slate-950 shadow-sm'
                             : 'text-slate-400 hover:text-white'
-                        }`}
+                          }`}
                       >
                         <Layers className="w-3.5 h-3.5" />
                         <span>Strategic Pillars</span>
@@ -552,11 +506,10 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                       <button
                         type="button"
                         onClick={() => setCardTab('tech')}
-                        className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${
-                          cardTab === 'tech' 
-                            ? 'bg-cyan-500 text-slate-950 shadow-sm' 
+                        className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${cardTab === 'tech'
+                            ? 'bg-cyan-500 text-slate-950 shadow-sm'
                             : 'text-slate-400 hover:text-white'
-                        }`}
+                          }`}
                       >
                         <Cpu className="w-3.5 h-3.5" />
                         <span>Stack &amp; SLA</span>
@@ -572,8 +525,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                       >
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {displayedDeliverables?.slice(0, 4).map((deliv, dIdx) => (
-                            <div 
-                              key={dIdx} 
+                            <div
+                              key={dIdx}
                               className="flex items-start gap-2 p-2 rounded-xl bg-slate-900/50 hover:bg-slate-900 border border-slate-800/80 hover:border-cyan-500/30 transition-colors text-xs text-slate-200 min-h-[42px]"
                             >
                               <div className="w-4 h-4 rounded-md bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5 text-cyan-400">
