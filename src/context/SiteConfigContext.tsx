@@ -364,14 +364,14 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'marketinglu_cms_site_config_v10';
+const STORAGE_KEY = 'marketinglu_cms_site_config_v11';
 
 const hydrateServices = (raw: ExpertiseItem[]): ExpertiseItem[] => {
   return raw.map((s) => {
     const defaultService = expertiseData.find((d) => d.id === s.id);
-    // Only use saved image if it is an explicit base64 data-URL or live https URL; otherwise always use bundled asset
-    const isCustomUpload = s.image && (s.image.startsWith('data:image/') || s.image.startsWith('http://') || s.image.startsWith('https://'));
-    const resolvedImage = isCustomUpload ? s.image : (defaultService?.image || s.image || '');
+    const isStaleBuildAsset = s.image && (s.image.startsWith('/assets/') || s.image.includes('B0kTyj2w') || s.image.includes('2gkmjmzq'));
+    const isCustomUpload = s.image && !isStaleBuildAsset && (s.image.startsWith('data:image/') || s.image.startsWith('http://') || s.image.startsWith('https://'));
+    const resolvedImage = isCustomUpload ? s.image : (defaultService?.image || '');
 
     return {
       ...defaultService,
@@ -386,7 +386,7 @@ const hydrateSectionImages = (rawImages?: Record<string, string>): Record<string
   if (!rawImages) return {};
   const cleaned: Record<string, string> = {};
   for (const [key, val] of Object.entries(rawImages)) {
-    if (val && (val.startsWith('data:image/') || val.startsWith('http://') || val.startsWith('https://'))) {
+    if (val && !val.startsWith('/assets/') && (val.startsWith('data:image/') || val.startsWith('http://') || val.startsWith('https://'))) {
       cleaned[key] = val;
     }
   }
