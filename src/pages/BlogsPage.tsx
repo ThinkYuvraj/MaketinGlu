@@ -116,7 +116,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
             </span>
           </h1>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center lg:text-justify">
             Battle-tested digital marketing blueprints, technical SEO frameworks, and conversion optimization playbooks written by senior strategists who manage multi-crore campaigns.
           </p>
         </div>

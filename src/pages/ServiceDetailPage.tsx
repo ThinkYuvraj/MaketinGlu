@@ -96,7 +96,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
               </div>
 
               {/* Narrative Summary */}
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed lg:text-justify">
                 {service.summary}
               </p>
 
@@ -229,7 +229,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
               Four Strategic Foundations Behind Every Project
             </h2>
-            <p className="mt-3 text-slate-400 text-xs sm:text-sm md:text-base">
+            <p className="mt-3 text-slate-400 text-xs sm:text-sm md:text-base lg:text-justify">
               Engineered without compromises. Here is how our architecture ensures compounding value for your business.
             </p>
           </div>
