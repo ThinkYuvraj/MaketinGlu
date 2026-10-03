@@ -463,29 +463,11 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Mobile & Tablet Slide Tracker Indicator & Caret Controls */}
+              {/* Mobile & Tablet Slide Tracker Indicator */}
               <div className="flex lg:hidden items-center justify-between mt-3 px-1">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={handlePrev}
-                    className="w-7 h-7 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
-                    aria-label="Previous strategic pillar"
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="w-7 h-7 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
-                    aria-label="Next strategic pillar"
-                  >
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="text-[10px] font-mono text-slate-400 ml-1">
-                    Pillar <span className="text-cyan-400 font-bold">{safeIndex + 1}</span> of {totalPillars}
-                  </span>
-                </div>
+                <span className="text-[10px] font-mono text-slate-400">
+                  Pillar <span className="text-cyan-400 font-bold">{safeIndex + 1}</span> of {totalPillars}
+                </span>
 
                 {/* Step Indicator Bars */}
                 <div className="flex items-center gap-1">

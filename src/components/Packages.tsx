@@ -438,29 +438,11 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </motion.div>
           </AnimatePresence>
 
-          {/* Mobile & Tablet Slide Tracker Indicator & Controls */}
+          {/* Mobile & Tablet Slide Tracker Indicator */}
           <div className="flex lg:hidden items-center justify-between mt-4 sm:mt-5 px-2">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
-                aria-label="Previous package"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
-                aria-label="Next package"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-              <span className="text-[11px] text-slate-400 font-mono ml-1">
-                Tier <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {packagesData.length}
-              </span>
-            </div>
+            <span className="text-[11px] text-slate-400 font-mono">
+              Tier <span className="text-cyan-400 font-bold">{safeCurrentIndex + 1}</span> of {packagesData.length}
+            </span>
 
             {/* Step Indicator Bars (Curved Rectangles) */}
             <div className="flex items-center gap-1.5">
