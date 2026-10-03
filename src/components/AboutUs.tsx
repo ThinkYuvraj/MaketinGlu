@@ -383,7 +383,15 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
                   dragElastic={0.15}
+                  onDragStart={() => setIsPaused(true)}
+                  onTouchStart={() => setIsPaused(true)}
+                  onTouchEnd={() => setIsPaused(false)}
+                  onTouchCancel={() => setIsPaused(false)}
+                  onPointerDown={() => setIsPaused(true)}
+                  onPointerUp={() => setIsPaused(false)}
+                  onPointerCancel={() => setIsPaused(false)}
                   onDragEnd={(_, info) => {
+                    setIsPaused(false);
                     const swipeThreshold = 35;
                     const velocityThreshold = 180;
                     if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

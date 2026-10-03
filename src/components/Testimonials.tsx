@@ -168,7 +168,15 @@ export default function Testimonials() {
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.15}
+                onDragStart={() => setIsAutoPlaying(false)}
+                onTouchStart={() => setIsAutoPlaying(false)}
+                onTouchEnd={() => setIsAutoPlaying(true)}
+                onTouchCancel={() => setIsAutoPlaying(true)}
+                onPointerDown={() => setIsAutoPlaying(false)}
+                onPointerUp={() => setIsAutoPlaying(true)}
+                onPointerCancel={() => setIsAutoPlaying(true)}
                 onDragEnd={(_, info) => {
+                  setIsAutoPlaying(true);
                   const swipeThreshold = 35;
                   const velocityThreshold = 180;
                   if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

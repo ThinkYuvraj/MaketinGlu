@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import {
   Sparkles,
@@ -88,6 +88,20 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
     setIsDeliverablesExpanded(false);
     setCurrentIndex(index);
   };
+
+  const mobileTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const desktopTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const activeMobile = mobileTabRefs.current[safeCurrentIndex];
+    if (activeMobile) {
+      activeMobile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+    const activeDesktop = desktopTabRefs.current[safeCurrentIndex];
+    if (activeDesktop) {
+      activeDesktop.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, [safeCurrentIndex]);
 
   // Auto-swipe every 4 seconds (pauses on hover)
   useEffect(() => {
@@ -181,7 +195,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         {/* MOBILE & TABLET VIEW (lg:hidden): Interactive Caret Carousel Showcase for Services */}
         <div className="block lg:hidden relative max-w-xl mx-auto w-full mt-3">
           {/* Horizontal Scrollable Curved Rectangle Categorization Dock */}
-          <div className="flex flex-row items-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full mb-3">
+          <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full mb-3 px-2">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const TabIcon = getExpertiseIcon(srv);
@@ -189,6 +203,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               return (
                 <button
                   key={srv.id}
+                  ref={(el) => { mobileTabRefs.current[tabIdx] = el; }}
                   type="button"
                   onClick={() => handleSelectService(tabIdx)}
                   className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer uppercase tracking-wide select-none ${
@@ -220,7 +235,15 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.18}
+              onDragStart={() => setIsPaused(true)}
+              onTouchStart={() => setIsPaused(true)}
+              onTouchEnd={() => setIsPaused(false)}
+              onTouchCancel={() => setIsPaused(false)}
+              onPointerDown={() => setIsPaused(true)}
+              onPointerUp={() => setIsPaused(false)}
+              onPointerCancel={() => setIsPaused(false)}
               onDragEnd={(_, info) => {
+                setIsPaused(false);
                 const swipeThreshold = 35;
                 const velocityThreshold = 180;
                 if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
@@ -235,7 +258,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               <div className="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500" />
 
               {/* Service Visual Header Image */}
-              <div className="relative w-full h-32 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#090e1c] group mb-2.5">
+              <div className="relative w-full h-28 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#090e1c] group mb-2.5">
                 <img
                   src={
                     (config.sectionImages?.[activeService.id] && (config.sectionImages[activeService.id].startsWith('data:image/') || config.sectionImages[activeService.id].startsWith('http')))
@@ -252,37 +275,14 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     }
                   }}
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-[#060a14]/95 via-[#060a14]/35 to-transparent pointer-events-none" />
-
-                {/* Floating Category & Metric Badges */}
-                <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/90 border border-cyan-500/40 text-cyan-300 text-[10px] sm:text-xs font-mono font-bold uppercase backdrop-blur-md">
-                    <ActiveIcon className="w-3.5 h-3.5" />
-                    <span>{activeService.category || 'Discipline'}</span>
-                  </div>
-
-                  {activeService.metricBadge && (
-                    <div className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-emerald-300 bg-emerald-950/90 border border-emerald-500/40 px-2.5 py-1 rounded-lg font-bold backdrop-blur-md">
-                      <TrendingUp className="w-3 h-3 text-emerald-400" />
-                      <span>{activeService.metricBadge}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="absolute bottom-2.5 left-3 z-10">
-                  <span className="text-xs font-bold text-cyan-400 uppercase tracking-wide font-mono">
-                    {activeService.subtitle}
-                  </span>
-                </div>
               </div>
 
-              {/* Title & Summary */}
-              <h3 className="text-lg sm:text-xl font-black text-white tracking-tight leading-snug">
+              {/* Title & Subtitle (Summary paragraph removed) */}
+              <h3 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug">
                 {activeService.title}
               </h3>
-
-              <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
-                {activeService.summary}
+              <p className="text-xs font-bold text-cyan-400 mt-0.5">
+                {activeService.subtitle}
               </p>
 
               {/* Inclusions / Deliverables Preview */}
@@ -350,7 +350,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         <div className="hidden lg:block w-full">
           {/* INTERACTIVE TOP SERVICES FULL BAR DOCK */}
           <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-            <div className="flex flex-row items-center justify-center sm:justify-start gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none">
+            <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none px-2">
               {services.map((srv, tabIdx) => {
                 const isSelected = tabIdx === safeCurrentIndex;
                 const TabIcon = getExpertiseIcon(srv);
@@ -358,6 +358,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                 return (
                   <button
                     key={srv.id}
+                    ref={(el) => { desktopTabRefs.current[tabIdx] = el; }}
                     type="button"
                     onClick={() => handleSelectService(tabIdx)}
                     className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none uppercase tracking-wide shrink-0 ${
@@ -452,16 +453,13 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                       </div>
                     </div>
 
-                    {/* Title & Subtitle */}
-                    <div className="min-h-[75px] sm:min-h-[70px]">
+                    {/* Title & Subtitle (Summary paragraph removed) */}
+                    <div>
                       <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
                         {activeService.title}
                       </h3>
                       <p className="text-xs sm:text-sm font-bold text-cyan-400 mt-0.5">
                         {activeService.subtitle}
-                      </p>
-                      <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2 lg:text-justify">
-                        {activeService.summary}
                       </p>
                     </div>
                   </div>
@@ -593,7 +591,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
                 {/* RIGHT COLUMN: Visual Showcase & Performance Gauge */}
                 <div className="lg:col-span-5 order-1 lg:order-2 flex flex-col justify-between h-full space-y-3 sm:space-y-4">
-                  <div className="relative w-full h-44 sm:h-64 lg:h-full lg:min-h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-[#090e1c] group flex flex-col justify-end">
+                  <div className="relative w-full h-40 sm:h-52 lg:h-full lg:min-h-[220px] rounded-2xl sm:rounded-3xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-[#090e1c] group flex flex-col justify-end">
                     <img
                       src={
                         (config.sectionImages?.[activeService.id] && (config.sectionImages[activeService.id].startsWith('data:image/') || config.sectionImages[activeService.id].startsWith('http')))

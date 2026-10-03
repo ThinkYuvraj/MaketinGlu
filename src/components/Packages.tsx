@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { 
   Sparkles, 
@@ -110,6 +110,15 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
     }),
   };
 
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const activeEl = tabRefs.current[safeCurrentIndex];
+    if (activeEl) {
+      activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, [safeCurrentIndex]);
+
   if (!currentPkg) return null;
 
   const isPopular = !!currentPkg.popular;
@@ -166,8 +175,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         </div>
 
         {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
-        <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-          <div className="flex flex-row items-center justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none">
+        <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-1 sm:px-2 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
+          <div className="flex flex-row items-center justify-start sm:justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none px-2">
             {packagesData.map((pkg, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');
@@ -177,20 +186,21 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               return (
                 <button
                   key={pkg.id}
+                  ref={(el) => { tabRefs.current[tabIdx] = el; }}
                   type="button"
                   onClick={() => handleSelectPackage(tabIdx)}
-                  className={`group relative flex flex-row items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none uppercase tracking-wide shrink-0 ${
+                  className={`group relative flex flex-row items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none uppercase tracking-wide shrink-0 ${
                     isSelected
                       ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
                       : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                   }`}
                 >
-                  <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
+                  <div className={`w-4 sm:w-5 h-4 sm:h-5 rounded-lg flex items-center justify-center shrink-0 ${
                     isSelected ? 'bg-slate-950 text-cyan-400 font-black' : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
                   }`}>
                     <TabIcon className="w-3 h-3 stroke-[2.5]" />
                   </div>
-                  <span className="tracking-tight font-bold text-xs uppercase whitespace-nowrap">
+                  <span className="tracking-tight font-bold text-[11px] sm:text-xs uppercase whitespace-nowrap">
                     {pkg.name.replace(' Package', '')}
                   </span>
                   {pkg.popular && (
@@ -249,7 +259,15 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.15}
+              onDragStart={() => setIsPaused(true)}
+              onTouchStart={() => setIsPaused(true)}
+              onTouchEnd={() => setIsPaused(false)}
+              onTouchCancel={() => setIsPaused(false)}
+              onPointerDown={() => setIsPaused(true)}
+              onPointerUp={() => setIsPaused(false)}
+              onPointerCancel={() => setIsPaused(false)}
               onDragEnd={(_, info) => {
+                setIsPaused(false);
                 const swipeThreshold = 35;
                 const velocityThreshold = 180;
                 if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
