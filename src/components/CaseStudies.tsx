@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { 
   ArrowUpRight, 
@@ -31,6 +31,16 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const triggerTemporaryPause = () => {
+    setIsPaused(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 4500);
+  };
 
   const casesList = config.caseStudies && config.caseStudies.length > 0 ? config.caseStudies : caseStudiesData;
   const totalCases = casesList.length;
@@ -48,7 +58,18 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const handleSelectTab = (idx: number) => {
     setSlideDirection(idx > currentIndex ? 'right' : 'left');
     setCurrentIndex(idx);
+    triggerTemporaryPause();
   };
+
+  // 4.5-Second Auto-Swipe Timer
+  useEffect(() => {
+    if (isPaused || totalCases <= 1) return;
+    const interval = setInterval(() => {
+      setSlideDirection('right');
+      setCurrentIndex((prev) => (prev + 1) % totalCases);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [currentIndex, isPaused, totalCases]);
 
   const mobileSlideVariants: Variants = {
     enter: (direction: 'left' | 'right') => ({
@@ -83,20 +104,20 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
       <Container>
         {/* Centered Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-snug sm:leading-tight lg:whitespace-nowrap text-center">
             {config.casesSectionTitle1 || 'Case Studies &'}{' '}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-400">
               {config.casesSectionTitle2 || 'Recent Work'}
             </span>
           </h2>
 
-          <p className="mt-2 text-slate-400 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands across D2C, SaaS, and retail.'}
           </p>
         </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { TrendingUp, CheckCircle2, Sparkles, Zap, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
@@ -17,6 +17,7 @@ export default function PerformanceStats() {
   const stats = [
     {
       id: 'web-dev',
+      tabLabel: 'Core',
       percentage: config.stats.webDesign,
       badge: "Core Vitals & Speed",
       label: "Customized Web & App Dev",
@@ -33,6 +34,7 @@ export default function PerformanceStats() {
     },
     {
       id: 'ecommerce',
+      tabLabel: 'Funnels',
       percentage: config.stats.ecommerce,
       badge: "Conversion Architecture",
       label: "E-Commerce Architecture",
@@ -49,6 +51,7 @@ export default function PerformanceStats() {
     },
     {
       id: 'branding',
+      tabLabel: 'Visual',
       percentage: config.stats.design,
       badge: "Visual Authority",
       label: "Brand Identity & Design",
@@ -65,6 +68,7 @@ export default function PerformanceStats() {
     },
     {
       id: 'smo',
+      tabLabel: 'Organic',
       percentage: config.stats.smo,
       badge: "Organic Amplification",
       label: "SMO & Social Media Reach",
@@ -82,6 +86,15 @@ export default function PerformanceStats() {
   ];
 
   const totalStats = stats.length;
+  const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const triggerTemporaryPause = () => {
+    setIsPaused(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 4500);
+  };
 
   const handleNext = useCallback(() => {
     setSlideDirection('right');
@@ -96,16 +109,18 @@ export default function PerformanceStats() {
   const handleSelectStat = (idx: number) => {
     setSlideDirection(idx > currentIndex ? 'right' : 'left');
     setCurrentIndex(idx);
+    triggerTemporaryPause();
   };
 
-  // Auto-rotation timer for mobile view
+  // 4-Second Auto-Swipe Timer with smooth continuous cycling
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
-      handleNext();
-    }, 5500);
+      setSlideDirection('right');
+      setCurrentIndex((prev) => (prev + 1) % totalStats);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [isPaused, handleNext]);
+  }, [currentIndex, isPaused, totalStats]);
 
   // 144Hz Smooth drag animation variants
   const mobileSlideVariants: Variants = {
@@ -146,6 +161,22 @@ export default function PerformanceStats() {
       >
         {/* Top Subtle Ambient Glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
+
+        {/* 4-Second Auto-Swipe Active Progress Indicator Line (shown on mobile) */}
+        {isMobile && (
+          <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden z-20">
+            <motion.div
+              key={`${item.id}-${isPaused}`}
+              initial={{ width: "0%" }}
+              animate={{ width: isPaused ? "0%" : "100%" }}
+              transition={{
+                duration: isPaused ? 0 : 4,
+                ease: "linear",
+              }}
+              className="h-full bg-linear-to-r from-sky-400 via-cyan-400 to-teal-300 shadow-sm shadow-cyan-400/50"
+            />
+          </div>
+        )}
 
         <div>
           {/* Top Header Badge */}
@@ -256,8 +287,6 @@ export default function PerformanceStats() {
       className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-center items-center bg-brand-bg border-t border-slate-800/80 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={() => setIsPaused(true)}
-      onTouchEnd={() => setIsPaused(false)}
     >
       {/* Top subtle ambient line glow */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -265,18 +294,18 @@ export default function PerformanceStats() {
       <Container>
         
         {/* Consistent Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 text-xs font-bold tracking-widest uppercase mb-2">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
             <span>VERIFIED CAPABILITY METRICS</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-snug sm:leading-tight lg:whitespace-nowrap text-center">
             Our Performance In{' '}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               Numbers
             </span>
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mt-2 max-w-xl mx-auto">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             Battle-tested delivery standards calibrated for sustainable growth, search dominance, and client retention.
           </p>
         </div>
@@ -340,7 +369,7 @@ export default function PerformanceStats() {
                       <TabIcon className="w-3 h-3" />
                     </div>
                     <span className="relative z-10 tracking-tight font-bold truncate text-[10px] sm:text-xs uppercase">
-                      {stat.badge.split(' ')[0]}
+                      {stat.tabLabel}
                     </span>
                   </button>
                 );
@@ -366,7 +395,9 @@ export default function PerformanceStats() {
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.2}
+                onDragStart={() => triggerTemporaryPause()}
                 onDragEnd={(_, info) => {
+                  triggerTemporaryPause();
                   const swipeThreshold = 35;
                   const velocityThreshold = 250;
                   if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

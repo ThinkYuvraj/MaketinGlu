@@ -160,20 +160,20 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR {services.length} CORE DISCIPLINES</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-snug sm:leading-tight lg:whitespace-nowrap text-center">
             End-to-End Digital Solutions{' '}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               Engineered for Growth
             </span>
           </h2>
 
-          <p className="mt-2.5 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             Eliminate fragmented vendors. Every discipline operates under one roof with dedicated senior architects in New Delhi, battle-tested playbooks, and transparent deliverables.
           </p>
         </div>
@@ -326,11 +326,11 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
                 {/* IN-CARD INTERACTIVE SWITCHER: Deliverables vs Pillars vs Tech */}
                 <div className="pt-1 flex-1 flex flex-col justify-between">
-                  <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-900/90 border border-slate-800 w-full sm:w-auto inline-flex mb-3">
+                  <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-900/90 border border-slate-800 w-full sm:w-auto inline-flex mb-3 overflow-x-auto scrollbar-none">
                     <button
                       type="button"
                       onClick={() => setCardTab('deliverables')}
-                      className={`flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                      className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${
                         cardTab === 'deliverables' 
                           ? 'bg-cyan-500 text-slate-950 shadow-sm' 
                           : 'text-slate-400 hover:text-white'
@@ -343,7 +343,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     <button
                       type="button"
                       onClick={() => setCardTab('pillars')}
-                      className={`flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                      className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${
                         cardTab === 'pillars' 
                           ? 'bg-cyan-500 text-slate-950 shadow-sm' 
                           : 'text-slate-400 hover:text-white'
@@ -356,7 +356,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     <button
                       type="button"
                       onClick={() => setCardTab('tech')}
-                      className={`flex-1 sm:flex-initial px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                      className={`flex-1 sm:flex-initial px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap ${
                         cardTab === 'tech' 
                           ? 'bg-cyan-500 text-slate-950 shadow-sm' 
                           : 'text-slate-400 hover:text-white'
@@ -454,7 +454,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
               {/* RIGHT COLUMN: Visual Showcase & Performance Gauge (order-1 on mobile/tablet so image is at the top, order-2 on desktop) */}
               <div className="lg:col-span-5 order-1 lg:order-2 flex flex-col justify-between h-full space-y-3 sm:space-y-4">
-                <div className="relative w-full h-48 sm:h-64 lg:h-full lg:min-h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-[#090e1c] group flex flex-col justify-end">
+                <div className="relative w-full h-44 sm:h-64 lg:h-full lg:min-h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-[#090e1c] group flex flex-col justify-end">
                   <img
                     src={
                       (config.sectionImages?.[activeService.id] && (config.sectionImages[activeService.id].startsWith('data:image/') || config.sectionImages[activeService.id].startsWith('http')))

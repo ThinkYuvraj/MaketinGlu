@@ -27,12 +27,6 @@
     overflow-x: hidden;
     overscroll-behavior-y: none;
   }
-
-  @media (min-width: 1024px) {
-    body {
-      zoom: 90%;
-    }
-  }
 }
 
 /* Lenis 144Hz Smooth Scrolling Support */

@@ -211,20 +211,20 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
 
       <Container className="relative z-10">
         {/* Centered Single-Frame Header Row */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14 pb-4 border-b border-slate-800/60 flex flex-col items-center justify-center">
-          <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12 pb-4 border-b border-slate-800/60 flex flex-col items-center justify-center">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{badgeText}</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-snug sm:leading-tight lg:whitespace-nowrap text-center">
             {title1}{' '}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               {title2}
             </span>
           </h2>
 
-          <p className="mt-2.5 text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {description}
           </p>
         </div>

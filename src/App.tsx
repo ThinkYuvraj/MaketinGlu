@@ -191,7 +191,7 @@ function AppContent() {
                 <>
                   {/* Section 1: Hero Section */}
                   {config.heroEnabled !== false && (
-                    <AnimatedSection id="home" delayMs={0} className="relative">
+                    <AnimatedSection id="home" delayMs={0} className="relative w-full">
                       <Hero
                         onOpenConsultation={() => handleOpenConsultation()}
                         onExplorePortfolio={handleExplorePortfolio}
