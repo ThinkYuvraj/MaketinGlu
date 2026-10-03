@@ -38,7 +38,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
             {/* Location / Capability Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#061826]/80 border border-cyan-500/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase mb-4 sm:mb-5 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-[#061826]/80 border border-cyan-500/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase mb-4 sm:mb-5 shadow-sm">
               <TrendingUp className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span className="truncate max-w-65 sm:max-w-none">{config.locationBadge}</span>
             </div>
@@ -66,7 +66,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation()}
-                className="w-full sm:w-auto h-11 sm:h-12 px-7 rounded-full bg-linear-to-r from-sky-400 via-cyan-400 to-sky-400 hover:brightness-110 active:scale-[0.98] text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all border border-cyan-300/40 touch-manipulation"
+                className="w-full sm:w-auto h-11 sm:h-12 px-7 rounded-xl bg-linear-to-r from-sky-400 via-cyan-400 to-sky-400 hover:brightness-110 active:scale-[0.98] text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all border border-cyan-300/40 touch-manipulation"
                 id="hero-btn-consultation"
               >
                 <Sparkles className="w-4 h-4 text-slate-950 shrink-0" />
@@ -78,7 +78,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
               <motion.button
                 {...buttonHoverMotion}
                 onClick={onExplorePortfolio}
-                className="w-full sm:w-auto h-11 sm:h-12 px-7 rounded-full bg-[#0a1120] hover:bg-slate-900 active:scale-[0.98] border border-slate-700/80 hover:border-cyan-500/50 text-slate-200 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md touch-manipulation"
+                className="w-full sm:w-auto h-11 sm:h-12 px-7 rounded-xl bg-[#0a1120] hover:bg-slate-900 active:scale-[0.98] border border-slate-700/80 hover:border-cyan-500/50 text-slate-200 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md touch-manipulation"
                 id="hero-btn-portfolio"
               >
                 <span className="whitespace-nowrap">{config.heroSecondaryCta}</span>
