@@ -90,9 +90,9 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
       </div>
 
       {/* Bottom Inclusions & Smooth Down Cue */}
-      <div className="w-full relative z-10 px-3 sm:px-0">
+      <div className="w-full relative z-10 px-3 sm:px-0 mt-6 sm:mt-10">
         <Container>
-          <div className="pt-3 sm:pt-3.5 border-t border-slate-800/80 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 lg:gap-8 text-[11px] sm:text-xs text-slate-300">
+          <div className="pt-4 sm:pt-5 border-t border-slate-800/80 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 lg:gap-8 text-[11px] sm:text-xs text-slate-300">
             <div className="flex items-center gap-1.5 sm:gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span className="font-medium">Turnkey Web &amp; E-Commerce</span>

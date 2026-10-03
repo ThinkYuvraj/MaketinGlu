@@ -209,7 +209,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
       <div className="absolute top-1/3 -right-24 w-80 h-80 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/3 -left-24 w-80 h-80 bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
 
-      <Container className="relative z-10 max-w-7xl mx-auto">
+      <Container className="relative z-10">
         {/* Centered Single-Frame Header Row */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-14 pb-4 border-b border-slate-800/60 flex flex-col items-center justify-center">
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-md bg-cyan-950/50 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">

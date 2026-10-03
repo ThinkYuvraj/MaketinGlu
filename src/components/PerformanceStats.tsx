@@ -241,10 +241,6 @@ export default function PerformanceStats() {
         <div className="mt-4 p-2.5 sm:p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 group-hover:border-cyan-500/30 transition-all shadow-sm">
           <div className="flex items-center justify-between text-xs font-mono uppercase font-bold text-slate-400 tracking-wider mb-1">
             <span>{item.metricLabel}</span>
-            <span className="text-xs text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-1.5 py-0.5 rounded flex items-center gap-1 font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              SLA
-            </span>
           </div>
           <div className="text-xs sm:text-sm font-black text-cyan-300 font-mono tracking-tight">
             {item.metricValue}
