@@ -84,7 +84,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
               </span>
             </div>
 
-            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed max-w-sm lg:text-justify">
               ISO 9001:2015 certified digital marketing &amp; web architecture agency engineering high-converting SEO, Google Ads, and full-stack software.
             </p>
 

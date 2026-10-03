@@ -25,8 +25,8 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
       className="relative w-full min-h-0 lg:min-h-[calc(100dvh-70px)] xl:min-h-[85vh] pt-20 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 flex flex-col justify-between items-center bg-[#070b14] overflow-hidden select-none scroll-mt-20 border-b border-slate-800/60"
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-[22rem] h-36 sm:h-[14rem] bg-cyan-500/10 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 right-4 sm:right-10 w-40 sm:w-[18rem] h-40 sm:h-[18rem] bg-blue-600/5 blur-[90px] sm:blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-[26rem] h-44 sm:h-[16rem] bg-cyan-500/15 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-4 sm:right-10 w-44 sm:w-[20rem] h-44 sm:h-[20rem] bg-blue-600/10 blur-[90px] sm:blur-[120px] rounded-full pointer-events-none" />
 
       {/* Main Hero Body */}
       <div className="flex-1 flex flex-col justify-center items-center w-full relative z-10 px-3 sm:px-4 py-2 sm:py-4">
@@ -38,8 +38,8 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
             {/* Location / Capability Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#061826]/80 border border-cyan-500/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase mb-4 sm:mb-5 shadow-sm">
-              <TrendingUp className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-950/70 backdrop-blur-xl border border-cyan-500/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase mb-4 sm:mb-5 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+              <TrendingUp className="w-3.5 h-3.5 text-cyan-400 shrink-0 animate-pulse" />
               <span className="truncate max-w-65 sm:max-w-none">{config.locationBadge}</span>
             </div>
 
