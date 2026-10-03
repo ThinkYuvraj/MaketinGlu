@@ -281,8 +281,8 @@ export default function PerformanceStats() {
       <Container>
         
         {/* Consistent Section Header */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
             <span>VERIFIED CAPABILITY METRICS</span>
           </div>

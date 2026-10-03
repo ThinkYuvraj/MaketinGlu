@@ -147,8 +147,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
       <Container className="relative z-10">
            {/* Section Header */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.packagesSectionBadge || 'TRANSPARENT SERVICE TIERS'}</span>
           </div>
@@ -160,13 +160,13 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </span>
           </h2>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {config.packagesSectionDescription || 'Engineered packages calibrated for distinct growth stages. Compare full inclusions, dedicated team allocations, and turnkey execution scopes below.'}
           </p>
         </div>
 
         {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
-        <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-2 sm:mt-4 mb-6 sm:mb-8 flex justify-center">
+        <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-1 sm:mt-2 mb-4 sm:mb-6 flex justify-center">
           <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
             {packagesData.map((pkg, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;

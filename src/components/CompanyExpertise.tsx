@@ -160,7 +160,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
       <Container className="relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-6 sm:mb-10 lg:mb-12">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5">
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>OUR {services.length} CORE DISCIPLINES</span>
@@ -173,13 +173,13 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </span>
           </h2>
 
-          <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             Eliminate fragmented vendors. Every discipline operates under one roof with dedicated senior architects in New Delhi, battle-tested playbooks, and transparent deliverables.
           </p>
         </div>
 
         {/* INTERACTIVE TOP SERVICES FULL BAR DOCK (Single-Row Flex Scroll on Mobile/Tablet, 6-Col Grid on Desktop) */}
-        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-4 mb-4 sm:mb-8">
+        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-5">
           <div className="flex overflow-x-auto lg:grid lg:grid-cols-6 scrollbar-none gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
