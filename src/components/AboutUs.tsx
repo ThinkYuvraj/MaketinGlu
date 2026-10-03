@@ -230,16 +230,16 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
         </div>
 
         {/* 2-Column Grid: Left Agency Profile & Right 3D Caret Carousel Pillars */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 lg:gap-5 items-stretch">
           
           {/* Left Column: Agency Story, Mission & Metric Badges (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-linear-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-44 h-44 bg-cyan-500/5 blur-2xl rounded-full pointer-events-none" />
+          <div className="lg:col-span-5 flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-linear-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/5 blur-2xl rounded-full pointer-events-none" />
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-6 h-6 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
                     <Compass className="w-3.5 h-3.5" />
                   </div>
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight">
@@ -252,12 +252,12 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed lg:text-justify">
+              <p className="text-xs text-slate-300 leading-relaxed line-clamp-2 lg:text-justify">
                 {story}
               </p>
 
               {/* Mission statement card */}
-              <div className="p-3 rounded-xl bg-[#040813] border border-slate-800 text-xs text-slate-200 italic font-medium leading-relaxed shadow-inner lg:text-justify">
+              <div className="p-2.5 rounded-xl bg-[#040813] border border-slate-800/90 text-xs text-slate-200 italic font-medium leading-relaxed shadow-inner line-clamp-2 lg:text-justify">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 not-italic block mb-0.5">
                   MISSION STATEMENT
                 </span>
@@ -267,7 +267,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
               {/* Value checklist */}
               <div className="grid grid-cols-1 gap-1 pt-0.5">
                 {checklist.slice(0, 3).map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
+                  <div key={idx} className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-300">
                     <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                     <span className="truncate">{item}</span>
                   </div>
@@ -276,15 +276,15 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             </div>
 
             {/* 4 Metric Badges in Compact 2x2 Grid */}
-            <div className="grid grid-cols-2 gap-2 pt-3 mt-3 border-t border-slate-800/80">
+            <div className="grid grid-cols-2 gap-1.5 pt-2.5 mt-2.5 border-t border-slate-800/80">
               {credentials.map((cred, idx) => {
                 const Icon = cred.icon;
                 return (
                   <div
                     key={idx}
-                    className="p-2 sm:p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex items-center gap-2 hover:border-cyan-500/40 transition-colors"
+                    className="p-1.5 sm:p-2 rounded-xl bg-slate-900/80 border border-slate-800/90 flex items-center gap-2 hover:border-cyan-500/40 transition-colors"
                   >
-                    <div className="w-6 h-6 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                    <div className="w-5.5 h-5.5 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
                       <Icon className="w-3 h-3" />
                     </div>
                     <div className="min-w-0">
@@ -304,9 +304,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
           {/* Right Column: 3D CARET CAROUSEL FOR 4 CORE PILLARS (7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             
-            {/* Quick-Selector Floating Dock for 4 Pillars (Responsive Grid) */}
-            <div className="w-full max-w-full mb-2.5">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1.5 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
+            {/* Quick-Selector Floating Dock for 4 Pillars */}
+            <div className="w-full max-w-full mb-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
                 {pillars.map((pillar, tabIdx) => {
                   const isSelected = tabIdx === safeIndex;
                   const TabIcon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
@@ -316,7 +316,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       key={pillar.id || tabIdx}
                       type="button"
                       onClick={() => handleSelectPillar(tabIdx)}
-                      className={`group relative flex items-center justify-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[36px] select-none text-center ${
+                      className={`group relative flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[32px] sm:min-h-[34px] select-none text-center ${
                         isSelected
                           ? 'text-white'
                           : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -332,13 +332,13 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       )}
 
                       <div
-                        className={`relative z-10 w-4.5 h-4.5 rounded-md flex items-center justify-center shrink-0 transition-all ${
+                        className={`relative z-10 w-4 h-4 rounded-md flex items-center justify-center shrink-0 transition-all ${
                           isSelected
                             ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
                             : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
                         }`}
                       >
-                        <TabIcon className="w-3 h-3" />
+                        <TabIcon className="w-2.5 h-2.5" />
                       </div>
                       <span className="relative z-10 tracking-tight font-semibold truncate text-[10px] sm:text-xs">
                         {pillar.tag}
@@ -360,22 +360,22 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="hidden lg:flex absolute -left-4 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                className="hidden lg:flex absolute -left-3.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
                 aria-label="Previous strategic pillar"
                 title="Previous Pillar"
               >
-                <ChevronLeft className="w-4 h-4 group-hover/caret:-translate-x-0.5 transition-transform" />
+                <ChevronLeft className="w-3.5 h-3.5 group-hover/caret:-translate-x-0.5 transition-transform" />
               </button>
 
               {/* Right Floating Desktop Only Next/Prev Button */}
               <button
                 type="button"
                 onClick={handleNext}
-                className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                className="hidden lg:flex absolute -right-3.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
                 aria-label="Next strategic pillar"
                 title="Next Pillar"
               >
-                <ChevronRight className="w-4 h-4 group-hover/caret:translate-x-0.5 transition-transform" />
+                <ChevronRight className="w-3.5 h-3.5 group-hover/caret:translate-x-0.5 transition-transform" />
               </button>
 
               {/* 3D Animated Spotlight Pillar Card */}
@@ -399,10 +399,10 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       handlePrev();
                     }
                   }}
-                  className="w-full h-full min-h-[260px] sm:min-h-[280px] rounded-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-4 sm:p-5 lg:p-6 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+                  className="w-full h-full min-h-[200px] sm:min-h-[220px] rounded-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-4 lg:p-4.5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
                 >
                   {/* Active Progress Indicator Line */}
-                  <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden">
+                  <div className="absolute top-0 inset-x-0 h-0.5 bg-slate-800/80 overflow-hidden">
                     <motion.div
                       key={`${activePillar.id}-${isPaused}`}
                       initial={{ width: "0%" }}
@@ -415,15 +415,15 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                     />
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-2.5">
                     {/* Pillar Badge & Icon */}
                     <div className="flex items-center justify-between">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold uppercase tracking-wider">
-                        <ActiveIcon className="w-3.5 h-3.5 text-cyan-400" />
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-[11px] font-mono font-bold uppercase tracking-wider">
+                        <ActiveIcon className="w-3 h-3 text-cyan-400" />
                         <span>{activePillar.tag}</span>
                       </div>
 
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-md">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-md">
                         <CheckCircle2 className="w-3 h-3" />
                         <span>Standard Guarantee</span>
                       </span>
@@ -431,71 +431,71 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
 
                     {/* Headline */}
                     <div>
-                      <h4 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-snug">
+                      <h4 className="text-lg sm:text-xl lg:text-2xl font-black text-white tracking-tight leading-snug">
                         {activePillar.title}
                       </h4>
                     </div>
 
                     {/* Description Narrative */}
-                    <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed lg:text-justify">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3 lg:text-justify">
                       {activePillar.description}
                     </p>
                   </div>
 
                   {/* Bottom Assurance & Verification */}
-                  <div className="pt-4 mt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-                    <div className="flex items-center gap-2 text-cyan-300 font-medium">
-                      <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <div className="pt-2.5 mt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-1.5 text-cyan-300 text-[11px] sm:text-xs font-medium">
+                      <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                       <span>100% Commercial IP &amp; Code Sovereignty</span>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => onOpenConsultation?.(activePillar.title)}
-                      className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-white font-bold cursor-pointer transition-colors"
+                      className="inline-flex items-center gap-1 text-cyan-400 hover:text-white font-bold text-[11px] sm:text-xs cursor-pointer transition-colors"
                     >
                       <span>Inquire About {activePillar.tag}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
                 </motion.div>
               </AnimatePresence>
 
               {/* Mobile & Tablet Slide Tracker Indicator & Caret Controls */}
-              <div className="flex lg:hidden items-center justify-between mt-4 px-2">
-                <div className="flex items-center gap-2">
+              <div className="flex lg:hidden items-center justify-between mt-3 px-1">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={handlePrev}
-                    className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
+                    className="w-7 h-7 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
                     aria-label="Previous strategic pillar"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="w-8 h-8 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
+                    className="w-7 h-7 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-400 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all"
                     aria-label="Next strategic pillar"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </button>
-                  <span className="text-[11px] text-slate-400 font-mono ml-1">
+                  <span className="text-[10px] font-mono text-slate-400 ml-1">
                     Pillar <span className="text-cyan-400 font-bold">{safeIndex + 1}</span> of {totalPillars}
                   </span>
                 </div>
 
                 {/* Step Indicator Bars */}
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   {pillars.map((_, dotIdx) => (
                     <button
                       key={dotIdx}
                       type="button"
                       onClick={() => handleSelectPillar(dotIdx)}
-                      className={`h-1.5 rounded-sm transition-all cursor-pointer ${
+                      className={`h-1 rounded-xs transition-all cursor-pointer ${
                         dotIdx === safeIndex
-                          ? 'w-6 bg-cyan-400 shadow-sm shadow-cyan-400/40'
-                          : 'w-2 bg-slate-800 hover:bg-slate-600'
+                          ? 'w-5 bg-cyan-400 shadow-sm shadow-cyan-400/40'
+                          : 'w-1.5 bg-slate-800 hover:bg-slate-600'
                       }`}
                       aria-label={`Go to pillar ${dotIdx + 1}`}
                     />
