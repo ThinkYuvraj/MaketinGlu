@@ -66,7 +66,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
 
 
         {/* Hero Section: Deep Dive & Visual */}
-        <div className="mt-4 sm:mt-6 lg:mt-8 rounded-3xl bg-gradient-to-b from-[#0b1328] via-[#090f1f] to-[#070b14] border border-cyan-500/30 p-6 sm:p-10 lg:p-14 shadow-2xl relative overflow-hidden mb-16">
+        <div className="mt-4 sm:mt-6 lg:mt-8 rounded-3xl bg-linear-to-b from-[#0b1328] via-[#090f1f] to-[#070b14] border border-cyan-500/30 p-6 sm:p-10 lg:p-14 shadow-2xl relative overflow-hidden mb-16">
           <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
@@ -116,7 +116,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
                     key={idx}
                     className="p-3 rounded-xl bg-[#0d162d]/90 border border-slate-800 text-left hover:border-cyan-500/40 transition-colors"
                   >
-                    <div className="text-lg sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-300">
+                    <div className="text-lg sm:text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300">
                       {stat.value}
                     </div>
                     <div className="text-[11px] font-bold text-slate-200 mt-0.5 truncate">
@@ -134,7 +134,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
                 <motion.button
                   {...buttonHoverMotion}
                   onClick={() => onOpenConsultation(service.title)}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-lg shadow-cyan-500/25 cursor-pointer min-h-[48px]"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-lg shadow-cyan-500/25 cursor-pointer min-h-[48px]"
                   id={`hero-book-${service.id}`}
                 >
                   <span>Book Free Strategy Call</span>
@@ -159,7 +159,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
             {/* Right Showcase Column: Image & Highlights */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center">
               <div className="relative group w-full max-w-lg">
-                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/30 via-sky-500/20 to-blue-600/30 rounded-3xl blur-2xl opacity-80 group-hover:opacity-100 transition duration-500" />
+                <div className="absolute -inset-2 bg-linear-to-r from-cyan-500/30 via-sky-500/20 to-blue-600/30 rounded-3xl blur-2xl opacity-80 group-hover:opacity-100 transition duration-500" />
                 
                 <div className="relative rounded-2xl bg-[#0b1324] border border-cyan-500/30 overflow-hidden shadow-2xl p-3 sm:p-4">
                   <img 
@@ -395,7 +395,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
         </div>
 
         {/* Section 5: Real Client Success Story */}
-        <div className="mb-16 p-6 sm:p-8 lg:p-10 rounded-3xl bg-gradient-to-r from-[#0b162b] to-[#0a1122] border border-cyan-500/30 relative overflow-hidden">
+        <div className="mb-16 p-6 sm:p-8 lg:p-10 rounded-3xl bg-linear-to-r from-[#0b162b] to-[#0a1122] border border-cyan-500/30 relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
             <div className="lg:col-span-8 space-y-3">
               <div className="inline-flex items-center gap-1.5 text-cyan-400 text-xs font-bold uppercase tracking-wider">
@@ -515,7 +515,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
         </div>
 
         {/* Section 8: Bottom Strategy Consultation Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border border-cyan-500/40 text-center shadow-2xl relative overflow-hidden">
+        <div className="p-8 sm:p-12 rounded-3xl bg-linear-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border border-cyan-500/40 text-center shadow-2xl relative overflow-hidden">
           <div className="max-w-2xl mx-auto space-y-4">
             <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-3 py-1 rounded-lg">
               LET'S BUILD SOMETHING EXTRAORDINARY
@@ -530,7 +530,7 @@ export default function ServiceDetailPage({ service, onOpenConsultation }: Servi
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation(`Consultation for ${service.title}`)}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 cursor-pointer"
               >
                 Book Free Consultation for {service.tabLabel}
               </motion.button>

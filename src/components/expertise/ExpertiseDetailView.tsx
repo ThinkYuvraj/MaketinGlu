@@ -125,7 +125,7 @@ export default function ExpertiseDetailView({
                 <motion.button
                   {...buttonHoverMotion}
                   onClick={() => onOpenConsultation(activeExpertise.title)}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-lg shadow-cyan-500/25 cursor-pointer min-h-[46px]"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-lg shadow-cyan-500/25 cursor-pointer min-h-[46px]"
                   id={`cta-expertise-book-${activeExpertise.id}`}
                 >
                   <span>Book Consultation</span>
@@ -160,7 +160,7 @@ export default function ExpertiseDetailView({
             {/* Right Column: Image showcase with ambient backlight */}
             <div className="lg:col-span-5 xl:col-span-5 2xl:col-span-5 flex justify-center w-full">
               <div className="relative group w-full max-w-lg xl:max-w-xl 2xl:max-w-2xl">
-                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/30 via-sky-500/20 to-blue-600/30 rounded-3xl blur-2xl opacity-75 group-hover:opacity-100 transition duration-500" />
+                <div className="absolute -inset-2 bg-linear-to-r from-cyan-500/30 via-sky-500/20 to-blue-600/30 rounded-3xl blur-2xl opacity-75 group-hover:opacity-100 transition duration-500" />
                 
                 <div 
                   onClick={() => navigateToService(activeExpertise.id)}

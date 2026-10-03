@@ -51,7 +51,7 @@ export default function PackageDeliverablesTable({
             onClick={() => setLayoutMode('bento')}
             className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               layoutMode === 'bento'
-                ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-sm shadow-cyan-500/20'
+                ? 'bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-sm shadow-cyan-500/20'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -63,7 +63,7 @@ export default function PackageDeliverablesTable({
             onClick={() => setLayoutMode('table')}
             className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               layoutMode === 'table'
-                ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-sm shadow-cyan-500/20'
+                ? 'bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 shadow-sm shadow-cyan-500/20'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -85,7 +85,7 @@ export default function PackageDeliverablesTable({
                 className="rounded-2xl bg-[#080d1a] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-lg group"
               >
                 {/* Category Header */}
-                <div className="p-4 sm:p-5 bg-gradient-to-b from-[#0e172a] to-[#0a1122] border-b border-slate-800/80">
+                <div className="p-4 sm:p-5 bg-linear-to-b from-[#0e172a] to-[#0a1122] border-b border-slate-800/80">
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 transition-transform">
                       <CategoryIcon className="w-4 h-4" />

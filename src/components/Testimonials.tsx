@@ -91,7 +91,7 @@ export default function Testimonials() {
       className="relative py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Top subtle glow line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
 
       {/* Subtle ambient light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[220px] bg-cyan-500/[0.04] blur-[120px] rounded-full pointer-events-none" />
@@ -107,7 +107,7 @@ export default function Testimonials() {
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             What Our Clients Say{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-300">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300">
               About MarketingGlu
             </span>
           </h2>
@@ -148,7 +148,7 @@ export default function Testimonials() {
         {/* COMPACT TESTIMONIAL CARD */}
         <div className="relative max-w-5xl mx-auto">
           <div
-            className="relative p-5 sm:p-6 lg:p-7 rounded-2xl bg-gradient-to-r from-[#0c1424]/95 via-[#09101d]/95 to-[#070c18]/98 border border-cyan-500/30 shadow-xl backdrop-blur-xl transition-all duration-300 group overflow-hidden"
+            className="relative p-5 sm:p-6 lg:p-7 rounded-2xl bg-linear-to-r from-[#0c1424]/95 via-[#09101d]/95 to-[#070c18]/98 border border-cyan-500/30 shadow-xl backdrop-blur-xl transition-all duration-300 group overflow-hidden"
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
             id="featured-testimonial-card"
@@ -181,7 +181,7 @@ export default function Testimonials() {
               >
                 {/* Left / Top: Reviewer Profile */}
                 <div className="lg:col-span-4 flex items-center lg:flex-col lg:items-start gap-3.5 border-b lg:border-b-0 lg:border-r border-slate-800/80 pb-4 lg:pb-0 lg:pr-6">
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${currentItem.avatarColor} flex items-center justify-center text-white font-black text-base shadow-md shadow-cyan-500/10 shrink-0`}>
+                  <div className={`w-12 h-12 rounded-2xl bg-linear-to-tr ${currentItem.avatarColor} flex items-center justify-center text-white font-black text-base shadow-md shadow-cyan-500/10 shrink-0`}>
                     {currentItem.initial}
                   </div>
                   <div>

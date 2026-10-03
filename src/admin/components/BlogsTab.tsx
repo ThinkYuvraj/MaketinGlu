@@ -229,7 +229,7 @@ export default function BlogsTab({
         <button
           type="button"
           onClick={openCreateModal}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-500 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-98 transition shadow-lg shadow-cyan-500/20 cursor-pointer shrink-0"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-linear-to-r from-cyan-500 to-sky-500 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-98 transition shadow-lg shadow-cyan-500/20 cursor-pointer shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Write New Article</span>
@@ -694,7 +694,7 @@ export default function BlogsTab({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-500 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-98 transition shadow-md shadow-cyan-500/20 cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-linear-to-r from-cyan-500 to-sky-500 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-98 transition shadow-md shadow-cyan-500/20 cursor-pointer"
                 >
                   {editingBlogId ? 'Save Changes' : 'Publish Article'}
                 </button>

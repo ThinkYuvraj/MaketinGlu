@@ -153,7 +153,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white">
       {/* Top subtle glow line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
 
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-cyan-500/5 blur-[140px] rounded-full pointer-events-none" />
@@ -169,7 +169,7 @@ export default function FAQ() {
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {config.faqSectionTitle1 || 'Frequently Asked'}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               {config.faqSectionTitle2 || 'Questions'}
             </span>
           </h2>
@@ -235,14 +235,14 @@ export default function FAQ() {
                     onClick={() => setActiveCategory(cat.id)}
                     className={`group relative inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[34px] uppercase tracking-wide ${
                       isActive
-                        ? 'bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 text-white shadow-sm shadow-cyan-400/30'
+                        ? 'bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 text-white shadow-sm shadow-cyan-400/30'
                         : 'bg-transparent text-slate-400 hover:text-white hover:bg-slate-800/40'
                     }`}
                   >
                     <div
                       className={`w-4 h-4 rounded flex items-center justify-center shrink-0 ${
                         isActive
-                          ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black'
+                          ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black'
                           : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
                       }`}
                     >
@@ -277,7 +277,7 @@ export default function FAQ() {
 
         {/* SCROLLABLE FLEXBOX LIST OF QUESTIONS (Exact match to Packages Card size) */}
         <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="w-full min-h-[560px] lg:min-h-[500px] rounded-3xl sm:rounded-[32px] overflow-hidden p-5 sm:p-7 lg:p-8 shadow-2xl backdrop-blur-2xl bg-gradient-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
+          <div className="w-full min-h-[560px] lg:min-h-[500px] rounded-3xl sm:rounded-[32px] overflow-hidden p-5 sm:p-7 lg:p-8 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
             
             {/* Scroll Guidance Header Bar */}
             <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-800/80 text-xs font-mono text-slate-400">
@@ -355,7 +355,7 @@ export default function FAQ() {
 
             <a
               href="#/services"
-              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 hover:brightness-110 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md min-h-[36px] whitespace-nowrap"
+              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 hover:brightness-110 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all shadow-md min-h-[36px] whitespace-nowrap"
             >
               <span>Services &rarr;</span>
             </a>

@@ -15,9 +15,9 @@ export default function AppointmentBanner({ onOpenConsultation }: AppointmentBan
       </div>
 
       <Container size="narrow">
-        <div className="relative overflow-hidden rounded-xl border border-cyan-500/25 bg-gradient-to-r from-slate-900/90 via-cyan-950/30 to-slate-900/90 backdrop-blur-md px-4 py-3 sm:px-6 sm:py-3.5 shadow-lg shadow-cyan-950/20">
+        <div className="relative overflow-hidden rounded-xl border border-cyan-500/25 bg-linear-to-r from-slate-900/90 via-cyan-950/30 to-slate-900/90 backdrop-blur-md px-4 py-3 sm:px-6 sm:py-3.5 shadow-lg shadow-cyan-950/20">
           {/* Subtle top accent line */}
-          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-5">
             {/* Left Content Column */}
@@ -41,7 +41,7 @@ export default function AppointmentBanner({ onOpenConsultation }: AppointmentBan
               <button
                 type="button"
                 onClick={onOpenConsultation}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-medium text-xs shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all duration-200 active:scale-95 cursor-pointer whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-medium text-xs shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all duration-200 active:scale-95 cursor-pointer whitespace-nowrap"
               >
                 <Calendar className="w-3.5 h-3.5" />
                 <span>Reserve Free Slot</span>

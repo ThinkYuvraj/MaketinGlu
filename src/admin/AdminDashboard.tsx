@@ -364,7 +364,7 @@ export default function AdminDashboard({ onBackToSite, onLogout }: AdminDashboar
           <button
             type="button"
             onClick={handleSaveAll}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-bold shadow-lg shadow-cyan-500/20 transition-all cursor-pointer min-h-[36px]"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 text-xs font-bold shadow-lg shadow-cyan-500/20 transition-all cursor-pointer min-h-[36px]"
           >
             <Save className="w-3.5 h-3.5" />
             <span>Publish Changes</span>

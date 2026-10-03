@@ -290,12 +290,12 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
               alt={blog.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#070b14]/50 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-[#070b14]/50 to-transparent" />
           </div>
         )}
 
         {/* Strategic Takeaways Box */}
-        <div className="mb-10 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-[#0c152a] to-[#090f1f] border border-cyan-500/30 shadow-lg">
+        <div className="mb-10 p-5 sm:p-6 rounded-2xl bg-linear-to-r from-[#0c152a] to-[#090f1f] border border-cyan-500/30 shadow-lg">
           <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider mb-2">
             <Sparkles className="w-4 h-4" />
             <span>EXECUTIVE BRIEFING &amp; CORE HIGHLIGHTS</span>
@@ -360,7 +360,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
         </div>
 
         {/* Inline Article CTA */}
-        <div className="mb-16 p-8 rounded-3xl bg-gradient-to-r from-cyan-950/50 via-[#0a1124] to-sky-950/50 border border-cyan-500/40 text-center space-y-4 shadow-xl">
+        <div className="mb-16 p-8 rounded-3xl bg-linear-to-r from-cyan-950/50 via-[#0a1124] to-sky-950/50 border border-cyan-500/40 text-center space-y-4 shadow-xl">
           <h3 className="text-xl sm:text-2xl font-black text-white">
             Want Us to Implement This Strategy for Your Business?
           </h3>
@@ -371,7 +371,7 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
             <button
               type="button"
               onClick={() => onOpenConsultation(blog.title)}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-500 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 shadow-lg shadow-cyan-500/20 transition cursor-pointer"
+              className="px-6 py-2.5 rounded-xl bg-linear-to-r from-cyan-500 to-sky-500 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 shadow-lg shadow-cyan-500/20 transition cursor-pointer"
             >
               Book Free Strategy Session
             </button>

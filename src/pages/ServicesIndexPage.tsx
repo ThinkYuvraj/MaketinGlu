@@ -50,7 +50,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
             End-to-End Digital Solutions{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               Engineered for Growth
             </span>
           </h1>
@@ -145,7 +145,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                 <div className="pt-2">
                   <button
                     onClick={() => navigateToService(service.id)}
-                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer min-h-[44px] group/btn"
+                    className="w-full py-3 px-4 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 hover:brightness-110 text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-md shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer min-h-[44px] group/btn"
                     id={`services-view-page-${service.id}`}
                   >
                     <span>Know More</span>
@@ -161,7 +161,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
         })()}
 
         {/* Global Strategy Consultation Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border border-cyan-500/40 text-center shadow-2xl relative overflow-hidden">
+        <div className="p-8 sm:p-12 rounded-3xl bg-linear-to-r from-sky-950 via-[#0a1b2d] to-cyan-950 border border-cyan-500/40 text-center shadow-2xl relative overflow-hidden">
           <div className="max-w-2xl mx-auto space-y-4">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
               Need a Custom Cross-Discipline Solution?
@@ -173,7 +173,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
               <motion.button
                 {...buttonHoverMotion}
                 onClick={() => onOpenConsultation('Comprehensive Multi-Service Strategy')}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-500/25 cursor-pointer"
               >
                 Book Custom Multi-Service Consultation
               </motion.button>

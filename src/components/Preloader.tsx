@@ -92,7 +92,7 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
                   ]
                 }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative z-10 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-[#0c152a] to-[#070c18] border border-cyan-400/40 backdrop-blur-xl"
+                className="relative z-10 p-3.5 sm:p-4 rounded-2xl bg-linear-to-b from-[#0c152a] to-[#070c18] border border-cyan-400/40 backdrop-blur-xl"
               >
                 <Logo variant="light-badge" size="lg" />
               </motion.div>
@@ -108,7 +108,7 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
               <span className="text-2xl sm:text-3xl font-black text-white tracking-tight italic">
                 MARKETIN
               </span>
-              <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-500 not-italic tracking-tight">
+              <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-sky-400 via-cyan-300 to-blue-500 not-italic tracking-tight">
                 GLU
               </span>
             </motion.div>
@@ -131,14 +131,14 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
               <div className="h-2 w-full bg-[#080e1e] rounded-full overflow-hidden border border-slate-800/90 p-[1.5px] relative shadow-inner">
                 {/* Active Gradient Fill */}
                 <motion.div
-                  className="h-full bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 rounded-full shadow-[0_0_14px_rgba(6,182,212,0.9)] relative overflow-hidden"
+                  className="h-full bg-linear-to-r from-sky-500 via-cyan-400 to-teal-300 rounded-full shadow-[0_0_14px_rgba(6,182,212,0.9)] relative overflow-hidden"
                   style={{ width: `${progress}%` }}
                 >
                   {/* Internal Scanning Beam */}
                   <motion.div
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
-                    className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12"
+                    className="absolute inset-0 w-1/2 bg-linear-to-r from-transparent via-white/50 to-transparent skew-x-12"
                   />
                 </motion.div>
               </div>

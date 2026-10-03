@@ -79,7 +79,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   return (
     <section id="cases" className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-[#060a13] border-t border-slate-800/80">
       {/* Top Subtle Glow Separation */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
       <Container>
         {/* Centered Section Header */}
@@ -91,7 +91,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {config.casesSectionTitle1 || 'Case Studies &'}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-400">
               {config.casesSectionTitle2 || 'Recent Work'}
             </span>
           </h2>
@@ -110,7 +110,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
             return (
               <div
-                className="rounded-2xl bg-gradient-to-b from-[#0c1324] to-[#070c18] border border-slate-800/90 hover:border-cyan-500/50 transition-all duration-300 group hover:shadow-2xl hover:shadow-cyan-950/30 flex flex-col overflow-hidden h-full select-none"
+                className="rounded-2xl bg-linear-to-b from-[#0c1324] to-[#070c18] border border-slate-800/90 hover:border-cyan-500/50 transition-all duration-300 group hover:shadow-2xl hover:shadow-cyan-950/30 flex flex-col overflow-hidden h-full select-none"
                 id={`case-card-${item.id}`}
               >
                 {/* 1. VISUAL SHOWCASE HEADER */}
@@ -134,7 +134,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         alt={item.title} 
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 rounded-lg" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#050914] via-[#050914]/60 to-black/30 rounded-lg" />
+                      <div className="absolute inset-0 bg-linear-to-t from-[#050914] via-[#050914]/60 to-black/30 rounded-lg" />
                       
                       <div className="relative z-10 flex items-center justify-between">
                         <span className="px-2.5 py-1 rounded-md bg-slate-950/90 border border-cyan-500/40 text-[10px] font-mono tracking-wider text-cyan-300 uppercase">
@@ -285,7 +285,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                         </span>
                       </div>
                       <div className="my-auto">
-                        <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-sky-400">
+                        <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-200 to-sky-400">
                           {item.stats[0]?.value} {item.stats[0]?.label}
                         </div>
                         <p className="text-xs text-slate-400 mt-1">{item.category}</p>
@@ -333,7 +333,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <div className="py-3 px-1 my-1 border-y border-slate-800/80 grid grid-cols-3 divide-x divide-slate-800/80">
                       {item.stats.slice(0, 3).map((stat, idx) => (
                         <div key={idx} className={`text-center ${idx === 0 ? 'pr-2' : idx === 1 ? 'px-2' : 'pl-2'}`}>
-                          <div className="text-base sm:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-300 font-mono leading-tight">
+                          <div className="text-base sm:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-100 to-cyan-300 font-mono leading-tight">
                             {stat.value}
                           </div>
                           <div className="text-xs text-slate-400 font-medium truncate mt-0.5">
@@ -347,7 +347,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <button
                       type="button"
                       onClick={() => setActiveCase(item)}
-                      className="w-full mt-3 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[44px]"
+                      className="w-full mt-3 py-3 px-4 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[44px]"
                     >
                       <span>Explore Full Impact Analysis</span>
                       <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -588,7 +588,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       setActiveCase(null);
                       onOpenConsultation();
                     }}
-                    className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-3 px-5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm text-center shadow-lg shadow-cyan-500/25 cursor-pointer flex items-center justify-center gap-2"
                   >
                     <span>Discuss a Similar Growth Strategy for Your Brand</span>
                     <ArrowRight className="w-4 h-4" />

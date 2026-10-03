@@ -63,7 +63,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
   return (
     <footer id="contact" className="relative bg-[#02050d] border-t border-slate-800/80 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 lg:pb-16 text-slate-400 text-xs overflow-hidden">
       {/* Top subtle glow line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 via-slate-700 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/40 via-slate-700 to-transparent pointer-events-none" />
 
       <Container>
         {/* Main Footer Grid: 1-col on mobile, 2-col on tablet, 12-col on desktop */}

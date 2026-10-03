@@ -92,7 +92,7 @@ export default function ExpertiseGridView({
       </motion.div>
 
       {/* Additional Specialized Automation Capabilities Banner */}
-      <div className="p-5 sm:p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-[#091224] via-[#0d1a33] to-[#0a1426] border border-cyan-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="p-5 sm:p-6 lg:p-8 rounded-2xl bg-linear-to-r from-[#091224] via-[#0d1a33] to-[#0a1426] border border-cyan-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300 shrink-0">
             <Bot className="w-6 h-6" />
@@ -108,7 +108,7 @@ export default function ExpertiseGridView({
         </div>
         <button
           onClick={() => onOpenConsultation("AI Chatbot & Automation Solutions")}
-          className="w-full md:w-auto shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer whitespace-nowrap min-h-[44px]"
+          className="w-full md:w-auto shrink-0 px-6 py-3 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer whitespace-nowrap min-h-[44px]"
         >
           Inquire About Automations
         </button>

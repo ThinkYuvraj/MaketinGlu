@@ -121,7 +121,7 @@ export default function ConsultationModal({
                 <div className="pt-3">
                   <button
                     onClick={handleReset}
-                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer shadow-md shadow-cyan-500/20"
+                    className="px-6 py-2.5 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 font-bold text-xs sm:text-sm hover:brightness-110 transition-all cursor-pointer shadow-md shadow-cyan-500/20"
                   >
                     Done
                   </button>
@@ -229,7 +229,7 @@ export default function ConsultationModal({
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 font-black text-xs sm:text-sm hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+                      className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-linear-to-r from-sky-500 via-cyan-400 to-teal-300 text-slate-950 font-black text-xs sm:text-sm hover:brightness-110 active:scale-[0.99] transition-all cursor-pointer shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>{isSubmitting ? 'Reserving Your Slot...' : 'Confirm Appointment Reservation'}</span>

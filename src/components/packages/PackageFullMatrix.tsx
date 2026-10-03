@@ -48,7 +48,7 @@ export default function PackageFullMatrix({
                   scope="col"
                   className={`p-6 align-top relative transition-all duration-200 ${
                     pkg.popular
-                      ? 'bg-gradient-to-b from-cyan-950/40 to-[#0c162b] border-x-2 border-cyan-400'
+                      ? 'bg-linear-to-b from-cyan-950/40 to-[#0c162b] border-x-2 border-cyan-400'
                       : 'bg-[#0b1120] border-r border-slate-800/80'
                   }`}
                 >

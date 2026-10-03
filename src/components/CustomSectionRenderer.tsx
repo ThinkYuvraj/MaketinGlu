@@ -139,7 +139,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
       className="relative flex flex-col justify-center py-10 sm:py-14 lg:py-20 bg-[#070b14] border-t border-slate-800/80"
     >
       {/* Sleek separation glow divider line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 via-slate-700/60 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/20 via-slate-700/60 to-transparent pointer-events-none" />
 
       {/* Subtle background ambient radial light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-cyan-500/[0.03] rounded-full blur-3xl pointer-events-none" />
@@ -157,7 +157,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {section.title}{' '}
             {section.titleHighlight && (
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
                 {section.titleHighlight}
               </span>
             )}
@@ -279,7 +279,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                   {section.primaryCtaText && (
                     <button
                       onClick={() => handleCtaClick(section.primaryCtaLink, section.primaryCtaText)}
-                      className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 flex items-center gap-2 cursor-pointer transition-all"
+                      className="px-6 py-3 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 flex items-center gap-2 cursor-pointer transition-all"
                     >
                       <span>{section.primaryCtaText}</span>
                       <ArrowRight className="w-4 h-4" />
@@ -308,7 +308,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-[#0c1428] to-[#070c18]">
+                  <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-linear-to-br from-[#0c1428] to-[#070c18]">
                     <div className="w-16 h-16 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 mb-4 shadow-lg shadow-cyan-500/20">
                       <Sparkles className="w-8 h-8" />
                     </div>
@@ -323,7 +323,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
 
         {/* LAYOUT: BANNER */}
         {section.layout === 'banner' && (
-          <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-r from-sky-950/70 via-[#0a1b2d] to-cyan-950/70 border border-cyan-500/30 p-8 sm:p-12 text-center relative overflow-hidden shadow-2xl">
+          <div className="max-w-5xl mx-auto rounded-3xl bg-linear-to-r from-sky-950/70 via-[#0a1b2d] to-cyan-950/70 border border-cyan-500/30 p-8 sm:p-12 text-center relative overflow-hidden shadow-2xl">
             <div className="relative z-10 max-w-3xl mx-auto space-y-6">
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                 {section.titleHighlight ? `${section.title} ${section.titleHighlight}` : section.title}
@@ -354,7 +354,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
                 key={item.id || idx}
                 className="p-6 rounded-2xl bg-[#090e1c] border border-slate-800 text-center flex flex-col justify-center items-center space-y-2"
               >
-                <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-300 font-mono">
+                <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300 font-mono">
                   {item.statValue || '100%'}
                 </div>
                 <div className="text-xs font-bold text-white">{item.title}</div>

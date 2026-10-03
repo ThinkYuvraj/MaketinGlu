@@ -198,7 +198,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
       className="scroll-mt-20 lg:scroll-mt-24 relative py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Top ambient line glow */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-sky-500/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-sky-500/30 to-transparent pointer-events-none" />
 
       {/* Anchor targets for smooth navigation without duplicate ID collisions */}
       <span id="about-us" className="absolute -top-28 sm:-top-32 pointer-events-none" />
@@ -219,7 +219,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-center">
             {title1}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               {title2}
             </span>
           </h2>
@@ -233,7 +233,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
           {/* Left Column: Agency Story, Mission & Metric Badges (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
+          <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-44 h-44 bg-cyan-500/5 blur-2xl rounded-full pointer-events-none" />
 
             <div className="space-y-4">
@@ -320,7 +320,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       {isSelected && (
                         <motion.div
                           layoutId="activeAboutPillarCapsule"
-                          className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
+                          className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
                           transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                         />
                       )}
@@ -328,7 +328,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       <div
                         className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-all ${
                           isSelected
-                            ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
+                            ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
                             : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
                         }`}
                       >
@@ -354,7 +354,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="hidden lg:flex absolute -left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-2xl bg-[#080d1a]/95 hover:bg-gradient-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                className="hidden lg:flex absolute -left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-2xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
                 aria-label="Previous strategic pillar"
                 title="Previous Pillar"
               >
@@ -365,7 +365,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-2xl bg-[#080d1a]/95 hover:bg-gradient-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-2xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
                 aria-label="Next strategic pillar"
                 title="Next Pillar"
               >
@@ -393,7 +393,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       handlePrev();
                     }
                   }}
-                  className="w-full h-full min-h-[360px] sm:min-h-[380px] rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+                  className="w-full h-full min-h-[360px] sm:min-h-[380px] rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-5 sm:p-8 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
                 >
                   {/* Active Progress Indicator Line */}
                   <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden">
@@ -405,7 +405,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                         duration: isPaused ? 0 : 4,
                         ease: "linear",
                       }}
-                      className="h-full bg-gradient-to-r from-sky-400 via-cyan-400 to-teal-300 shadow-sm shadow-cyan-400/50"
+                      className="h-full bg-linear-to-r from-sky-400 via-cyan-400 to-teal-300 shadow-sm shadow-cyan-400/50"
                     />
                   </div>
 

@@ -43,7 +43,7 @@ export default function MobileBottomBar({ onOpenConsultation }: MobileBottomBarP
         <button
           type="button"
           onClick={onOpenConsultation}
-          className="flex-[1.5] min-h-[44px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 text-xs font-black active:brightness-95 shadow-md shadow-cyan-500/20 cursor-pointer"
+          className="flex-[1.5] min-h-[44px] flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-linear-to-r from-sky-500 to-cyan-400 text-slate-950 text-xs font-black active:brightness-95 shadow-md shadow-cyan-500/20 cursor-pointer"
         >
           <Sparkles className="w-3.5 h-3.5 shrink-0" />
           <span className="truncate">Book Free Audit</span>

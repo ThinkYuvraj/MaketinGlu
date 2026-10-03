@@ -141,7 +141,7 @@ export default function PerformanceStats() {
 
     return (
       <div 
-        className="group flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#0c1424] via-[#09101d] to-[#070b14] border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 p-5 sm:p-6 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 relative overflow-hidden h-full select-none"
+        className="group flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#0c1424] via-[#09101d] to-brand-bg border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 p-5 sm:p-6 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 relative overflow-hidden h-full select-none"
         id={`stat-card-${isMobile ? 'mobile-' : ''}${idx}`}
       >
         {/* Top Subtle Ambient Glow */}
@@ -257,14 +257,14 @@ export default function PerformanceStats() {
   return (
     <section 
       id="growth" 
-      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80"
+      className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-brand-bg border-t border-slate-800/80"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
     >
       {/* Top subtle ambient line glow */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
       <span id="performance" className="absolute -top-24" />
       <Container>
         
@@ -276,7 +276,7 @@ export default function PerformanceStats() {
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Our Performance In{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               Numbers
             </span>
           </h2>
@@ -319,7 +319,7 @@ export default function PerformanceStats() {
                     key={stat.id}
                     type="button"
                     onClick={() => handleSelectStat(tabIdx)}
-                    className={`group relative flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[38px] select-none text-center uppercase tracking-wide ${
+                    className={`group relative flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-9.5 select-none text-center uppercase tracking-wide ${
                       isSelected
                         ? 'text-white'
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -329,7 +329,7 @@ export default function PerformanceStats() {
                     {isSelected && (
                       <motion.div
                         layoutId="activePerformanceStatCapsule"
-                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
+                        className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
                         transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                       />
                     )}
@@ -337,7 +337,7 @@ export default function PerformanceStats() {
                     <div
                       className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-all ${
                         isSelected
-                          ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
+                          ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
                           : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
                       }`}
                     >

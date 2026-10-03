@@ -139,7 +139,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
       className="relative flex flex-col justify-center py-16 sm:py-20 lg:py-24 bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white"
     >
       {/* Top subtle glow line */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
 
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-cyan-500/10 blur-[160px] rounded-full pointer-events-none" />
@@ -155,7 +155,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {config.packagesSectionTitle1 || 'Tailored Digital Marketing'}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-sky-300 to-blue-500">
               {config.packagesSectionTitle2 || 'Service Packages'}
             </span>
           </h2>
@@ -189,7 +189,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   {isSelected && (
                     <motion.div
                       layoutId="activePackageTabCapsule"
-                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
+                      className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -198,7 +198,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   <div
                     className={`relative z-10 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-all ${
                       isSelected
-                        ? 'bg-gradient-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
+                        ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
                         : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
                     }`}
                   >
@@ -233,7 +233,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <button
             type="button"
             onClick={handlePrev}
-            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-2xl bg-[#080d1a]/95 hover:bg-gradient-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-2xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Previous package"
             title="Previous Package"
           >
@@ -245,7 +245,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-2xl bg-[#080d1a]/95 hover:bg-gradient-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-2xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Next package"
             title="Next Package"
           >
@@ -276,8 +276,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               }}
               className={`w-full min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden p-4 sm:p-6 lg:p-8 shadow-2xl backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-stretch relative cursor-grab active:cursor-grabbing touch-pan-y ${
                 isPopular
-                  ? 'bg-gradient-to-b from-[#0f1b36]/98 via-[#0b1325]/98 to-[#070c18]/98 border-2 border-cyan-400/90 shadow-cyan-500/20'
-                  : 'bg-gradient-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-slate-800/90 shadow-cyan-500/10'
+                  ? 'bg-linear-to-b from-[#0f1b36]/98 via-[#0b1325]/98 to-[#070c18]/98 border-2 border-cyan-400/90 shadow-cyan-500/20'
+                  : 'bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-slate-800/90 shadow-cyan-500/10'
               }`}
             >
               {/* 4-Second Auto-Swipe Active Progress Indicator Line */}
@@ -290,7 +290,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     duration: isPaused ? 0 : 4,
                     ease: "linear",
                   }}
-                  className="h-full bg-gradient-to-r from-sky-400 via-cyan-400 to-teal-300 shadow-sm shadow-cyan-400/50"
+                  className="h-full bg-linear-to-r from-sky-400 via-cyan-400 to-teal-300 shadow-sm shadow-cyan-400/50"
                 />
               </div>
 
@@ -310,7 +310,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     </span>
 
                     {isPopular ? (
-                      <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                      <span className="bg-linear-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
                         <Sparkles className="w-3.5 h-3.5 fill-slate-950" />
                         <span>Most Popular</span>
                       </span>
@@ -324,7 +324,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
                       {currentPkg.name}
                     </h3>
-                    <p className="text-xs sm:text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-300 mt-1">
+                    <p className="text-xs sm:text-sm font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300 mt-1">
                       {currentPkg.highlight}
                     </p>
                     <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed line-clamp-2">
@@ -375,8 +375,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     onClick={() => onSelectPackage(currentPkg.name)}
                     className={`w-full min-h-[48px] py-3 px-5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg ${
                       isPopular
-                        ? 'bg-gradient-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/30 hover:brightness-110'
-                        : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-cyan-500/20 hover:brightness-110'
+                        ? 'bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/30 hover:brightness-110'
+                        : 'bg-linear-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-cyan-500/20 hover:brightness-110'
                     }`}
                     id={`btn-select-${currentPkg.id}`}
                   >
