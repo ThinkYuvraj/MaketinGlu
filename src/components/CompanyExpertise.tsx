@@ -173,7 +173,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             Eliminate fragmented vendors. Every discipline operates under one roof with dedicated senior architects in New Delhi, battle-tested playbooks, and transparent deliverables.
           </p>
         </div>
@@ -318,7 +318,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     <p className="text-xs sm:text-sm font-bold text-cyan-400 mt-0.5">
                       {activeService.subtitle}
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed line-clamp-2">
+                    <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed line-clamp-2 lg:text-justify">
                       {activeService.summary}
                     </p>
                   </div>

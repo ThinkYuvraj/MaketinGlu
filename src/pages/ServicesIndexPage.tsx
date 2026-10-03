@@ -55,7 +55,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
             </span>
           </h1>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             Eliminate fragmented vendors. Explore our verified domain capabilities, battle-tested methodologies, and dedicated service specifications below.
           </p>
         </div>
@@ -118,7 +118,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
                   </p>
 
                   {/* Short Summary */}
-                  <p className="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">
+                  <p className="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4 lg:text-justify">
                     {service.summary}
                   </p>
 
@@ -166,7 +166,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
               Need a Custom Cross-Discipline Solution?
             </h3>
-            <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed lg:text-justify">
               Most fast-growing brands combine Web Engineering, SEO, and Social Management for maximum market velocity. Speak with our lead digital architects to craft a tailored growth strategy.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">

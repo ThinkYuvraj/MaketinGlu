@@ -224,7 +224,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             </span>
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             {description}
           </p>
         </div>
@@ -252,12 +252,12 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-300 leading-relaxed lg:text-justify">
                 {story}
               </p>
 
               {/* Mission statement card */}
-              <div className="p-3 rounded-xl bg-[#040813] border border-slate-800 text-xs text-slate-200 italic font-medium leading-relaxed shadow-inner">
+              <div className="p-3 rounded-xl bg-[#040813] border border-slate-800 text-xs text-slate-200 italic font-medium leading-relaxed shadow-inner lg:text-justify">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 not-italic block mb-0.5">
                   MISSION STATEMENT
                 </span>
@@ -437,7 +437,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                     </div>
 
                     {/* Description Narrative */}
-                    <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed lg:text-justify">
                       {activePillar.description}
                     </p>
                   </div>

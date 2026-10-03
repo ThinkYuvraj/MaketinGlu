@@ -231,7 +231,7 @@ export default function PerformanceStats() {
           </h3>
 
           {/* Description Info */}
-          <p className="text-xs text-slate-300 text-center leading-relaxed mb-3">
+          <p className="text-xs text-slate-300 text-center lg:text-justify leading-relaxed mb-3">
             {item.description}
           </p>
 
@@ -274,7 +274,7 @@ export default function PerformanceStats() {
               Numbers
             </span>
           </h2>
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             Battle-tested delivery standards calibrated for sustainable growth, search dominance, and client retention.
           </p>
         </div>

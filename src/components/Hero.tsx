@@ -56,7 +56,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             </h1>
 
             {/* Description */}
-            <p className="max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto text-xs min-[380px]:text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-2 sm:px-4 opacity-90 text-balance line-clamp-2">
+            <p className="max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto text-xs min-[380px]:text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-2 sm:px-4 opacity-90 text-balance line-clamp-2 lg:text-justify">
               {config.heroDescription}
             </p>
 

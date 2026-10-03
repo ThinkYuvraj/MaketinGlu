@@ -112,7 +112,7 @@ export default function Testimonials() {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             Authentic reviews and quantifiable growth results directly from verified Indian client partnerships.
           </p>
 
@@ -216,7 +216,7 @@ export default function Testimonials() {
                   </div>
 
                   {/* Punchy Quote */}
-                  <blockquote className="text-sm sm:text-base text-slate-200 font-medium leading-relaxed italic">
+                  <blockquote className="text-sm sm:text-base text-slate-200 font-medium leading-relaxed italic lg:text-justify">
                     “{currentItem.quote}”
                   </blockquote>
                 </div>

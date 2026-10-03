@@ -160,7 +160,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             {config.packagesSectionDescription || 'Engineered packages calibrated for distinct growth stages. Compare full inclusions, dedicated team allocations, and turnkey execution scopes below.'}
           </p>
         </div>
@@ -327,7 +327,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                     <p className="text-xs font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300 mt-0.5">
                       {currentPkg.highlight}
                     </p>
-                    <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2">
+                    <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2 lg:text-justify">
                       {currentPkg.tagline}
                     </p>
                   </div>

@@ -126,7 +126,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
               className="overflow-hidden border-t border-slate-800/80 bg-[#060a16]"
             >
               <div className="p-3.5 sm:p-4 space-y-2.5">
-                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal lg:text-justify">
                   {faq.answer}
                 </p>
 
@@ -184,7 +184,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
             {config.faqSectionDescription || 'Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.'}
           </p>
         </div>
