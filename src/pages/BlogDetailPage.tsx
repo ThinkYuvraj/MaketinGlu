@@ -284,13 +284,14 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
 
         {/* Cover Image */}
         {blog.coverImage && (
-          <div className="mb-10 rounded-3xl overflow-hidden aspect-video border border-slate-800 shadow-2xl bg-slate-900 relative">
-            <img
-              src={blog.coverImage}
-              alt={blog.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-[#070b14]/50 to-transparent" />
+          <div className="mb-8 flex justify-center">
+            <div className="relative w-full max-w-xl sm:max-w-2xl rounded-2xl overflow-hidden border border-cyan-500/30 shadow-xl bg-[#090f1f]/90 p-3 sm:p-5 flex items-center justify-center">
+              <img
+                src={blog.coverImage}
+                alt={blog.title}
+                className="max-h-[220px] sm:max-h-[280px] w-auto max-w-full object-contain rounded-xl mx-auto drop-shadow-md"
+              />
+            </div>
           </div>
         )}
 
@@ -412,15 +413,15 @@ export default function BlogDetailPage({ slug, onOpenConsultation }: BlogDetailP
                   className="group cursor-pointer rounded-2xl bg-[#090f1f] border border-slate-800 hover:border-cyan-500/40 p-4 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="relative aspect-video rounded-xl overflow-hidden mb-3 bg-slate-900">
+                    <div className="relative h-32 sm:h-36 rounded-xl overflow-hidden mb-3 bg-[#090f1f] border border-slate-800/80 flex items-center justify-center p-2">
                       {rel.coverImage && (
                         <img
                           src={rel.coverImage}
                           alt={rel.title}
-                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform"
+                          className="max-h-full w-auto object-contain transform group-hover:scale-105 transition-transform duration-300"
                         />
                       )}
-                      <span className="absolute top-2 left-2 text-[9px] font-mono font-bold uppercase text-cyan-300 bg-[#070b14]/90 px-2 py-0.5 rounded">
+                      <span className="absolute top-2 left-2 text-[9px] font-mono font-bold uppercase text-cyan-300 bg-[#070b14]/90 px-2 py-0.5 rounded border border-cyan-500/30">
                         {rel.category}
                       </span>
                     </div>

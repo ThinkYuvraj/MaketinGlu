@@ -22,6 +22,14 @@ export default function Preloader({ onComplete, minDurationMs = 1250 }: Preloade
   const [stageIndex, setStageIndex] = useState(0);
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  useEffect(() => {
     const startTime = performance.now();
     let animFrame: number;
 

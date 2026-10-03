@@ -284,7 +284,7 @@ export default function PerformanceStats() {
               Numbers
             </span>
           </h2>
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-justify">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             Battle-tested delivery standards calibrated for sustainable growth, search dominance, and client retention.
           </p>
         </div>

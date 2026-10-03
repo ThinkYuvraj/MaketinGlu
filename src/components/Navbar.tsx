@@ -23,6 +23,7 @@ import { useNavigation } from '../context/NavigationContext';
 import { expertiseData, getExpertiseIcon } from '../data/expertiseData';
 import Logo from './Logo';
 import { buttonHoverMotion, standardEase } from '../lib/animations';
+import { scrollToTop, scrollToElement } from '../lib/useSmoothScroll';
 
 interface NavbarProps {
   onOpenConsultation: () => void;
@@ -99,6 +100,9 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
   const getActiveTabKey = (): string => {
     if (currentRoute.type === 'service-detail' || currentRoute.type === 'services-index') {
       return 'services';
+    }
+    if (currentRoute.type === 'packages-index' || currentRoute.type === 'package-detail') {
+      return 'packages';
     }
     if (currentRoute.type === 'blogs' || currentRoute.type === 'blog-detail') {
       return 'blogs';
@@ -185,23 +189,33 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
+
+    if (href === '#/' || href === '/' || href === '#home' || href === '#') {
+      if (currentRoute.type !== 'home') {
+        navigateTo('#/');
+      } else {
+        if (window.location.hash !== '#/') {
+          window.location.hash = '#/';
+        }
+      }
+      scrollToTop(false);
+      return;
+    }
+
     if (href.startsWith('#/')) {
       navigateTo(href);
       return;
     }
+
     if (currentRoute.type !== 'home') {
       navigateTo('#/' + href);
       setTimeout(() => {
         const id = href.replace('#', '');
-        const elem = document.getElementById(id);
-        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+        scrollToElement(id);
       }, 100);
     } else {
       const id = href.replace('#', '');
-      const elem = document.getElementById(id);
-      if (elem) {
-        elem.scrollIntoView({ behavior: 'smooth' });
-      }
+      scrollToElement(id);
     }
   };
 
@@ -302,7 +316,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 <button
                   onClick={() => {
                     setServicesDropdownOpen((prev) => !prev);
-                    handleNavClick('#expertise');
+                    handleNavClick('#/services');
                   }}
                   onMouseEnter={() => setHoveredTab('services')}
                   className={`relative px-2.5 lg:px-3 xl:px-3.5 py-1.5 rounded-xl text-[11px] lg:text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none whitespace-nowrap shrink-0 ${
@@ -342,7 +356,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                             CORE CAPABILITIES
                           </span>
                           <button
-                            onClick={() => handleNavClick('#expertise')}
+                            onClick={() => {
+                              setServicesDropdownOpen(false);
+                              handleNavClick('#/services');
+                            }}
                             className="text-[11px] text-slate-400 hover:text-cyan-300 font-semibold cursor-pointer transition-colors"
                           >
                             All Services &rarr;
@@ -389,7 +406,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
                       <div className="mt-2.5 pt-2.5 border-t border-slate-800/80">
                         <button
-                          onClick={() => handleNavClick('#expertise')}
+                          onClick={() => {
+                            setServicesDropdownOpen(false);
+                            handleNavClick('#/services');
+                          }}
                           className="w-full py-2.5 px-3 rounded-xl bg-linear-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 text-slate-950 text-xs sm:text-sm font-bold transition-all shadow-md shadow-cyan-400/20 cursor-pointer flex items-center justify-center gap-2 group/btn min-h-[40px]"
                           id="nav-dropdown-know-more"
                         >
@@ -404,7 +424,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </AnimatePresence>
               </div>
 
-              {renderNavTab('packages', 'Packages', '#packages')}
+              {renderNavTab('packages', 'Packages', '#/packages')}
               {renderNavTab('portfolio', 'Portfolio', '#cases')}
               {renderNavTab('reviews', 'Reviews', '#testimonials')}
               {renderNavTab('faq', 'FAQs', '#faq')}

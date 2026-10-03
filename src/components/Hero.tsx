@@ -22,7 +22,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section
       id="hero-section"
-      className="relative w-full min-h-0 lg:min-h-[calc(100dvh-70px)] xl:min-h-[85vh] pt-32 sm:pt-36 lg:pt-40 xl:pt-44 pb-4 sm:pb-6 flex flex-col justify-between items-center bg-[#070b14] overflow-hidden select-none scroll-mt-32 border-b border-slate-800/60"
+      className="relative w-full min-h-screen min-h-[100dvh] pt-28 sm:pt-32 lg:pt-36 pb-4 sm:pb-6 flex flex-col justify-between items-center bg-[#070b14] overflow-hidden select-none scroll-mt-0 border-b border-slate-800/60"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-[26rem] h-44 sm:h-[16rem] bg-cyan-500/15 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
@@ -56,7 +56,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             </h1>
 
             {/* Description */}
-            <p className="max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto text-xs min-[380px]:text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-2 sm:px-4 opacity-90 text-justify">
+            <p className="max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto text-xs min-[380px]:text-sm sm:text-base md:text-lg text-slate-300 font-normal leading-relaxed mb-6 sm:mb-8 px-2 sm:px-4 opacity-90 text-center">
               {config.heroDescription}
             </p>
 

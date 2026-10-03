@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { expertiseData } from '../data/expertiseData';
+import { scrollToTop, scrollToElement } from '../lib/useSmoothScroll';
 
 export type RouteType = 'home' | 'services-index' | 'service-detail' | 'packages-index' | 'package-detail' | 'blogs' | 'blog-detail' | 'admin' | 'privacy' | 'terms';
 
@@ -129,13 +130,25 @@ function parsePathAndHash(): RouteState {
 
 export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentRoute, setCurrentRoute] = useState<RouteState>(() => parsePathAndHash());
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
     const handleLocationChange = () => {
-      if (!window.location.hash || window.location.hash === '#') {
+      let parsed = parsePathAndHash();
+
+      // If initial page load / refresh and route is home, strictly load at top of Home (Hero)
+      if (isFirstLoad.current) {
+        isFirstLoad.current = false;
+        if (parsed.type === 'home') {
+          if (window.location.hash !== '#/') {
+            window.history.replaceState(null, '', '#/');
+          }
+          parsed = { type: 'home', path: '#/' };
+        }
+      } else if (!window.location.hash || window.location.hash === '#') {
         window.history.replaceState(null, '', '#/');
       }
-      const parsed = parsePathAndHash();
+
       setCurrentRoute(parsed);
 
       // Handle document title updates
@@ -166,19 +179,13 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
 
       // Smooth scroll to top when changing full pages or landing on home
       if (parsed.type !== 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (parsed.anchor && window.location.hash.includes('#/')) {
-        // Only scroll to anchor if user explicitly navigated to a deep route anchor
+        scrollToTop(true);
+      } else if (parsed.anchor) {
         setTimeout(() => {
-          const el = document.getElementById(parsed.anchor!);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
+          scrollToElement(parsed.anchor!);
         }, 100);
       } else {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
+        scrollToTop(true);
       }
     };
 
@@ -226,17 +233,19 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
 
   const navigateToHome = (anchor?: string) => {
     if (anchor) {
+      const cleanAnchor = anchor.replace(/^#\/?/, '');
       if (currentRoute.type === 'home') {
-        const el = document.getElementById(anchor.replace('#', ''));
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-        window.location.hash = `#${anchor.replace('#', '')}`;
+        scrollToElement(cleanAnchor);
+        window.location.hash = `#${cleanAnchor}`;
       } else {
-        window.location.hash = `#/${anchor.replace('#', '')}`;
+        window.location.hash = `#/${cleanAnchor}`;
       }
     } else {
+      const isAlreadyHome = currentRoute.type === 'home';
       window.location.hash = '#/';
+      if (isAlreadyHome) {
+        scrollToTop(false);
+      }
     }
   };
 

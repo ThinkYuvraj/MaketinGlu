@@ -23,7 +23,7 @@ interface PackagesProps {
 
 export default function Packages({ onSelectPackage }: PackagesProps) {
   const { config } = useSiteConfig();
-  const { navigateToPackageDetail } = useNavigation();
+  const { navigateToPackageDetail, navigateToPackages } = useNavigation();
   const packagesData = config.packages && config.packages.length > 0 ? config.packages : [];
   const totalPackages = packagesData.length;
 
@@ -168,7 +168,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-justify">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {config.packagesSectionDescription || 'Engineered packages calibrated for distinct growth stages. Compare full inclusions, dedicated team allocations, and turnkey execution scopes below.'}
           </p>
         </div>
@@ -340,20 +340,6 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                       <p className="text-xs text-slate-300 mt-1.5 leading-relaxed line-clamp-3 lg:text-justify">
                         {currentPkg.tagline}
                       </p>
-                      <div className="mt-2.5">
-                        <motion.button
-                          {...buttonHoverMotion}
-                          type="button"
-                          onClick={() => {
-                            if (isDraggingRef.current) return;
-                            navigateToPackages();
-                          }}
-                          className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer group/knowmore"
-                        >
-                          <span>Know More</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-cyan-400 group-hover/knowmore:translate-x-1 transition-transform stroke-[2.5]" />
-                        </motion.button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -395,15 +381,32 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                 </div>
               </div>
 
-              {/* FULL WIDTH BOTTOM CTA BUTTON (At the bottom of the card) */}
-              <div className="w-full pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-800/80 shrink-0">
+              {/* BOTTOM CTA BUTTON ROW (Know More on Left, Choose Plan on Right) */}
+              <div className="w-full pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-800/80 shrink-0 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4">
+                {/* Left Button: Know More */}
                 <motion.button
                   {...buttonHoverMotion}
+                  type="button"
+                  onClick={() => {
+                    if (isDraggingRef.current) return;
+                    navigateToPackages();
+                  }}
+                  className="w-full sm:w-1/2 min-h-[44px] sm:min-h-[48px] py-2.5 sm:py-3 px-5 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-cyan-300 bg-slate-900/90 hover:bg-slate-800/90 border border-cyan-500/30 hover:border-cyan-400/60 flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md active:scale-[0.98] group/btnkm"
+                  id={`btn-knowmore-${currentPkg.id}`}
+                >
+                  <span>Know More</span>
+                  <ArrowRight className="w-4 h-4 text-cyan-400 group-hover/btnkm:translate-x-1 transition-transform stroke-[2.5]" />
+                </motion.button>
+
+                {/* Right Button: Choose Plan */}
+                <motion.button
+                  {...buttonHoverMotion}
+                  type="button"
                   onClick={() => {
                     if (isDraggingRef.current) return;
                     onSelectPackage(currentPkg.name);
                   }}
-                  className={`w-full min-h-[44px] sm:min-h-[48px] py-2.5 sm:py-3 px-6 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xl ${
+                  className={`w-full sm:w-1/2 min-h-[44px] sm:min-h-[48px] py-2.5 sm:py-3 px-5 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xl ${
                     isPopular
                       ? 'bg-linear-to-r from-sky-400 via-cyan-400 to-blue-500 text-slate-950 shadow-cyan-500/35 hover:brightness-110'
                       : 'bg-linear-to-r from-cyan-500 via-sky-500 to-blue-600 text-slate-950 shadow-cyan-500/25 hover:brightness-110'

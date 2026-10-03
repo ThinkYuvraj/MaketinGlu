@@ -165,3 +165,14 @@ html.lenis, html.lenis body {
   }
 }
 
+/* Article Content Image Size Limits */
+article img, .prose img {
+  max-height: 280px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 1.5rem auto !important;
+  border-radius: 1rem !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+

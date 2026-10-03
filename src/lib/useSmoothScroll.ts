@@ -8,13 +8,13 @@ export function scrollToTop(immediate = true) {
     window.history.scrollRestoration = 'manual';
   }
 
-  window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-
   const lenis = (window as any).__lenis as Lenis | undefined;
   if (lenis) {
-    lenis.scrollTo(0, { immediate });
+    lenis.scrollTo(0, { immediate, duration: immediate ? 0 : 1.2 });
+  } else {
+    window.scrollTo({ top: 0, left: 0, behavior: immediate ? ('instant' as ScrollBehavior) : 'smooth' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }
 }
 
@@ -26,7 +26,9 @@ export function useSmoothScroll() {
     }
 
     // Force zero scroll before initializing Lenis
-    scrollToTop(true);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
 
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -46,8 +48,10 @@ export function useSmoothScroll() {
     // Attach to window for global access immediately
     (window as any).__lenis = lenis;
 
-    // Zero Lenis position strictly on creation
-    lenis.scrollTo(0, { immediate: true });
+    // Zero Lenis position strictly on creation if no specific hash anchor
+    if (!window.location.hash || window.location.hash === '#/' || window.location.hash === '#') {
+      lenis.scrollTo(0, { immediate: true });
+    }
 
     let animationFrameId: number;
 
@@ -75,7 +79,8 @@ export function useSmoothScroll() {
 
 export function scrollToElement(elementId: string, offset = 0) {
   const lenis = (window as any).__lenis as Lenis | undefined;
-  const target = document.getElementById(elementId.replace(/^#/, ''));
+  const cleanId = elementId.replace(/^#\/?/, '');
+  const target = document.getElementById(cleanId);
   
   if (target) {
     if (lenis) {

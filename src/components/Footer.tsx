@@ -19,6 +19,7 @@ import { useSiteConfig } from '../context/SiteConfigContext';
 import { useNavigation } from '../context/NavigationContext';
 import { expertiseData } from '../data/expertiseData';
 import { staggerContainerVariants, staggerItemVariants } from '../lib/animations';
+import { scrollToTop, scrollToElement } from '../lib/useSmoothScroll';
 
 interface FooterProps {
   onOpenConsultation: () => void;
@@ -30,21 +31,32 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
   const { currentRoute, navigateTo, navigateToService } = useNavigation();
 
   const handleLinkClick = (href: string) => {
+    if (href === '#/' || href === '/' || href === '#home' || href === '#') {
+      if (currentRoute.type !== 'home') {
+        navigateTo('#/');
+      } else {
+        if (window.location.hash !== '#/') {
+          window.location.hash = '#/';
+        }
+      }
+      scrollToTop(false);
+      return;
+    }
+
     if (href.startsWith('#/')) {
       navigateTo(href);
       return;
     }
+
     if (currentRoute.type !== 'home') {
       navigateTo('#/' + href);
       setTimeout(() => {
         const id = href.replace('#', '');
-        const elem = document.getElementById(id);
-        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+        scrollToElement(id);
       }, 100);
     } else {
       const id = href.replace('#', '');
-      const elem = document.getElementById(id);
-      if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+      scrollToElement(id);
     }
   };
 

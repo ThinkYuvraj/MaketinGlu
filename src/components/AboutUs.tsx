@@ -245,7 +245,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             </span>
           </h2>
 
-          <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-justify">
+          <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {description}
           </p>
         </div>
