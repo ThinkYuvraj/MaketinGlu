@@ -152,7 +152,6 @@ export default function PerformanceStats() {
   const renderStatCard = (item: typeof stats[0], idx: number, isMobile = false) => {
     const strokeDashoffset = circumference - (item.percentage / 100) * circumference;
     const gradientId = `cyan-gradient-${isMobile ? 'm-' : ''}${idx}`;
-    const CardIcon = item.icon;
 
     return (
       <div 
@@ -179,25 +178,8 @@ export default function PerformanceStats() {
         )}
 
         <div>
-          {/* Top Header Badge */}
-          <div className="flex items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-800/80">
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/35 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
-                <CardIcon className="w-3.5 h-3.5" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-[11px] font-bold text-white uppercase tracking-wide truncate">
-                  {item.badge}
-                </div>
-                <div className="text-[10px] font-mono text-slate-400 tracking-tight truncate">
-                  {item.category}
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Circular Gauge Centerpiece */}
-          <div className="flex justify-center my-2">
+          <div className="flex justify-center mb-2 mt-1">
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
                 <defs>
