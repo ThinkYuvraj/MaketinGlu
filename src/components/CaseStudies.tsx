@@ -347,7 +347,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <button
                       type="button"
                       onClick={() => setActiveCase(item)}
-                      className="w-full mt-2 py-2 px-3 rounded-lg bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[36px]"
+                      className="w-full mt-2 py-2 px-3 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[36px]"
                     >
                       <span>Explore Full Impact Analysis</span>
                       <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />

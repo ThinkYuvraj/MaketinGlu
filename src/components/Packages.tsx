@@ -233,7 +233,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <button
             type="button"
             onClick={handlePrev}
-            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-2xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-left-7 xl:-left-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Previous package"
             title="Previous Package"
           >
@@ -245,7 +245,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-2xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
+            className="hidden lg:flex absolute lg:-right-7 xl:-right-9 top-1/2 -translate-y-1/2 z-30 min-w-[52px] h-13 px-3.5 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret gap-1"
             aria-label="Next package"
             title="Next Package"
           >
@@ -373,7 +373,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   <motion.button
                     {...buttonHoverMotion}
                     onClick={() => onSelectPackage(currentPkg.name)}
-                    className={`w-full min-h-[48px] py-3 px-5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg ${
+                    className={`w-full min-h-[48px] py-3 px-5 rounded-xl font-black text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg ${
                       isPopular
                         ? 'bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/30 hover:brightness-110'
                         : 'bg-linear-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-cyan-500/20 hover:brightness-110'

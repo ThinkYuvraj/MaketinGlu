@@ -243,7 +243,7 @@ export default function Footer({ onOpenConsultation, onOpenAdmin }: FooterProps)
                   navigateTo('#/admin');
                 }
               }}
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-cyan-300 transition-all text-[11px] font-semibold cursor-pointer min-h-[28px]"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-cyan-300 transition-all text-[11px] font-semibold cursor-pointer min-h-[28px]"
               title="Admin Portal Login"
             >
               <Lock className="w-2.5 h-2.5 text-cyan-400" />

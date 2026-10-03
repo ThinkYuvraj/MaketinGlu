@@ -22,14 +22,14 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section
       id="hero-section"
-      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-between items-center bg-[#060a12] overflow-hidden select-none scroll-mt-24"
+      className="relative w-full min-h-[100dvh] pt-32 sm:pt-36 lg:pt-40 pb-6 sm:pb-8 flex flex-col justify-between items-center bg-[#060a12] overflow-hidden select-none scroll-mt-28"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-175 h-45 sm:h-85 bg-cyan-500/10 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute top-1/2 right-4 sm:right-10 w-50 sm:w-75 h-50 sm:h-75 bg-blue-600/5 blur-[90px] sm:blur-[120px] rounded-full pointer-events-none" />
 
       {/* Main Hero Body */}
-      <div className="flex-1 flex flex-col justify-center items-center w-full relative z-10 px-2 sm:px-0 py-2 sm:py-6">
+      <div className="flex-1 flex flex-col justify-center items-center w-full relative z-10 px-3 sm:px-4 py-2 sm:py-4">
         <Container className="relative text-center w-full">
           <motion.div 
             initial={{ opacity: 0, y: 16 }}
@@ -38,7 +38,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
             className="max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto"
           >
             {/* Location / Capability Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-lg bg-[#061826]/80 border border-cyan-500/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase mb-4 sm:mb-5 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#061826]/80 border border-cyan-500/40 text-cyan-400 text-[11px] font-bold tracking-wider uppercase mb-4 sm:mb-5 shadow-sm">
               <TrendingUp className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span className="truncate max-w-65 sm:max-w-none">{config.locationBadge}</span>
             </div>
@@ -111,7 +111,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
           <div className="flex justify-center mt-3">
             <button
               onClick={handleScrollDown}
-              className="group p-1 text-slate-500 hover:text-cyan-400 transition-colors cursor-pointer touch-manipulation"
+              className="group p-1.5 rounded-xl text-slate-500 hover:text-cyan-400 hover:bg-slate-900/60 transition-colors cursor-pointer touch-manipulation"
               aria-label="Scroll to performance metrics"
             >
               <ChevronDown className="w-4 h-4" />

@@ -207,7 +207,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
   const renderNavTab = (tabKey: string, label: string, href: string) => {
     const isHighlighted = highlightedTab === tabKey;
-    const showCapsule = isHighlighted && tabKey !== 'home';
+    const showCapsule = isHighlighted;
     return (
       <button
         key={tabKey}
@@ -254,7 +254,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               <span className="truncate max-w-[220px] sm:max-w-none font-medium">{config.announcement.text}</span>
               <button
                 onClick={onOpenConsultation}
-                className="inline-flex items-center gap-1.5 font-bold text-slate-950 bg-linear-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 px-3 py-1 rounded-md text-xs ml-1.5 cursor-pointer shrink-0 shadow-sm shadow-cyan-400/20 active:scale-95 transition-all"
+                className="inline-flex items-center gap-1.5 font-bold text-slate-950 bg-linear-to-r from-cyan-400 to-sky-400 hover:from-cyan-300 hover:to-sky-300 px-3 py-1 rounded-xl text-xs ml-1.5 cursor-pointer shrink-0 shadow-sm shadow-cyan-400/20 active:scale-95 transition-all"
               >
                 <span>{config.announcement.ctaText}</span>
                 <ArrowRight className="w-3 h-3 text-slate-950 stroke-[2.5]" />
@@ -305,7 +305,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     handleNavClick('#expertise');
                   }}
                   onMouseEnter={() => setHoveredTab('services')}
-                  className={`relative flex items-center gap-1 px-2.5 lg:px-3 xl:px-3.5 py-1.5 rounded-xl text-[11px] lg:text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none whitespace-nowrap ${
+                  className={`relative px-2.5 lg:px-3 xl:px-3.5 py-1.5 rounded-xl text-[11px] lg:text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none whitespace-nowrap shrink-0 ${
                     highlightedTab === 'services'
                       ? 'text-white font-bold'
                       : 'text-slate-400 hover:text-slate-200'
@@ -324,7 +324,6 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                     />
                   )}
                   <span className="relative z-10">Services</span>
-                  <ChevronDown className={`relative z-10 w-3.5 h-3.5 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180 text-cyan-400' : 'text-slate-400'}`} />
                 </button>
 
                 {/* Dropdown Menu */}
