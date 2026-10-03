@@ -136,7 +136,17 @@ function AppContent() {
 
       {/* Sleek Website Initial Loading Screen */}
       {showPreloader && (
-        <Preloader onComplete={() => setShowPreloader(false)} minDurationMs={1000} />
+        <Preloader 
+          onComplete={() => {
+            setShowPreloader(false);
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+            const heroEl = document.getElementById('hero-section') || document.getElementById('home');
+            if (heroEl) {
+              heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }} 
+          minDurationMs={1000} 
+        />
       )}
       
       {/* Top Fixed Navigation with Services dropdown */}
