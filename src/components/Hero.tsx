@@ -22,7 +22,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section
       id="hero-section"
-      className="relative w-full min-h-[calc(100vh+48px)] pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-12 flex flex-col justify-between items-center overflow-hidden bg-[#060a12] select-none"
+      className="relative w-full min-h-screen lg:h-screen pt-20 sm:pt-24 lg:pt-24 pb-4 sm:pb-6 flex flex-col justify-between items-center overflow-hidden bg-[#060a12] select-none"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-175 h-45 sm:h-85 bg-cyan-500/10 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
@@ -92,7 +92,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
       {/* Bottom Inclusions & Smooth Down Cue */}
       <div className="w-full relative z-10 px-3 sm:px-0 mb-2">
         <Container>
-          <div className="pt-4 border-t border-slate-800/60 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 lg:gap-8 text-[11px] sm:text-xs text-slate-300">
+          <div className="pt-4 border-t border-slate-800/60 max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 lg:gap-12 text-[11px] sm:text-xs text-slate-300">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span className="font-medium">Turnkey Web &amp; E-Commerce</span>
