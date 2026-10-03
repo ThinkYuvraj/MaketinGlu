@@ -114,7 +114,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 id={`case-card-${item.id}`}
               >
                 {/* 1. VISUAL SHOWCASE HEADER */}
-                <div className="relative h-44 sm:h-52 bg-[#050914] overflow-hidden border-b border-slate-800/80 p-4 sm:p-5 flex flex-col justify-between">
+                <div className="relative h-32 sm:h-36 bg-[#050914] overflow-hidden border-b border-slate-800/80 p-3 sm:p-4 flex flex-col justify-between">
                   <div 
                     className="absolute inset-0 opacity-[0.03] pointer-events-none"
                     style={{
@@ -137,16 +137,16 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       <div className="absolute inset-0 bg-linear-to-t from-[#050914] via-[#050914]/60 to-black/30 rounded-lg" />
                       
                       <div className="relative z-10 flex items-center justify-between">
-                        <span className="px-2.5 py-1 rounded-md bg-slate-950/90 border border-cyan-500/40 text-[10px] font-mono tracking-wider text-cyan-300 uppercase">
+                        <span className="px-2 py-0.5 rounded-md bg-slate-950/90 border border-cyan-500/40 text-[9px] font-mono tracking-wider text-cyan-300 uppercase">
                           {item.category}
                         </span>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/90 border border-emerald-500/40 text-[10px] font-mono text-emerald-400 font-semibold">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-950/90 border border-emerald-500/40 text-[9px] font-mono text-emerald-400 font-semibold">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           VERIFIED
                         </span>
                       </div>
 
-                      <div className="relative z-10 flex items-center justify-between text-xs text-slate-200 bg-slate-950/85 px-3 py-1.5 rounded-lg border border-slate-800">
+                      <div className="relative z-10 flex items-center justify-between text-[11px] text-slate-200 bg-slate-950/85 px-2.5 py-1 rounded-lg border border-slate-800">
                         <span className="font-bold text-white truncate">{item.client || item.title}</span>
                         <span className="text-cyan-300 font-mono font-bold shrink-0">{item.stats[0]?.value}</span>
                       </div>
@@ -154,39 +154,39 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                   ) : isNexa ? (
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-                            <ShoppingBag className="w-4 h-4" />
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-6 h-6 rounded-md bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
+                            <ShoppingBag className="w-3.5 h-3.5" />
                           </div>
-                          <span className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
+                          <span className="text-xs font-bold text-slate-200 tracking-wide">
                             {item.client || 'Nexa Store India'}
                           </span>
                           <span className="text-slate-600">&bull;</span>
-                          <span className="text-xs text-slate-400">D2C Fashion</span>
+                          <span className="text-[11px] text-slate-400">D2C Fashion</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-xs font-mono text-emerald-300 font-semibold">
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-mono text-emerald-300 font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                           <span>LIVE AUDIT</span>
                         </div>
                       </div>
 
-                      <div className="my-auto py-2">
-                        <div className="flex items-center justify-between mb-2 text-xs">
-                          <div className="flex items-center gap-2">
-                            <Gauge className="w-4 h-4 text-cyan-400" />
-                            <span className="text-slate-300 font-medium">Mobile Checkout Latency:</span>
-                            <span className="line-through text-slate-500 font-mono text-xs">4.8s</span>
+                      <div className="my-auto py-0.5">
+                        <div className="flex items-center justify-between mb-1 text-[11px]">
+                          <div className="flex items-center gap-1.5">
+                            <Gauge className="w-3.5 h-3.5 text-cyan-400" />
+                            <span className="text-slate-300 font-medium">Checkout Latency:</span>
+                            <span className="line-through text-slate-500 font-mono text-[10px]">4.8s</span>
                             <span className="text-cyan-400 font-bold">&rarr;</span>
-                            <span className="text-emerald-400 font-mono font-bold text-xs sm:text-sm">0.4s</span>
+                            <span className="text-emerald-400 font-mono font-bold text-xs">0.4s</span>
                           </div>
-                          <span className="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded-md border border-cyan-500/30">
+                          <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/80 px-1.5 py-0.5 rounded border border-cyan-500/30">
                             +95% Speed
                           </span>
                         </div>
 
-                        <div className="w-full h-10 sm:h-12 relative flex items-center">
-                          <svg className="w-full h-full overflow-visible" viewBox="0 0 300 45" preserveAspectRatio="none">
+                        <div className="w-full h-6 sm:h-7 relative flex items-center">
+                          <svg className="w-full h-full overflow-visible" viewBox="0 0 300 30" preserveAspectRatio="none">
                             <defs>
                               <linearGradient id="nexaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" stopColor="#0284c7" stopOpacity="0.4" />
@@ -194,61 +194,61 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                                 <stop offset="100%" stopColor="#2dd4bf" stopOpacity="1" />
                               </linearGradient>
                             </defs>
-                            <line x1="0" y1="35" x2="300" y2="35" stroke="#334155" strokeDasharray="3 3" strokeWidth="1" />
+                            <line x1="0" y1="24" x2="300" y2="24" stroke="#334155" strokeDasharray="3 3" strokeWidth="1" />
                             <path 
-                              d="M0,35 Q70,33 130,22 T240,8 L300,5" 
+                              d="M0,24 Q70,22 130,15 T240,6 L300,3" 
                               fill="none" 
                               stroke="url(#nexaGrad)" 
-                              strokeWidth="2.5" 
+                              strokeWidth="2" 
                               strokeLinecap="round" 
                             />
-                            <circle cx="130" cy="22" r="3" fill="#38bdf8" className="animate-pulse" />
-                            <circle cx="300" cy="5" r="3.5" fill="#2dd4bf" />
+                            <circle cx="130" cy="15" r="2.5" fill="#38bdf8" className="animate-pulse" />
+                            <circle cx="300" cy="3" r="3" fill="#2dd4bf" />
                           </svg>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-xs text-slate-400 pt-2.5 pb-0.5 border-t border-slate-800/80">
-                        <span className="text-slate-300">Headless Architecture &amp; Core Web Vitals (99/100)</span>
-                        <span className="text-cyan-300 font-mono font-bold">₹2.3M GMV Attributed</span>
+                      <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 pt-1.5 pb-0.5 border-t border-slate-800/80">
+                        <span className="text-slate-300 truncate">Headless Arch &amp; Core Web Vitals (99/100)</span>
+                        <span className="text-cyan-300 font-mono font-bold shrink-0">₹2.3M GMV Attributed</span>
                       </div>
                     </div>
                   ) : isTechDuniya ? (
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-lg bg-blue-950 border border-blue-500/40 flex items-center justify-center text-blue-400">
-                            <Radio className="w-4 h-4" />
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-6 h-6 rounded-md bg-blue-950 border border-blue-500/40 flex items-center justify-center text-blue-400">
+                            <Radio className="w-3.5 h-3.5" />
                           </div>
-                          <span className="text-xs sm:text-sm font-bold text-slate-200 tracking-wide">
+                          <span className="text-xs font-bold text-slate-200 tracking-wide">
                             {item.client || 'TechDuniya Media'}
                           </span>
                           <span className="text-slate-600">&bull;</span>
-                          <span className="text-xs text-slate-400">Tech &amp; Gadgets</span>
+                          <span className="text-[11px] text-slate-400">Tech &amp; Gadgets</span>
                         </div>
 
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-950/80 border border-cyan-500/40 text-xs font-mono text-cyan-300 font-semibold">
-                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-mono text-cyan-300 font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                           <span>VIRAL MOMENTUM</span>
                         </div>
                       </div>
 
-                      <div className="my-auto py-2">
-                        <div className="flex items-center justify-between mb-2 text-xs">
-                          <div className="flex items-center gap-2">
-                            <BarChart2 className="w-4 h-4 text-sky-400" />
+                      <div className="my-auto py-0.5">
+                        <div className="flex items-center justify-between mb-1 text-[11px]">
+                          <div className="flex items-center gap-1.5">
+                            <BarChart2 className="w-3.5 h-3.5 text-sky-400" />
                             <span className="text-slate-300 font-medium">Monthly Social Reach:</span>
-                            <span className="line-through text-slate-500 font-mono text-xs">65K</span>
+                            <span className="line-through text-slate-500 font-mono text-[10px]">65K</span>
                             <span className="text-cyan-400 font-bold">&rarr;</span>
-                            <span className="text-cyan-300 font-mono font-bold text-xs sm:text-sm">320K</span>
+                            <span className="text-cyan-300 font-mono font-bold text-xs">320K</span>
                           </div>
-                          <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                          <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30">
                             +180% Inbound
                           </span>
                         </div>
 
-                        <div className="w-full h-10 sm:h-12 relative flex items-center">
-                          <svg className="w-full h-full overflow-visible" viewBox="0 0 300 45" preserveAspectRatio="none">
+                        <div className="w-full h-6 sm:h-7 relative flex items-center">
+                          <svg className="w-full h-full overflow-visible" viewBox="0 0 300 30" preserveAspectRatio="none">
                             <defs>
                               <linearGradient id="techGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" stopColor="#0369a1" stopOpacity="0.4" />
@@ -256,41 +256,41 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                                 <stop offset="100%" stopColor="#818cf8" stopOpacity="1" />
                               </linearGradient>
                             </defs>
-                            <line x1="0" y1="36" x2="300" y2="36" stroke="#334155" strokeDasharray="3 3" strokeWidth="1" />
+                            <line x1="0" y1="24" x2="300" y2="24" stroke="#334155" strokeDasharray="3 3" strokeWidth="1" />
                             <path 
-                              d="M0,36 C40,35 60,30 90,26 C130,20 170,28 210,14 C250,3 280,6 300,3" 
+                              d="M0,24 C40,23 60,20 90,17 C130,13 170,18 210,9 C250,2 280,4 300,2" 
                               fill="none" 
                               stroke="url(#techGrad)" 
-                              strokeWidth="2.5" 
+                              strokeWidth="2" 
                               strokeLinecap="round" 
                             />
-                            <circle cx="210" cy="14" r="3" fill="#38bdf8" />
-                            <circle cx="300" cy="3" r="3.5" fill="#818cf8" className="animate-pulse" />
+                            <circle cx="210" cy="9" r="2.5" fill="#38bdf8" />
+                            <circle cx="300" cy="2" r="3" fill="#818cf8" className="animate-pulse" />
                           </svg>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-xs text-slate-400 pt-2.5 pb-0.5 border-t border-slate-800/80">
-                        <span className="text-slate-300">Algorithmic Content Hooks &amp; Creator Syndication</span>
-                        <span className="text-sky-300 font-mono font-bold">8.4% Engagement CTR</span>
+                      <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 pt-1.5 pb-0.5 border-t border-slate-800/80">
+                        <span className="text-slate-300 truncate">Algorithmic Content Hooks &amp; Creator Syndication</span>
+                        <span className="text-sky-300 font-mono font-bold shrink-0">8.4% Engagement CTR</span>
                       </div>
                     </div>
                   ) : (
                     <div className="relative z-10 w-full h-full flex flex-col justify-between">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs sm:text-sm font-bold text-slate-200">{item.client || item.title}</span>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-xs font-mono text-cyan-300">
-                          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                        <span className="text-xs font-bold text-slate-200">{item.client || item.title}</span>
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-mono text-cyan-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                           DEPLOYED
                         </span>
                       </div>
                       <div className="my-auto">
-                        <div className="text-xl sm:text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-200 to-sky-400">
+                        <div className="text-lg font-black text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-200 to-sky-400">
                           {item.stats[0]?.value} {item.stats[0]?.label}
                         </div>
-                        <p className="text-xs text-slate-400 mt-1">{item.category}</p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">{item.category}</p>
                       </div>
-                      <div className="text-xs text-slate-400 pt-2 border-t border-slate-800/80 flex items-center justify-between">
+                      <div className="text-[10px] text-slate-400 pt-1.5 border-t border-slate-800/80 flex items-center justify-between">
                         <span>MarketinGlu Framework</span>
                         <span className="text-cyan-400 font-mono font-bold">VERIFIED</span>
                       </div>
@@ -299,27 +299,27 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 </div>
 
                 {/* 2. CARD EDITORIAL BODY */}
-                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5">
                   <div>
-                    <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider text-cyan-400 mb-2">
+                    <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-cyan-400 mb-1">
                       <span>{item.category}</span>
                       <span className="text-slate-400">{item.year || '2025-2026'}</span>
                     </div>
 
-                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug mb-2">
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug mb-1">
                       {item.title}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-2">
+                    <p className="text-xs text-slate-300 leading-normal line-clamp-2">
                       {item.description}
                     </p>
 
                     {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-3">
+                      <div className="flex flex-wrap gap-1 mt-2">
                         {item.tags.map((tag, tIdx) => (
                           <span 
                             key={tIdx} 
-                            className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300"
+                            className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[10px] text-slate-300"
                           >
                             {tag}
                           </span>
@@ -330,13 +330,13 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
 
                   {/* 3. METRICS RIBBON */}
                   <div>
-                    <div className="py-3 px-1 my-1 border-y border-slate-800/80 grid grid-cols-3 divide-x divide-slate-800/80">
+                    <div className="py-2 px-1 my-1 border-y border-slate-800/80 grid grid-cols-3 divide-x divide-slate-800/80">
                       {item.stats.slice(0, 3).map((stat, idx) => (
-                        <div key={idx} className={`text-center ${idx === 0 ? 'pr-2' : idx === 1 ? 'px-2' : 'pl-2'}`}>
-                          <div className="text-base sm:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-100 to-cyan-300 font-mono leading-tight">
+                        <div key={idx} className={`text-center ${idx === 0 ? 'pr-1.5' : idx === 1 ? 'px-1.5' : 'pl-1.5'}`}>
+                          <div className="text-sm sm:text-base font-black text-transparent bg-clip-text bg-linear-to-r from-white via-cyan-100 to-cyan-300 font-mono leading-tight">
                             {stat.value}
                           </div>
-                          <div className="text-xs text-slate-400 font-medium truncate mt-0.5">
+                          <div className="text-[10px] text-slate-400 font-medium truncate mt-0.5">
                             {stat.label}
                           </div>
                         </div>
@@ -347,10 +347,10 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                     <button
                       type="button"
                       onClick={() => setActiveCase(item)}
-                      className="w-full mt-3 py-3 px-4 rounded-xl bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[44px]"
+                      className="w-full mt-2 py-2 px-3 rounded-lg bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-cyan-500/20 hover:brightness-110 cursor-pointer min-h-[36px]"
                     >
                       <span>Explore Full Impact Analysis</span>
-                      <ArrowRight className="w-4 h-4 stroke-[3]" />
+                      <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
                     </button>
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-40px" }}
-                className="hidden lg:grid lg:grid-cols-2 gap-6 sm:gap-8 w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1600px] mx-auto"
+                className="hidden lg:grid lg:grid-cols-2 gap-4 sm:gap-6 w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto"
               >
                 {casesList.map((item) => (
                   <motion.div

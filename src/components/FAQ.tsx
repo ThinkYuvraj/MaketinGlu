@@ -277,10 +277,10 @@ export default function FAQ() {
 
         {/* SCROLLABLE FLEXBOX LIST OF QUESTIONS (Exact match to Packages Card size) */}
         <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="w-full min-h-[560px] lg:min-h-[500px] rounded-3xl sm:rounded-[32px] overflow-hidden p-5 sm:p-7 lg:p-8 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
+          <div className="w-full min-h-[340px] sm:min-h-[360px] rounded-3xl sm:rounded-[32px] overflow-hidden p-4 sm:p-6 lg:p-7 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
             
             {/* Scroll Guidance Header Bar */}
-            <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-800/80 text-xs font-mono text-slate-400">
+            <div className="flex items-center justify-between pb-3 mb-2.5 border-b border-slate-800/80 text-xs font-mono text-slate-400">
               <span className="flex items-center gap-2 text-cyan-300 font-bold">
                 <HelpCircle className="w-4 h-4 text-cyan-400" />
                 <span>FAQ Knowledge Directory ({filteredFaqs.length} Questions)</span>
@@ -291,9 +291,9 @@ export default function FAQ() {
             </div>
 
             {/* Scrollable Flexbox Container with flex-1 and smooth scrolling */}
-            <div className="flex-1 w-full flex flex-col space-y-3 max-h-[460px] lg:max-h-[440px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
+            <div className="flex-1 w-full flex flex-col space-y-2.5 max-h-[320px] sm:max-h-[340px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
               {filteredFaqs.length === 0 ? (
-                <div className="text-center py-12 px-4 rounded-2xl border border-slate-800 bg-[#090e1c] my-auto">
+                <div className="text-center py-8 px-4 rounded-2xl border border-slate-800 bg-[#090e1c] my-auto">
                   <HelpCircle className="w-8 h-8 text-slate-500 mx-auto mb-2" />
                   <p className="text-sm font-bold text-white">No questions match your search</p>
                   <p className="text-xs text-slate-400 mt-1">
@@ -313,13 +313,10 @@ export default function FAQ() {
             </div>
 
             {/* Bottom Footer Strip */}
-            <div className="pt-3.5 mt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <div className="pt-3 mt-2.5 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
               <span className="flex items-center gap-1.5 text-cyan-300 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span>Verified technical &amp; commercial campaign guidelines</span>
-              </span>
-              <span className="font-mono text-slate-400 text-xs">
-                100% Transparency
               </span>
             </div>
 
