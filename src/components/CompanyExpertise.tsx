@@ -278,7 +278,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   handlePrev();
                 }
               }}
-              className="w-full min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-4 sm:p-6 lg:p-8 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-stretch relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+              className="w-full min-h-0 sm:min-h-0 lg:min-h-[410px] rounded-2xl sm:rounded-3xl lg:rounded-[28px] bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-5 lg:p-6 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 lg:gap-6 items-stretch relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
             >
               {/* 4-Second Auto-Swipe Active Progress Indicator Line */}
               <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden">
