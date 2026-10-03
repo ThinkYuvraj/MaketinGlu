@@ -707,7 +707,11 @@ async function startServer() {
     if (staticDir) {
       console.log(`Serving static production files from: ${staticDir}`);
       app.use(express.static(staticDir));
-      app.get('*', (_req, res, next) => {
+      app.get('*', (req, res, next) => {
+        // Prevent fallback index.html on missing assets, images, CSS, or JS files
+        if (req.path.startsWith('/assets/') || req.path.match(/\.(css|js|png|jpg|jpeg|svg|webp|ico|json|map|woff2?)$/i)) {
+          return res.status(404).type('text/plain').send('Resource not found');
+        }
         res.sendFile(path.join(staticDir, 'index.html'), (err) => {
           if (err) next(err);
         });
