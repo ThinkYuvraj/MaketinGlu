@@ -233,13 +233,13 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 lg:gap-5 items-stretch">
           
           {/* Left Column: Agency Story, Mission & Metric Badges (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-linear-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/5 blur-2xl rounded-full pointer-events-none" />
+          <div className="lg:col-span-5 flex flex-col justify-between p-3.5 sm:p-4 rounded-lg bg-linear-to-b from-[#0a1224] to-[#070c18] border border-cyan-500/25 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/5 blur-2xl rounded-none pointer-events-none" />
 
             <div className="space-y-2.5">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
+                  <div className="w-6 h-6 rounded-md bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
                     <Compass className="w-3.5 h-3.5" />
                   </div>
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight">
@@ -252,16 +252,18 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 </span>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed line-clamp-2 lg:text-justify">
+              <p className="text-xs text-slate-300 leading-relaxed lg:text-justify">
                 {story}
               </p>
 
               {/* Mission statement card */}
-              <div className="p-2.5 rounded-xl bg-[#040813] border border-slate-800/90 text-xs text-slate-200 italic font-medium leading-relaxed shadow-inner line-clamp-2 lg:text-justify">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 not-italic block mb-0.5">
+              <div className="p-2.5 rounded-md bg-[#040813] border border-slate-800/90 shadow-inner">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 block mb-1">
                   MISSION STATEMENT
                 </span>
-                "{mission}"
+                <p className="text-xs text-slate-200 italic font-medium leading-relaxed lg:text-justify">
+                  "{mission}"
+                </p>
               </div>
 
               {/* Value checklist */}
@@ -282,9 +284,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                 return (
                   <div
                     key={idx}
-                    className="p-1.5 sm:p-2 rounded-xl bg-slate-900/80 border border-slate-800/90 flex items-center gap-2 hover:border-cyan-500/40 transition-colors"
+                    className="p-1.5 sm:p-2 rounded-md bg-slate-900/80 border border-slate-800/90 flex items-center gap-2 hover:border-cyan-500/40 transition-colors"
                   >
-                    <div className="w-5.5 h-5.5 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                    <div className="w-5.5 h-5.5 rounded-md bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
                       <Icon className="w-3 h-3" />
                     </div>
                     <div className="min-w-0">
@@ -306,7 +308,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             
             {/* Quick-Selector Floating Dock for 4 Pillars */}
             <div className="w-full max-w-full mb-2">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 rounded-lg bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
                 {pillars.map((pillar, tabIdx) => {
                   const isSelected = tabIdx === safeIndex;
                   const TabIcon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
@@ -316,17 +318,17 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       key={pillar.id || tabIdx}
                       type="button"
                       onClick={() => handleSelectPillar(tabIdx)}
-                      className={`group relative flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer min-h-[32px] sm:min-h-[34px] select-none text-center ${
+                      className={`group relative flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer min-h-[32px] sm:min-h-[34px] select-none text-center ${
                         isSelected
                           ? 'text-white'
                           : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
                       }`}
                     >
-                      {/* Animated Active Background Curved Rectangle */}
+                      {/* Animated Active Background Rectangle */}
                       {isSelected && (
                         <motion.div
                           layoutId="activeAboutPillarCapsule"
-                          className="absolute inset-0 rounded-lg bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
+                          className="absolute inset-0 rounded-md bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
                           transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                         />
                       )}
@@ -360,7 +362,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="hidden lg:flex absolute -left-3.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                className="hidden lg:flex absolute -left-3.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-lg bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
                 aria-label="Previous strategic pillar"
                 title="Previous Pillar"
               >
@@ -371,7 +373,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="hidden lg:flex absolute -right-3.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-xl bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
+                className="hidden lg:flex absolute -right-3.5 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-lg bg-[#080d1a]/95 hover:bg-linear-to-r hover:from-sky-500 hover:to-cyan-400 hover:text-slate-950 border border-cyan-500/50 text-cyan-300 items-center justify-center shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xl group/caret"
                 aria-label="Next strategic pillar"
                 title="Next Pillar"
               >
@@ -399,7 +401,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       handlePrev();
                     }
                   }}
-                  className="w-full h-full min-h-[200px] sm:min-h-[220px] rounded-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-4 lg:p-4.5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+                  className="w-full h-full min-h-[220px] sm:min-h-[240px] rounded-lg bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-4 lg:p-4.5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
                 >
                   {/* Active Progress Indicator Line */}
                   <div className="absolute top-0 inset-x-0 h-0.5 bg-slate-800/80 overflow-hidden">

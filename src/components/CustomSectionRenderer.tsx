@@ -164,7 +164,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({
           </h2>
 
           {section.description && (
-            <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center lg:text-justify">
               {section.description}
             </p>
           )}
