@@ -22,7 +22,7 @@ export default function Hero({ onOpenConsultation, onExplorePortfolio }: HeroPro
   return (
     <section
       id="hero-section"
-      className="relative w-full min-h-screen lg:h-screen pt-20 sm:pt-24 lg:pt-24 pb-4 sm:pb-6 flex flex-col justify-between items-center overflow-hidden bg-[#060a12] select-none"
+      className="relative w-full min-h-[90vh] lg:min-h-screen py-12 sm:py-16 lg:py-20 flex flex-col justify-between items-center bg-[#060a12] overflow-hidden select-none scroll-mt-24"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-175 h-45 sm:h-85 bg-cyan-500/10 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
