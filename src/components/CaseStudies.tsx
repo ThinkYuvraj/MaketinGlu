@@ -403,20 +403,26 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               {/* MOBILE & TABLET VIEW (<1024px): Caret Carousel with Swipe & Indicators */}
               <div className="block lg:hidden relative max-w-lg mx-auto">
                 {/* Case Study Quick Tabs */}
-                <div className="flex items-center justify-center gap-2 mb-3 overflow-x-auto px-2 scrollbar-none">
+                <div className="flex flex-row items-center justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none mb-3">
                   {casesList.map((cItem, tabIdx) => {
                     const isSelected = tabIdx === currentIndex;
                     return (
                       <button
                         key={cItem.id}
+                        type="button"
                         onClick={() => handleSelectTab(tabIdx)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                        className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none uppercase tracking-wide shrink-0 ${
                           isSelected
-                            ? 'bg-cyan-400 text-slate-950 border-cyan-400 shadow-md shadow-cyan-400/20'
-                            : 'bg-slate-900/80 text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                            ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                            : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                         }`}
                       >
-                        {cItem.client || `Case ${tabIdx + 1}`}
+                        <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
+                          isSelected ? 'bg-slate-950 text-cyan-400 font-black' : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
+                        }`}>
+                          <Sparkles className="w-3 h-3 stroke-[2.5]" />
+                        </div>
+                        <span className="whitespace-nowrap">{cItem.client || `Case ${tabIdx + 1}`}</span>
                       </button>
                     );
                   })}

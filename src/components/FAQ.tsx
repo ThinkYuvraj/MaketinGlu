@@ -216,7 +216,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
 
           {/* Category Chips & Expand Toggle */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
-            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            <div className="flex flex-row items-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
               {categoryFilters.map((cat) => {
                 const Icon = cat.icon;
                 const isActive = activeCategory === cat.id;
@@ -227,24 +227,24 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
                     key={cat.id}
                     type="button"
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`group relative inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[32px] uppercase tracking-wide ${
+                    className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer uppercase tracking-wide shrink-0 select-none ${
                       isActive
-                        ? 'bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 text-white shadow-sm shadow-cyan-400/30'
-                        : 'bg-transparent text-slate-400 hover:text-white hover:bg-slate-800/40'
+                        ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                        : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                     }`}
                   >
                     <div
-                      className={`w-4 h-4 rounded flex items-center justify-center shrink-0 ${
+                      className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
                         isActive
-                          ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black'
-                          : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
+                          ? 'bg-slate-950 text-cyan-400 font-black'
+                          : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
                       }`}
                     >
-                      <Icon className="w-2.5 h-2.5" />
+                      <Icon className="w-3 h-3 stroke-[2.5]" />
                     </div>
-                    <span className="text-[11px] font-bold">{cat.label}</span>
-                    <span className={`text-[10px] px-1.5 py-0.2 rounded ${
-                      isActive ? 'bg-cyan-400/30 text-cyan-200 font-bold' : 'bg-slate-800 text-slate-400'
+                    <span className="text-xs font-bold tracking-tight">{cat.label}</span>
+                    <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md ${
+                      isActive ? 'bg-slate-950/25 text-slate-950' : 'bg-slate-800 text-slate-400'
                     }`}>
                       {count}
                     </span>

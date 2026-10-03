@@ -143,7 +143,7 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
           </div>
 
           {/* Category Filters */}
-          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex flex-row items-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
             {blogCategories.map((category) => {
               const count =
                 category === 'All Articles'
@@ -156,17 +156,22 @@ export default function BlogsPage({ onOpenConsultation }: BlogsPageProps) {
                   key={category}
                   type="button"
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer uppercase tracking-wide shrink-0 select-none ${
                     isSelected
-                      ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                      : 'bg-slate-900/90 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white'
+                      ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                      : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                   }`}
                 >
-                  <span>{category}</span>
+                  <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
+                    isSelected ? 'bg-slate-950 text-cyan-400 font-black' : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
+                  }`}>
+                    <Sparkles className="w-3 h-3 stroke-[2.5]" />
+                  </div>
+                  <span className="text-xs font-bold tracking-tight">{category}</span>
                   <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded-md font-mono ${
+                    className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md ${
                       isSelected
-                        ? 'bg-slate-950/25 text-slate-950 font-bold'
+                        ? 'bg-slate-950/25 text-slate-950'
                         : 'bg-slate-800 text-slate-400'
                     }`}
                   >

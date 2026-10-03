@@ -181,7 +181,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         {/* MOBILE & TABLET VIEW (lg:hidden): Interactive Caret Carousel Showcase for Services */}
         <div className="block lg:hidden relative max-w-xl mx-auto w-full mt-3">
           {/* Horizontal Scrollable Curved Rectangle Categorization Dock */}
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2.5 mb-3 w-full px-1">
+          <div className="flex flex-row items-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full mb-3">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const TabIcon = getExpertiseIcon(srv);
@@ -191,13 +191,17 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   key={srv.id}
                   type="button"
                   onClick={() => handleSelectService(tabIdx)}
-                  className={`rounded-xl px-4 py-2 text-xs font-bold tracking-wide transition-all shrink-0 flex items-center gap-2 cursor-pointer uppercase select-none ${
+                  className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer uppercase tracking-wide select-none ${
                     isSelected
                       ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
                       : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                   }`}
                 >
-                  <TabIcon className="w-4 h-4 shrink-0" />
+                  <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
+                    isSelected ? 'bg-slate-950 text-cyan-400 font-black' : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
+                  }`}>
+                    <TabIcon className="w-3 h-3 stroke-[2.5]" />
+                  </div>
                   <span className="whitespace-nowrap">{srv.tabLabel}</span>
                 </button>
               );
@@ -231,7 +235,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               <div className="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500" />
 
               {/* Service Visual Header Image */}
-              <div className="relative w-full h-44 sm:h-52 rounded-xl sm:rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#090e1c] group mb-3.5">
+              <div className="relative w-full h-32 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#090e1c] group mb-2.5">
                 <img
                   src={
                     (config.sectionImages?.[activeService.id] && (config.sectionImages[activeService.id].startsWith('data:image/') || config.sectionImages[activeService.id].startsWith('http')))
@@ -346,7 +350,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         <div className="hidden lg:block w-full">
           {/* INTERACTIVE TOP SERVICES FULL BAR DOCK */}
           <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
+            <div className="flex flex-row items-center justify-center sm:justify-start gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none">
               {services.map((srv, tabIdx) => {
                 const isSelected = tabIdx === safeCurrentIndex;
                 const TabIcon = getExpertiseIcon(srv);
@@ -356,14 +360,18 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                     key={srv.id}
                     type="button"
                     onClick={() => handleSelectService(tabIdx)}
-                    className={`group relative flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer min-h-[40px] select-none text-center w-full uppercase tracking-wide ${
+                    className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none uppercase tracking-wide shrink-0 ${
                       isSelected
                         ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
                         : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                     }`}
                   >
-                    <TabIcon className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-slate-950 stroke-[2.5]' : 'text-cyan-400'}`} />
-                    <span className="tracking-tight font-bold truncate text-[10px] sm:text-xs uppercase whitespace-nowrap">
+                    <div className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
+                      isSelected ? 'bg-slate-950 text-cyan-400 font-black' : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
+                    }`}>
+                      <TabIcon className="w-3 h-3 stroke-[2.5]" />
+                    </div>
+                    <span className="tracking-tight font-bold text-xs uppercase whitespace-nowrap">
                       {srv.tabLabel}
                     </span>
                   </button>
@@ -412,7 +420,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="w-full min-h-0 sm:min-h-0 lg:min-h-[350px] rounded-2xl sm:rounded-3xl lg:rounded-[24px] bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-4 lg:p-5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch relative overflow-hidden cursor-grab active:cursor-grabbing"
+                className="w-full min-h-0 sm:min-h-0 lg:min-h-[280px] rounded-2xl sm:rounded-3xl lg:rounded-[24px] bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-4 lg:p-4.5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch relative overflow-hidden cursor-grab active:cursor-grabbing"
               >
                 {/* 4-Second Auto-Swipe Active Progress Indicator Line */}
                 <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden">
@@ -429,30 +437,30 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                 </div>
 
                 {/* LEFT COLUMN: Deep Information & Interactive Tabbed Breakdown */}
-                <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-between h-full space-y-4">
+                <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-between h-full space-y-3">
                   <div>
                     {/* Top Badge & Metric */}
-                    <div className="flex flex-wrap items-center justify-between gap-2.5 mb-2 min-h-[28px]">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold uppercase">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5 min-h-[26px]">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold uppercase">
                         <ActiveIcon className="w-3.5 h-3.5" />
                         <span>{activeService.category || 'Core Growth Discipline'}</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1.5 text-xs text-emerald-300 bg-emerald-950/50 border border-emerald-500/30 px-3 py-1 rounded-full font-bold">
+                      <div className="inline-flex items-center gap-1.5 text-xs text-emerald-300 bg-emerald-950/50 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
                         <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
                         <span>{activeService.metricBadge || '99.8% Client Success'}</span>
                       </div>
                     </div>
 
                     {/* Title & Subtitle */}
-                    <div className="min-h-[120px] sm:min-h-[110px]">
+                    <div className="min-h-[75px] sm:min-h-[70px]">
                       <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
                         {activeService.title}
                       </h3>
                       <p className="text-xs sm:text-sm font-bold text-cyan-400 mt-0.5">
                         {activeService.subtitle}
                       </p>
-                      <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed line-clamp-2 lg:text-justify">
+                      <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2 lg:text-justify">
                         {activeService.summary}
                       </p>
                     </div>

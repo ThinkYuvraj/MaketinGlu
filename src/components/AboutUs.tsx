@@ -306,9 +306,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
           {/* Right Column: 3D CARET CAROUSEL FOR 4 CORE PILLARS (7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             
-            {/* Quick-Selector Floating Dock for 4 Pillars */}
-            <div className="w-full max-w-full mb-2">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 rounded-lg bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-lg">
+            {/* Quick-Selector Floating Dock for Pillars */}
+            <div className="w-full max-w-full mb-3">
+              <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
                 {pillars.map((pillar, tabIdx) => {
                   const isSelected = tabIdx === safeIndex;
                   const TabIcon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
@@ -318,31 +318,22 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                       key={pillar.id || tabIdx}
                       type="button"
                       onClick={() => handleSelectPillar(tabIdx)}
-                      className={`group relative flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer min-h-[32px] sm:min-h-[34px] select-none text-center ${
+                      className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer uppercase tracking-wide shrink-0 select-none ${
                         isSelected
-                          ? 'text-white'
-                          : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                          ? 'bg-linear-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black shadow-[0_0_20px_rgba(6,182,212,0.45)] scale-102'
+                          : 'bg-[#091122]/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-cyan-500/40'
                       }`}
                     >
-                      {/* Animated Active Background Rectangle */}
-                      {isSelected && (
-                        <motion.div
-                          layoutId="activeAboutPillarCapsule"
-                          className="absolute inset-0 rounded-md bg-linear-to-r from-cyan-500/25 via-sky-500/30 to-blue-500/25 border border-cyan-400/90 shadow-[0_0_16px_rgba(6,182,212,0.35)]"
-                          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                        />
-                      )}
-
                       <div
-                        className={`relative z-10 w-4 h-4 rounded-md flex items-center justify-center shrink-0 transition-all ${
+                        className={`w-5 h-5 rounded-lg flex items-center justify-center shrink-0 ${
                           isSelected
-                            ? 'bg-linear-to-tr from-cyan-400 to-sky-300 text-slate-950 font-black shadow-sm'
-                            : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
+                            ? 'bg-slate-950 text-cyan-400 font-black'
+                            : 'bg-slate-800 text-cyan-400 group-hover:text-slate-200'
                         }`}
                       >
-                        <TabIcon className="w-2.5 h-2.5" />
+                        <TabIcon className="w-3 h-3 stroke-[2.5]" />
                       </div>
-                      <span className="relative z-10 tracking-tight font-semibold truncate text-[10px] sm:text-xs">
+                      <span className="text-xs font-bold tracking-tight">
                         {pillar.tag}
                       </span>
                     </button>
