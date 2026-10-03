@@ -55,7 +55,7 @@ export default function ServicesIndexPage({ onOpenConsultation }: ServicesIndexP
             </span>
           </h1>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
             Eliminate fragmented vendors. Explore our verified domain capabilities, battle-tested methodologies, and dedicated service specifications below.
           </p>
         </div>

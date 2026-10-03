@@ -117,7 +117,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2">
             {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands across D2C, SaaS, and retail.'}
           </p>
         </div>
