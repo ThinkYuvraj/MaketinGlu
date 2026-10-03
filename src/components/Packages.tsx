@@ -168,7 +168,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-justify">
             {config.packagesSectionDescription || 'Engineered packages calibrated for distinct growth stages. Compare full inclusions, dedicated team allocations, and turnkey execution scopes below.'}
           </p>
         </div>
@@ -346,7 +346,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                           type="button"
                           onClick={() => {
                             if (isDraggingRef.current) return;
-                            navigateToPackageDetail(currentPkg.id);
+                            navigateToPackages();
                           }}
                           className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer group/knowmore"
                         >

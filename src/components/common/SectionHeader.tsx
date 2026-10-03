@@ -41,7 +41,7 @@ export default function SectionHeader({
           {title}
         </h2>
         {subtitle && (
-          <p className={`mt-3 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl lg:text-justify ${isCenter ? 'mx-auto' : ''}`}>
+          <p className={`mt-3 text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl text-justify ${isCenter ? 'mx-auto' : ''}`}>
             {subtitle}
           </p>
         )}

@@ -193,7 +193,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center line-clamp-2 lg:text-justify">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-justify">
             {config.faqSectionDescription || 'Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.'}
           </p>
         </div>

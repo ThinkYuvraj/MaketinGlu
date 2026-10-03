@@ -146,24 +146,28 @@ function AppContent() {
         <Preloader 
           onComplete={() => {
             setShowPreloader(false);
+            if (window.location.hash && !window.location.hash.startsWith('#/')) {
+              window.history.replaceState(null, '', window.location.pathname);
+            }
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
             scrollToTop(true);
-            requestAnimationFrame(() => {
+            const resetToHero = () => {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
               document.documentElement.scrollTop = 0;
               document.body.scrollTop = 0;
+              const lenis = (window as any).__lenis;
               const heroEl = document.getElementById('hero-section') || document.getElementById('home');
-              if (heroEl) {
-                const lenis = (window as any).__lenis;
-                if (lenis) {
-                  lenis.scrollTo(heroEl, { immediate: true });
-                } else {
-                  heroEl.scrollIntoView({ behavior: 'instant' as ScrollBehavior, block: 'start' });
-                }
+              if (lenis) {
+                lenis.scrollTo(0, { immediate: true });
+              } else if (heroEl) {
+                heroEl.scrollIntoView({ behavior: 'instant' as ScrollBehavior, block: 'start' });
               }
-            });
+            };
+            requestAnimationFrame(resetToHero);
+            setTimeout(resetToHero, 80);
+            setTimeout(resetToHero, 200);
           }} 
           minDurationMs={1000} 
         />

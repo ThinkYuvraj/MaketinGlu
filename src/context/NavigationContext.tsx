@@ -161,17 +161,21 @@ export const NavigationProvider: React.FC<{ children: ReactNode }> = ({ children
         document.title = "MarketinGlu - Digital Marketing Solutions";
       }
 
-      // Smooth scroll to top when changing full pages
-      if (parsed.type !== 'home' || !parsed.anchor) {
+      // Smooth scroll to top when changing full pages or landing on home
+      if (parsed.type !== 'home') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (parsed.anchor) {
-        // Scroll to anchor on home page
+      } else if (parsed.anchor && window.location.hash.includes('#/')) {
+        // Only scroll to anchor if user explicitly navigated to a deep route anchor
         setTimeout(() => {
           const el = document.getElementById(parsed.anchor!);
           if (el) {
             el.scrollIntoView({ behavior: 'smooth' });
           }
         }, 100);
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
       }
     };
 
