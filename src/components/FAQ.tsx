@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   HelpCircle, 
@@ -39,6 +39,15 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
   const [openIds, setOpenIds] = useState<(number | string)[]>([faqs[0]?.id || 1]);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const activeIdx = categoryFilters.findIndex(c => c.id === activeCategory);
+    if (activeIdx >= 0 && tabRefs.current[activeIdx]) {
+      tabRefs.current[activeIdx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, [activeCategory]);
 
   const toggle = (id: number | string) => {
     if (openIds.includes(id)) {
@@ -217,7 +226,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
           {/* Category Chips & Expand Toggle */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
             <div className="flex flex-row items-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
-              {categoryFilters.map((cat) => {
+              {categoryFilters.map((cat, cIdx) => {
                 const Icon = cat.icon;
                 const isActive = activeCategory === cat.id;
                 const count = categoryCounts[cat.id] || 0;
@@ -225,6 +234,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
                 return (
                   <button
                     key={cat.id}
+                    ref={(el) => { tabRefs.current[cIdx] = el; }}
                     type="button"
                     onClick={() => setActiveCategory(cat.id)}
                     className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer uppercase tracking-wide shrink-0 select-none ${

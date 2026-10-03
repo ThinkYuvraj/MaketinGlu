@@ -9,9 +9,6 @@ import {
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  Clock,
-  Users,
-  CheckCircle2,
   Crown
 } from 'lucide-react';
 import { useSiteConfig } from '../context/SiteConfigContext';
@@ -32,7 +29,9 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   const initialIndex = Math.max(0, packagesData.findIndex((p) => p.popular));
   const [currentIndex, setCurrentIndex] = useState<number>(initialIndex >= 0 ? initialIndex : 0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isInteracting, setIsInteracting] = useState<boolean>(false);
+  const isPaused = isHovered || isInteracting;
   const [isMobileOrTablet, setIsMobileOrTablet] = useState<boolean>(false);
 
   // Detect mobile & tablet for touch-swiping
@@ -110,12 +109,21 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
     }),
   };
 
+  const packageDockRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    const activeEl = tabRefs.current[safeCurrentIndex];
-    if (activeEl) {
-      activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    const container = packageDockRef.current;
+    const tab = tabRefs.current[safeCurrentIndex];
+    if (container && tab) {
+      const tabLeft = tab.offsetLeft;
+      const tabWidth = tab.offsetWidth;
+      const containerWidth = container.offsetWidth;
+      const targetScroll = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
     }
   }, [safeCurrentIndex]);
 
@@ -129,18 +137,6 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
     : isPopular 
     ? 'Tier 02 • Growth' 
     : 'Tier 03 • Enterprise Scale';
-
-  const turnaroundSLA = currentPkg.id === 'basic' 
-    ? '10-14 Days Setup' 
-    : isPopular 
-    ? '14-21 Days Sprint' 
-    : 'Rapid Continuous Execution';
-
-  const dedicatedRole = currentPkg.id === 'basic' 
-    ? '1 Dedicated Growth Strategist' 
-    : isPopular 
-    ? 'Senior Growth Architect + Content Lead' 
-    : 'Full Growth Pod (4 Senior Specialists)';
 
   return (
     <section 
@@ -176,7 +172,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
 
         {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
         <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-1 sm:px-2 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-          <div className="flex flex-row items-center justify-start sm:justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none px-2">
+          <div ref={packageDockRef} className="flex flex-row items-center justify-start sm:justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none px-2">
             {packagesData.map((pkg, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const isPro = pkg.id === 'pro' || pkg.name.toLowerCase().includes('pro');
@@ -220,8 +216,8 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         <div 
           className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8"
           style={{ perspective: 1200 }}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           {/* Left Floating Desktop Only Next/Prev Button */}
           <button
@@ -258,16 +254,17 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
               exit="exit"
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
+              dragSnapToOrigin={true}
               dragElastic={0.15}
-              onDragStart={() => setIsPaused(true)}
-              onTouchStart={() => setIsPaused(true)}
-              onTouchEnd={() => setIsPaused(false)}
-              onTouchCancel={() => setIsPaused(false)}
-              onPointerDown={() => setIsPaused(true)}
-              onPointerUp={() => setIsPaused(false)}
-              onPointerCancel={() => setIsPaused(false)}
+              onDragStart={() => setIsInteracting(true)}
+              onTouchStart={() => setIsInteracting(true)}
+              onTouchEnd={() => setIsInteracting(false)}
+              onTouchCancel={() => setIsInteracting(false)}
+              onPointerDown={() => setIsInteracting(true)}
+              onPointerUp={() => setIsInteracting(false)}
+              onPointerCancel={() => setIsInteracting(false)}
               onDragEnd={(_, info) => {
-                setIsPaused(false);
+                setIsInteracting(false);
                 const swipeThreshold = 35;
                 const velocityThreshold = 180;
                 if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
@@ -296,136 +293,103 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                 />
               </div>
 
-              {/* LEFT COLUMN: Tier Metadata, Price Scope, SLA Metrics & CTA Button */}
-              <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3">
-                <div>
-                  {/* Top Badges */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                    <span
-                      className={`text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                        isPopular
-                          ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-500/50 shadow-sm'
-                          : 'bg-slate-900 text-slate-300 border border-slate-800'
-                      }`}
-                    >
-                      {tierLabel}
-                    </span>
-
-                    {isPopular ? (
-                      <span className="bg-linear-to-r from-amber-400 to-amber-500 text-slate-950 text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
-                        <Sparkles className="w-3 h-3 fill-slate-950" />
-                        <span>Most Popular</span>
-                      </span>
-                    ) : (
-                      <div className="h-5" />
-                    )}
-                  </div>
-
-                  {/* Title & Highlight */}
-                  <div className="min-h-0">
-                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
-                      {currentPkg.name}
-                    </h3>
-                    <p className="text-xs font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300 mt-0.5">
-                      {currentPkg.highlight}
-                    </p>
-                    <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2 lg:text-justify">
-                      {currentPkg.tagline}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Investment Scope Card */}
-                <div className="p-3 sm:p-3.5 rounded-xl bg-[#060a14]/90 border border-slate-800/90 shadow-inner flex flex-col justify-between space-y-2">
+              {/* Top Section: Left Metadata & Right Deliverables */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-start w-full">
+                {/* LEFT COLUMN: Tier Metadata & Title */}
+                <div className="lg:col-span-5 flex flex-col justify-between space-y-2">
                   <div>
-                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-0.5">
-                      <span>Engagement Scope</span>
-                      <span className="text-cyan-400 font-bold">
-                        {currentPkg.badge || 'Turnkey Retainer'}
+                    {/* Top Badges */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                      <span
+                        className={`text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                          isPopular
+                            ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-500/50 shadow-sm'
+                            : 'bg-slate-900 text-slate-300 border border-slate-800'
+                        }`}
+                      >
+                        {tierLabel}
                       </span>
+
+                      {isPopular ? (
+                        <span className="bg-linear-to-r from-amber-400 to-amber-500 text-slate-950 text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                          <Sparkles className="w-3 h-3 fill-slate-950" />
+                          <span>Most Popular</span>
+                        </span>
+                      ) : (
+                        <div className="h-5" />
+                      )}
                     </div>
 
-                    <div className="text-sm sm:text-base font-black text-white">
-                      {currentPkg.priceNote}
-                    </div>
-                  </div>
-
-                  {/* SLA Badges */}
-                  <div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-2 border-t border-slate-800/80 text-[11px] text-slate-300">
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                        <span className="truncate">{turnaroundSLA}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Users className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                        <span className="truncate">{dedicatedRole}</span>
-                      </div>
-                    </div>
-
-                    <div className="text-[11px] text-cyan-300 mt-1.5 font-medium flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                      <span>Zero Lock-In &bull; Monthly Milestone Audits</span>
+                    {/* Title & Highlight */}
+                    <div className="min-h-0">
+                      <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                        {currentPkg.name}
+                      </h3>
+                      <p className="text-xs font-bold text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-sky-300 mt-0.5">
+                        {currentPkg.highlight}
+                      </p>
+                      <p className="text-xs text-slate-300 mt-1 leading-relaxed line-clamp-2 lg:text-justify">
+                        {currentPkg.tagline}
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Main CTA Button */}
-                <div className="pt-0.5 mt-auto">
-                  <motion.button
-                    {...buttonHoverMotion}
-                    onClick={() => onSelectPackage(currentPkg.name)}
-                    className={`w-full min-h-[42px] py-2.5 px-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg ${
-                      isPopular
-                        ? 'bg-linear-to-r from-sky-500 via-sky-400 to-cyan-400 text-slate-950 shadow-cyan-500/30 hover:brightness-110'
-                        : 'bg-linear-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-cyan-500/20 hover:brightness-110'
-                    }`}
-                    id={`btn-select-${currentPkg.id}`}
-                  >
-                    <span>Choose {currentPkg.name.replace(' Package', '')} Plan</span>
-                    <ArrowRight className="w-4 h-4 stroke-[3]" />
-                  </motion.button>
+                {/* RIGHT COLUMN: Turnkey Deliverables & Inclusions Grid */}
+                <div className="lg:col-span-7 flex flex-col justify-between space-y-2 pt-2 lg:pt-0 lg:border-l lg:border-slate-800/80 lg:pl-5">
+                  <div>
+                    <div className="flex items-center justify-between text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                      <span className="flex items-center gap-1.5">
+                        <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                        <span>Included Turnkey Deliverables ({totalFeatures})</span>
+                      </span>
+                      <span className="text-cyan-400 font-mono text-[11px]">
+                        Full Scope Unlocked
+                      </span>
+                    </div>
+
+                    {/* Turnkey Deliverables: Clean Bullet Points on Mobile, 2-Column Cards Grid on Desktop/Tablet */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 content-start">
+                      {currentPkg.features?.slice(0, 8).map((feat, fIdx) => (
+                        <div
+                          key={fIdx}
+                          className="flex items-start gap-2 py-1 px-1 sm:p-2 sm:rounded-lg sm:bg-slate-900/50 sm:hover:bg-slate-900/80 sm:border sm:border-slate-800/70 sm:hover:border-cyan-500/30 transition-colors text-xs text-slate-200 sm:min-h-[36px]"
+                        >
+                          {/* Mobile Only: Glowing Cyan Bullet Point */}
+                          <div className="flex sm:hidden items-center justify-center shrink-0 w-3.5 h-3.5 mt-0.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)]" />
+                          </div>
+
+                          {/* Tablet & Desktop Only: Check Icon Badge */}
+                          <div className="hidden sm:flex w-4 h-4 rounded-md bg-cyan-500/15 border border-cyan-500/30 items-center justify-center shrink-0 mt-0.5 text-cyan-300">
+                            <Check className="w-3 h-3 stroke-[3]" />
+                          </div>
+
+                          <span className="leading-tight text-slate-200 sm:text-slate-300 text-[11px] sm:text-xs font-normal">
+                            {feat.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* RIGHT COLUMN: Turnkey Deliverables & Inclusions Grid (Wide landscape layout) */}
-              <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-2 pt-2 lg:pt-0 lg:border-l lg:border-slate-800/80 lg:pl-5">
-                <div>
-                  <div className="flex items-center justify-between text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-                    <span className="flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                      <span>Included Turnkey Deliverables ({totalFeatures})</span>
-                    </span>
-                    <span className="text-cyan-400 font-mono text-[11px]">
-                      Full Scope Unlocked
-                    </span>
-                  </div>
-
-                  {/* Turnkey Deliverables: Clean Bullet Points on Mobile, 2-Column Cards Grid on Desktop/Tablet */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 content-start">
-                    {currentPkg.features?.slice(0, 8).map((feat, fIdx) => (
-                      <div
-                        key={fIdx}
-                        className="flex items-start gap-2 py-1 px-1 sm:p-2 sm:rounded-lg sm:bg-slate-900/50 sm:hover:bg-slate-900/80 sm:border sm:border-slate-800/70 sm:hover:border-cyan-500/30 transition-colors text-xs text-slate-200 sm:min-h-[36px]"
-                      >
-                        {/* Mobile Only: Glowing Cyan Bullet Point */}
-                        <div className="flex sm:hidden items-center justify-center shrink-0 w-3.5 h-3.5 mt-0.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)]" />
-                        </div>
-
-                        {/* Tablet & Desktop Only: Check Icon Badge */}
-                        <div className="hidden sm:flex w-4 h-4 rounded-md bg-cyan-500/15 border border-cyan-500/30 items-center justify-center shrink-0 mt-0.5 text-cyan-300">
-                          <Check className="w-3 h-3 stroke-[3]" />
-                        </div>
-
-                        <span className="leading-tight text-slate-200 sm:text-slate-300 text-[11px] sm:text-xs font-normal">
-                          {feat.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
+              {/* FULL WIDTH BOTTOM CTA BUTTON (At the bottom of the card) */}
+              <div className="w-full pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-slate-800/80">
+                <motion.button
+                  {...buttonHoverMotion}
+                  onClick={() => onSelectPackage(currentPkg.name)}
+                  className={`w-full min-h-[44px] sm:min-h-[48px] py-2.5 sm:py-3 px-6 rounded-xl sm:rounded-2xl font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xl ${
+                    isPopular
+                      ? 'bg-linear-to-r from-sky-400 via-cyan-400 to-blue-500 text-slate-950 shadow-cyan-500/35 hover:brightness-110'
+                      : 'bg-linear-to-r from-cyan-500 via-sky-500 to-blue-600 text-slate-950 shadow-cyan-500/25 hover:brightness-110'
+                  }`}
+                  id={`btn-select-${currentPkg.id}`}
+                >
+                  <span>Choose {currentPkg.name.replace(' Package', '')} Plan</span>
+                  <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 stroke-[3]" />
+                </motion.button>
               </div>
             </motion.div>
           </AnimatePresence>

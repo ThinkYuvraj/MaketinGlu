@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import {
   Sparkles,
@@ -79,7 +79,9 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isInteracting, setIsInteracting] = useState<boolean>(false);
+  const isPaused = isHovered || isInteracting;
 
   if (config.aboutEnabled === false) {
     return null;
@@ -148,6 +150,24 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
     setSlideDirection(idx > safeIndex ? 'right' : 'left');
     setCurrentIndex(idx);
   };
+
+  const aboutDockRef = useRef<HTMLDivElement | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const container = aboutDockRef.current;
+    const tab = tabRefs.current[safeIndex];
+    if (container && tab) {
+      const tabLeft = tab.offsetLeft;
+      const tabWidth = tab.offsetWidth;
+      const containerWidth = container.offsetWidth;
+      const targetScroll = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+  }, [safeIndex]);
 
   // 4-Second Auto-Swipe Timer
   useEffect(() => {
@@ -308,7 +328,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             
             {/* Quick-Selector Floating Dock for Pillars */}
             <div className="w-full max-w-full mb-3">
-              <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
+              <div ref={aboutDockRef} className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
                 {pillars.map((pillar, tabIdx) => {
                   const isSelected = tabIdx === safeIndex;
                   const TabIcon = PILLAR_ICONS[pillar.iconName || 'Zap'] || Zap;
@@ -316,6 +336,7 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                   return (
                     <button
                       key={pillar.id || tabIdx}
+                      ref={(el) => { tabRefs.current[tabIdx] = el; }}
                       type="button"
                       onClick={() => handleSelectPillar(tabIdx)}
                       className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer uppercase tracking-wide shrink-0 select-none ${
@@ -346,8 +367,8 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
             <div 
               className="relative flex-1 w-full"
               style={{ perspective: 1200 }}
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               {/* Left Floating Desktop Only Next/Prev Button */}
               <button
@@ -382,16 +403,17 @@ export default function AboutUs({ onOpenConsultation }: AboutUsProps) {
                   exit="exit"
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
+                  dragSnapToOrigin={true}
                   dragElastic={0.15}
-                  onDragStart={() => setIsPaused(true)}
-                  onTouchStart={() => setIsPaused(true)}
-                  onTouchEnd={() => setIsPaused(false)}
-                  onTouchCancel={() => setIsPaused(false)}
-                  onPointerDown={() => setIsPaused(true)}
-                  onPointerUp={() => setIsPaused(false)}
-                  onPointerCancel={() => setIsPaused(false)}
+                  onDragStart={() => setIsInteracting(true)}
+                  onTouchStart={() => setIsInteracting(true)}
+                  onTouchEnd={() => setIsInteracting(false)}
+                  onTouchCancel={() => setIsInteracting(false)}
+                  onPointerDown={() => setIsInteracting(true)}
+                  onPointerUp={() => setIsInteracting(false)}
+                  onPointerCancel={() => setIsInteracting(false)}
                   onDragEnd={(_, info) => {
-                    setIsPaused(false);
+                    setIsInteracting(false);
                     const swipeThreshold = 35;
                     const velocityThreshold = 180;
                     if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

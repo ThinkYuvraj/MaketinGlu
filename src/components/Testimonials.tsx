@@ -20,7 +20,9 @@ export default function Testimonials() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const isAutoPlaying = !isHovered && !isInteracting;
 
   // Calculate average rating dynamically
   const avgRating = useMemo(() => {
@@ -47,19 +49,16 @@ export default function Testimonials() {
   }, [isAutoPlaying, totalReviews]);
 
   const handlePrev = () => {
-    setIsAutoPlaying(false);
     setSlideDirection('left');
     setCurrentIndex((prev) => (prev - 1 + totalReviews) % totalReviews);
   };
 
   const handleNext = () => {
-    setIsAutoPlaying(false);
     setSlideDirection('right');
     setCurrentIndex((prev) => (prev + 1) % totalReviews);
   };
 
   const handleSelectReview = (idx: number) => {
-    setIsAutoPlaying(false);
     setSlideDirection(idx > currentIndex ? 'right' : 'left');
     setCurrentIndex(idx);
   };
@@ -149,8 +148,8 @@ export default function Testimonials() {
         <div className="relative max-w-4xl mx-auto">
           <div
             className="relative p-4 sm:p-5 lg:p-6 rounded-2xl bg-linear-to-r from-[#0c1424]/95 via-[#09101d]/95 to-[#070c18]/98 border border-cyan-500/30 shadow-xl backdrop-blur-xl transition-all duration-300 group overflow-hidden"
-            onMouseEnter={() => setIsAutoPlaying(false)}
-            onMouseLeave={() => setIsAutoPlaying(true)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             id="featured-testimonial-card"
           >
             {/* Watermark Quote Icon */}
@@ -167,16 +166,17 @@ export default function Testimonials() {
                 transition={{ duration: 0.25, ease: standardEase }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
+                dragSnapToOrigin={true}
                 dragElastic={0.15}
-                onDragStart={() => setIsAutoPlaying(false)}
-                onTouchStart={() => setIsAutoPlaying(false)}
-                onTouchEnd={() => setIsAutoPlaying(true)}
-                onTouchCancel={() => setIsAutoPlaying(true)}
-                onPointerDown={() => setIsAutoPlaying(false)}
-                onPointerUp={() => setIsAutoPlaying(true)}
-                onPointerCancel={() => setIsAutoPlaying(true)}
+                onDragStart={() => setIsInteracting(true)}
+                onTouchStart={() => setIsInteracting(true)}
+                onTouchEnd={() => setIsInteracting(false)}
+                onTouchCancel={() => setIsInteracting(false)}
+                onPointerDown={() => setIsInteracting(true)}
+                onPointerUp={() => setIsInteracting(false)}
+                onPointerCancel={() => setIsInteracting(false)}
                 onDragEnd={(_, info) => {
-                  setIsAutoPlaying(true);
+                  setIsInteracting(false);
                   const swipeThreshold = 35;
                   const velocityThreshold = 180;
                   if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

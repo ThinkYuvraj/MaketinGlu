@@ -54,7 +54,9 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
   const [cardTab, setCardTab] = useState<'deliverables' | 'pillars' | 'tech'>('deliverables');
   const [isDeliverablesExpanded, setIsDeliverablesExpanded] = useState<boolean>(false);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isInteracting, setIsInteracting] = useState<boolean>(false);
+  const isPaused = isHovered || isInteracting;
   const [isMobileOrTablet, setIsMobileOrTablet] = useState<boolean>(false);
 
   // Detect mobile & tablet for touch-swiping
@@ -89,21 +91,28 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
     setCurrentIndex(index);
   };
 
+  const mobileDockRef = useRef<HTMLDivElement | null>(null);
+  const desktopDockRef = useRef<HTMLDivElement | null>(null);
   const mobileTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const desktopTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    const activeMobile = mobileTabRefs.current[safeCurrentIndex];
-    if (activeMobile) {
-      activeMobile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-    const activeDesktop = desktopTabRefs.current[safeCurrentIndex];
-    if (activeDesktop) {
-      activeDesktop.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
+    const scrollToTab = (container: HTMLElement | null, tab: HTMLElement | null) => {
+      if (!container || !tab) return;
+      const tabLeft = tab.offsetLeft;
+      const tabWidth = tab.offsetWidth;
+      const containerWidth = container.offsetWidth;
+      const targetScroll = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    };
+    scrollToTab(mobileDockRef.current, mobileTabRefs.current[safeCurrentIndex]);
+    scrollToTab(desktopDockRef.current, desktopTabRefs.current[safeCurrentIndex]);
   }, [safeCurrentIndex]);
 
-  // Auto-swipe every 4 seconds (pauses on hover)
+  // Auto-swipe every 4 seconds (pauses on hover or drag)
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
@@ -195,7 +204,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         {/* MOBILE & TABLET VIEW (lg:hidden): Interactive Caret Carousel Showcase for Services */}
         <div className="block lg:hidden relative max-w-xl mx-auto w-full mt-3">
           {/* Horizontal Scrollable Curved Rectangle Categorization Dock */}
-          <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full mb-3 px-2">
+          <div ref={mobileDockRef} className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full mb-3 px-2">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
               const TabIcon = getExpertiseIcon(srv);
@@ -234,16 +243,17 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
               exit="exit"
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
+              dragSnapToOrigin={true}
               dragElastic={0.18}
-              onDragStart={() => setIsPaused(true)}
-              onTouchStart={() => setIsPaused(true)}
-              onTouchEnd={() => setIsPaused(false)}
-              onTouchCancel={() => setIsPaused(false)}
-              onPointerDown={() => setIsPaused(true)}
-              onPointerUp={() => setIsPaused(false)}
-              onPointerCancel={() => setIsPaused(false)}
+              onDragStart={() => setIsInteracting(true)}
+              onTouchStart={() => setIsInteracting(true)}
+              onTouchEnd={() => setIsInteracting(false)}
+              onTouchCancel={() => setIsInteracting(false)}
+              onPointerDown={() => setIsInteracting(true)}
+              onPointerUp={() => setIsInteracting(false)}
+              onPointerCancel={() => setIsInteracting(false)}
               onDragEnd={(_, info) => {
-                setIsPaused(false);
+                setIsInteracting(false);
                 const swipeThreshold = 35;
                 const velocityThreshold = 180;
                 if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
@@ -350,7 +360,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         <div className="hidden lg:block w-full">
           {/* INTERACTIVE TOP SERVICES FULL BAR DOCK */}
           <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
-            <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none px-2">
+            <div ref={desktopDockRef} className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none px-2">
               {services.map((srv, tabIdx) => {
                 const isSelected = tabIdx === safeCurrentIndex;
                 const TabIcon = getExpertiseIcon(srv);
@@ -385,8 +395,8 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
           <div
             className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8 mt-2 sm:mt-4"
             style={{ perspective: 1200 }}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
             {/* Left Floating Desktop Only Next/Prev Button */}
             <button

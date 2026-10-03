@@ -31,16 +31,9 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const triggerTemporaryPause = () => {
-    setIsPaused(true);
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    resumeTimerRef.current = setTimeout(() => {
-      setIsPaused(false);
-    }, 4500);
-  };
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isInteracting, setIsInteracting] = useState<boolean>(false);
+  const isPaused = isHovered || isInteracting;
 
   const casesList = config.caseStudies && config.caseStudies.length > 0 ? config.caseStudies : caseStudiesData;
   const totalCases = casesList.length;
@@ -58,8 +51,25 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   const handleSelectTab = (idx: number) => {
     setSlideDirection(idx > currentIndex ? 'right' : 'left');
     setCurrentIndex(idx);
-    triggerTemporaryPause();
   };
+
+  const caseDockRef = useRef<HTMLDivElement | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const container = caseDockRef.current;
+    const tab = tabRefs.current[currentIndex];
+    if (container && tab) {
+      const tabLeft = tab.offsetLeft;
+      const tabWidth = tab.offsetWidth;
+      const containerWidth = container.offsetWidth;
+      const targetScroll = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentIndex]);
 
   // 4.5-Second Auto-Swipe Timer
   useEffect(() => {
@@ -403,12 +413,13 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
               {/* MOBILE & TABLET VIEW (<1024px): Caret Carousel with Swipe & Indicators */}
               <div className="block lg:hidden relative max-w-lg mx-auto">
                 {/* Case Study Quick Tabs */}
-                <div className="flex flex-row items-center justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none mb-3">
+                <div ref={caseDockRef} className="flex flex-row items-center justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full overflow-x-auto scrollbar-none mb-3">
                   {casesList.map((cItem, tabIdx) => {
                     const isSelected = tabIdx === currentIndex;
                     return (
                       <button
                         key={cItem.id}
+                        ref={(el) => { tabRefs.current[tabIdx] = el; }}
                         type="button"
                         onClick={() => handleSelectTab(tabIdx)}
                         className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none uppercase tracking-wide shrink-0 ${
@@ -429,7 +440,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 </div>
 
                 {/* Swipable Card Container */}
-                <div className="relative overflow-hidden px-1">
+                <div className="relative overflow-hidden px-1" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
                   <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
                     <motion.div
                       key={casesList[currentIndex].id}
@@ -445,16 +456,17 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                       }}
                       drag="x"
                       dragConstraints={{ left: 0, right: 0 }}
+                      dragSnapToOrigin={true}
                       dragElastic={0.2}
-                      onDragStart={() => setIsPaused(true)}
-                      onTouchStart={() => setIsPaused(true)}
-                      onTouchEnd={() => setIsPaused(false)}
-                      onTouchCancel={() => setIsPaused(false)}
-                      onPointerDown={() => setIsPaused(true)}
-                      onPointerUp={() => setIsPaused(false)}
-                      onPointerCancel={() => setIsPaused(false)}
+                      onDragStart={() => setIsInteracting(true)}
+                      onTouchStart={() => setIsInteracting(true)}
+                      onTouchEnd={() => setIsInteracting(false)}
+                      onTouchCancel={() => setIsInteracting(false)}
+                      onPointerDown={() => setIsInteracting(true)}
+                      onPointerUp={() => setIsInteracting(false)}
+                      onPointerCancel={() => setIsInteracting(false)}
                       onDragEnd={(_, info) => {
-                        setIsPaused(false);
+                        setIsInteracting(false);
                         const swipeThreshold = 35;
                         const velocityThreshold = 250;
                         if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {

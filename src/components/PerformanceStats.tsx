@@ -9,7 +9,9 @@ export default function PerformanceStats() {
   const { config } = useSiteConfig();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-  const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const isPaused = isHovered || isInteracting;
 
   const radius = 32;
   const circumference = 2 * Math.PI * radius;
@@ -86,15 +88,6 @@ export default function PerformanceStats() {
   ];
 
   const totalStats = stats.length;
-  const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const triggerTemporaryPause = () => {
-    setIsPaused(true);
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-    resumeTimerRef.current = setTimeout(() => {
-      setIsPaused(false);
-    }, 4500);
-  };
 
   const handleNext = useCallback(() => {
     setSlideDirection('right');
@@ -109,8 +102,25 @@ export default function PerformanceStats() {
   const handleSelectStat = (idx: number) => {
     setSlideDirection(idx > currentIndex ? 'right' : 'left');
     setCurrentIndex(idx);
-    triggerTemporaryPause();
   };
+
+  const statsDockRef = useRef<HTMLDivElement | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const container = statsDockRef.current;
+    const tab = tabRefs.current[currentIndex];
+    if (container && tab) {
+      const tabLeft = tab.offsetLeft;
+      const tabWidth = tab.offsetWidth;
+      const containerWidth = container.offsetWidth;
+      const targetScroll = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentIndex]);
 
   // 4-Second Auto-Swipe Timer with smooth continuous cycling
   useEffect(() => {
@@ -303,7 +313,7 @@ export default function PerformanceStats() {
           
           {/* Quick-Selector Floating Dock for 4 Stats (Flex Row) */}
           <div className="w-full max-w-full mb-3">
-            <div className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
+            <div ref={statsDockRef} className="flex flex-row items-center justify-start sm:justify-center gap-2 p-1.5 rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-x-auto scrollbar-none w-full">
               {stats.map((stat, tabIdx) => {
                 const isSelected = tabIdx === currentIndex;
                 const TabIcon = stat.icon;
@@ -311,6 +321,7 @@ export default function PerformanceStats() {
                 return (
                   <button
                     key={stat.id}
+                    ref={(el) => { tabRefs.current[tabIdx] = el; }}
                     type="button"
                     onClick={() => handleSelectStat(tabIdx)}
                     className={`group relative flex flex-row items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer uppercase tracking-wide shrink-0 select-none ${
@@ -338,7 +349,7 @@ export default function PerformanceStats() {
           </div>
 
           {/* Swipable Card Container with popLayout */}
-          <div className="relative overflow-hidden px-1">
+          <div className="relative overflow-hidden px-1" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
             <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
               <motion.div
                 key={stats[currentIndex].id}
@@ -354,16 +365,17 @@ export default function PerformanceStats() {
                 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
+                dragSnapToOrigin={true}
                 dragElastic={0.2}
-                onDragStart={() => setIsPaused(true)}
-                onTouchStart={() => setIsPaused(true)}
-                onTouchEnd={() => triggerTemporaryPause()}
-                onTouchCancel={() => triggerTemporaryPause()}
-                onPointerDown={() => setIsPaused(true)}
-                onPointerUp={() => triggerTemporaryPause()}
-                onPointerCancel={() => triggerTemporaryPause()}
+                onDragStart={() => setIsInteracting(true)}
+                onTouchStart={() => setIsInteracting(true)}
+                onTouchEnd={() => setIsInteracting(false)}
+                onTouchCancel={() => setIsInteracting(false)}
+                onPointerDown={() => setIsInteracting(true)}
+                onPointerUp={() => setIsInteracting(false)}
+                onPointerCancel={() => setIsInteracting(false)}
                 onDragEnd={(_, info) => {
-                  triggerTemporaryPause();
+                  setIsInteracting(false);
                   const swipeThreshold = 35;
                   const velocityThreshold = 250;
                   if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
