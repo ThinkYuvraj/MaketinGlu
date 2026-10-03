@@ -155,7 +155,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
   return (
     <section 
       id="faq" 
-      className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden scroll-mt-20 lg:scroll-mt-24"
+      className="relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden scroll-mt-20 lg:scroll-mt-24"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -171,8 +171,8 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
       <Container className="relative z-10">
 
         {/* Section Header (Unified 1-Line Heading & Main-Content Equal Subheading) */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-6 sm:mb-8 pb-3 border-b border-slate-800/60 flex flex-col items-center justify-center">
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5 pb-2 border-b border-slate-800/60 flex flex-col items-center justify-center">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.faqSectionBadge || 'KNOWLEDGE BASE & GUIDELINES'}</span>
           </div>
@@ -184,7 +184,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
             </span>
           </h2>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {config.faqSectionDescription || 'Direct answers regarding campaign timelines, Google rankings, code ownership, and media billing.'}
           </p>
         </div>
@@ -271,7 +271,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
 
         {/* MINIMIZED SCROLLABLE FLEXBOX CONTAINER (More Width, Less Height) */}
         <div className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1140px] 2xl:max-w-[1240px] w-full mx-auto px-2 sm:px-4">
-          <div className="w-full min-h-[240px] sm:min-h-[260px] rounded-2xl sm:rounded-3xl overflow-hidden p-3.5 sm:p-5 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
+          <div className="w-full min-h-[200px] sm:min-h-[220px] rounded-2xl overflow-hidden p-3.5 sm:p-4 shadow-2xl backdrop-blur-2xl bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 flex flex-col justify-between relative">
             
             {/* Guidance Header Bar */}
             <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800/80 text-xs font-mono text-slate-400">
@@ -285,7 +285,7 @@ export default function FAQ({ onOpenConsultation: _ }: FAQProps) {
             </div>
 
             {/* Scrollable Flexbox Container: More width, less height */}
-            <div className="flex-1 w-full flex flex-col space-y-2 max-h-[320px] sm:max-h-[360px] lg:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
+            <div className="flex-1 w-full flex flex-col space-y-1.5 max-h-[260px] sm:max-h-[300px] lg:max-h-[320px] overflow-y-auto pr-2 custom-scrollbar focus:outline-none">
               {filteredFaqs.length === 0 ? (
                 <div className="text-center py-6 px-4 rounded-xl border border-slate-800 bg-[#090e1c] my-auto">
                   <HelpCircle className="w-7 h-7 text-slate-500 mx-auto mb-2" />

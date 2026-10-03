@@ -1,8 +1,33 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
+export function scrollToTop(immediate = true) {
+  if (typeof window === 'undefined') return;
+
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  const lenis = (window as any).__lenis as Lenis | undefined;
+  if (lenis) {
+    lenis.scrollTo(0, { immediate });
+  }
+}
+
 export function useSmoothScroll() {
   useEffect(() => {
+    // Disable browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Force zero scroll before initializing Lenis
+    scrollToTop(true);
+
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
@@ -18,6 +43,12 @@ export function useSmoothScroll() {
       infinite: false,
     });
 
+    // Attach to window for global access immediately
+    (window as any).__lenis = lenis;
+
+    // Zero Lenis position strictly on creation
+    lenis.scrollTo(0, { immediate: true });
+
     let animationFrameId: number;
 
     function raf(time: number) {
@@ -27,10 +58,14 @@ export function useSmoothScroll() {
 
     animationFrameId = requestAnimationFrame(raf);
 
-    // Attach to window for global access
-    (window as any).__lenis = lenis;
+    const handleUnload = () => {
+      window.scrollTo(0, 0);
+    };
+
+    window.addEventListener('beforeunload', handleUnload);
 
     return () => {
+      window.removeEventListener('beforeunload', handleUnload);
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
       delete (window as any).__lenis;
@@ -50,3 +85,4 @@ export function scrollToElement(elementId: string, offset = 0) {
     }
   }
 }
+

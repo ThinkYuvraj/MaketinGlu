@@ -11,7 +11,7 @@ export default function PerformanceStats() {
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
   const [isPaused, setIsPaused] = useState(false);
 
-  const radius = 41;
+  const radius = 32;
   const circumference = 2 * Math.PI * radius;
 
   const stats = [
@@ -156,11 +156,11 @@ export default function PerformanceStats() {
 
     return (
       <div 
-        className="group flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-linear-to-b from-[#0c1424] via-[#09101d] to-brand-bg border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 p-5 sm:p-6 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 relative overflow-hidden h-full select-none"
+        className="group flex flex-col justify-between rounded-2xl bg-linear-to-b from-[#0c1424] via-[#09101d] to-brand-bg border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 p-3.5 sm:p-4.5 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/10 relative overflow-hidden h-full select-none"
         id={`stat-card-${isMobile ? 'mobile-' : ''}${idx}`}
       >
         {/* Top Subtle Ambient Glow */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
+        <div className="absolute top-0 right-0 w-28 h-28 bg-cyan-500/5 rounded-full blur-xl pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
 
         {/* 4-Second Auto-Swipe Active Progress Indicator Line (shown on mobile) */}
         {isMobile && (
@@ -180,16 +180,16 @@ export default function PerformanceStats() {
 
         <div>
           {/* Top Header Badge */}
-          <div className="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800/80">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-cyan-950/80 border border-cyan-500/35 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm shadow-cyan-950/40">
-                <CardIcon className="w-4 h-4" />
+          <div className="flex items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-800/80">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-7 h-7 rounded-lg bg-cyan-950/80 border border-cyan-500/35 flex items-center justify-center text-cyan-400 shrink-0 shadow-sm">
+                <CardIcon className="w-3.5 h-3.5" />
               </div>
               <div className="min-w-0">
-                <div className="text-xs font-bold text-white uppercase tracking-wide truncate">
+                <div className="text-[11px] font-bold text-white uppercase tracking-wide truncate">
                   {item.badge}
                 </div>
-                <div className="text-xs font-mono text-slate-400 tracking-tight truncate">
+                <div className="text-[10px] font-mono text-slate-400 tracking-tight truncate">
                   {item.category}
                 </div>
               </div>
@@ -197,9 +197,9 @@ export default function PerformanceStats() {
           </div>
 
           {/* Circular Gauge Centerpiece */}
-          <div className="flex justify-center my-3">
-            <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center shrink-0">
-              <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <div className="flex justify-center my-2">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
                 <defs>
                   <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#0284c7" />
@@ -209,20 +209,20 @@ export default function PerformanceStats() {
                 </defs>
                 {/* Background track circle */}
                 <circle
-                  cx="50"
-                  cy="50"
+                  cx="40"
+                  cy="40"
                   r={radius}
                   stroke="#1e293b"
-                  strokeWidth="6.5"
+                  strokeWidth="5"
                   fill="transparent"
                 />
                 {/* Glowing active arc */}
                 <circle
-                  cx="50"
-                  cy="50"
+                  cx="40"
+                  cy="40"
                   r={radius}
                   stroke={`url(#${gradientId})`}
-                  strokeWidth="6.5"
+                  strokeWidth="5"
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   strokeLinecap="round"
@@ -233,10 +233,10 @@ export default function PerformanceStats() {
 
               {/* Percentage and sub-label in center */}
               <div className="absolute inset-0 flex items-center justify-center flex-col px-1 text-center pointer-events-none">
-                <span className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-none">
+                <span className="text-xl sm:text-2xl font-black text-white tracking-tight leading-none">
                   {item.percentage}%
                 </span>
-                <span className="text-[10px] sm:text-[11px] font-extrabold text-cyan-400 uppercase tracking-wider mt-1">
+                <span className="text-[9px] font-extrabold text-cyan-400 uppercase tracking-wider mt-0.5">
                   Delivery
                 </span>
               </div>
@@ -244,19 +244,19 @@ export default function PerformanceStats() {
           </div>
 
           {/* Title */}
-          <h3 className="text-base sm:text-lg font-bold text-white text-center tracking-tight mb-2 group-hover:text-cyan-300 transition-colors">
+          <h3 className="text-sm sm:text-base font-bold text-white text-center tracking-tight mb-1.5 group-hover:text-cyan-300 transition-colors">
             {item.label}
           </h3>
 
           {/* Description Info */}
-          <p className="text-xs sm:text-sm text-slate-400 text-center leading-relaxed mb-4">
+          <p className="text-xs text-slate-300 text-center leading-relaxed mb-3">
             {item.description}
           </p>
 
           {/* Bullet Highlights */}
-          <div className="space-y-2 py-3 border-t border-slate-800/80">
+          <div className="space-y-1.5 py-2 border-t border-slate-800/80">
             {item.highlights.map((point, hIdx) => (
-              <div key={hIdx} className="flex items-start gap-2 text-xs text-slate-300">
+              <div key={hIdx} className="flex items-start gap-1.5 text-[11px] text-slate-300">
                 <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
                 <span className="leading-snug">{point}</span>
               </div>
@@ -271,7 +271,7 @@ export default function PerformanceStats() {
   return (
     <section 
       id="growth" 
-      className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-brand-bg border-t border-slate-800/80 overflow-hidden"
+      className="relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-brand-bg border-t border-slate-800/80 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

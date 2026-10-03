@@ -98,14 +98,14 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
   };
 
   return (
-    <section id="cases" className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-[#060a13] border-t border-slate-800/80 overflow-hidden">
+    <section id="cases" className="relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-[#060a13] border-t border-slate-800/80 overflow-hidden">
       {/* Top Subtle Glow Separation */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/25 via-slate-700/60 to-transparent pointer-events-none" />
 
       <Container>
         {/* Centered Section Header */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>{config.casesSectionBadge || 'PROVEN OUTCOMES'}</span>
           </div>
@@ -117,7 +117,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
             </span>
           </h2>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             {config.casesSectionDescription || 'Real-world revenue and lead-generation outcomes engineered for scaling brands across D2C, SaaS, and retail.'}
           </p>
         </div>
@@ -135,7 +135,7 @@ export default function CaseStudies({ onOpenConsultation }: CaseStudiesProps) {
                 id={`case-card-${item.id}`}
               >
                 {/* 1. VISUAL SHOWCASE HEADER */}
-                <div className="relative h-32 sm:h-36 bg-[#050914] overflow-hidden border-b border-slate-800/80 p-3 sm:p-4 flex flex-col justify-between">
+                <div className="relative h-28 sm:h-32 bg-[#050914] overflow-hidden border-b border-slate-800/80 p-3 flex flex-col justify-between">
                   <div 
                     className="absolute inset-0 opacity-[0.03] pointer-events-none"
                     style={{

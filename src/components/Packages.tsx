@@ -136,7 +136,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
   return (
     <section 
       id="packages" 
-      className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
+      className="relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -166,7 +166,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
         </div>
 
         {/* INTERACTIVE PACKAGE CURVED RECTANGLE FLOATING DOCK */}
-        <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-1 sm:mt-2 mb-4 sm:mb-6 flex justify-center">
+        <div className="relative max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto px-2 mt-1 sm:mt-2 mb-3 sm:mb-4 flex justify-center">
           <div className="grid grid-cols-3 gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
             {packagesData.map((pkg, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
@@ -274,7 +274,7 @@ export default function Packages({ onSelectPackage }: PackagesProps) {
                   handlePrev();
                 }
               }}
-              className={`w-full min-h-0 sm:min-h-0 lg:min-h-[410px] rounded-2xl sm:rounded-3xl lg:rounded-[28px] overflow-hidden p-3.5 sm:p-5 lg:p-6 shadow-2xl backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 lg:gap-6 items-stretch relative cursor-grab active:cursor-grabbing touch-pan-y ${
+              className={`w-full min-h-0 sm:min-h-0 lg:min-h-[350px] rounded-2xl sm:rounded-3xl lg:rounded-[24px] overflow-hidden p-3.5 sm:p-4 lg:p-5 shadow-2xl backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch relative cursor-grab active:cursor-grabbing touch-pan-y ${
                 isPopular
                   ? 'bg-linear-to-b from-[#0f1b36]/98 via-[#0b1325]/98 to-[#070c18]/98 border-2 border-cyan-400/90 shadow-cyan-500/20'
                   : 'bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-slate-800/90 shadow-cyan-500/10'

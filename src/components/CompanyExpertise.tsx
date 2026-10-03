@@ -138,7 +138,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
   return (
     <section 
       id="expertise" 
-      className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
+      className="relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 selection:bg-cyan-500 selection:text-white overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -179,7 +179,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
         </div>
 
         {/* INTERACTIVE TOP SERVICES FULL BAR DOCK (Single-Row Flex Scroll on Mobile/Tablet, 6-Col Grid on Desktop) */}
-        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-5">
+        <div className="relative w-full max-w-full lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-2 sm:px-4 mt-1 sm:mt-2 mb-3 sm:mb-4">
           <div className="flex overflow-x-auto lg:grid lg:grid-cols-6 scrollbar-none gap-1.5 p-1.5 rounded-xl sm:rounded-2xl bg-[#090f20]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_12px_40px_rgba(0,0,0,0.6)] w-full">
             {services.map((srv, tabIdx) => {
               const isSelected = tabIdx === safeCurrentIndex;
@@ -228,7 +228,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
 
         {/* MAIN 3D INTERACTIVE SERVICE SPOTLIGHT SHOWCASE (Widescreen Landscape Rounded Rectangle Card) */}
         <div 
-          className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8 mt-4 sm:mt-6"
+          className="relative max-w-4xl lg:max-w-5xl xl:max-w-[1120px] 2xl:max-w-[1180px] w-full mx-auto px-2 sm:px-6 lg:px-8 mt-2 sm:mt-4"
           style={{ perspective: 1200 }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -278,7 +278,7 @@ export default function CompanyExpertise({ onOpenConsultation }: CompanyExpertis
                   handlePrev();
                 }
               }}
-              className="w-full min-h-0 sm:min-h-0 lg:min-h-[410px] rounded-2xl sm:rounded-3xl lg:rounded-[28px] bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-5 lg:p-6 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 lg:gap-6 items-stretch relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
+              className="w-full min-h-0 sm:min-h-0 lg:min-h-[350px] rounded-2xl sm:rounded-3xl lg:rounded-[24px] bg-linear-to-b from-[#0e1628]/98 via-[#0a101e]/98 to-[#060a14]/98 border border-cyan-500/35 p-3.5 sm:p-4 lg:p-5 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch relative overflow-hidden cursor-grab active:cursor-grabbing touch-pan-y"
             >
               {/* 4-Second Auto-Swipe Active Progress Indicator Line */}
               <div className="absolute top-0 inset-x-0 h-1 bg-slate-800/80 overflow-hidden">

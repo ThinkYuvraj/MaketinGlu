@@ -88,7 +88,7 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative w-full min-h-0 lg:min-h-[calc(100dvh-80px)] xl:min-h-[82vh] py-8 sm:py-12 lg:py-14 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
+      className="relative w-full min-h-0 py-6 sm:py-8 lg:py-10 flex flex-col justify-center items-center bg-[#070b14] border-t border-slate-800/80 overflow-hidden"
     >
       {/* Top subtle glow line */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-cyan-500/30 to-transparent pointer-events-none" />
@@ -99,8 +99,8 @@ export default function Testimonials() {
       <Container className="relative z-10">
 
         {/* Centered Compact Section Header */}
-        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10 lg:mb-12">
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2.5 shadow-sm shadow-cyan-500/10">
+        <div className="text-center max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mb-3 sm:mb-4 lg:mb-5">
+          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-md bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-2 shadow-sm shadow-cyan-500/10">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>VERIFIED CLIENT FEEDBACK</span>
           </div>
@@ -112,12 +112,12 @@ export default function Testimonials() {
             </span>
           </h2>
 
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl mx-auto text-center">
             Authentic reviews and quantifiable growth results directly from verified Indian client partnerships.
           </p>
 
           {/* Centered Rating Pill & Mini Controls */}
-          <div className="mt-4 inline-flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-[#0a1120] border border-slate-800 shadow-sm">
+          <div className="mt-3 inline-flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-[#0a1120] border border-slate-800 shadow-sm">
             <span className="text-sm font-black text-white font-mono">{avgRating}</span>
             {renderStars(5)}
             <span className="text-[11px] text-slate-400 pl-1.5 border-l border-slate-800">
@@ -146,9 +146,9 @@ export default function Testimonials() {
         </div>
 
         {/* COMPACT TESTIMONIAL CARD */}
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-4xl mx-auto">
           <div
-            className="relative p-5 sm:p-6 lg:p-7 rounded-2xl bg-linear-to-r from-[#0c1424]/95 via-[#09101d]/95 to-[#070c18]/98 border border-cyan-500/30 shadow-xl backdrop-blur-xl transition-all duration-300 group overflow-hidden"
+            className="relative p-4 sm:p-5 lg:p-6 rounded-2xl bg-linear-to-r from-[#0c1424]/95 via-[#09101d]/95 to-[#070c18]/98 border border-cyan-500/30 shadow-xl backdrop-blur-xl transition-all duration-300 group overflow-hidden"
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
             id="featured-testimonial-card"

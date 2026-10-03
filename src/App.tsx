@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -14,7 +14,7 @@ import CustomSectionRenderer from './components/CustomSectionRenderer';
 import { SectionPosition } from './types';
 import { pageTransitionVariants } from './lib/animations';
 import Preloader from './components/Preloader';
-import { useSmoothScroll } from './lib/useSmoothScroll';
+import { useSmoothScroll, scrollToTop } from './lib/useSmoothScroll';
 import { useBarbaTransitions } from './lib/useBarbaTransitions';
 
 // Lazy-loaded Below-the-Fold Components & Modals
@@ -52,6 +52,11 @@ function AppContent() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [consultationService, setConsultationService] = useState<string>('Digital Marketing Audit');
   const [showPreloader, setShowPreloader] = useState(true);
+
+  // Force strict scroll to top landing on initial mount
+  useEffect(() => {
+    scrollToTop(true);
+  }, []);
 
   const handleOpenConsultation = (serviceName?: string) => {
     if (serviceName) {
@@ -139,11 +144,19 @@ function AppContent() {
         <Preloader 
           onComplete={() => {
             setShowPreloader(false);
-            window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-            const heroEl = document.getElementById('hero-section') || document.getElementById('home');
-            if (heroEl) {
-              heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            scrollToTop(true);
+            requestAnimationFrame(() => {
+              scrollToTop(true);
+              const heroEl = document.getElementById('hero-section') || document.getElementById('home');
+              if (heroEl) {
+                const lenis = (window as any).__lenis;
+                if (lenis) {
+                  lenis.scrollTo(heroEl, { immediate: true });
+                } else {
+                  heroEl.scrollIntoView({ behavior: 'instant' as ScrollBehavior, block: 'start' });
+                }
+              }
+            });
           }} 
           minDurationMs={1000} 
         />
